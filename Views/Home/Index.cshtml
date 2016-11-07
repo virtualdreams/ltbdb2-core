@@ -1,5 +1,14 @@
+@model System.Collections.Generic.IEnumerable<BookModel>
+@using ltbdb.Models;
+
 @{
 
 }
 
 <h1>Welcome</h2>
+
+<ul>
+@foreach(var book in Model) {
+	<li>@book.Title</li>
+}
+</ul>

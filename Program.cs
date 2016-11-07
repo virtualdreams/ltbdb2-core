@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace aspnetcoreapp
+namespace ltbdb
 {
     public class Program
     {

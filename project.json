@@ -1,0 +1,32 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "preserveCompilationContext": true,
+	"debugType": "portable",
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+    	"type": "platform",
+    	"version": "1.0.1"
+    },
+    "Microsoft.AspNetCore.Diagnostics": "1.0.0",
+    "Microsoft.AspNetCore.Mvc": "1.0.0",
+    "Microsoft.AspNetCore.Razor.Tools": {
+    	"version": "1.0.0-preview2-final",
+    	"type": "build"
+    },
+    "Microsoft.AspNetCore.Routing": "1.0.0",
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0",
+    "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+	"SimpleInjector": "3.2.7",
+	"MongoDB.Driver": "2.3.0"
+  },
+  "frameworks": {
+	"netcoreapp1.0": {
+		"imports": "dnxcore50"
+	}
+  }
+}

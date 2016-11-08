@@ -1,0 +1,26 @@
+﻿@model ltbdb.Models.BookViewContainer
+@using ltbdb.Models
+@using ltbdb.Core.Helpers
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Header = "Home";
+}
+
+<div class="book">
+	<ul>
+	@foreach (var book in Model.Books) {
+		<li>
+			<a href="@Url.Action("view", "book", new { id = @book.Id, slug = book.Title.ToSlug() })">
+				<div class="img">
+					<img src="@ImageStore.GetCDNPath(book.Filename, ImageType.Thumbnail)" alt="Cover" />
+				</div>
+				<div class="title">
+					<span>Nr. @book.Number - @book.Title</span>
+				</div>
+			</a>
+		</li>
+	}
+	</ul>
+</div>

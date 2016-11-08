@@ -1,0 +1,11 @@
+@model ltbdb.Models.BookModel
+@using ltbdb.Core.Helpers
+
+<li>
+	<a href="@Url.Action("view", "book", new { id = Model.Id, slug = Model.Title.ToSlug() })">
+		<div>
+			<img src="@ImageStore.GetCDNPath(Model.Filename, ImageType.PreferThumbnail)" alt="" />
+		</div>
+		<span>Nr. @Model.Number - @Model.Title</span>
+	</a>
+</li>

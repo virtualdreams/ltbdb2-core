@@ -1,0 +1,87 @@
+﻿@using ltbdb.Core.Helpers
+<!DOCTYPE html>
+
+<html lang="de">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		@if(!String.IsNullOrEmpty(ViewBag.Description)) {
+		<meta name="description" content="@ViewBag.Description" />
+		}
+		<meta name="application-name" content="Lustiges Taschenbuch Datenbank" />
+		<meta name="keywords" content="Lustiges Taschenbuch, Datenbank, LTB, @ViewBag.Keywords" />
+
+		<link type="text/css" href="@Url.Content("~/css/smoothness/jquery-ui.min.css")" rel="stylesheet" />
+		<link type="text/css" href="@Url.Content("~/css/jBox.css")" rel="stylesheet" />
+		<link type="text/css" href="@Url.Content("~/css/material.min.css")" rel="stylesheet" />		
+		<link type="text/css" href="@Url.Content("~/css/layout.min.css")" rel="stylesheet" />
+		<link type="text/css" href="@Url.Content("~/css/navigation.min.css")" rel="stylesheet" />
+
+		<script type="text/javascript" src="@Url.Content("~/js/jquery.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/jquery-ui.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/jquery.validate.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/jBox.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/bootstrap.min.js")"></script>
+
+		<link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
+
+		<title>@(ViewBag.Title)@(String.IsNullOrEmpty(ViewBag.Title) ? "" : " | ")Lustiges Taschenbuch - Datenbank</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="wrapper-content">
+				<div class="header">
+					<a href="/">
+						<div class="left">
+							<h1 class="logo">
+								Lustiges Taschenbuch Datenbank
+							</h1>
+						</div>
+					</a>
+					<div class="right">
+						<div class="links">
+							@*<a href="#">Impressum</a>*@
+							@await Component.InvokeAsync("Login")
+						</div>
+						<div class="searchbox">
+							<form action="@Url.Action("search", "home")" method="get">
+								<input id="q" type="text" name="q" value="@ViewBag.Search" placeholder="Suche..." />
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="nav">
+					<ul>
+						<li><a href="/">Home</a></li>
+						<li><a href="/categories">Kategorien</a>
+							<ul>
+								@await Component.InvokeAsync("Categories")
+							</ul>  
+						</li>
+						<li><a href="/tags">Tags</a>
+							<ul>
+								@await Component.InvokeAsync("Tags")
+							</ul>
+						</li>
+						@if(Context.User.Identity.IsAuthenticated) {
+						<li><a href="@Url.Action("create", "book")">Neues Buch</a></li>
+						<li style="float: right;">
+							<a href="@Url.Action("index", "home", new { area = "admin" })">Einstellungen</a>
+						</li>
+						}
+					</ul>
+				</div>
+
+				<div class="content">
+					@RenderBody()
+				</div>
+
+				<div class="footer">
+					<div class="copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version <a href="https://github.com/virtualdreams/ltbdatabase2/commits">@*@VersionInfo.FileVersion*@</a></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

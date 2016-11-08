@@ -1,35 +1,54 @@
 {
+  "description": "ltbdb",
+  "copyright": "stichelbiene.de 2016",
   "version": "1.0.0-*",
   "buildOptions": {
     "preserveCompilationContext": true,
-	"debugType": "portable",
+    "compile": {
+      "exclude": [],
+      "excludeFiles": []
+    },
+    "debugType": "portable",
     "emitEntryPoint": true
+  },
+  "publishOptions": {
+    "include": [
+      "wwwroot",
+      "Config",
+      "Views/**/*.cshtml",
+      "Areas/**/*.cshtml"
+    ],
+    "exclude": [
+      "wwwroot/**/*.less",
+      "wwwroot/**/*.map"
+    ]
   },
   "dependencies": {
     "Microsoft.NETCore.App": {
-    	"type": "platform",
-    	"version": "1.0.1"
+      "type": "platform",
+      "version": "1.0.1"
     },
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Microsoft.AspNetCore.Razor.Tools": {
-    	"version": "1.0.0-preview2-final",
-    	"type": "build"
+      "version": "1.0.0-preview2-final",
+      "type": "build"
     },
-    "Microsoft.AspNetCore.Routing": "1.0.0",
+    "Microsoft.AspNetCore.Routing": "1.0.1",
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
+    "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "SimpleInjector": "3.2.7",
     "SimpleInjector.Integration.AspNetCore": "3.2.1",
     "SimpleInjector.Integration.AspNetCore.Mvc": "3.2.3",
     "MongoDB.Driver": "2.3.0",
     "AutoMapper": "5.1.1"
-    },
+  },
   "frameworks": {
-	"netcoreapp1.0": {
-		"imports": "dnxcore50"
-	}
+    "netcoreapp1.0": {
+      "imports": "dnxcore50"
+    }
   }
 }

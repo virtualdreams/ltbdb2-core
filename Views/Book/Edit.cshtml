@@ -1,0 +1,141 @@
+﻿@model ltbdb.Models.BookEditContainer
+@using MongoDB.Bson
+@using ltbdb.Models
+@using ltbdb.Core.Helpers
+
+@{
+	if(Model.Book.Id == ObjectId.Empty) {
+		ViewBag.Title = "Neues Buch";
+	} else {
+		ViewBag.Title = String.Format("Nr. {0} - {1} | {2}", Model.Book.Number, Model.Book.Title, Model.Book.Category);
+	}
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="@Url.Action("edit", "book")" method="post" enctype="multipart/form-data" id="book-form">
+	<h2>Buch</h2>
+	<div class="details">
+		<div style="float: left;">
+			
+			<!-- number -->
+			<div class="block">
+				<label for="number">Nummer</label>
+			</div>
+			<div class="block">
+				<input class="input" type="text" id="number" name="number" value="@Model.Book.Number" placeholder="Nummer der Ausgabe" /> @Html.ValidationMessage("number")
+			</div>
+
+			<!-- titel -->
+			<div class="block">
+				<label for="title">Titel</label>
+			</div>
+			<div class="block">
+				<input class="input" type="text" id="title" name="title" value="@Model.Book.Title" placeholder="Titel der Ausgabe" /> @Html.ValidationMessage("title")
+			</div>
+
+			<!-- category -->
+			<div class="block">
+				<label for="category">Kategorie</label>
+			</div>
+			<div class="block">
+				<input class="input c" type="text" id="category" name="category" value="@Model.Book.Category" placeholder="Kategorie der Ausgabe" /> @Html.ValidationMessage("category")
+			</div>
+
+			<!-- stories -->
+			<div class="block">
+				<label>Inhalt</label>
+			</div>
+			<div class="block" id="story-container">
+				@foreach (var story in Model.Book.Stories)
+				{
+				<div class="story">
+					<input class="input" type="text" name="stories" value="@story" placeholder="Inhalt" /> <span class="button-green story-ins" title="Eintrag darüber einfügen."><i class="material-icons material-icons-small">add</i></span> <span class="button-red story-rem" title="Eintrag entfernen."><i class="material-icons material-icons-small">remove</i></span>
+				</div>
+				}
+			</div>
+			<div class="block">
+				<span class="button-green" id="story-add">Inhalt hinzufügen</span> @Html.ValidationMessage("stories")
+			</div>
+
+			<!-- tags -->
+			<div class="block">
+				<label for="tags">Tags</label>
+			</div>
+			<div class="block">
+				<input class="input t" type="text" id="tags" name="tags" value="@Model.Book.Tags" placeholder="Tags" /> @Html.ValidationMessage("tags")
+			</div>
+
+			<div class="block">
+				<input class="button-green" type="submit" value="Speichern" />
+			</div>
+
+		</div>
+		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
+			<input style="display: none;" name="image" type="file" id="image-upload" />
+			<img style="cursor: pointer;" id="image" src="@ImageStore.GetCDNPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen." />
+			
+			<input type="hidden" name="filename" value="@ImageStore.GetCDNPath(Model.Book.Filename)" />
+			<input type="hidden" name="remove" value="false" id="remove" />
+
+			<div style="position: absolute; top: -24px; right: 8px;">
+				<span class="pointer" id="image-reset" title="Bild zurücksetzen." style="display: none;"><i class="material-icons bigger">undo</i></span>
+				<span class="pointer" id="image-delete" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	$(function () {
+		$('#image').on('click', function () {
+			$('#image-upload').click();
+		});
+
+		$('#image-upload').change(function () {
+			if (typeof window.FileReader === 'undefined') {
+				alert("Dein Browser unterstützt diese Funktion nicht. Die Vorschau ist nicht verfügbar.");
+				return;
+			} else {
+				var files = $("#image-upload").get(0).files;
+				var reader = new FileReader();
+
+				if (!files[0].type.match('image')) {
+					reset($('#image-upload'));
+					alert("Dateityp nicht unterstützt.");
+					return;
+				}
+
+				reader.onload = function (e) {
+					$('#image').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(files[0]);
+			}
+
+			$('#remove').val(false);
+			$('#image-reset').show();
+		});
+
+		$('#image-delete').click(function (e) {
+			e.preventDefault();
+
+			reset($('#image-upload'));
+			$('#image').attr('src', '@GlobalConfig.Get().NoImage.TrimStart('.')');
+			$('#remove').val(true);
+			$('#image-reset').show();
+		});
+
+		$('#image-reset').click(function (e) {
+			e.preventDefault();
+
+			reset($('#image-upload'));
+			$('#image').attr('src', '@ImageStore.GetCDNPath(Model.Book.Filename)');
+			$('#remove').val(false);
+			$('#image-reset').hide();
+		});
+
+		function reset(e) {
+			var control = e;
+			control.replaceWith(control.clone(true));
+		}
+	});
+</script>

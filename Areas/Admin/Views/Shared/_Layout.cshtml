@@ -1,0 +1,63 @@
+﻿@using ltbdb.Core.Helpers
+<!DOCTYPE html>
+
+<html lang="de">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link type="text/css" href="@Url.Content("~/css/smoothness/jquery-ui.min.css")" rel="stylesheet" />
+		<link type="text/css" href="@Url.Content("~/css/jBox.css")" rel="stylesheet" />
+		<link type="text/css" href="@Url.Content("~/css/material.min.css")" rel="stylesheet" />
+		<link type="text/css" href="@Url.Content("~/css/admin.min.css")" rel="stylesheet" />
+
+		<script type="text/javascript" src="@Url.Content("~/js/jquery.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/jquery-ui.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/jquery.validate.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/jBox.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/bootstrap.min.js")"></script>
+
+		<link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
+
+		<title>@(ViewBag.Title)@(String.IsNullOrEmpty(ViewBag.Title) ? "" : " | ")Lustiges Taschenbuch - Administration</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="wrapper-content">
+				<div class="header">
+					<a href="/admin">
+						<div class="left">
+							<h1 class="logo">
+								Lustiges Taschenbuch Administration
+							</h1>
+						</div>
+					</a>
+					<div class="right">
+					</div>
+				</div>
+
+				<div class="content">
+					<div class="one-fourth">
+						<div class="left-box">
+							<nav>
+								<a href="/admin" class="@((ViewBag.Menu == "home") ? "selected" : "")">Home</a>
+								<a href="/">Frontend</a>
+								<a href="@Url.Action("index", "category", new { area = "admin" })" class="@((ViewBag.Menu == "category") ? "selected" : "")">Kategorien</a>
+								<a href="@Url.Action("index", "stats", new { area = "admin" })" class="@((ViewBag.Menu == "stats") ? "selected" : "")">Statistik</a>
+							</nav>
+						</div>
+					</div>
+					<div class="three-fourth">
+						<div class="right-box">
+							@RenderBody()
+						</div>
+					</div>
+				</div>
+
+				<div class="footer">
+					<div class="copy">Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version <a href="https://github.com/virtualdreams/ltbdatabase2/commits">@*@VersionInfo.FileVersion*@</a></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

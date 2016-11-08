@@ -1,0 +1,37 @@
+﻿@model ltbdb.Models.BookViewCategoryContainer
+@using ltbdb.Models
+@using ltbdb.Core.Helpers
+
+@{
+	ViewBag.Title = String.Format("{0}", Model.Category);
+	ViewBag.Description = String.Format("{0}", Model.Category);
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Header = String.Format("Kategorie \"{0}\"", @Model.Category);
+}
+
+<div class="book">
+	<ul>
+	@if(Model.PageOffset.HasPrevious) {
+		<li>
+			<a class="pager" href="@Url.Action("view", "category", new { id = Model.Category, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })">[zurück]</a>
+		</li>
+	}
+	@foreach (var book in Model.Books) {
+		<li>
+			<a href="@Url.Action("view", "book", new { id = @book.Id, slug = book.Title.ToSlug() })">
+				<div class="img">
+					<img src="@ImageStore.GetCDNPath(book.Filename, ImageType.Thumbnail)" alt="Cover" />
+				</div>
+				<div class="title">
+					<span>Nr. @book.Number - @book.Title</span>
+				</div>
+			</a>
+		</li>
+	}
+	@if(Model.PageOffset.HasNext) {
+		<li>
+			<a class="pager" href="@Url.Action("view", "category", new { id = Model.Category, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">[weiter]</a>
+		</li>
+	}
+	</ul>
+</div>

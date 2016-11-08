@@ -1,0 +1,15 @@
+body {
+  width: 100%;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+}
+.error {
+  padding: 10px;
+  margin-top: 100px;
+}
+.error h2 {
+  margin-top: 0;
+  border-bottom: 1px solid #dddddd;
+}

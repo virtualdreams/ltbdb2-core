@@ -1,14 +1,23 @@
-@model System.Collections.Generic.IEnumerable<BookModel>
-@using ltbdb.Models;
+﻿@model ltbdb.Models.BookViewContainer
+@using ltbdb.Models
+@using ltbdb.Core.Helpers
 
 @{
-
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Welcome</h2>
-
-<ul>
-@foreach(var book in Model) {
-	<li>@book.Title</li>
-}
+<h2>Zuletzt hinzugefügt...</h2>
+<ul class="book">
+@foreach (var book in Model.Books) {
+	@await Component.InvokeAsync("Book", new { model = book })
+	@*<li>
+		<a href="@Url.Action("view", "book", new { id = @book.Id, slug = book.Title.ToSlug() })">
+			<div>
+				<img src="@ImageStore.GetCDNPath(book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
+			</div>
+			<span>Nr. @book.Number - @book.Title</span>
+		</a>
+	</li>*@
+	}
 </ul>

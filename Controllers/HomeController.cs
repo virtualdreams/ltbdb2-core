@@ -1,28 +1,60 @@
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
+using ltbdb.Core.Services;
 using ltbdb.Models;
+using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using ltbdb.Core.Helpers;
 
 namespace ltbdb.Controllers
 {
-	public class HomeController : Controller
-	{
-		private readonly DemoService Service;
+    //[LogError(Order = 0)]
+	//[HandleError(View = "Error", Order=99)]
+    public class HomeController : Controller
+    {
+		//private static readonly ILog Log = LogManager.GetLogger(typeof(HomeController));
 
-		public HomeController(DemoService service)
+		private readonly BookService Book;
+		private readonly CategoryService Category;
+		private readonly TagService Tag;
+
+		public HomeController(BookService book, CategoryService category, TagService tag)
 		{
-			Service = service;
+			Book = book;
+			Category = category;
+			Tag = tag;
 		}
 
-		public IActionResult Index()
+		[HttpGet]
+        public IActionResult Index()
+        {
+			var _books = Book.GetRecentlyAdded();
+
+			var books = Mapper.Map<BookModel[]>(_books);
+
+			var view = new BookViewContainer { Books = books };
+
+			return View(view);
+        }
+
+		//[ValidateInput(false)]
+		[HttpGet]
+		public IActionResult Search(string q, int? ofs)
 		{
-			Mapper.Initialize(cfg => cfg.CreateMap<Book, BookModel>());
+			var _books = Book.Search(q ?? String.Empty);
+			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
 
-			var _books = Service.Get();
+			var books = Mapper.Map<BookModel[]>(_page);
+			var offset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
 
-			var books = Mapper.Map<IEnumerable<Book>, IEnumerable<BookModel>>(_books);
-			
-			return View(books);
+			var view = new BookViewSearchContainer
+			{
+				Books = books,
+				Query = q,
+				PageOffset = offset
+			};
+
+			return View(view);
 		}
-	}
+    }
 }

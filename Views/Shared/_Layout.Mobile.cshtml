@@ -1,0 +1,55 @@
+﻿@using ltbdb.Core.Helpers
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		@if(!String.IsNullOrEmpty(ViewBag.Description)) {
+		<meta name="description" content="@ViewBag.Description" />
+		}
+		<meta name="application-name" content="Lustiges Taschenbuch Datenbank" />
+		<meta name="keywords" content="Lustiges Taschenbuch, Datenbank, LTB, @ViewBag.Keywords" />
+
+		<link type="text/css" href="@Url.Content("~/static/css/layout.mobile.min.css")" rel="stylesheet" />
+
+		<script type="text/javascript" src="@Url.Content("~/static/js/jquery.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/static/js/bootstrap.mobile.min.js")"></script>
+
+		<link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
+
+		<title>@ViewBag.Title</title>
+	</head>
+	<body>
+		<div>
+			<header>
+				<div class="hamburger" id="hamburger">
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+				<div class="header">
+					@ViewBag.Header
+				</div>
+				<div style="clear: both;"></div>
+			</header>
+			<nav>
+				<ul>
+					<li class="main"><a href="/">Home</a></li>
+					<li class="main"><a href="@Url.Action("index", "category")">Kategorien</a></li>
+					@{Html.RenderAction("categories", "home"); }
+					<li class="main"><a href="/tags">Tags</a></li>
+					@{Html.RenderAction("tags", "home"); }
+					<li class="main"><a href="@Url.Action("search", "home")">Suche</a></li>
+				</ul>
+			</nav>
+			<div class="content">
+				@RenderBody()
+			</div>
+			<footer>
+				<span>Copyright &copy; 2014 by <a href="http://stichelbiene.de">stichelbiene.de</a>. All rights reserved. Version <a href="https://github.com/virtualdreams/ltbdatabase2/commits">@VersionInfo.FileVersion</a></span>
+			</footer>
+		</div>
+	</body>
+</html>

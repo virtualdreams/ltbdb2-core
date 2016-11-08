@@ -1,0 +1,19 @@
+﻿@model ltbdb.Models.TagViewContainer
+@using ltbdb.Models;
+
+@{
+	ViewBag.Title = "Tags";
+	ViewBag.Description = "Tags";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Header = "Tags";
+}
+
+<div class="details">
+	<h3>Tags</h3>
+	<div class="tags">
+	@foreach (var tag in Model.Tags)
+	{
+		<a href="@Url.Action("view", "tag", new { id = tag })">@tag</a>
+	}
+	</div>
+</div>

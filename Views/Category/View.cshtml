@@ -1,0 +1,36 @@
+﻿@model ltbdb.Models.BookViewCategoryContainer
+@using ltbdb.Models
+@using ltbdb.Core.Helpers
+
+@{
+	ViewBag.Title = String.Format("{0}", Model.Category);
+	ViewBag.Description = String.Format("{0}", Model.Category);
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="position: relative;">
+	<div class="panel-menu">
+		Anzahl Bücher in dieser Kategorie: @Model.PageOffset.Items
+	</div>
+	<h2>Kategorie "@Model.Category"</h2>
+	<ul class="book">
+		@foreach (var book in Model.Books) {
+			<li>
+				<a href="@Url.Action("view", "book", new { id = @book.Id, slug = book.Title.ToSlug() })">
+					<div>
+						<img src="@ImageStore.GetCDNPath(book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
+					</div>
+					<span>Nr. @book.Number - @book.Title</span>
+				</a>
+			</li>
+		 }
+	</ul>
+	<div class="pager">
+		@if(Model.PageOffset.HasPrevious) {
+			<a href="@Url.Action("view", "category", new { id = Model.Category, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
+		}
+		@if(Model.PageOffset.HasNext) {
+			<a href="@Url.Action("view", "category", new { id = Model.Category, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">weiter <i class="material-icons">keyboard_arrow_right</i></a>
+		}
+	</div>
+</div>

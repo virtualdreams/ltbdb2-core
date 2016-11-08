@@ -1,0 +1,34 @@
+﻿@model ltbdb.Models.LoginModel
+@using ltbdb.Models
+
+@{
+	ViewBag.Title = "Login";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="@Url.Action("login", "account", new { ReturnUrl = Context.Request.Query["ReturnUrl"] })" method="post" enctype="multipart/form-data" id="login-form">
+	<h2>Anmeldung</h2>
+	<div class="details">
+		<div style="margin-left: 10px; padding-bottom: 20px;">
+			@Html.ValidationMessage("failed")
+		</div>
+
+		<div class="block">
+			<label for="username">Benutzername</label>
+		</div>
+		<div class="block">
+			<input class="input input-small" type="text" id="username" name="username" value="@Model.Username" placeholder="Benutzername" /> @Html.ValidationMessage("username")
+		</div>
+
+		<div class="block">
+			<label for="password">Passwort</label>
+		</div>
+		<div class="block">
+			<input class="input input-small" type="password" id="password" name="password" value="" placeholder="Passwort" /> @Html.ValidationMessage("password")
+		</div>
+
+		<div class="block">
+			<input class="button-green" type="submit" value="Login" />
+		</div>
+	</div>
+</form>

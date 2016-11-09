@@ -1,40 +1,32 @@
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 
-//using Microsoft.Extensions.Logging;
-
-using SimpleInjector;
-using SimpleInjector.Integration.AspNetCore;
-using SimpleInjector.Integration.AspNetCore.Mvc;
-
-using MongoDB.Driver;
-using Microsoft.AspNetCore.Mvc;
-using ltbdb.ModelBinders;
 using AutoMapper;
+using MongoDB.Driver;
+using Newtonsoft.Json.Serialization;
+using ltbdb.ModelBinders;
 using ltbdb.Core.Models;
 using ltbdb.Models;
-using System.Linq;
-using Newtonsoft.Json.Serialization;
+using ltbdb.Core.Helpers;
+using ltbdb.Core.Services;
 
 namespace ltbdb
 {
-	public class Startup
+    public class Startup
 	{
-		private Container Container = new Container();
-
 		public IConfigurationRoot Configuration { get; }
 
 		public Startup(IHostingEnvironment env)
 		{
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
+				.AddJsonFile("Config/appsettings.json", optional: true, reloadOnChange: false)
 				.AddEnvironmentVariables();
 
 			Configuration = builder.Build();
@@ -43,28 +35,25 @@ namespace ltbdb
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddLogging();
+
 			services.AddMvc(options => {
-				//options.ModelBinderProviders.Add(typeof(ObjectId), new Object());
 				options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
 			}).AddJsonOptions(options => {
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 			});
+
+			services.AddAuthorization(options => {
+				options.AddPolicy("AdministratorOnly", policy => policy.RequireRole("Administrator"));
+			});
 			
-			services.AddSingleton<IControllerActivator>(new SimpleInjectorControllerActivator(Container));
-			services.AddSingleton<IViewComponentActivator>(new SimpleInjectorViewComponentActivator(Container));
+			services.AddScoped<IMongoClient>(options => new MongoClient(GlobalConfig.Get().MongoDB));
+			services.AddTransient<BookService>();
+			services.AddTransient<TagService>();
+			services.AddTransient<CategoryService>();
 		}
 		
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
 		{
-			// initialize AutoMapper
-			InitializeAutoMapper();
-
-			// initialize simple injector
-			app.UseSimpleInjectorAspNetRequestScoping(Container);
-			Container.Options.DefaultScopedLifestyle = new AspNetRequestLifestyle();
-			InitializeSimpleInjector(app);
-
-			/*if(env.IsDevelopment())
 			// add logger
 			/*
 			logger.WithFilter(new FilterLoggerSettings{
@@ -74,15 +63,16 @@ namespace ltbdb
 			}).AddConsole(LogLevel.Debug);
 			*/
 			logger.AddConsole(Configuration.GetSection("Logging"));
+
+			if(env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
 			else
 			{
 				app.UseExceptionHandler("/error/index");
-			}*/
-
-			app.UseDeveloperExceptionPage();
+			}
+			
 			app.Use(async (context, next) => {
 				await next();
 				if(context.Response.StatusCode == 404)
@@ -152,19 +142,11 @@ namespace ltbdb
 					template: "{controller=Home}/{action=Index}/{id?}"
 				);
 			});
+
+			// initialize AutoMapper
+			InitializeAutoMapper();
 		}
 		
-		private void InitializeSimpleInjector(IApplicationBuilder app)
-		{
-			Container.RegisterMvcControllers(app);
-			Container.RegisterMvcViewComponents(app);
-
-			Container.Register<IMongoClient>(() => new MongoClient("mongodb://127.0.0.1/"), Lifestyle.Scoped);
-			//Container.Register<DemoService>(Lifestyle.Scoped);
-
-			Container.Verify();
-		}
-
 		private void InitializeAutoMapper()
 		{
 			Mapper.Initialize(cfg => {

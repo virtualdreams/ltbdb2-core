@@ -5,86 +5,89 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 
 namespace ltbdb.Core.Services
 {
     public class CategoryService : MongoContext
-	{
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryService));
+    {
+        private readonly ILogger<CategoryService> Log;
 
-		public CategoryService(IMongoClient client)
-			: base(client)
-		{ }
+        public CategoryService(IMongoClient client, ILogger<CategoryService> logger)
+            : base(client)
+        {
+            Log = logger;
+        }
 
-		/// <summary>
-		/// Get all available categories.
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<string> Get()
-		{
-			return Book.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
-		}
+        /// <summary>
+        /// Get all available categories.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> Get()
+        {
+            return Book.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
+        }
 
-		/// <summary>
-		/// Rename a category. Returns false if no document modified.
-		/// </summary>
-		/// <param name="from">The original category name.</param>
-		/// <param name="to">The target category name.</param>
-		/// <returns></returns>
-		public bool Rename(string from, string to)
-		{
-			from = from.Trim();
-			to = to.Trim();
-			
-			if (String.IsNullOrEmpty(from) || String.IsNullOrEmpty(to))
-				return false;
-			
-			var _filter = Builders<Book>.Filter;
-			var _from = _filter.Eq(f => f.Category, from);
+        /// <summary>
+        /// Rename a category. Returns false if no document modified.
+        /// </summary>
+        /// <param name="from">The original category name.</param>
+        /// <param name="to">The target category name.</param>
+        /// <returns></returns>
+        public bool Rename(string from, string to)
+        {
+            from = from.Trim();
+            to = to.Trim();
 
-			var _update = Builders<Book>.Update;
-			var _set = _update.Set(s => s.Category, to);
+            if (String.IsNullOrEmpty(from) || String.IsNullOrEmpty(to))
+                return false;
 
-			var _result = Book.UpdateMany(_from, _set);
+            var _filter = Builders<Book>.Filter;
+            var _from = _filter.Eq(f => f.Category, from);
 
-			if (_result.IsAcknowledged && _result.ModifiedCount > 0)
-			{
-				//Log.InfoFormat("Rename category '{0}' to '{1}'. Modified {2} documents.", from, to, _result.ModifiedCount);
-				return true;
-			}
-			else
-			{
-				//Log.ErrorFormat("Rename category '{0}' failed. No document was modified.", from);
-				return false;
-			}
-		}
+            var _update = Builders<Book>.Update;
+            var _set = _update.Set(s => s.Category, to);
 
-		/// <summary>
-		/// Get a list of suggestions for term.
-		/// </summary>
-		/// <param name="term">The term to search for.</param>
-		/// <returns></returns>
-		public IEnumerable<string> Suggestions(string term)
-		{
-			term = term.Trim();
+            var _result = Book.UpdateMany(_from, _set);
 
-			if (String.IsNullOrEmpty(term))
-				term = ".*";
-			else
-				term = Regex.Escape(term);
+            if (_result.IsAcknowledged && _result.ModifiedCount > 0)
+            {
+                Log.LogInformation("Rename category '{0}' to '{1}'. Modified {2} documents.", from, to, _result.ModifiedCount);
+                return true;
+            }
+            else
+            {
+                Log.LogError("Rename category '{0}' failed. No document was modified.", from);
+                return false;
+            }
+        }
 
-			var _filter = Builders<Book>.Filter;
-			var _category = _filter.Regex(f => f.Category, new BsonRegularExpression(term, "i"));
+        /// <summary>
+        /// Get a list of suggestions for term.
+        /// </summary>
+        /// <param name="term">The term to search for.</param>
+        /// <returns></returns>
+        public IEnumerable<string> Suggestions(string term)
+        {
+            term = term.Trim();
 
-			var _sort = Builders<Book>.Sort;
-			var _order = _sort.Ascending(f => f.Category);
+            if (String.IsNullOrEmpty(term))
+                term = ".*";
+            else
+                term = Regex.Escape(term);
 
-			//if (Log.IsDebugEnabled)
-			//{
-			//	Log.Debug(Book.Find(_category).Sort(_order).ToString());
-			//}
+            var _filter = Builders<Book>.Filter;
+            var _category = _filter.Regex(f => f.Category, new BsonRegularExpression(term, "i"));
 
-			return Book.Find(_category).Sort(_order).ToEnumerable().Select(s => s.Category).Distinct();
-		}
-	}
+            var _sort = Builders<Book>.Sort;
+            var _order = _sort.Ascending(f => f.Category);
+
+            if (Log.IsEnabled(LogLevel.Debug))
+            {
+                Log.LogDebug(Book.Find(_category).Sort(_order).ToString());
+            }
+
+            return Book.Find(_category).Sort(_order).ToEnumerable().Select(s => s.Category).Distinct();
+        }
+    }
 }

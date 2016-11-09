@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using ltbdb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace ltbdb.Controllers
 {
@@ -9,7 +10,12 @@ namespace ltbdb.Controllers
     //[HandleError(View = "Error", Order = 99)]
     public class AccountController : Controller
     {
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(AccountController));
+		private readonly ILogger<AccountController> Log;
+
+		public AccountController(ILogger<AccountController> logger)
+		{
+			Log = logger;
+		}
 
         [HttpGet]
         public IActionResult Index()

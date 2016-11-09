@@ -5,21 +5,24 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 
 namespace ltbdb.Core.Services
 {
     public class TagService: MongoContext
 	{
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(TagService));
+		private readonly ILogger<TagService> Log;
 
 		private class Tag
 		{
 			public string _id { get; set; }
 		}
 
-		public TagService(IMongoClient client)
+		public TagService(IMongoClient client, ILogger<TagService> logger)
 			: base(client)
-		{ }
+		{
+			Log = logger;
+		}
 
 		/// <summary>
 		/// Get all available tags.
@@ -28,7 +31,6 @@ namespace ltbdb.Core.Services
 		public IEnumerable<string> Get()
 		{
 			return Book.Distinct<string>("Tags", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
-			
 			//return Book.Find(_ => true).ToEnumerable().SelectMany(s => s.Tags).Distinct();
 		}
 

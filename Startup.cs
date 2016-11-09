@@ -42,6 +42,7 @@ namespace ltbdb
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddLogging();
 			services.AddMvc(options => {
 				//options.ModelBinderProviders.Add(typeof(ObjectId), new Object());
 				options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
@@ -64,6 +65,15 @@ namespace ltbdb
 			InitializeSimpleInjector(app);
 
 			/*if(env.IsDevelopment())
+			// add logger
+			/*
+			logger.WithFilter(new FilterLoggerSettings{
+				{ "Microsoft", LogLevel.Warning},
+				{ "System", LogLevel.Warning },
+				{ "ltbdb", LogLevel.Debug }
+			}).AddConsole(LogLevel.Debug);
+			*/
+			logger.AddConsole(Configuration.GetSection("Logging"));
 			{
 				app.UseDeveloperExceptionPage();
 			}

@@ -1,10 +1,8 @@
 ﻿using ltbdb.Core.Services;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace ltbdb.Controllers.Api
+namespace ltbdb.Api
 {
     [Route("api/[controller]/[action]")]
 	//[LogError(Order = 0)]

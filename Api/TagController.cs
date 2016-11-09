@@ -1,10 +1,9 @@
 ﻿using ltbdb.Core.Services;
-using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 
-namespace ltbdb.Controllers.Api
+namespace ltbdb.Api
 {
     [Authorize]
 	[Route("api/[controller]/[action]")]

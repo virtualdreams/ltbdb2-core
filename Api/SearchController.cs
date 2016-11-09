@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 namespace ltbdb.Api
 {
     [Route("api/[controller]/[action]")]
-	//[LogError(Order = 0)]
     public class SearchController : Controller
     {
 		//private static readonly ILog Log = LogManager.GetLogger(typeof(SearchController));
@@ -26,21 +25,18 @@ namespace ltbdb.Api
 		public IActionResult Title(string term)
 		{
 			return Json(Book.Suggestions(term ?? String.Empty), new JsonSerializerSettings{ Formatting = Formatting.Indented } );
-			//return Book.Suggestions(term ?? String.Empty);
 		}
 
 		[HttpGet]
 		public IActionResult Categories(string term)
 		{
 			return Json(Category.Suggestions(term ?? String.Empty), new JsonSerializerSettings{ Formatting = Formatting.Indented } );
-			//return Category.Suggestions(term ?? String.Empty);
 		}
 
 		[HttpGet]
 		public IActionResult Tags(string term)
 		{
 			return Json(Tag.Suggestions(term ?? String.Empty), new JsonSerializerSettings{ Formatting = Formatting.Indented } );
-			//return Tag.Suggestions(term ?? String.Empty);
 		}
     }
 }

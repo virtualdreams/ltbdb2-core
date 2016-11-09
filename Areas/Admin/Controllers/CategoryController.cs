@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ltbdb.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-    [Authorize]
-	//[LogError(Order = 0)]
-	//[HandleError(View = "Error", Order = 99)]
+    [Authorize(Policy = "AdministratorOnly")]
     public class CategoryController : Controller
     {
 		//private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
@@ -25,7 +23,7 @@ namespace ltbdb.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-        public ActionResult Index()
+        public IActionResult Index()
         {
 			var _categories = Category.Get().OrderBy(s => s);
 
@@ -38,7 +36,7 @@ namespace ltbdb.Areas.Admin.Controllers
         }
 
 		[HttpPost]
-		public ActionResult Move(string from, string to)
+		public IActionResult Move(string from, string to)
 		{
 			Category.Rename(from ?? String.Empty, to ?? String.Empty);
 

@@ -9,8 +9,6 @@ using Newtonsoft.Json;
 
 namespace ltbdb.Controllers
 {
-    //[LogError(Order = 0)]
-    //[HandleError(View = "Error", Order=99)]
     public class BookController : Controller
     {
 		//private static readonly ILog Log = LogManager.GetLogger(typeof(BookController));

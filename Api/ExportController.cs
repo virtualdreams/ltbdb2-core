@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 namespace ltbdb.Api
 {
     [Route("api/[controller]/[action]")]
-	//[LogError(Order = 0)]
     public class ExportController : Controller
 	{
 		//private static readonly ILog Log = LogManager.GetLogger(typeof(ExportController));
@@ -21,7 +20,6 @@ namespace ltbdb.Api
 		public IActionResult List()
 		{
 			return Json(Book.Export(), new JsonSerializerSettings{ Formatting = Formatting.Indented});
-			//return Ok(Book.Export());
 		}
 	}
 }

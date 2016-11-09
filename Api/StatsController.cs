@@ -6,9 +6,8 @@ using Newtonsoft.Json;
 
 namespace ltbdb.Api
 {
-    [Authorize]
+    [Authorize(Policy = "AdministratorOnly")]
 	[Route("api/[controller]/[action]")]
-	//[LogError(Order = 0)]
 	public class StatsController : Controller
 	{
 		//private static readonly ILog Log = LogManager.GetLogger(typeof(StatsController));

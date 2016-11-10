@@ -1,4 +1,6 @@
 ﻿@using ltbdb.Core.Helpers
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 <!DOCTYPE html>
 
 <html lang="de">
@@ -67,6 +69,8 @@
 						</li>
 						@if(Context.User.Identity.IsAuthenticated) {
 						<li><a href="@Url.Action("create", "book")">Neues Buch</a></li>
+						}
+						@if(await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")) {
 						<li style="float: right;">
 							<a href="@Url.Action("index", "home", new { area = "admin" })">Einstellungen</a>
 						</li>

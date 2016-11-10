@@ -8,11 +8,22 @@
 <div class="box">
 	<h3>Benutzer</h3>
 	<div>
-		<ul class="list">
-		@foreach(var user in Model.Users) {
-			<li>&bullet; @user.Username (@user.Role)</li>
-		}
-		</ul>
+		<table>
+			<thead>
+				<th style="text-align:left; min-width: 200px;">Benutzer</th>
+				<th style="text-align:left; min-width: 200px;">Rolle</th>
+				<th style="text-align:left; min-width: 200px;">Aktiv</th>
+			</thead>
+			<tbody>
+			@foreach(var user in Model.Users) {
+				<tr>
+					<td>@user.Username</td>
+					<td>@user.Role</td>
+					<td>@(user.Enabled ? "Aktiv" : "Inaktiv")</td>
+				</tr>
+			}
+			</tbody>
+		</table>
 	</div>
 </div>
 
@@ -45,6 +56,17 @@
 			</div>
 			<div class="block">
 				<input class="input" type="password" id="passwordrepeat" name="passwordrepeat" value="" placeholder="Passwort wiederholen" />
+			</div>
+			
+			<!-- password repeat -->
+			<div class="block">
+				<label for="role">Password wiederholen</label>
+			</div>
+			<div class="block">
+				<select class="input" name="role" id="role">
+					<option value="User">Benutzer</option>
+					<option value="Administrator">Administrator</option>
+				</select>
 			</div>
 
 			<div class="block">

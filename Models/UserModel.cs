@@ -17,5 +17,7 @@ namespace ltbdb.Models
 		public string PasswordRepeat { get; set; }
 
 		public string Role { get; set; }
+
+		public bool Enabled { get; set; }
 	}
 }

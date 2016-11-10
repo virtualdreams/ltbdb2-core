@@ -20,7 +20,7 @@ namespace ltbdb.Core.Services
 
 		public IEnumerable<User> Get()
 		{
-			return User.Find(_ => true).ToEnumerable().OrderBy(o => o.Username).ThenBy(o => o.Role);
+			return User.Find(_ => true).ToEnumerable().OrderBy(o => o.Role).ThenBy(o => o.Username);
 		}
 
 		/// <summary>
@@ -36,20 +36,21 @@ namespace ltbdb.Core.Services
 
 			var _filter = Builders<User>.Filter;
 			var _username = _filter.Eq(f => f.Username, username);
+			var _active = _filter.Eq(f => f.Enabled, true);
 
 			if(Log.IsEnabled(LogLevel.Debug))
 			{
-				User.Find(_username).ToString();
+				Log.LogDebug(User.Find(_username & _active).ToString());
 			}
 
-			var _user = User.Find(_username).SingleOrDefault();
+			var _user = User.Find(_username & _active).SingleOrDefault();
 			if(_user != null && PasswordHasher.VerifyHashedPassword(_user.Password, password))
 				return _user;
 			
 			return null;
 		}
 
-		public ObjectId CreateUser(string username, string password, RoleType role)
+		public ObjectId CreateUser(string username, string password, string role)
 		{
 			username = username.Trim();
 			password = password.Trim();

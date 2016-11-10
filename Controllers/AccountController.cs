@@ -73,7 +73,7 @@ namespace ltbdb.Controllers
 					var claims = new List<Claim>
 					{
 						new Claim(ClaimTypes.Name, model.Username, ClaimValueTypes.String),
-						new Claim(ClaimTypes.Role, RoleType.Administrator.ToString(), ClaimValueTypes.String)
+						new Claim(ClaimTypes.Role, "Administrator", ClaimValueTypes.String)
 					};
 
 					var _identity = new ClaimsIdentity(claims, "local");

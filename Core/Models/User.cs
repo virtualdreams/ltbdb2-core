@@ -30,17 +30,4 @@ namespace ltbdb.Core.Models
 		/// </summary>
 		public bool Enabled { get; set; }
 	}
-
-	public enum RoleType
-	{
-		/// <summary>
-		/// user role.
-		/// </summary>
-		User,
-
-		/// <summary>
-		/// user role.
-		/// </summary>
-		Administrator
-	}
 }

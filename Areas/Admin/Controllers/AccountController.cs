@@ -49,7 +49,7 @@ namespace ltbdb.Areas.Admin.Controllers
 
 			if(model.Password.Equals(model.PasswordRepeat))
 			{
-				Account.CreateUser(model.Username, model.Password, RoleType.User);
+				Account.CreateUser(model.Username, model.Password, model.Role);
 			}
 
 			return RedirectToAction("index");

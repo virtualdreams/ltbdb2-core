@@ -1,11 +1,12 @@
 ﻿using Singleton;
 using ConfigFile;
+using Microsoft.Extensions.Logging;
 
 namespace ltbdb.Core.Helpers
 {
     public sealed class GlobalConfig: SingletonBase<GlobalConfig>
 	{
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(GlobalConfig));
+		private readonly ILogger<GlobalConfig> Log = Startup.Logger.CreateLogger<GlobalConfig>();
 		
 		private GlobalConfig()
 		{
@@ -81,7 +82,7 @@ namespace ltbdb.Core.Helpers
 		#region Read configuration
 		private void ReadConfiguration()
 		{
-			//Log.InfoFormat("Load configuration...");
+			Log.LogInformation("Load configuration...");
 
 			var config = new ConfigReader("./Config/application.conf");
 
@@ -89,33 +90,33 @@ namespace ltbdb.Core.Helpers
 			//Log.InfoFormat("Set kestrel address to {0}.", this.Kestrel);
 
 			this.MongoDB = config.GetValue<string>("mongodb", "mongodb://127.0.0.1/", true);
-			//Log.InfoFormat("Set mongodb connection string to {0}.", this.MongoDB);
+			Log.LogInformation("Set mongodb connection string to {0}.", this.MongoDB);
 
 			this.ItemsPerPage = config.GetValue<int>("items_per_page", 18, true);
-			//Log.InfoFormat("Set items per page to {0}.", this.ItemsPerPage);
+			Log.LogInformation("Set items per page to {0}.", this.ItemsPerPage);
 
 			this.RecentItems = config.GetValue<int>("recent_items", 18, true);
-			//Log.InfoFormat("Set recently added items to {0}.", this.RecentItems);
+			Log.LogInformation("Set recently added items to {0}.", this.RecentItems);
 
 			this.Storage = config.TryGetValue<string>("storage", true);
-			//Log.InfoFormat("Set storage path to {0}.", this.Storage);
+			Log.LogInformation("Set storage path to {0}.", this.Storage);
 
 			this.CDNPath = config.TryGetValue<string>("cdn", true);
-			//Log.InfoFormat("Set cdn to {0}.", this.CDNPath);
+			Log.LogInformation("Set cdn to {0}.", this.CDNPath);
 
 			this.NoImage = config.GetValue<string>("no_image", "");
-			//Log.InfoFormat("Set no image path to {0}.", this.NoImage);
+			Log.LogInformation("Set no image path to {0}.", this.NoImage);
 
 			this.GraphicsMagick = config.GetValue<string>("gm", "gm", true);
-			//Log.InfoFormat("Set graphics magick executable to {0}.", this.GraphicsMagick);
+			Log.LogInformation("Set graphics magick executable to {0}.", this.GraphicsMagick);
 
 			this.Username = config.TryGetValue<string>("username", true);
 			this.Password = config.TryGetValue<string>("password", true);
 
 			this.UseDatabaseAuthentication = config.GetValue<bool>("usedbauth", false, true);
-			//Log.InfoFormat("Use database authentication {0}.", this.UseDatabaseAuthentication);
+			Log.LogInformation("Use database authentication {0}.", this.UseDatabaseAuthentication);
 
-			//Log.InfoFormat("Load configuration finished.");
+			Log.LogInformation("Load configuration finished.");
 		}
 		#endregion
 	}

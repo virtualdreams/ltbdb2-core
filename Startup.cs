@@ -21,7 +21,9 @@ namespace ltbdb
 	{
 		public IConfigurationRoot Configuration { get; }
 
-		public Startup(IHostingEnvironment env)
+		static public ILoggerFactory Logger { get; private set; }
+
+		public Startup(IHostingEnvironment env, ILoggerFactory logger)
 		{
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
@@ -29,6 +31,8 @@ namespace ltbdb
 				.AddEnvironmentVariables();
 
 			Configuration = builder.Build();
+
+			Logger = logger;
 		}
 
 		public void ConfigureServices(IServiceCollection services)

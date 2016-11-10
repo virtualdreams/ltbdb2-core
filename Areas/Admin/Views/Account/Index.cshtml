@@ -1,0 +1,55 @@
+@model ltbdb.Models.UserViewContainer
+@using ltbdb.Models;
+@{
+	ViewBag.Title = "Benutzer";
+	ViewBag.Menu = "user";
+}
+
+<div class="box">
+	<h3>Benutzer</h3>
+	<div>
+		<ul class="list">
+		@foreach(var user in Model.Users) {
+			<li>&bullet; @user.Username (@user.Role)</li>
+		}
+		</ul>
+	</div>
+</div>
+
+<div class="box">
+	<h3>Benutzer hinzufügen</h3>
+	<div>
+		<p>
+			description
+		</p>
+		<form action="@Url.Action("create", "account", new { area = "admin"})" method="POST" enctype="multipart/form-data" id="user-form">
+			<!-- username -->
+			<div class="block">
+				<label for="username">Benutzername</label>
+			</div>
+			<div class="block">
+				<input class="input" type="text" id="username" name="username" value="" placeholder="Benutzername" />
+			</div>
+
+			<!-- password -->
+			<div class="block">
+				<label for="password">Password</label>
+			</div>
+			<div class="block">
+				<input class="input" type="password" id="password" name="password" value="" placeholder="Passwort" />
+			</div>
+
+			<!-- password repeat -->
+			<div class="block">
+				<label for="passwordrepeat">Password wiederholen</label>
+			</div>
+			<div class="block">
+				<input class="input" type="password" id="passwordrepeat" name="passwordrepeat" value="" placeholder="Passwort wiederholen" />
+			</div>
+
+			<div class="block">
+				<input class="button-red" type="submit" value="Benutzer anlegen" />
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,5 +1,4 @@
-﻿using System;
-using Singleton;
+﻿using Singleton;
 using ConfigFile;
 
 namespace ltbdb.Core.Helpers
@@ -51,6 +50,11 @@ namespace ltbdb.Core.Helpers
 		/// </summary>
 		public string Password { get; private set; }
 		
+		/// <summary>
+		/// Use mongodb to read login data instead of the config file.
+		/// </summary>
+		public bool UseDatabaseAuthentication { get; set; }
+
 		/// <summary>
 		/// Storage path, where the images be saved.
 		/// Can be a relative path or a full qualified url.
@@ -107,7 +111,10 @@ namespace ltbdb.Core.Helpers
 
 			this.Username = config.TryGetValue<string>("username", true);
 			this.Password = config.TryGetValue<string>("password", true);
-			
+
+			this.UseDatabaseAuthentication = config.GetValue<bool>("usedbauth", false, true);
+			//Log.InfoFormat("Use database authentication {0}.", this.UseDatabaseAuthentication);
+
 			//Log.InfoFormat("Load configuration finished.");
 		}
 		#endregion

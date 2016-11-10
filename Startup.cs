@@ -1,20 +1,19 @@
-using System;
-using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
-using AutoMapper;
 using MongoDB.Driver;
 using Newtonsoft.Json.Serialization;
-using ltbdb.ModelBinders;
-using ltbdb.Core.Models;
-using ltbdb.Models;
+using System.Linq;
+using System;
 using ltbdb.Core.Helpers;
+using ltbdb.Core.Models;
 using ltbdb.Core.Services;
+using ltbdb.ModelBinders;
+using ltbdb.Models;
 
 namespace ltbdb
 {
@@ -43,13 +42,17 @@ namespace ltbdb
 			});
 
 			services.AddAuthorization(options => {
-				options.AddPolicy("AdministratorOnly", policy => policy.RequireRole("Administrator"));
+				options.AddPolicy("AdministratorOnly", policy => {
+					policy.RequireRole("Administrator");
+				});
 			});
 			
+			// dependency injection
 			services.AddScoped<IMongoClient>(options => new MongoClient(GlobalConfig.Get().MongoDB));
 			services.AddTransient<BookService>();
 			services.AddTransient<TagService>();
 			services.AddTransient<CategoryService>();
+			services.AddTransient<UserService>();
 		}
 		
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
@@ -138,6 +141,18 @@ namespace ltbdb
 				);
 
 				routes.MapRoute(
+					name: "Login",
+					template: "login",
+					defaults: new { controller = "account", action = "login"}
+				);
+
+				routes.MapRoute(
+					name: "Logout",
+					template: "logout",
+					defaults: new { controller = "account", action = "logout"}
+				);
+
+				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}"
 				);
@@ -165,7 +180,13 @@ namespace ltbdb
 					.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w))))
 					.ForSourceMember(s => s.Image, map => map.Ignore())
 					.ForSourceMember(s => s.Remove, map => map.Ignore());
+
+				cfg.CreateMap<User, UserModel>()
+					.ForMember(d => d.Password, map => map.Ignore())
+					.ForMember(d => d.PasswordRepeat, map => map.Ignore());
 			});
+
+			Mapper.AssertConfigurationIsValid();
 		}
 	}
 }

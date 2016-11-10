@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace ltbdb.Core.Helpers
 {
@@ -13,7 +12,7 @@ namespace ltbdb.Core.Helpers
 		{
 			get
 			{
-				Assembly asm = Assembly.GetEntryAssembly();
+				var asm = Assembly.GetEntryAssembly();
 				var fvi = FileVersionInfo.GetVersionInfo(asm.Location);
 
 				return fvi.FileVersion;
@@ -27,28 +26,10 @@ namespace ltbdb.Core.Helpers
 		{
 			get
 			{
-				Assembly asm = Assembly.GetEntryAssembly();
-				FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
+				var asm = Assembly.GetEntryAssembly();
+				var fvi = FileVersionInfo.GetVersionInfo(asm.Location);
 
 				return fvi.ProductVersion;
-			}
-		}
-
-		/// <summary>
-		/// Get the git hash if available.
-		/// </summary>
-		public static string GitHash
-		{
-			get
-			{
-				Assembly asm = Assembly.GetEntryAssembly(); //.GetExecutingAssembly();
-				FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
-
-				var match = Regex.Match(fvi.ProductVersion, "([0-9a-f]{7,7})", RegexOptions.IgnoreCase);
-				if (match.Success)
-					return match.Groups[1].Value;
-				else
-					return "";
 			}
 		}
 	}

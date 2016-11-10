@@ -20,6 +20,8 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		protected IMongoCollection<Book> Book { get; private set; }
 
+		protected IMongoCollection<User> User { get; private set; }
+
 		///// <summary>
 		///// The full sized images collection.
 		///// </summary>
@@ -35,6 +37,7 @@ namespace ltbdb.Core.Services
 			_client = client;
 			_db = _client.GetDatabase("ltbdb"); // TODO database name configureable
 			Book = _db.GetCollection<Book>("book");
+			User = _db.GetCollection<User>("user");
 			//Images = new GridFSBucket(_db, new GridFSBucketOptions { BucketName = "images" });
 			//Thumbs = new GridFSBucket(_db, new GridFSBucketOptions { BucketName = "thumbs" });
 		}

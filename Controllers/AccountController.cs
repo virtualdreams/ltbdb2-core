@@ -1,27 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
+using ltbdb.Core.Helpers;
+using ltbdb.Core.Models;
+using ltbdb.Core.Services;
 using ltbdb.Models;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace ltbdb.Controllers
 {
-    //[LogError(Order = 0)]
-    //[HandleError(View = "Error", Order = 99)]
     public class AccountController : Controller
     {
 		private readonly ILogger<AccountController> Log;
 
-		public AccountController(ILogger<AccountController> logger)
+		private readonly UserService Authentication;
+
+		public AccountController(UserService authentication, ILogger<AccountController> logger)
 		{
+			Authentication = authentication;
 			Log = logger;
 		}
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
 
 		[HttpGet]
 		public IActionResult Login()
@@ -39,26 +39,59 @@ namespace ltbdb.Controllers
 				return View("Login", model);
 			}
 			
-			var claims = new List<Claim>{
-				new Claim(ClaimTypes.Name, "TEST", ClaimValueTypes.String)
-			};
+			if(GlobalConfig.Get().UseDatabaseAuthentication)
+			{
+				var _user = Authentication.GetUser(model.Username, model.Password);
+				if(_user != null && _user.Enabled)
+				{
+					var claims = new List<Claim>
+					{
+						new Claim(ClaimTypes.Name, _user.Username, ClaimValueTypes.String),
+						new Claim(ClaimTypes.Role, _user.Role, ClaimValueTypes.String)
+					};
 
+					var _identity = new ClaimsIdentity(claims, "local");
+					var _principal = new ClaimsPrincipal(_identity);
 
-			var user = new ClaimsIdentity(claims, "local");
-			var principal = new ClaimsPrincipal(user);
+					HttpContext.Authentication.SignInAsync("ltbdb", _principal, 
+						new AuthenticationProperties {
+							IsPersistent = true,
+							AllowRefresh = true
+						}
+					).Wait();
+				}
+				else
+				{
+					ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
+					return View("Login", model);
+				}
+			}
+			else
+			{
+				if (GlobalConfig.Get().Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && GlobalConfig.Get().Password.Equals(model.Password))
+				{
+					var claims = new List<Claim>
+					{
+						new Claim(ClaimTypes.Name, model.Username, ClaimValueTypes.String),
+						new Claim(ClaimTypes.Role, RoleType.Administrator.ToString(), ClaimValueTypes.String)
+					};
 
-			HttpContext.Authentication.SignInAsync("ltbdb", principal).Wait();
+					var _identity = new ClaimsIdentity(claims, "local");
+					var _principal = new ClaimsPrincipal(_identity);
 
-			// check login credentials
-			//if (GlobalConfig.Get().Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && GlobalConfig.Get().Password.Equals(model.Password))
-			//{
-			//	FormsAuthentication.SetAuthCookie(model.Username, false);
-			//}
-			//else
-			//{
-			//	ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
-			//	return View("login", model);
-			//}
+					HttpContext.Authentication.SignInAsync("ltbdb", _principal, 
+						new AuthenticationProperties {
+							IsPersistent = true,
+							AllowRefresh = true
+						}
+					).Wait();
+				}
+				else
+				{
+					ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
+					return View("Login", model);
+				}
+			}
 
 			// return to target page.
 			if (Url.IsLocalUrl(returnUrl))
@@ -75,7 +108,6 @@ namespace ltbdb.Controllers
 		public IActionResult Logout()
 		{
 			HttpContext.Authentication.SignOutAsync("ltbdb");
-			//FormsAuthentication.SignOut();
 
 			return RedirectToAction("index", "home");
 		}

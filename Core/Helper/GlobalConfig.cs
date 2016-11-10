@@ -20,11 +20,13 @@ namespace ltbdb.Core.Helpers
 		
 		#region Public members
 
+		/*
 		/// <summary>
 		/// Kestrel server address.
 		/// </summary>
 		/// <returns></returns>
 		public string Kestrel { get; private set; }
+		*/
 
 		/// <summary>
 		/// MongoDB connection string.
@@ -86,8 +88,8 @@ namespace ltbdb.Core.Helpers
 
 			var config = new ConfigReader("./Config/application.conf");
 
-			this.Kestrel = config.GetValue<string>("kestrel", "http://*:5000", true);
-			//Log.InfoFormat("Set kestrel address to {0}.", this.Kestrel);
+			//this.Kestrel = config.GetValue<string>("kestrel", "http://*:5000", true);
+			//Log.LogInformation("Set kestrel address to {0}.", this.Kestrel);
 
 			this.MongoDB = config.GetValue<string>("mongodb", "mongodb://127.0.0.1/", true);
 			Log.LogInformation("Set mongodb connection string to {0}.", this.MongoDB);

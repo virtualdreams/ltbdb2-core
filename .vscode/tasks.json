@@ -11,6 +11,17 @@
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "publish",
+            "args": [
+                "--configuration",
+                "Release",
+                "${workspaceRoot}\\project.json"
+            ],
+            "isBuildCommand": false,
+            "showOutput": "always",
+            "echoCommand": true
         }
     ]
 }

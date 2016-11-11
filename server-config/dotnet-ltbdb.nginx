@@ -1,0 +1,25 @@
+server {
+	listen 5000 default_server;
+	listen [::]:5000 default_server;
+	
+	server_tokens off;
+	
+	client_max_body_size 5M;
+	
+	root /srv/www/ltbdb-core/wwwroot;
+	
+	location ~ ^/(content|css|images|js)/ {
+		expires 30d;
+		add_header Pragma public;
+		add_header Cache-Control "public";
+	}
+	
+	location / {
+		proxy_pass http://127.0.0.1:5001;
+		proxy_http_version 1.1;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection keep-alive;
+		proxy_set_header Host $host;
+		proxy_cache_bypass $http_upgrade;
+	}
+}

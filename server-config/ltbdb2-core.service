@@ -1,5 +1,5 @@
 [Unit]
-Description=dotnet ltbdb-core
+Description=dotnet ltbdb2-core
 After=network.target
 
 [Service]
@@ -9,8 +9,8 @@ EnvironmentFile=
 ;RestartSec=10
 Type=simple
 SyslogIdentifier=ltbdb2
-WorkingDirectory=/srv/www/ltbdb-core
-ExecStart=/usr/local/bin/dotnet /srv/www/ltbdb-core/ltbdb2.dll
+WorkingDirectory=/srv/www/ltbdb2-core
+ExecStart=/usr/local/bin/dotnet /srv/www/ltbdb2-core/ltbdb2.dll
 User=www-data
 Group=www-data
 

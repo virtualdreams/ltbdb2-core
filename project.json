@@ -16,6 +16,9 @@
       }
     }
   },
+  "scripts": {
+    "precompile": "gulp"
+  },
   "buildOptions": {
     "outputName": "ltbdb2",
     "preserveCompilationContext": true,

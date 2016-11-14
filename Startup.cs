@@ -14,6 +14,8 @@ using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.ModelBinders;
 using ltbdb.Models;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace ltbdb
 {
@@ -84,8 +86,16 @@ namespace ltbdb
 				await next();
 				if(context.Response.StatusCode == 404)
 				{
-					context.Request.Path = "/error/http404";
-					await next();
+					if(context.Request.Path.StartsWithSegments("/api"))
+					{
+						context.Response.ContentType = "application/json";
+						await context.Response.WriteAsync(JsonConvert.SerializeObject(new { message = "Not found." }, Formatting.Indented), Encoding.UTF8);
+					}
+					else
+					{
+						context.Request.Path = "/error/http404";
+						await next();
+					}
 				}
 			});
 

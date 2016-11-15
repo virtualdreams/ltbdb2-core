@@ -21,5 +21,12 @@ namespace ltbdb.Api
 		{
 			return Json(Book.Export(), new JsonSerializerSettings{ Formatting = Formatting.Indented});
 		}
+
+		public IActionResult Download()
+		{
+			Response.Headers.Add("Content-Disposition", "attachment; filename=books.json");
+
+			return Json(Book.Export(), new JsonSerializerSettings{ Formatting = Formatting.Indented});
+		}
 	}
 }

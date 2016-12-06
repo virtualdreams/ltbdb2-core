@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using AutoMapper;
-using ltbdb.Core.Helpers;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace ltbdb.Controllers
 {
@@ -15,13 +15,15 @@ namespace ltbdb.Controllers
     {
 		private readonly IMapper Mapper;
 		private readonly ILogger<AccountController> Log;
+		private readonly IOptions<Settings> Settings;
 		private readonly UserService Authentication;
 
-		public AccountController(IMapper mapper, UserService authentication, ILogger<AccountController> logger)
+		public AccountController(IMapper mapper, ILogger<AccountController> log, IOptions<Settings> settings, UserService authentication)
 		{
 			Mapper = mapper;
+			Log = log;
+			Settings = settings;
 			Authentication = authentication;
-			Log = logger;
 		}
 
 		[HttpGet]
@@ -40,7 +42,7 @@ namespace ltbdb.Controllers
 				return View("Login", model);
 			}
 			
-			if(GlobalConfig.Get().UseDatabaseAuthentication)
+			if(Settings.Value.UseDatabaseAuthentication)
 			{
 				var _user = Authentication.GetUser(model.Username, model.Password);
 				if(_user != null && _user.Enabled)
@@ -69,7 +71,7 @@ namespace ltbdb.Controllers
 			}
 			else
 			{
-				if (GlobalConfig.Get().Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && GlobalConfig.Get().Password.Equals(model.Password))
+				if (Settings.Value.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Settings.Value.Password.Equals(model.Password))
 				{
 					var claims = new List<Claim>
 					{

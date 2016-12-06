@@ -60,7 +60,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation("Image path: {0}", imagePath);
 			Log.LogInformation("Thumb path: {0}", thumbPath);
 
-			GraphicsMagick.GraphicsImage = GlobalConfig.Get().GraphicsMagick;
+			GraphicsMagick.GraphicsImage = Settings.Value.GraphicsMagick;
 
 			try
 			{
@@ -161,7 +161,7 @@ namespace ltbdb.Core.Services
 		/// <returns>The CDN path.</returns>
 		public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal)
 		{
-			var _cdn = GlobalConfig.Get().CDNPath;
+			var _cdn = Settings.Value.CDNPath;
 			
 			switch (imageType)
 			{
@@ -182,7 +182,7 @@ namespace ltbdb.Core.Services
 					goto default;
 
 				default:
-					return GlobalConfig.Get().NoImage.TrimStart('.');
+					return Settings.Value.NoImage;
 			}
 		}
 
@@ -201,7 +201,7 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		private string GetStoragePath()
 		{
-			return GlobalConfig.Get().Storage;
+			return Settings.Value.Storage;
 		}
 
 		/// <summary>

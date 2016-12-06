@@ -1,21 +1,23 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System.Linq;
+using System;
 using ltbdb.Core.Services;
 using ltbdb.Models;
-using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using ltbdb.Core.Helpers;
 
 namespace ltbdb.Controllers
 {
     public class CategoryController : Controller
     {
 		private readonly IMapper Mapper;
+		private readonly IOptions<Settings> Settings;
 		private readonly BookService Book;
 
-		public CategoryController(IMapper mapper, BookService book)
+		public CategoryController(IMapper mapper, IOptions<Settings> settings, BookService book)
 		{
 			Mapper = mapper;
+			Settings = settings;
 			Book = book;
 		}
 
@@ -23,10 +25,10 @@ namespace ltbdb.Controllers
         public IActionResult Index(int? ofs)
         {
 			var _books = Book.Get().OrderBy(o => o.Category);
-			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
+			var _page = _books.Skip(ofs ?? 0).Take(Settings.Value.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
-			var offset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, Settings.Value.ItemsPerPage, _books.Count());
 
 			var view = new BookViewAllContainer
 			{
@@ -44,10 +46,10 @@ namespace ltbdb.Controllers
 			if (_books.Count() == 0)
 				return new StatusCodeResult(404);
 
-			var _page = _books.Skip(ofs ?? 0).Take(GlobalConfig.Get().ItemsPerPage);
+			var _page = _books.Skip(ofs ?? 0).Take(Settings.Value.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
-			var offset = new PageOffset(ofs ?? 0, GlobalConfig.Get().ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, Settings.Value.ItemsPerPage, _books.Count());
 
 			var view = new BookViewCategoryContainer
 			{

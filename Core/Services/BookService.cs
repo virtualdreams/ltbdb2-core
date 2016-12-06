@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System;
-using ltbdb.Core.Helpers;
 using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
@@ -117,7 +116,7 @@ namespace ltbdb.Core.Services
 		/// Get recently added books.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Book> GetRecentlyAdded()
+		public IEnumerable<Book> GetRecentlyAdded(int limit)
 		{
 			var _filter = Builders<Book>.Filter;
 			var _all = _filter.Empty;
@@ -130,7 +129,7 @@ namespace ltbdb.Core.Services
 				Log.LogDebug(Context.Book.Find(_all).Sort(_order).ToString());
 			}
 
-			return Context.Book.Find(_all).Sort(_order).Limit(GlobalConfig.Get().RecentItems).ToEnumerable();
+			return Context.Book.Find(_all).Sort(_order).Limit(limit).ToEnumerable();
 		}
 
 		/// <summary>

@@ -1,9 +1,12 @@
 ﻿@model ltbdb.Models.BookEditContainer
 @using MongoDB.Bson
+@using ltbdb
 @using ltbdb.Models
 @using ltbdb.Core.Helpers
 @using ltbdb.Core.Services
+@using Microsoft.Extensions.Options
 @inject ImageService ImageService
+@inject IOptions<Settings> Settings;
 
 @{
 	if(Model.Book.Id == ObjectId.Empty) {
@@ -80,8 +83,8 @@
 			<input type="hidden" name="remove" value="false" id="remove" />
 
 			<div style="position: absolute; top: -24px; right: 8px;">
-				<span class="pointer" id="image-reset" title="Bild zurücksetzen." style="display: none;"><i class="material-icons bigger">undo</i></span>
-				<span class="pointer" id="image-delete" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
+				<span class="pointer" id="image-reset" data-src="@ImageService.GetCDNPath(Model.Book.Filename)" title="Bild zurücksetzen." style="display: none;"><i class="material-icons bigger">undo</i></span>
+				<span class="pointer" id="image-delete" data-src="@Settings.Value.NoImage" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
 			</div>
 		</div>
 	</div>
@@ -121,7 +124,7 @@
 			e.preventDefault();
 
 			reset($('#image-upload'));
-			$('#image').attr('src', '@GlobalConfig.Get().NoImage.TrimStart('.')');
+			$('#image').attr('src', $(this).data('src'));
 			$('#remove').val(true);
 			$('#image-reset').show();
 		});
@@ -130,7 +133,7 @@
 			e.preventDefault();
 
 			reset($('#image-upload'));
-			$('#image').attr('src', '@ImageService.GetCDNPath(Model.Book.Filename)');
+			$('#image').attr('src', $(this).data('src'));
 			$('#remove').val(false);
 			$('#image-reset').hide();
 		});

@@ -15,15 +15,8 @@
 	<h2>Alle Inhalte</h2>
 	<ul class="book">
 		@foreach (var book in Model.Books) {
-			<li>
-				<a href="@Url.Action("view", "book", new { id = @book.Id, slug = book.Title.ToSlug() })">
-					<div>
-						<img src="@ImageStore.GetCDNPath(book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
-					</div>
-					<span>Nr. @book.Number - @book.Title</span>
-				</a>
-			</li>
-		 }
+			@await Component.InvokeAsync("Book", new { model = book })
+		}
 	</ul>
 	<div class="pager">
 		@if(Model.PageOffset.HasPrevious) {

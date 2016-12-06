@@ -1,8 +1,9 @@
-﻿using ltbdb.Core.Services;
-using System.Linq;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Linq;
+using ltbdb.Core.Services;
 
 namespace ltbdb.Api
 {
@@ -10,14 +11,14 @@ namespace ltbdb.Api
 	[Route("api/[controller]/[action]")]
 	public class StatsController : Controller
 	{
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(StatsController));
-
+		private readonly IMapper Mapper;
 		private readonly BookService Book;
 		private readonly CategoryService Category;
 		private readonly TagService Tag;
 
-		public StatsController(BookService book, CategoryService category, TagService tag)
+		public StatsController(IMapper mapper, BookService book, CategoryService category, TagService tag)
 		{
+			Mapper = mapper;
 			Book = book;
 			Category = category;
 			Tag = tag;

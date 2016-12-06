@@ -1,4 +1,5 @@
-﻿using ltbdb.Core.Services;
+﻿using AutoMapper;
+using ltbdb.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -7,12 +8,12 @@ namespace ltbdb.Api
     [Route("api/[controller]/[action]")]
     public class ExportController : Controller
 	{
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(ExportController));
-
+		private readonly IMapper Mapper;
 		private readonly BookService Book;
 
-		public ExportController(BookService book)
+		public ExportController(IMapper mapper, BookService book)
 		{
+			Mapper = mapper;
 			Book = book;
 		}
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using AutoMapper;
 using ltbdb.Core.Helpers;
-using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 using Microsoft.AspNetCore.Http.Authentication;
@@ -13,12 +13,13 @@ namespace ltbdb.Controllers
 {
     public class AccountController : Controller
     {
+		private readonly IMapper Mapper;
 		private readonly ILogger<AccountController> Log;
-
 		private readonly UserService Authentication;
 
-		public AccountController(UserService authentication, ILogger<AccountController> logger)
+		public AccountController(IMapper mapper, UserService authentication, ILogger<AccountController> logger)
 		{
+			Mapper = mapper;
 			Authentication = authentication;
 			Log = logger;
 		}

@@ -1,7 +1,8 @@
-﻿using ltbdb.Core.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using ltbdb.Core.Services;
 
 namespace ltbdb.Api
 {
@@ -9,12 +10,12 @@ namespace ltbdb.Api
 	[Route("api/[controller]/[action]")]
 	public class TagController : Controller
 	{
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(TagController));
-
+		private readonly IMapper Mapper;
 		private readonly TagService Tag;
 
-		public TagController(TagService tag)
+		public TagController(IMapper mapper, TagService tag)
 		{
+			Mapper = mapper;
 			Tag = tag;
 		}
 

@@ -1,25 +1,25 @@
-using System;
-using System.Collections.Generic;
 using AutoMapper;
-using ltbdb.Core.Models;
-using ltbdb.Core.Services;
-using ltbdb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using ltbdb.Core.Services;
+using ltbdb.Models;
 
 namespace ltbdb.Areas.Admin.Controllers
 {
-	[Area("Admin")]
+    [Area("Admin")]
     [Authorize(Policy = "AdministratorOnly")]
 	public class AccountController: Controller
 	{
+		private readonly IMapper Mapper;
 		private readonly ILogger<AccountController> Log;
 
 		private readonly UserService Account;
 
-		public AccountController(UserService authentication, ILogger<AccountController> logger)
+		public AccountController(IMapper mapper, UserService authentication, ILogger<AccountController> logger)
 		{
+			Mapper = mapper;
 			Account = authentication;
 			Log = logger;
 		}

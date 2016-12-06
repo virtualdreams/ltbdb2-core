@@ -1,4 +1,5 @@
-﻿using ltbdb.Core.Services;
+﻿using AutoMapper;
+using ltbdb.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -9,11 +10,10 @@ namespace ltbdb.Api
 	[Route("api/[controller]/[action]")]
 	public class CategoryController : Controller
 	{
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
-
+		private readonly IMapper Mapper;
 		private readonly CategoryService Category;
 
-		public CategoryController(CategoryService category)
+		public CategoryController(IMapper mapper, CategoryService category)
 		{
 			Category = category;
 		}

@@ -10,14 +10,14 @@ namespace ltbdb.Controllers
 {
     public class HomeController : Controller
     {
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(HomeController));
-
+		private readonly IMapper Mapper;
 		private readonly BookService Book;
 		private readonly CategoryService Category;
 		private readonly TagService Tag;
 
-		public HomeController(BookService book, CategoryService category, TagService tag)
+		public HomeController(IMapper mapper, BookService book, CategoryService category, TagService tag)
 		{
+			Mapper = mapper;
 			Book = book;
 			Category = category;
 			Tag = tag;

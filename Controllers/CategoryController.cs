@@ -10,12 +10,12 @@ namespace ltbdb.Controllers
 {
     public class CategoryController : Controller
     {
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
-
+		private readonly IMapper Mapper;
 		private readonly BookService Book;
 
-		public CategoryController(BookService book)
+		public CategoryController(IMapper mapper, BookService book)
 		{
+			Mapper = mapper;
 			Book = book;
 		}
 

@@ -1,21 +1,22 @@
-﻿using ltbdb.Core.Services;
-using System;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
+using ltbdb.Core.Services;
 
 namespace ltbdb.Api
 {
     [Route("api/[controller]/[action]")]
     public class SearchController : Controller
     {
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(SearchController));
-
+		private readonly IMapper Mapper;
 		private readonly BookService Book;
 		private readonly CategoryService Category;
 		private readonly TagService Tag;
 
-		public SearchController(BookService book, CategoryService category, TagService tag)
+		public SearchController(IMapper mapper, BookService book, CategoryService category, TagService tag)
 		{
+			Mapper = mapper;
 			Book = book;
 			Category = category;
 			Tag = tag;

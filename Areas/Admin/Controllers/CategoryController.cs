@@ -1,9 +1,10 @@
-﻿using ltbdb.Core.Services;
-using ltbdb.Models;
-using System;
-using System.Linq;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System;
+using ltbdb.Core.Services;
+using ltbdb.Models;
 
 namespace ltbdb.Areas.Admin.Controllers
 {
@@ -11,13 +12,13 @@ namespace ltbdb.Areas.Admin.Controllers
     [Authorize(Policy = "AdministratorOnly")]
     public class CategoryController : Controller
     {
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(CategoryController));
-
+		private readonly IMapper Mapper;
 		private readonly BookService Book;
 		private readonly CategoryService Category;
 
-		public CategoryController(BookService book, CategoryService category)
+		public CategoryController(IMapper mapper, BookService book, CategoryService category)
 		{
+			Mapper = mapper;
 			Book = book;
 			Category = category;
 		}

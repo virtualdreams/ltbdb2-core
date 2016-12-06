@@ -1,7 +1,10 @@
-﻿using System;
+using System;
 using System.IO;
+using ltbdb.Core.Helpers;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-namespace ltbdb.Core.Helpers
+namespace ltbdb.Core.Services
 {
     /// <summary>
     /// Type of image to request from storage.
@@ -24,11 +27,17 @@ namespace ltbdb.Core.Helpers
 		PreferThumbnail
 	}
 
-	static public class ImageStore
+	public class ImageService
 	{
-		//private static readonly ILog Log = LogManager.GetLogger(typeof(ImageStore));
+		readonly IOptions<Settings> Settings;
+		readonly ILogger<ImageService> Log;
+		readonly string thumbnailDirectory = "thumb";
 
-		static readonly string thumbnailDirectory = "thumb";
+		public ImageService(IOptions<Settings> settings, ILogger<ImageService> log)
+		{
+			Settings = settings;
+			Log = log;
+		}
 
 		/// <summary>
 		/// Save image to storage and create a thumbnail.
@@ -36,7 +45,7 @@ namespace ltbdb.Core.Helpers
 		/// <param name="stream">The image stream.</param>
 		/// <param name="createThumbnail">Create also a thumbnail.</param>
 		/// <returns>The name of the created file.</returns>
-		static public string Save(Stream stream, bool createThumbnail = true)
+		public string Save(Stream stream, bool createThumbnail = true)
 		{
 			if (stream == null)
 				throw new Exception("Stream must not null.");
@@ -48,8 +57,8 @@ namespace ltbdb.Core.Helpers
 			var imagePath = Path.Combine(imageStorage, filename);
 			var thumbPath = Path.Combine(thumbStorage, filename);
 
-			//Log.InfoFormat("Image path: {0}", imagePath);
-			//Log.InfoFormat("Thumb path: {0}", thumbPath);
+			Log.LogInformation("Image path: {0}", imagePath);
+			Log.LogInformation("Thumb path: {0}", thumbPath);
 
 			GraphicsMagick.GraphicsImage = GlobalConfig.Get().GraphicsMagick;
 
@@ -77,9 +86,9 @@ namespace ltbdb.Core.Helpers
 
 				return filename;
 			}
-			catch (Exception /*ex*/)
+			catch (Exception ex)
 			{
-				//Log.ErrorFormat(ex.Message);
+				Log.LogError(ex.Message);
 
 				if (File.Exists(imagePath))
 				{
@@ -101,7 +110,7 @@ namespace ltbdb.Core.Helpers
 		/// <param name="filename">The filename.</param>
 		/// <param name="thumbnail">Test for thumbnail.</param>
 		/// <returns>True if exists.</returns>
-		static public bool Exists(string filename, bool thumbnail = false)
+		public bool Exists(string filename, bool thumbnail = false)
 		{
 			if (String.IsNullOrEmpty(filename))
 				return false;
@@ -127,7 +136,7 @@ namespace ltbdb.Core.Helpers
 		/// </summary>
 		/// <param name="filename">The filename.</param>
 		/// <param name="thumbnail">Delete thumbnail also.</param>
-		static public void Remove(string filename, bool thumbnail = true)
+		public void Remove(string filename, bool thumbnail = true)
 		{
 			if (Exists(filename))
 			{
@@ -150,7 +159,7 @@ namespace ltbdb.Core.Helpers
 		/// <param name="filename">The image filename.</param>
 		/// <param name="imageType">Select type of image to load.</param>
 		/// <returns>The CDN path.</returns>
-		static public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal)
+		public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal)
 		{
 			var _cdn = GlobalConfig.Get().CDNPath;
 			
@@ -181,7 +190,7 @@ namespace ltbdb.Core.Helpers
 		/// Generate a new file name from guid.
 		/// </summary>
 		/// <returns></returns>
-		static private string GetFilename()
+		private string GetFilename()
 		{
 			return Guid.NewGuid().ToString();
 		}
@@ -190,7 +199,7 @@ namespace ltbdb.Core.Helpers
 		/// Get the absolute storage path.
 		/// </summary>
 		/// <returns></returns>
-		static private string GetStoragePath()
+		private string GetStoragePath()
 		{
 			return GlobalConfig.Get().Storage;
 		}
@@ -199,7 +208,7 @@ namespace ltbdb.Core.Helpers
 		/// Get the absolute thumbnail path.
 		/// </summary>
 		/// <returns></returns>
-		static private string GetThumbPath()
+		private string GetThumbPath()
 		{
 			return Path.Combine(GetStoragePath(), thumbnailDirectory);
 		}

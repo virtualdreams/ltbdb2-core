@@ -15,16 +15,18 @@ namespace ltbdb.Core.Services
 	{
 		private readonly ILogger<BookService> Log;
 		private readonly MongoContext Context;
+		private readonly ImageService ImageService;
 
 		/// <summary>
 		/// Initializes the BookService class.
 		/// </summary>
 		/// <param name="client">The mongo client.</param>
 		/// <param name="logger">The logger.</param>
-		public BookService(ILogger<BookService> logger, MongoContext context)
+		public BookService(ILogger<BookService> logger, MongoContext context, ImageService image)
 		{ 
 			Log = logger;
 			Context = context;
+			ImageService = image;
 		}
 
 		/// <summary>
@@ -302,7 +304,7 @@ namespace ltbdb.Core.Services
 			{
 				// remove the old images and store the new one
 				RemoveImage(_book.Filename);
-				var _filename = ImageStore.Save(stream, true);
+				var _filename = ImageService.Save(stream, true);
 				if (String.IsNullOrEmpty(_filename))
 					return false;
 
@@ -332,7 +334,7 @@ namespace ltbdb.Core.Services
 		/// <param name="filename">The filename.</param>
 		private void RemoveImage(string filename)
 		{
-			ImageStore.Remove(filename, true);
+			ImageService.Remove(filename, true);
 		}
 	}
 }

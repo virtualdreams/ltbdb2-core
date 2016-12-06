@@ -2,6 +2,8 @@
 @using MongoDB.Bson
 @using ltbdb.Models
 @using ltbdb.Core.Helpers
+@using ltbdb.Core.Services
+@inject ImageService ImageService
 
 @{
 	if(Model.Book.Id == ObjectId.Empty) {
@@ -72,9 +74,9 @@
 		</div>
 		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
 			<input style="display: none;" name="image" type="file" id="image-upload" />
-			<img style="cursor: pointer;" id="image" src="@ImageStore.GetCDNPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen." />
+			<img style="cursor: pointer;" id="image" src="@ImageService.GetCDNPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen." />
 			
-			<input type="hidden" name="filename" value="@ImageStore.GetCDNPath(Model.Book.Filename)" />
+			<input type="hidden" name="filename" value="@ImageService.GetCDNPath(Model.Book.Filename)" />
 			<input type="hidden" name="remove" value="false" id="remove" />
 
 			<div style="position: absolute; top: -24px; right: 8px;">
@@ -128,7 +130,7 @@
 			e.preventDefault();
 
 			reset($('#image-upload'));
-			$('#image').attr('src', '@ImageStore.GetCDNPath(Model.Book.Filename)');
+			$('#image').attr('src', '@ImageService.GetCDNPath(Model.Book.Filename)');
 			$('#remove').val(false);
 			$('#image-reset').hide();
 		});

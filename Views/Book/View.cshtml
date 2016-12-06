@@ -1,6 +1,8 @@
 ﻿@model ltbdb.Models.BookViewDetailContainer
 @using ltbdb.Models
 @using ltbdb.Core.Helpers
+@using ltbdb.Core.Services
+@inject ImageService ImageService
 
 @{
 	ViewBag.Title = String.Format("Nr. {0} - {1} | {2}", Model.Book.Number, Model.Book.Title, Model.Book.Category);
@@ -33,8 +35,8 @@
 			}
 		</div>
 		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
-			<a id="image-big" href="@ImageStore.GetCDNPath(Model.Book.Filename)" title="Nr. @Model.Book.Number - @Model.Book.Title (@Model.Book.Category)" data-jbox-image="image">
-				<img src="@ImageStore.GetCDNPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
+			<a id="image-big" href="@ImageService.GetCDNPath(Model.Book.Filename)" title="Nr. @Model.Book.Number - @Model.Book.Title (@Model.Book.Category)" data-jbox-image="image">
+				<img src="@ImageService.GetCDNPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" />
 			</a>
 		</div>
 	</div>

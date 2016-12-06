@@ -35,23 +35,29 @@ namespace ltbdb
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// add logging to DI
 			services.AddLogging();
 
+			// add options to DI
+			services.AddOptions();
+
+			// add custom model binders
 			services.AddMvc(options => {
 				options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
 			}).AddJsonOptions(options => {
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 			});
 
+			// authorization policies
 			services.AddAuthorization(options => {
 				options.AddPolicy("AdministratorOnly", policy => {
 					policy.RequireRole("Administrator");
 				});
 			});
 			
-			// dependency injection
+			// DI
 			services.AddAutoMapper();
-			services.AddScoped<IMongoClient>(options => new MongoClient(GlobalConfig.Get().MongoDB));
+			services.AddScoped<IMongoClient>(options => new MongoClient(GlobalConfig.Get().MongoDB)); // TODO
 			services.AddTransient<BookService>();
 			services.AddTransient<TagService>();
 			services.AddTransient<CategoryService>();

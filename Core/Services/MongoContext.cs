@@ -1,41 +1,25 @@
 ﻿using ltbdb.Core.Models;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace ltbdb.Core.Services
 {
     public class MongoContext
 	{
-		/// <summary>
-		/// The mongo client.
-		/// </summary>
+		private readonly IOptions<Settings> Settings;
 		protected readonly IMongoClient _client;
-		
-		/// <summary>
-		/// The mongo database.
-		/// </summary>
 		protected readonly IMongoDatabase _db;
-
-		/// <summary>
-		/// The book collection.
-		/// </summary>
-		protected IMongoCollection<Book> Book { get; private set; }
-
-		protected IMongoCollection<User> User { get; private set; }
-
-		///// <summary>
-		///// The full sized images collection.
-		///// </summary>
+		public IMongoCollection<Book> Book { get; private set; }
+		public IMongoCollection<User> User { get; private set; }
 		//protected GridFSBucket Images { get; private set; }
-
-		///// <summary>
-		///// The thumbs images collection.
-		///// </summary>
 		//protected GridFSBucket Thumbs { get; private set; }
 
-		public MongoContext(IMongoClient client)
+		public MongoContext(IOptions<Settings> settings)
 		{
-			_client = client;
-			_db = _client.GetDatabase("ltbdb"); // TODO database name configureable
+			Settings = settings;
+
+			_client = new MongoClient(Settings.Value.MongoDB);
+			_db = _client.GetDatabase(Settings.Value.Database);
 			Book = _db.GetCollection<Book>("book");
 			User = _db.GetCollection<User>("user");
 			//Images = new GridFSBucket(_db, new GridFSBucketOptions { BucketName = "images" });

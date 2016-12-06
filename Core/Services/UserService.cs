@@ -8,19 +8,20 @@ using MongoDB.Driver;
 
 namespace ltbdb.Core.Services
 {
-    public class UserService: MongoContext
+    public class UserService
 	{
 		private readonly ILogger<UserService> Log;
+		private readonly MongoContext Context;
 
-		public UserService(IMongoClient client, ILogger<UserService> logger)
-			:base(client)
+		public UserService(ILogger<UserService> logger, MongoContext context)
 		{
 			Log = logger;
+			Context = context;
 		}
 
 		public IEnumerable<User> Get()
 		{
-			return User.Find(_ => true).ToEnumerable().OrderBy(o => o.Role).ThenBy(o => o.Username);
+			return Context.User.Find(_ => true).ToEnumerable().OrderBy(o => o.Role).ThenBy(o => o.Username);
 		}
 
 		/// <summary>
@@ -40,10 +41,10 @@ namespace ltbdb.Core.Services
 
 			if(Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug(User.Find(_username & _active).ToString());
+				Log.LogDebug(Context.User.Find(_username & _active).ToString());
 			}
 
-			var _user = User.Find(_username & _active).SingleOrDefault();
+			var _user = Context.User.Find(_username & _active).SingleOrDefault();
 			if(_user != null && PasswordHasher.VerifyHashedPassword(_user.Password, password))
 				return _user;
 			
@@ -63,7 +64,7 @@ namespace ltbdb.Core.Services
 				Enabled = true
 			};
 
-			User.InsertOne(_user);
+			Context.User.InsertOne(_user);
 
 			if(_user.Id == ObjectId.Empty)
 			{

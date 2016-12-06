@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MongoDB.Driver;
 using Newtonsoft.Json.Serialization;
-using ltbdb.Core.Helpers;
 using ltbdb.Core.Services;
 using ltbdb.ModelBinders;
 using Newtonsoft.Json;
@@ -40,6 +38,7 @@ namespace ltbdb
 
 			// add options to DI
 			services.AddOptions();
+			services.Configure<Settings>(Configuration.GetSection("Settings"));
 
 			// add custom model binders
 			services.AddMvc(options => {
@@ -57,7 +56,7 @@ namespace ltbdb
 			
 			// DI
 			services.AddAutoMapper();
-			services.AddScoped<IMongoClient>(options => new MongoClient(GlobalConfig.Get().MongoDB)); // TODO
+			services.AddScoped<MongoContext>();
 			services.AddTransient<BookService>();
 			services.AddTransient<TagService>();
 			services.AddTransient<CategoryService>();

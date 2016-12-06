@@ -9,14 +9,15 @@ using Microsoft.Extensions.Logging;
 
 namespace ltbdb.Core.Services
 {
-    public class CategoryService : MongoContext
+    public class CategoryService
     {
         private readonly ILogger<CategoryService> Log;
+        private readonly MongoContext Context;
 
-        public CategoryService(IMongoClient client, ILogger<CategoryService> logger)
-            : base(client)
+        public CategoryService(ILogger<CategoryService> logger, MongoContext context)
         {
             Log = logger;
+            Context = context;
         }
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace ltbdb.Core.Services
         /// <returns></returns>
         public IEnumerable<string> Get()
         {
-            return Book.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
+            return Context.Book.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
         }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace ltbdb.Core.Services
             var _update = Builders<Book>.Update;
             var _set = _update.Set(s => s.Category, to);
 
-            var _result = Book.UpdateMany(_from, _set);
+            var _result = Context.Book.UpdateMany(_from, _set);
 
             if (_result.IsAcknowledged && _result.ModifiedCount > 0)
             {
@@ -84,10 +85,10 @@ namespace ltbdb.Core.Services
 
             if (Log.IsEnabled(LogLevel.Debug))
             {
-                Log.LogDebug(Book.Find(_category).Sort(_order).ToString());
+                Log.LogDebug(Context.Book.Find(_category).Sort(_order).ToString());
             }
 
-            return Book.Find(_category).Sort(_order).ToEnumerable().Select(s => s.Category).Distinct();
+            return Context.Book.Find(_category).Sort(_order).ToEnumerable().Select(s => s.Category).Distinct();
         }
     }
 }

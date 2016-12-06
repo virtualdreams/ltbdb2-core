@@ -9,19 +9,20 @@ using Microsoft.Extensions.Logging;
 
 namespace ltbdb.Core.Services
 {
-    public class TagService: MongoContext
+    public class TagService
 	{
 		private readonly ILogger<TagService> Log;
+		private readonly MongoContext Context;
 
 		private class Tag
 		{
 			public string _id { get; set; }
 		}
 
-		public TagService(IMongoClient client, ILogger<TagService> logger)
-			: base(client)
+		public TagService(ILogger<TagService> logger, MongoContext context)
 		{
 			Log = logger;
+			Context = context;
 		}
 
 		/// <summary>
@@ -30,7 +31,7 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Get()
 		{
-			return Book.Distinct<string>("Tags", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
+			return Context.Book.Distinct<string>("Tags", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
 			//return Book.Find(_ => true).ToEnumerable().SelectMany(s => s.Tags).Distinct();
 		}
 
@@ -43,7 +44,7 @@ namespace ltbdb.Core.Services
 		{
 			term = term.Trim();
 
-			return Book.Aggregate()
+			return Context.Book.Aggregate()
 				.Unwind("Tags")
 				.Match(new BsonDocument { { "Tags", new BsonRegularExpression(Regex.Escape(term), "i") } })
 				.Group(new BsonDocument { { "_id", "$Tags" } })

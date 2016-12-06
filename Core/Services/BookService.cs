@@ -11,19 +11,20 @@ using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
 {
-    public class BookService: MongoContext
+    public class BookService
 	{
 		private readonly ILogger<BookService> Log;
+		private readonly MongoContext Context;
 
 		/// <summary>
 		/// Initializes the BookService class.
 		/// </summary>
 		/// <param name="client">The mongo client.</param>
 		/// <param name="logger">The logger.</param>
-		public BookService(IMongoClient client , ILogger<BookService> logger)
-			: base(client)
+		public BookService(ILogger<BookService> logger, MongoContext context)
 		{ 
 			Log = logger;
+			Context = context;
 		}
 
 		/// <summary>
@@ -40,10 +41,10 @@ namespace ltbdb.Core.Services
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug(Book.Find(_all).Sort(_order).ToString());
+				Log.LogDebug(Context.Book.Find(_all).Sort(_order).ToString());
 			}
 
-			return Book.Find(_all).Sort(_order).ToEnumerable();
+			return Context.Book.Find(_all).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
@@ -58,10 +59,10 @@ namespace ltbdb.Core.Services
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug(Book.Find(_id).ToString());
+				Log.LogDebug(Context.Book.Find(_id).ToString());
 			}
 
-			return Book.Find(_id).SingleOrDefault();
+			return Context.Book.Find(_id).SingleOrDefault();
 		}
 
 		/// <summary>
@@ -81,10 +82,10 @@ namespace ltbdb.Core.Services
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug(Book.Find(_category).Sort(_order).ToString());
+				Log.LogDebug(Context.Book.Find(_category).Sort(_order).ToString());
 			}
 
-			return Book.Find(_category).Sort(_order).ToEnumerable();
+			return Context.Book.Find(_category).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
@@ -104,10 +105,10 @@ namespace ltbdb.Core.Services
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug(Book.Find(_tag).Sort(_order).ToString());
+				Log.LogDebug(Context.Book.Find(_tag).Sort(_order).ToString());
 			}
 
-			return Book.Find(_tag).Sort(_order).ToEnumerable();
+			return Context.Book.Find(_tag).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
@@ -124,10 +125,10 @@ namespace ltbdb.Core.Services
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug(Book.Find(_all).Sort(_order).ToString());
+				Log.LogDebug(Context.Book.Find(_all).Sort(_order).ToString());
 			}
 
-			return Book.Find(_all).Sort(_order).Limit(GlobalConfig.Get().RecentItems).ToEnumerable();
+			return Context.Book.Find(_all).Sort(_order).Limit(GlobalConfig.Get().RecentItems).ToEnumerable();
 		}
 
 		/// <summary>
@@ -170,10 +171,10 @@ namespace ltbdb.Core.Services
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug(Book.Find(_title | _stories).Sort(_order).ToString());
+				Log.LogDebug(Context.Book.Find(_title | _stories).Sort(_order).ToString());
 			}
 
-			return Book.Find(_title | _stories).Sort(_order).ToEnumerable();
+			return Context.Book.Find(_title | _stories).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>
@@ -193,10 +194,10 @@ namespace ltbdb.Core.Services
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug(Book.Find(_title).Sort(_order).ToString());
+				Log.LogDebug(Context.Book.Find(_title).Sort(_order).ToString());
 			}
 
-			return Book.Find(_title).Sort(_order).ToEnumerable().Select(s => s.Title);
+			return Context.Book.Find(_title).Sort(_order).ToEnumerable().Select(s => s.Title);
 		}
 
 		/// <summary>
@@ -208,7 +209,7 @@ namespace ltbdb.Core.Services
 			book.Filename = null;
 			book.Created = DateTime.Now;
 
-			Book.InsertOne(book);
+			Context.Book.InsertOne(book);
 
 			if (book.Id == ObjectId.Empty)
 			{
@@ -239,7 +240,7 @@ namespace ltbdb.Core.Services
 				.Set(s => s.Stories, book.Stories)
 				.Set(s => s.Tags, book.Tags);
 
-			var _result = Book.UpdateOne(_id, _set);
+			var _result = Context.Book.UpdateOne(_id, _set);
 			if (_result.IsAcknowledged && _result.MatchedCount > 0)
 			{
 				Log.LogInformation("Update book '{0}'", book.Id);
@@ -266,7 +267,7 @@ namespace ltbdb.Core.Services
 			var _filter = Builders<Book>.Filter;
 			var _id = _filter.Eq(f => f.Id, _book.Id);
 
-			var _result = Book.DeleteOne(_id);
+			var _result = Context.Book.DeleteOne(_id);
 			if (_result.IsAcknowledged && _result.DeletedCount != 0)
 			{
 				RemoveImage(_book.Filename);
@@ -314,7 +315,7 @@ namespace ltbdb.Core.Services
 			var _update = Builders<Book>.Update;
 			var _set = _update.Set(f => f.Filename, _book.Filename);
 
-			var _result = Book.UpdateOne(_id, _set);
+			var _result = Context.Book.UpdateOne(_id, _set);
 
 			if (_result.IsAcknowledged && _result.ModifiedCount != 0)
 			{

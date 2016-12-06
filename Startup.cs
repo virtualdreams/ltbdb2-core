@@ -23,7 +23,7 @@ namespace ltbdb
 		{
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
-				.AddJsonFile("Config/appsettings.json", optional: true, reloadOnChange: false)
+				.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
 				.AddEnvironmentVariables();
 
 			Configuration = builder.Build();

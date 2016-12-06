@@ -32,7 +32,6 @@
   "publishOptions": {
     "include": [
       "wwwroot",
-      "Config",
       "Views/**/*.cshtml",
       "Areas/**/*.cshtml"
     ],

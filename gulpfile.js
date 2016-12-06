@@ -10,9 +10,9 @@ var jsTargetDir = 'wwwroot/js/'
 
 gulp.task('frontend-css', function() {
 	return gulp.src([
-		'wwwroot-src/css/material.css',
-		'wwwroot-src/css/layout.less',
-		'wwwroot-src/css/navigation.css'
+		'Assets/css/material.css',
+		'Assets/css/layout.less',
+		'Assets/css/navigation.css'
 	])
 	.pipe(less())
 	.pipe(concat('ltbdb.min.css'))
@@ -22,8 +22,8 @@ gulp.task('frontend-css', function() {
 
 gulp.task('admin-css', function() {
 	return gulp.src([
-		'wwwroot-src/css/material.css',
-		'wwwroot-src/css/admin.less',
+		'Assets/css/material.css',
+		'Assets/css/admin.less',
 	])
 	.pipe(less())
 	.pipe(concat('admin.min.css'))
@@ -33,7 +33,7 @@ gulp.task('admin-css', function() {
 
 gulp.task('error-css', function() {
 	return gulp.src([
-		'wwwroot-src/css/error.less',
+		'Assets/css/error.less',
 	])
 	.pipe(less())
 	.pipe(concat('error.min.css'))
@@ -43,7 +43,7 @@ gulp.task('error-css', function() {
 
 gulp.task('js', function() {
 	return gulp.src([
-		'wwwroot-src/js/ltbdb.js'
+		'Assets/js/ltbdb.js'
 	])
 	.pipe(uglify())
 	.pipe(rename({suffix: '.min'}))

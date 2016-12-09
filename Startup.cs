@@ -1,15 +1,18 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using ltbdb.Core.Services;
-using ltbdb.ModelBinders;
 using Newtonsoft.Json;
+using System.IO;
 using System.Text;
+using System;
+using ltbdb.Core.Services;
 using ltbdb.Extensions;
+using ltbdb.ModelBinders;
 
 namespace ltbdb
 {
@@ -33,6 +36,20 @@ namespace ltbdb
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// key ring
+			var _keyStore = Configuration.GetSection("Settings")["KeyStore"];
+			if(!String.IsNullOrEmpty(_keyStore))
+			{
+				services.AddDataProtection(options => {
+					options.ApplicationDiscriminator = "ltbdb";
+				}).PersistKeysToFileSystem(new DirectoryInfo(_keyStore));
+			}
+
+			// IIS integration
+			services.Configure<IISOptions>(options => {
+				
+			});
+
 			// add logging to DI
 			services.AddLogging();
 

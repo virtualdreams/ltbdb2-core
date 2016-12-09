@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-
-namespace ltbdb.Core.Helpers
+﻿namespace ltbdb.Core.Helpers
 {
     static public class VersionInfo
 	{
@@ -12,24 +9,7 @@ namespace ltbdb.Core.Helpers
 		{
 			get
 			{
-				var asm = Assembly.GetEntryAssembly();
-				var fvi = FileVersionInfo.GetVersionInfo(asm.Location);
-
-				return fvi.FileVersion;
-			}
-		}
-
-		/// <summary>
-		/// Get the product version.
-		/// </summary>
-		public static string ProductVersion
-		{
-			get
-			{
-				var asm = Assembly.GetEntryAssembly();
-				var fvi = FileVersionInfo.GetVersionInfo(asm.Location);
-
-				return fvi.ProductVersion;
+				return Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationVersion;
 			}
 		}
 	}

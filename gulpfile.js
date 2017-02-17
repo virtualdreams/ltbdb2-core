@@ -5,14 +5,15 @@ var gulp = require("gulp"),
 	less = require("gulp-less"),
 	uglify = require("gulp-uglify")
 
+var srcDir = 'wwwroot/assets/'
 var cssTargetDir = 'wwwroot/css/'
 var jsTargetDir = 'wwwroot/js/'
 
 gulp.task('frontend-css', function() {
 	return gulp.src([
-		'Assets/css/material.css',
-		'Assets/css/layout.less',
-		'Assets/css/navigation.css'
+		srcDir + 'css/material.css',
+		srcDir + 'css/layout.less',
+		srcDir + 'css/navigation.css'
 	])
 	.pipe(less())
 	.pipe(concat('ltbdb.min.css'))
@@ -22,8 +23,8 @@ gulp.task('frontend-css', function() {
 
 gulp.task('admin-css', function() {
 	return gulp.src([
-		'Assets/css/material.css',
-		'Assets/css/admin.less',
+		srcDir + 'css/material.css',
+		srcDir + 'css/admin.less',
 	])
 	.pipe(less())
 	.pipe(concat('admin.min.css'))
@@ -33,7 +34,7 @@ gulp.task('admin-css', function() {
 
 gulp.task('error-css', function() {
 	return gulp.src([
-		'Assets/css/error.less',
+		srcDir + 'css/error.less',
 	])
 	.pipe(less())
 	.pipe(concat('error.min.css'))
@@ -43,7 +44,7 @@ gulp.task('error-css', function() {
 
 gulp.task('js', function() {
 	return gulp.src([
-		'Assets/js/ltbdb.js'
+		srcDir + 'js/ltbdb.js'
 	])
 	.pipe(uglify())
 	.pipe(rename({suffix: '.min'}))

@@ -36,6 +36,7 @@
       "Areas/**/*.cshtml"
     ],
     "exclude": [
+      "wwwroot/assets",
       "wwwroot/**/*.less",
       "wwwroot/**/*.map"
     ]

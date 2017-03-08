@@ -7,17 +7,18 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\project.json"
+                "${workspaceRoot}\\ltbdb2.csproj"
             ],
             "isBuildCommand": true,
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "echoCommand": true
         },
         {
             "taskName": "publish",
             "args": [
                 "--configuration",
                 "Release",
-                "${workspaceRoot}\\project.json"
+                "${workspaceRoot}\\ltbdb2.csproj"
             ],
             "isBuildCommand": false,
             "showOutput": "always",

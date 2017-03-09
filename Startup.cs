@@ -77,20 +77,11 @@ namespace ltbdb
 			services.AddTransient<BookService>();
 			services.AddTransient<TagService>();
 			services.AddTransient<CategoryService>();
-			services.AddTransient<UserService>();
 			services.AddTransient<ImageService>();
 		}
 		
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
 		{
-			// add logger
-			/*
-			logger.WithFilter(new FilterLoggerSettings{
-				{ "Microsoft", LogLevel.Warning},
-				{ "System", LogLevel.Warning },
-				{ "ltbdb", LogLevel.Debug }
-			}).AddConsole(LogLevel.Debug);
-			*/
 			logger.AddConsole(Configuration.GetSection("Logging"));
 
 			if(env.IsDevelopment())
@@ -125,7 +116,7 @@ namespace ltbdb
 				AuthenticationScheme = "ltbdb",
 				CookieName = "ltbdb",
 				LoginPath = new PathString("/account/login"),
-				AccessDeniedPath = new PathString("/account/login"),
+				AccessDeniedPath = new PathString("/"),
 				AutomaticAuthenticate = true,
 				AutomaticChallenge = true
 			});

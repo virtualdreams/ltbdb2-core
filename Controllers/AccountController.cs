@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using AutoMapper;
-using ltbdb.Core.Services;
 using ltbdb.Models;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +15,12 @@ namespace ltbdb.Controllers
 		private readonly IMapper Mapper;
 		private readonly ILogger<AccountController> Log;
 		private readonly IOptions<Settings> Settings;
-		private readonly UserService Authentication;
 
-		public AccountController(IMapper mapper, ILogger<AccountController> log, IOptions<Settings> settings, UserService authentication)
+		public AccountController(IMapper mapper, ILogger<AccountController> log, IOptions<Settings> settings)
 		{
 			Mapper = mapper;
 			Log = log;
 			Settings = settings;
-			Authentication = authentication;
 		}
 
 		[HttpGet]
@@ -42,36 +39,7 @@ namespace ltbdb.Controllers
 				return View("Login", model);
 			}
 			
-			if(Settings.Value.UseDatabaseAuthentication)
-			{
-				var _user = Authentication.GetUser(model.Username, model.Password);
-				if(_user != null && _user.Enabled)
-				{
-					var claims = new List<Claim>
-					{
-						new Claim(ClaimTypes.Name, _user.Username, ClaimValueTypes.String),
-						new Claim(ClaimTypes.Role, _user.Role, ClaimValueTypes.String)
-					};
-
-					var _identity = new ClaimsIdentity(claims, "local");
-					var _principal = new ClaimsPrincipal(_identity);
-
-					HttpContext.Authentication.SignInAsync("ltbdb", _principal, 
-						new AuthenticationProperties {
-							IsPersistent = true,
-							AllowRefresh = true
-						}
-					).Wait();
-				}
-				else
-				{
-					ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
-					return View("Login", model);
-				}
-			}
-			else
-			{
-				if (Settings.Value.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Settings.Value.Password.Equals(model.Password))
+			if (Settings.Value.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Settings.Value.Password.Equals(model.Password))
 				{
 					var claims = new List<Claim>
 					{
@@ -94,7 +62,6 @@ namespace ltbdb.Controllers
 					ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
 					return View("Login", model);
 				}
-			}
 
 			// return to target page.
 			if (Url.IsLocalUrl(returnUrl))

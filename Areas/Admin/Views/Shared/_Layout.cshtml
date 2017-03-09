@@ -42,7 +42,6 @@
 								<a href="/admin" class="@((ViewBag.Menu == "home") ? "selected" : "")">Home</a>
 								<a href="/">Frontend</a>
 								<a href="@Url.Action("index", "category", new { area = "admin" })" class="@((ViewBag.Menu == "category") ? "selected" : "")">Kategorien</a>
-								<a href="@Url.Action("index", "account", new { area = "admin"})" class="@((ViewBag.Menu == "user") ? "selected" : "")">Benutzer</a>
 							</nav>
 						</div>
 					</div>

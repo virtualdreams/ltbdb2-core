@@ -1,7 +1,5 @@
 # Lustiges Taschenbuch Datenbank v2
 
-Portierung nach ASP.NET Core.
-
 Datenbank, um die private Sammlung von Lustigen Taschenbüchern zu tracken.
 
 ## Features
@@ -15,7 +13,7 @@ Datenbank, um die private Sammlung von Lustigen Taschenbüchern zu tracken.
 
 ## Frameworks / Tools
 
-* [.NET Core](https://www.microsoft.com/net/core) (v1.0 / v1.1)
+* [.NET Core 1.1.1](https://www.microsoft.com/net/core)
 * [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/)
 * [MongoDB](https://www.mongodb.com/)
 * [jQuery](http://jquery.com/)

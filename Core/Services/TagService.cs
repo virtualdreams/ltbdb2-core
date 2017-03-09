@@ -32,7 +32,6 @@ namespace ltbdb.Core.Services
 		public IEnumerable<string> Get()
 		{
 			return Context.Book.Distinct<string>("Tags", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
-			//return Book.Find(_ => true).ToEnumerable().SelectMany(s => s.Tags).Distinct();
 		}
 
 		/// <summary>

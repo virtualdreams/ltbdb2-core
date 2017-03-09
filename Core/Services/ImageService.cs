@@ -57,8 +57,8 @@ namespace ltbdb.Core.Services
 			var imagePath = Path.Combine(imageStorage, filename);
 			var thumbPath = Path.Combine(thumbStorage, filename);
 
-			Log.LogInformation("Image path: {0}", imagePath);
-			Log.LogInformation("Thumb path: {0}", thumbPath);
+			Log.LogInformation($"Set image path to '{imagePath}'.");
+			Log.LogInformation($"Set thumb path to '{thumbPath}'.");
 
 			GraphicsMagick.GraphicsImage = Settings.Value.GraphicsMagick;
 
@@ -143,6 +143,8 @@ namespace ltbdb.Core.Services
 				var storage = GetStoragePath();
 				var path = Path.Combine(storage, filename);
 				File.Delete(path);
+
+				Log.LogInformation($"Removed file '{path}'.");
 			}
 
 			if (Exists(filename, true))
@@ -150,6 +152,8 @@ namespace ltbdb.Core.Services
 				var storage = GetThumbPath();
 				var path = Path.Combine(storage, filename);
 				File.Delete(path);
+
+				Log.LogInformation($"Removed thumb file '{path}'.");
 			}
 		}
 

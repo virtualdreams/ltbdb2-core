@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using System;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
-using MongoDB.Bson;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Newtonsoft.Json;
 
 namespace ltbdb.Controllers
 {
@@ -76,37 +76,49 @@ namespace ltbdb.Controllers
 		[HttpPost]
 		public IActionResult Edit(BookWriteModel model)
 		{
-			if (!ModelState.IsValid)
+			if(ModelState.IsValid)
 			{
-				var view = new BookEditContainer
+				try
 				{
-					Book = model
-				};
+					var book = Mapper.Map<Book>(model);
+					var id = ObjectId.Empty;
+					if (book.Id == ObjectId.Empty)
+					{
+						id = Book.Create(book);
+					}
+					else
+					{
+						Book.Update(book);
+						id = book.Id;
+					}
 
-				return View("Edit", view);
+					// save image
+					if (model.Image != null || model.Remove)
+					{
+						if (model.Remove)
+						{
+							Book.SetImage(id, null);
+						}
+						else
+						{
+							Book.SetImage(id, model.Image.OpenReadStream());
+						}
+					}
+
+					return RedirectToAction("view", "book", new { id = id });
+				}
+				catch(Exception ex)
+				{
+					ModelState.AddModelError("error", ex.Message);
+				}
 			}
 
-			var book = Mapper.Map<Book>(model);
-			var id = ObjectId.Empty;
-			if (book.Id == ObjectId.Empty)
-				id = Book.Create(book);
-			else
-				id = Book.Update(book);
-
-			// save image
-			if (model.Image != null || model.Remove)
+			var view = new BookEditContainer
 			{
-				if (model.Remove)
-				{
-					Book.SetImage(id, null);
-				}
-				else
-				{
-					Book.SetImage(id, model.Image.OpenReadStream());
-				}
-			}
+				Book = model
+			};
 
-			return RedirectToAction("view", "book", new { id = id });
+			return View("Edit", view);
 		}
 
 		[Authorize]
@@ -114,9 +126,16 @@ namespace ltbdb.Controllers
 		[HttpPost]
 		public IActionResult Delete(ObjectId id)
 		{
-			var _result = Book.Delete(id);
+			try
+			{
+				Book.Delete(id);
 
-			return Json(new { Success = _result }, new JsonSerializerSettings { Formatting = Formatting.Indented });
+				return Json(new { Success = true, Error = "" });
+			}
+			catch(Exception ex)
+			{
+				return Json(new { Success = false, Error = ex.Message });
+			}
 		}
     }
 }

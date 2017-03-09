@@ -35,13 +35,13 @@ namespace ltbdb.Core.Services
         /// <param name="from">The original category name.</param>
         /// <param name="to">The target category name.</param>
         /// <returns></returns>
-        public bool Rename(string from, string to)
+        public void Rename(string from, string to)
         {
             from = from.Trim();
             to = to.Trim();
 
             if (String.IsNullOrEmpty(from) || String.IsNullOrEmpty(to))
-                return false;
+                throw new LtbdbRenameCategoryException();
 
             var _filter = Builders<Book>.Filter;
             var _from = _filter.Eq(f => f.Category, from);
@@ -51,16 +51,7 @@ namespace ltbdb.Core.Services
 
             var _result = Context.Book.UpdateMany(_from, _set);
 
-            if (_result.IsAcknowledged && _result.ModifiedCount > 0)
-            {
-                Log.LogInformation("Rename category '{0}' to '{1}'. Modified {2} documents.", from, to, _result.ModifiedCount);
-                return true;
-            }
-            else
-            {
-                Log.LogError("Rename category '{0}' failed. No document was modified.", from);
-                return false;
-            }
+            Log.LogInformation($"Rename category '{from}' to '{to}'. Modified {_result.ModifiedCount} documents.");
         }
 
         /// <summary>
@@ -83,10 +74,7 @@ namespace ltbdb.Core.Services
             var _sort = Builders<Book>.Sort;
             var _order = _sort.Ascending(f => f.Category);
 
-            if (Log.IsEnabled(LogLevel.Debug))
-            {
-                Log.LogDebug(Context.Book.Find(_category).Sort(_order).ToString());
-            }
+            Log.LogDebug($"Request suggestions for categories by term '{term}'.");
 
             return Context.Book.Find(_category).Sort(_order).ToEnumerable().Select(s => s.Category).Distinct();
         }

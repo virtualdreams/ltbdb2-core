@@ -40,10 +40,7 @@ namespace ltbdb.Core.Services
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(o => o.Number).Ascending(o => o.Category);
 
-			if (Log.IsEnabled(LogLevel.Debug))
-			{
-				Log.LogDebug(Context.Book.Find(_all).Sort(_order).ToString());
-			}
+			Log.LogInformation($"Request all books.");
 
 			return Context.Book.Find(_all).Sort(_order).ToEnumerable();
 		}
@@ -58,10 +55,7 @@ namespace ltbdb.Core.Services
 			var _filter = Builders<Book>.Filter;
 			var _id = _filter.Eq(f => f.Id, id);
 
-			if (Log.IsEnabled(LogLevel.Debug))
-			{
-				Log.LogDebug(Context.Book.Find(_id).ToString());
-			}
+			Log.LogInformation($"Request book by id '{id.ToString()}'.");
 
 			return Context.Book.Find(_id).SingleOrDefault();
 		}
@@ -81,10 +75,7 @@ namespace ltbdb.Core.Services
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(f => f.Number);
 
-			if (Log.IsEnabled(LogLevel.Debug))
-			{
-				Log.LogDebug(Context.Book.Find(_category).Sort(_order).ToString());
-			}
+			Log.LogInformation($"Request books by category '{category}'.");
 
 			return Context.Book.Find(_category).Sort(_order).ToEnumerable();
 		}
@@ -104,11 +95,8 @@ namespace ltbdb.Core.Services
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(f => f.Number).Ascending(f => f.Category);
 
-			if (Log.IsEnabled(LogLevel.Debug))
-			{
-				Log.LogDebug(Context.Book.Find(_tag).Sort(_order).ToString());
-			}
-
+			Log.LogInformation($"Request books by tag '{tag}'.");
+			
 			return Context.Book.Find(_tag).Sort(_order).ToEnumerable();
 		}
 
@@ -124,10 +112,7 @@ namespace ltbdb.Core.Services
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Descending(o => o.Created);
 
-			if (Log.IsEnabled(LogLevel.Debug))
-			{
-				Log.LogDebug(Context.Book.Find(_all).Sort(_order).ToString());
-			}
+			Log.LogInformation($"Request recently added book. (limit {limit})");
 
 			return Context.Book.Find(_all).Sort(_order).Limit(limit).ToEnumerable();
 		}
@@ -170,10 +155,7 @@ namespace ltbdb.Core.Services
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(f => f.Number).Ascending(f => f.Title);
 
-			if (Log.IsEnabled(LogLevel.Debug))
-			{
-				Log.LogDebug(Context.Book.Find(_title | _stories).Sort(_order).ToString());
-			}
+			Log.LogInformation($"Search for book by term '{term}'.");
 
 			return Context.Book.Find(_title | _stories).Sort(_order).ToEnumerable();
 		}
@@ -193,10 +175,7 @@ namespace ltbdb.Core.Services
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(f => f.Title);
 
-			if (Log.IsEnabled(LogLevel.Debug))
-			{
-				Log.LogDebug(Context.Book.Find(_title).Sort(_order).ToString());
-			}
+			Log.LogDebug($"Request suggestions for books by term '{term}'.");
 
 			return Context.Book.Find(_title).Sort(_order).ToEnumerable().Select(s => s.Title);
 		}
@@ -212,23 +191,16 @@ namespace ltbdb.Core.Services
 
 			Context.Book.InsertOne(book);
 
-			if (book.Id == ObjectId.Empty)
-			{
-				Log.LogError("Insert new book failed.");
-				return ObjectId.Empty;
-			}
-			else
-			{
-				Log.LogInformation("Insert new book with id '{0}'.", book.Id);
-				return book.Id;
-			}
+			Log.LogInformation($"Create new book with id '{book.Id}'.");
+
+			return book.Id;
 		}
 
 		/// <summary>
 		/// Update an existing book.
 		/// </summary>
 		/// <param name="book"></param>
-		public ObjectId Update(Book book)
+		public void Update(Book book)
 		{
 			var _filter = Builders<Book>.Filter;
 			var _id = _filter.Eq(f => f.Id, book.Id);
@@ -241,43 +213,29 @@ namespace ltbdb.Core.Services
 				.Set(s => s.Stories, book.Stories)
 				.Set(s => s.Tags, book.Tags);
 
-			var _result = Context.Book.UpdateOne(_id, _set);
-			if (_result.IsAcknowledged && _result.MatchedCount > 0)
-			{
-				Log.LogInformation("Update book '{0}'", book.Id);
-				return book.Id;
-			}
-			else
-			{
-				Log.LogError("Update book '{0}' failed.", book.Id);
-				return ObjectId.Empty;
-			}
+			Context.Book.UpdateOne(_id, _set);
+
+			Log.LogInformation($"Update book '{book.Id}'.");
 		}
 
 		/// <summary>
 		/// Delete an existing book.
 		/// </summary>
 		/// <param name="id"></param>
-		public bool Delete(ObjectId id)
+		public void Delete(ObjectId id)
 		{
 			var _book = GetById(id);
 
 			if (_book == null)
-				return false;
+				return;
 
 			var _filter = Builders<Book>.Filter;
 			var _id = _filter.Eq(f => f.Id, _book.Id);
 
-			var _result = Context.Book.DeleteOne(_id);
-			if (_result.IsAcknowledged && _result.DeletedCount != 0)
-			{
-				RemoveImage(_book.Filename);
+			Context.Book.DeleteOne(_id);
+			RemoveImage(_book.Filename);
 
-				Log.LogInformation("Delete book '{0}'", id);
-				return true;
-			}
-
-			return false;
+			Log.LogInformation($"Delete book '{id.ToString()}'.");
 		}
 
 		/// <summary>
@@ -286,26 +244,25 @@ namespace ltbdb.Core.Services
 		/// <param name="id">The id of the book.</param>
 		/// <param name="stream">The image stream.</param>
 		/// <returns>True on success.</returns>
-		public bool SetImage(ObjectId id, Stream stream)
+		public void SetImage(ObjectId id, Stream stream)
 		{
 			var _book = GetById(id);
 
 			if (_book == null)
-				return false;
-
+				return;
+			
+			RemoveImage(_book.Filename);
 			if (stream == null)
 			{
 				// remove the old images
-				RemoveImage(_book.Filename);
 				_book.Filename = null;
 			}
 			else
 			{
 				// remove the old images and store the new one
-				RemoveImage(_book.Filename);
 				var _filename = ImageService.Save(stream, true);
 				if (String.IsNullOrEmpty(_filename))
-					return false;
+					throw new LtbdbInvalidFilenameException();
 
 				_book.Filename = _filename;
 			}
@@ -318,13 +275,7 @@ namespace ltbdb.Core.Services
 
 			var _result = Context.Book.UpdateOne(_id, _set);
 
-			if (_result.IsAcknowledged && _result.ModifiedCount != 0)
-			{
-				Log.LogInformation("Update filename for book '{0}'", id);
-				return true;
-			}
-
-			return false;
+			Log.LogInformation($"Update image for book '{id.ToString()}'");
 		}
 
 		/// <summary>

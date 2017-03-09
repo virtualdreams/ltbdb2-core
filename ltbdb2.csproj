@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <Version>1.0.0</Version>
-    <Description>ltbdb</Description>
-    <Copyright>stichelbiene.de © 2014</Copyright>
-    <AssemblyTitle>ltbdb</AssemblyTitle>
+    <Description>Lustiges Taschenbuch Datenbank v2</Description>
+    <Copyright>stichelbiene.de © 2014-2017</Copyright>
+    <AssemblyTitle>Lustiges Taschenbuch Datenbank v2</AssemblyTitle>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <DebugType>portable</DebugType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
@@ -55,7 +55,7 @@
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
-    <Exec Command="gulp" />
+    <!--<Exec Command="gulp" />-->
   </Target>
 
 </Project>

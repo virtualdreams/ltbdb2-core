@@ -13,52 +13,57 @@ namespace ltbdb.Extensions
 				);
 
 				routes.MapRoute(
-					name: "Search",
+					name: "search",
 					template: "search",
-					defaults: new { controller = "Home", action = "search"}
+					defaults: new { controller = "Home", action = "Search"}
 				);
 
 				routes.MapRoute(
-					name: "Book",
-					template: "book/{id?}/{slug?}",
-					defaults: new { controller = "Book", action = "View"},
-					constraints: new { id = @"^[a-f0-9]{24}$" }
+					name: "view",
+					template: "book/{id?}",
+					defaults: new { controller = "Book", action = "View"}
 				);
 
 				routes.MapRoute(
-					name: "Tags",
-					template: "tags",
-					defaults: new { controller = "tag", action = "index" }
+					name: "create",
+					template: "create",
+					defaults: new { controller = "Book", action = "Create"}
 				);
 
 				routes.MapRoute(
-					name: "Tag",
-					template: "tag/{id?}",
-					defaults: new { controller = "tag", action = "view" }
+					name: "tags",
+					template: "tags/{ofs?}",
+					defaults: new { controller = "Tag", action = "Index" }
 				);
 
 				routes.MapRoute(
-					name: "Categories",
-					template: "categories",
-					defaults: new { controller = "category", action = "index" }
+					name: "tag",
+					template: "tag/{id?}/{ofs?}",
+					defaults: new { controller = "Tag", action = "View" }
 				);
 
 				routes.MapRoute(
-					name: "Category",
-					template: "category/{id?}",
-					defaults: new { controller = "category", action = "view" }
+					name: "categories",
+					template: "categories/{ofs?}",
+					defaults: new { controller = "Category", action = "Index" }
 				);
 
 				routes.MapRoute(
-					name: "Login",
+					name: "category",
+					template: "category/{id?}/{ofs?}",
+					defaults: new { controller = "Category", action = "View" }
+				);
+
+				routes.MapRoute(
+					name: "login",
 					template: "login",
-					defaults: new { controller = "account", action = "login"}
+					defaults: new { controller = "Account", action = "Login"}
 				);
 
 				routes.MapRoute(
-					name: "Logout",
+					name: "logout",
 					template: "logout",
-					defaults: new { controller = "account", action = "logout"}
+					defaults: new { controller = "Account", action = "Logout"}
 				);
 
 				routes.MapRoute(

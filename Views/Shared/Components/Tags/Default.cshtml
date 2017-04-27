@@ -2,5 +2,5 @@
 
 @foreach (var tag in Model.Tags)
 {
-	<li><a href="@Url.Action("view", "tag", new { id = tag })">@tag</a></li>
+	<li><a href="@Url.RouteUrl("tag", new { id = tag, ofs = "" })">@tag</a></li>
 }

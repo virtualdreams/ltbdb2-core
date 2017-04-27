@@ -12,7 +12,7 @@
 @foreach (var tag in Model.Tags)
 {
 	<div class="tag button-gray">
-		<a href="@Url.Action("view", "tag", new { id = tag })" title="">@tag</a>
+		<a href="@Url.RouteUrl("tag", new { id = tag })" title="">@tag</a>
 	</div>
 }
 </div>

@@ -1,5 +1,5 @@
 ﻿@if(!Context.User.Identity.IsAuthenticated) {
-	<a href="@Url.Action("login", "account")">Anmelden</a>
+	<a href="@Url.RouteUrl("login")">Anmelden</a>
 } else {
-	<a href="@Url.Action("logout", "account")">Abmelden</a>
+	<a href="@Url.RouteUrl("logout")">Abmelden</a>
 }

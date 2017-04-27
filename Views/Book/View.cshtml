@@ -13,7 +13,7 @@
 
 <div style="position: relative;">
 	<div class="panel-menu">
-		Kategorie: <a href="@Url.Action("view", "category", new { id = Model.Book.Category })">@Model.Book.Category</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d. MMM yyyy}", Model.Book.Created)
+		Kategorie: <a href="@Url.RouteUrl("category", new { id = Model.Book.Category })">@Model.Book.Category</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d. MMM yyyy}", Model.Book.Created)
 		@if(Context.User.Identity.IsAuthenticated) {
 		@:| <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a> | <span class="pointer" id="delete" data-id="@Model.Book.Id" data-title="Buch Nr. @Model.Book.Number - @Model.Book.Title">Löschen</span>
 		}
@@ -46,7 +46,7 @@
 		@foreach (var tag in Model.Book.Tags)
 		{
 		<div class="tag button-gray">
-			<a href="@Url.Action("view", "tag", new { id = tag })" title="">@tag</a>
+			<a href="@Url.RouteUrl("tag", new { id = tag })" title="">@tag</a>
 		</div>
 		}
 	</div>

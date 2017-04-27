@@ -46,7 +46,7 @@
 							@await Component.InvokeAsync("Login")
 						</div>
 						<div class="searchbox">
-							<form action="@Url.Action("search", "home")" method="get">
+							<form action="@Url.RouteUrl("search")" method="get">
 								<input id="q" type="text" name="q" value="@ViewBag.Search" placeholder="Suche..." />
 							</form>
 						</div>
@@ -56,18 +56,18 @@
 				<div class="nav">
 					<ul>
 						<li><a href="/">Home</a></li>
-						<li><a href="/categories">Kategorien</a>
+						<li><a href="@Url.RouteUrl("categories", new { ofs = "" })">Kategorien</a>
 							<ul>
 								@await Component.InvokeAsync("Categories")
 							</ul>  
 						</li>
-						<li><a href="/tags">Tags</a>
+						<li><a href="@Url.RouteUrl("tags", new { ofs = "" })">Tags</a>
 							<ul>
 								@await Component.InvokeAsync("Tags")
 							</ul>
 						</li>
 						@if(Context.User.Identity.IsAuthenticated) {
-						<li><a href="@Url.Action("create", "book")">Neues Buch</a></li>
+						<li><a href="@Url.RouteUrl("create")">Neues Buch</a></li>
 						}
 						@if(await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")) {
 						<li style="float: right;">

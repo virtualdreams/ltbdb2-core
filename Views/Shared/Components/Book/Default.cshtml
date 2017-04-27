@@ -4,7 +4,7 @@
 @inject ImageService ImageService
 
 <li>
-	<a href="@Url.Action("view", "book", new { id = Model.Id, slug = Model.Title.ToSlug() })">
+	<a href="@Url.RouteUrl("view", new { id = UrlHelper.ToSlug(Model.Id, 100, "Nr.", Model.Number.ToString(), Model.Title) })">
 		<div>
 			<img src="@ImageService.GetCDNPath(Model.Filename, ImageType.PreferThumbnail)" alt="" />
 		</div>

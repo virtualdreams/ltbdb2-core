@@ -1,37 +1,24 @@
 ﻿using System;
+using System.Text;
 using System.Text.RegularExpressions;
+using MongoDB.Bson;
 
 namespace ltbdb.Core.Helpers
 {
     static public class StringExtensions
 	{
 		/// <summary>
-		/// Slugify the string.
+		/// Get last n characters.
 		/// </summary>
-		/// <param name="value">The string to slugify.</param>
-		/// <returns>Slugified string.</returns>
-		static public string ToSlug(this string value)
+		/// <param name="value">The value.</param>
+		/// <param name="len">Max length.</param>
+		/// <returns>Last n characters.</returns>
+		static public string GetLast(this string value, int len)
 		{
-			// convert to lower case
-			value = value.ToLowerInvariant();
+			if(String.IsNullOrEmpty(value) || len >= value.Length)
+				return value;
 
-			// remove all accents
-			//var bytes = Encoding.GetEncoding("Cyrillic").GetBytes(value);
-			//value = Encoding.ASCII.GetString(bytes);
-
-			// replace spaces
-			value = Regex.Replace(value, @"\s", "-", RegexOptions.Compiled);
-
-			// remove invalid chars
-			value = Regex.Replace(value, @"[^a-z0-9\s-_]", "", RegexOptions.Compiled);
-
-			// trim dashes from end
-			value = value.Trim('-', '_');
-
-			// replace double occurences of - or _
-			value = Regex.Replace(value, @"([-_]){2,}", "$1", RegexOptions.Compiled);
-
-			return value;
+			return value.Substring(value.Length - len);
 		}
 
 		/// <summary>
@@ -39,45 +26,16 @@ namespace ltbdb.Core.Helpers
 		/// </summary>
 		/// <param name="baseUri">The base path.</param>
 		/// <param name="relativeUri">The additional path.</param>
-		/// <returns></returns>
+		/// <returns>The combined path.</returns>
 		public static string Combine(this string baseUri, string relativeUri)
 		{
-			if (baseUri == null) throw new ArgumentNullException("baseUri");
-			if (relativeUri == null) throw new ArgumentNullException("relativeUri");
+			if (baseUri == null) throw new ArgumentNullException(nameof(baseUri));
+			if (relativeUri == null) throw new ArgumentNullException(nameof(relativeUri));
 
 			if (!baseUri.EndsWith("/"))
 				baseUri += "/";
 
 			return String.Format("{0}{1}", baseUri, relativeUri);
-		}
-
-		/// <summary>
-		/// Escape regex characters, except '?' and '*'.
-		/// </summary>
-		/// <param name="str"></param>
-		/// <returns></returns>
-		static public string EscapeRegex(this string str)
-		{
-			if (String.IsNullOrEmpty(str))
-				return String.Empty;
-
-			str = Regex.Replace(str, @"\*{2,}", "*");
-
-			return str
-				.Replace(@"\", @"\\")
-				.Replace(@"+", @"\+")
-				.Replace(@"|", @"\|")
-				.Replace(@"(", @"\(")
-				.Replace(@")", @"\)")
-				.Replace(@"{", @"\{")
-				.Replace(@"[", @"\[")
-				.Replace(@"^", @"\^")
-				.Replace(@"$", @"\$")
-				.Replace(@".", @"\.")
-				.Replace(@"#", @"\#")
-				.Replace(@" ", @"\ ")
-				.Replace(@"*", @".*") // wildcard
-				.Replace(@"?", @"."); // wildcard
 		}
 	}
 }

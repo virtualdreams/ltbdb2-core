@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using System;
+using ltbdb.Core.Helpers;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
@@ -105,7 +106,7 @@ namespace ltbdb.Controllers
 						}
 					}
 
-					return RedirectToAction("view", "book", new { id = id });
+					return RedirectToAction("view", "book", new { id = UrlHelper.ToSlug(id, 100, "Nr.", book.Number.ToString(), book.Title) });
 				}
 				catch(Exception ex)
 				{

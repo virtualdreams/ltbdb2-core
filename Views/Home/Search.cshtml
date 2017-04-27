@@ -20,10 +20,10 @@
 	</ul>
 	<div class="pager">
 		@if(Model.PageOffset.HasPrevious) {
-			<a href="@Url.Action("search", "home", new { q = Model.Query, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
+			<a href="@Url.RouteUrl("search", new { q = Model.Query, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
 		}
 		@if(Model.PageOffset.HasNext) {
-			<a href="@Url.Action("search", "home", new { q = Model.Query, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">weiter <i class="material-icons">keyboard_arrow_right</i></a>
+			<a href="@Url.RouteUrl("search", new { q = Model.Query, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">weiter <i class="material-icons">keyboard_arrow_right</i></a>
 		}
 	</div>
 </div>

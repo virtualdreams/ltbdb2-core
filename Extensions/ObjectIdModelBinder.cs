@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using ltbdb.Core.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MongoDB.Bson;
 
@@ -16,9 +17,10 @@ namespace ltbdb.ModelBinders
 			}
 
 			ObjectId _id;
-			if(!ObjectId.TryParse((string)result.ConvertTo(typeof(string)), out _id))
+			if(!ObjectId.TryParse(((string)result.ConvertTo(typeof(string))).GetLast(24), out _id))
 			{
 				bindingContext.Result = ModelBindingResult.Success(ObjectId.Empty);
+				return Task.CompletedTask;
 			}
 
 			bindingContext.Result = ModelBindingResult.Success(_id);

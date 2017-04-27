@@ -16,9 +16,9 @@
 </ul>
 <div class="pager">
 	@if(Model.PageOffset.HasPrevious) {
-		<a href="@Url.Action("view", "tag", new { id = Model.Tag, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
+		<a href="@Url.RouteUrl("tag", new { id = Model.Tag, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
 	}
 	@if(Model.PageOffset.HasNext) {
-		<a href="@Url.Action("view", "tag", new { id = Model.Tag, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">weiter <i class="material-icons">keyboard_arrow_right</i></a>
+		<a href="@Url.RouteUrl("tag", new { id = Model.Tag, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">weiter <i class="material-icons">keyboard_arrow_right</i></a>
 	}
 </div>

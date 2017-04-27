@@ -84,38 +84,23 @@ namespace ltbdb
 		{
 			logger.AddConsole(Configuration.GetSection("Logging"));
 
+			app.UseStatusCodePagesWithReExecute("/error/{0}");
+
 			if(env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
 			else
 			{
-				app.UseExceptionHandler("/error/index");
+				app.UseExceptionHandler("/error/500");
 			}
-			
-			app.Use(async (context, next) => {
-				await next();
-				if(context.Response.StatusCode == 404)
-				{
-					if(context.Request.Path.StartsWithSegments("/api"))
-					{
-						context.Response.ContentType = "application/json";
-						await context.Response.WriteAsync(JsonConvert.SerializeObject(new { message = "Not found." }, Formatting.Indented), Encoding.UTF8);
-					}
-					else
-					{
-						context.Request.Path = "/error/http404";
-						await next();
-					}
-				}
-			});
 
 			app.UseStaticFiles();
 
 			app.UseCookieAuthentication(new CookieAuthenticationOptions(){
 				AuthenticationScheme = "ltbdb",
 				CookieName = "ltbdb",
-				LoginPath = new PathString("/account/login"),
+				LoginPath = new PathString("/login"),
 				AccessDeniedPath = new PathString("/"),
 				AutomaticAuthenticate = true,
 				AutomaticChallenge = true

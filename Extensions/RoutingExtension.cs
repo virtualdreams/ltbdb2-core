@@ -97,6 +97,12 @@ namespace ltbdb.Extensions
 				);
 
 				routes.MapRoute(
+					name: "error",
+					template: "error/{code?}",
+					defaults: new { controller = "home", action = "error" }
+				);
+
+				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}"
 				);

@@ -30,5 +30,17 @@ namespace ltbdb.Controllers
 
 			return View(view);
         }
+
+		public IActionResult Error(int? code)
+		{
+			switch(code ?? 0)
+			{
+				case 404:
+					return View("PageNotFound");
+
+				default:
+					return View();
+			}
+		}
     }
 }

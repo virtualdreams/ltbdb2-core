@@ -43,7 +43,7 @@
 					<div class="right">
 						<div class="links">
 							@*<a href="#">Impressum</a>*@
-							@await Component.InvokeAsync("Login")
+							@await Html.PartialAsync("_PartialLogin")
 						</div>
 						<div class="searchbox">
 							<form action="@Url.RouteUrl("search")" method="get">

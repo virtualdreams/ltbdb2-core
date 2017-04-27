@@ -11,7 +11,7 @@
 <h2>Inhalte getaggt mit &quot;@Model.Tag&quot;</h2>
 <ul class="book">
 	@foreach (var book in Model.Books) {
-		@await Component.InvokeAsync("Book", new { model = book })
+		@await Html.PartialAsync("_PartialBook", book)
 	}
 </ul>
 <div class="pager">

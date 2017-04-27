@@ -25,7 +25,7 @@
 <div class="box">
 	<h3>Export</h3>
 	<div>
-		<a class="button-green" href="/api/export/download">Export</a>
+		<a class="button-green" href="@Url.RouteUrl("areaExport", new { area = "admin" })">Export</a>
 	</div>
 </div>
 
@@ -50,6 +50,6 @@
 			});
 		}
 
-		getValue('/api/stats/list');
+		getValue('@Url.RouteUrl("areaStats", new { area = "admin"})');
 	});
 </script>

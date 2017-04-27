@@ -39,7 +39,7 @@ String.prototype.formatEx = function (placeholders) {
 $(function () {
 	/* autocomplete for search */
 	$('#q').autocomplete({
-		source: '/api/search/title',
+		source: '/search/title',
 		minLength: 3,
 		select: function (event, ui) {
 			if (ui.item) {
@@ -55,7 +55,7 @@ $(function () {
 	/* autocomplete for tags */
 	$('.t').autocomplete({
 		source: function (request, response) {
-			$.getJSON('/api/search/tags', {
+			$.getJSON('/search/tag', {
 				term: extractLast(request.term)
 			}, response);
 		},
@@ -83,7 +83,7 @@ $(function () {
 
 	/* autocomplete for categories */
 	$('.c').autocomplete({
-		source: '/api/search/categories',
+		source: '/search/category',
 		minLength: 0,
 		select: function (event, ui) {
 			if (ui.item) {

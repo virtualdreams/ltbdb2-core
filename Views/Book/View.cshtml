@@ -5,10 +5,10 @@
 @inject ImageService ImageService
 
 @{
-	ViewBag.Title = String.Format("Nr. {0} - {1} | {2}", Model.Book.Number, Model.Book.Title, Model.Book.Category);
-	ViewBag.Description = String.Format("Nr. {0} - {1}", Model.Book.Number, Model.Book.Title);
-	ViewBag.Keywords = String.Join(", ", Model.Book.Tags);
 	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = $"Nr. {Model.Book.Number} - {Model.Book.Title} | {Model.Book.Category} | ";
+	ViewBag.Description = $"Nr. {Model.Book.Number} - {Model.Book.Title}";
+	ViewBag.Keywords = String.Join(", ", Model.Book.Tags);
 }
 
 <div style="position: relative;">

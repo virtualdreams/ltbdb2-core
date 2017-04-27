@@ -9,12 +9,13 @@
 @inject IOptions<Settings> Settings;
 
 @{
-	if(Model.Book.Id == ObjectId.Empty) {
-		ViewBag.Title = "Neues Buch";
-	} else {
-		ViewBag.Title = String.Format("Nr. {0} - {1} | {2}", Model.Book.Number, Model.Book.Title, Model.Book.Category);
-	}
 	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	if(Model.Book.Id == ObjectId.Empty) {
+		ViewBag.Title = "Neues Buch | ";
+	} else {
+		ViewBag.Title = $"Nr. {Model.Book.Number} - {Model.Book.Title} | {Model.Book.Category} | ";
+	}
 }
 
 <form action="@Url.Action("edit", "book")" method="post" enctype="multipart/form-data" id="book-form">

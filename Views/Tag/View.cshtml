@@ -3,9 +3,9 @@
 @using ltbdb.Core.Helpers
 
 @{
-	ViewBag.Title = String.Format("Inhalte getaggt mit \"{0}\"", Model.Tag);
-	ViewBag.Description = String.Format("Inhalte getaggt mit \"{0}\"", Model.Tag);
 	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = $"Inhalte getaggt mit \"{Model.Tag}\" | ";
+	ViewBag.Description = $"Inhalte getaggt mit \"{Model.Tag}\"";
 }
 
 <h2>Inhalte getaggt mit &quot;@Model.Tag&quot;</h2>

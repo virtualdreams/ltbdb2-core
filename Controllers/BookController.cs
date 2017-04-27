@@ -26,7 +26,7 @@ namespace ltbdb.Controllers
 		{
 			var _book = Book.GetById(id);
 			if (_book == null)
-				return new StatusCodeResult(404);
+				return NotFound();
 
 			var book = Mapper.Map<BookModel>(_book);
 
@@ -61,7 +61,7 @@ namespace ltbdb.Controllers
 		{
 			var _book = Book.GetById(id);
 			if (_book == null)
-				return new StatusCodeResult(404);
+				return NotFound();
 
 			var book = Mapper.Map<BookWriteModel>(_book);
 

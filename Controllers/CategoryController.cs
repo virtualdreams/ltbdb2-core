@@ -44,7 +44,7 @@ namespace ltbdb.Controllers
 		{
 			var _books = Book.GetByCategory(id ?? String.Empty);
 			if (_books.Count() == 0)
-				return new StatusCodeResult(404);
+				return NotFound();
 
 			var _page = _books.Skip(ofs ?? 0).Take(Settings.Value.ItemsPerPage);
 

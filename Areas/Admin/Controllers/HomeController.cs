@@ -23,7 +23,7 @@ namespace ltbdb.Areas.Admin.Controllers
         }
 
 		[HttpGet]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }

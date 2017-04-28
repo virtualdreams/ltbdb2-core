@@ -24,7 +24,7 @@ namespace ltbdb.Extensions
 					.ForMember(s => s.Created, map => map.Ignore())
 					.ForMember(d => d.Filename, map => map.Ignore())
 					.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w))))
-					.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w))))
+					.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w)).Distinct()))
 					.ForSourceMember(s => s.Image, map => map.Ignore())
 					.ForSourceMember(s => s.Remove, map => map.Ignore());
 

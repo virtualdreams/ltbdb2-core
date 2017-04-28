@@ -94,10 +94,10 @@ $(function () {
 		$(this).autocomplete("search", $(this).val());
 	});
 
-	/* image box */
+	/* show cover */
 	jbox_image = new jBox('Image');
 
-	/* story management */
+	/* add, delete or insert stories */
 	var story_container = $('#story-container');
 	var story_template =	'<div class="story">\
 								<input class="input" type="text" name="stories" value="" placeholder="Inhalt" /> <span class="button-green story-ins" title="Eintrag darüber einfügen."><i class="material-icons material-icons-small">add</i></span> <span class="button-red story-rem" title="Eintrag entfernen."><i class="material-icons material-icons-small">remove</i></span>\
@@ -115,6 +115,92 @@ $(function () {
 	$(document).on('click', '.story-rem', function (e) {
 		var p = $(this).parent();
 		p.remove();
+	});
+
+	/* delete book */
+	var jbox_delete = new jBox('Modal', {
+		attach: $('#delete-book'),
+		content: $('#delete-book-dialog'),
+		overlay: true,
+		closeOnClick: 'body',
+		preventDefault: true,
+		closeButton: 'title',
+		getTitle: 'data-title'
+	});
+
+	$('#delete-book-submit').click(function () {
+		id = $('#delete-book').data('id');
+
+		$.ajax({
+			type: "POST",
+			url: '/book/delete/' + id,
+			statusCode: {
+				403: function () {
+					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+				},
+				404: function () {
+					alert('Resource not found.');
+				}
+			},
+			success: function (data) {
+				if (data.Success) {
+					location.href = '/';
+				}
+			}
+		})
+	});
+
+	/* add, delete or restore image */
+	function reset(e) {
+		var control = e;
+		control.replaceWith(control.clone(true));
+	}
+	
+	$('#image').on('click', function () {
+		$('#image-upload').click();
+	});
+
+	$('#image-upload').change(function () {
+		if (typeof window.FileReader === 'undefined') {
+			alert("Dein Browser unterstützt diese Funktion nicht. Die Vorschau ist nicht verfügbar.");
+			return;
+		} else {
+			var files = $("#image-upload").get(0).files;
+			var reader = new FileReader();
+
+			if (!files[0].type.match('image')) {
+				reset($('#image-upload'));
+				alert("Dateityp nicht unterstützt.");
+				return;
+			}
+
+			reader.onload = function (e) {
+				$('#image').attr('src', e.target.result);
+			}
+
+			reader.readAsDataURL(files[0]);
+		}
+
+		$('#remove').val(false);
+		$('#image-reset').show();
+	});
+
+	$('#image-delete').click(function (e) {
+		e.preventDefault();
+
+		reset($('#image-upload'));
+		$('#image').attr('src', $(this).data('src'));
+		$('#remove').val(true);
+		$('#image-reset').show();
+	});
+
+	$('#image-reset').click(function (e) {
+		e.preventDefault();
+
+		reset($('#image-upload'));
+		$('#image').attr('src', $(this).data('src'));
+		$('#remove').val(false);
+		$('#image-reset').hide();
 	});
 
 	/* validation */

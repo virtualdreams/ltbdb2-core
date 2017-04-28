@@ -29,12 +29,6 @@ namespace ltbdb.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult List()
-		{
-			return Json(Book.Export(), new JsonSerializerSettings{ Formatting = Formatting.Indented});
-		}
-
-        [HttpGet]
         public IActionResult Export()
         {
             // add header to force it as download

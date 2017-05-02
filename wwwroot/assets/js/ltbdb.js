@@ -46,9 +46,6 @@ $(function () {
 				$(event.target).val(ui.item.value);
 			}
 			$(event.target.form).submit();
-		},
-		open: function () {
-			$(this).autocomplete("widget").width($(this).outerWidth() - 6);
 		}
 	});
 
@@ -75,9 +72,6 @@ $(function () {
 			terms.push("");
 			this.value = terms.join("; ");
 			return false;
-		},
-		open: function () {
-			$(this).autocomplete("widget").width($(this).outerWidth() - 6);
 		}
 	});
 

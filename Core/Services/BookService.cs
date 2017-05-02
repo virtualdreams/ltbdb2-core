@@ -147,17 +147,25 @@ namespace ltbdb.Core.Services
 		{
 			term = term.Trim();
 
-			// TODO search in number, title and in stories
 			var _filter = Builders<Book>.Filter;
 			var _title = _filter.Regex(f => f.Title, new BsonRegularExpression(Regex.Escape(term), "i"));
 			var _stories = _filter.Regex("Stories", new BsonRegularExpression(Regex.Escape(term), "i"));
+			
+			var _query = _title | _stories;
+
+			var _n = 0;
+			if(Int32.TryParse(term, out _n))
+			{
+				var _number = _filter.Eq(f => f.Number, _n);
+				_query |= _number;
+			}
 
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(f => f.Number).Ascending(f => f.Title);
 
 			Log.LogInformation($"Search for book by term '{term}'.");
 
-			return Context.Book.Find(_title | _stories).Sort(_order).ToEnumerable();
+			return Context.Book.Find(_query).Sort(_order).ToEnumerable();
 		}
 
 		/// <summary>

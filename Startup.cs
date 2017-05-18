@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog.Web;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using System.IO;
@@ -24,6 +26,9 @@ namespace ltbdb
 
 		public Startup(IHostingEnvironment env, ILoggerFactory logger)
 		{
+			// only needed if the file is somewhere else or has a different name.
+			//env.ConfigureNLog("NLog.config");
+
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
 				.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
@@ -49,9 +54,6 @@ namespace ltbdb
 			services.Configure<IISOptions>(options => {
 				
 			});
-
-			// add logging to DI
-			services.AddLogging();
 
 			// add options to DI
 			services.AddOptions();
@@ -82,8 +84,10 @@ namespace ltbdb
 		
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
 		{
-			logger.AddConsole(Configuration.GetSection("Logging"));
+			logger.AddNLog();
 
+			app.AddNLogWeb();
+			
 			app.UseStatusCodePagesWithReExecute("/error/{0}");
 
 			if(env.IsDevelopment())

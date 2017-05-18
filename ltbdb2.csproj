@@ -31,6 +31,7 @@
     <Content Update="wwwroot\assets\**\*;wwwroot\**\*.less;wwwroot\**\*.map;appsettings.json">
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
+    <None Include="NLog.config" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +53,7 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
     <PackageReference Include="AutoMapper" Version="6.0.2" />
     <PackageReference Include="MongoDB.Driver" Version="2.4.3" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.4.0" />
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">

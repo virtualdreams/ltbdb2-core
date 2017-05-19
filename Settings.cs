@@ -5,48 +5,43 @@ namespace ltbdb
 		/// <summary>
 		/// MongoDb connection string.
 		/// </summary>
-		public string MongoDB { get; set; }
+		public string MongoDB { get; set; } = "mongodb://127.0.0.1/";
 
 		/// <summary>
 		/// MongoDb database name.
 		/// </summary>
-		public string Database { get; set; }
+		public string Database { get; set; } = "ltbdb";
 
 		/// <summary>
 		/// Items per page to display.
 		/// </summary>
-		public int ItemsPerPage { get; set; }
+		public int ItemsPerPage { get; set; } = 18;
 
 		/// <summary>
 		/// Recent items to display.
 		/// </summary>
-		public int RecentItems { get; set; }
+		public int RecentItems { get; set; } = 18;
 
 		/// <summary>
 		/// Storage path, where the images be saved.
 		/// Can be a relative path or a full qualified url.
 		/// </summary>
-		public string Storage { get; set; }
+		public string Storage { get; set; } = "./wwwroot/images";
 
 		/// <summary>
 		/// Path to image, if no cover exists.
 		/// </summary>
-		public string NoImage { get; set; }
+		public string NoImage { get; set; } = "/content/no-image.png";
 
 		/// <summary>
 		/// CDN path, where the images are located.
 		/// </summary>
-		public string CDNPath { get; set; }
+		public string CDNPath { get; set; } = "/images/";
 
 		/// <summary>
 		/// Path to GraphicsMagick to process the uploaded images.
 		/// </summary>
-		public string GraphicsMagick { get; set; }
-
-		/// <summary>
-		/// Use mongodb to read login data instead of the config file.
-		/// </summary>
-		public bool UseDatabaseAuthentication { get; set; }
+		public string GraphicsMagick { get; set; } = "gm";
 
 		/// <summary>
 		/// The username to login.

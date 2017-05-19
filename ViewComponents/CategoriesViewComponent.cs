@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ltbdb.ViewComponents
 {
 	public class CategoriesViewComponent : ViewComponent
-    {
+	{
 		private readonly CategoryService Category;
 
 		public CategoriesViewComponent(CategoryService category)

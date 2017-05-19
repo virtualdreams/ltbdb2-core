@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ltbdb.Models
 {
-    public class BookModel
+	public class BookModel
 	{
 		/// <summary>
 		/// The book id.
@@ -136,7 +136,7 @@ namespace ltbdb.Models
 		/// The tags for the book.
 		/// </summary>
 		public string Tags { get; set; }
-		
+
 
 		/// <summary>
 		/// The posted image.

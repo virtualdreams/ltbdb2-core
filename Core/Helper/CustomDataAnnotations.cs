@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ltbdb.Core.Helpers
 {
-    /// <summary>
-    /// Custom validation for max item length in a string array.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+	/// <summary>
+	/// Custom validation for max item length in a string array.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 	public class ArrayItemMaxLengthAttribute : ValidationAttribute
 	{
 		/// <summary>

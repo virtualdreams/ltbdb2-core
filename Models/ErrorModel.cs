@@ -2,7 +2,7 @@
 
 namespace ltbdb.Models
 {
-    public class ErrorModel
+	public class ErrorModel
 	{
 		/// <summary>
 		/// The exception.

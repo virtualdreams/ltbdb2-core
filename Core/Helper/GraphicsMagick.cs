@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ltbdb.Core.Helpers
 {
-    static public class GraphicsMagick
+	static public class GraphicsMagick
 	{
 		/// <summary>
 		/// Path to GraphicsImage. If null, "gm" will used.

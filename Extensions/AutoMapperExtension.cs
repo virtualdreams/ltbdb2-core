@@ -7,11 +7,12 @@ using ltbdb.Models;
 
 namespace ltbdb.Extensions
 {
-    static public class AutoMapperExtensions
+	static public class AutoMapperExtensions
 	{
 		static public IServiceCollection AddAutoMapper(this IServiceCollection services)
 		{
-			var _autoMapperConfig = new MapperConfiguration(config => {
+			var _autoMapperConfig = new MapperConfiguration(config =>
+			{
 				config.CreateMap<Book, BookModel>();
 				config.CreateMap<Book, BookWriteModel>()
 					.ForMember(d => d.Tags, map => map.MapFrom(s => String.Join("; ", s.Tags)))

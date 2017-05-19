@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ltbdb.Core.Services
 {
-    public class TagService
+	public class TagService
 	{
 		private readonly ILogger<TagService> Log;
 		private readonly MongoContext Context;

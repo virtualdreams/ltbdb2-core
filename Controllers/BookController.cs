@@ -10,8 +10,8 @@ using ltbdb.Models;
 
 namespace ltbdb.Controllers
 {
-    public class BookController : Controller
-    {
+	public class BookController : Controller
+	{
 		private readonly IMapper Mapper;
 		private readonly BookService Book;
 
@@ -34,7 +34,7 @@ namespace ltbdb.Controllers
 			{
 				Book = book,
 			};
-			
+
 			return View(view);
 		}
 
@@ -51,7 +51,7 @@ namespace ltbdb.Controllers
 			{
 				Book = book
 			};
-			
+
 			return View("Edit", view);
 		}
 
@@ -77,7 +77,7 @@ namespace ltbdb.Controllers
 		[HttpPost]
 		public IActionResult Edit(BookWriteModel model)
 		{
-			if(ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
 				try
 				{
@@ -108,7 +108,7 @@ namespace ltbdb.Controllers
 
 					return RedirectToAction("view", "book", new { id = UrlHelper.ToSlug(id, 100, "Nr.", book.Number.ToString(), book.Title) });
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					ModelState.AddModelError("error", ex.Message);
 				}
@@ -133,10 +133,10 @@ namespace ltbdb.Controllers
 
 				return Json(new { Success = true, Error = "" });
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				return Json(new { Success = false, Error = ex.Message });
 			}
 		}
-    }
+	}
 }

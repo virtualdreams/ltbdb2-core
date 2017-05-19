@@ -7,13 +7,13 @@ namespace ltbdb.Models
 	{
 		public ObjectId Id { get; set; }
 
-		[Required(ErrorMessage="Bitte gib einen Benutzernamen ein.")]
+		[Required(ErrorMessage = "Bitte gib einen Benutzernamen ein.")]
 		public string Username { get; set; }
 
-		[Required(ErrorMessage="Bitte gib ein Passwort ein.")]
+		[Required(ErrorMessage = "Bitte gib ein Passwort ein.")]
 		public string Password { get; set; }
 
-		[Required(ErrorMessage="Bitte gib ein Passwort ein.")]
+		[Required(ErrorMessage = "Bitte gib ein Passwort ein.")]
 		public string PasswordRepeat { get; set; }
 
 		public string Role { get; set; }

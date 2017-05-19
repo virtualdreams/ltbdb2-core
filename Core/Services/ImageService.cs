@@ -6,10 +6,10 @@ using Microsoft.Extensions.Options;
 
 namespace ltbdb.Core.Services
 {
-    /// <summary>
-    /// Type of image to request from storage.
-    /// </summary>
-    public enum ImageType
+	/// <summary>
+	/// Type of image to request from storage.
+	/// </summary>
+	public enum ImageType
 	{
 		/// <summary>
 		/// Get the normal version if available, otherwise none.
@@ -53,7 +53,7 @@ namespace ltbdb.Core.Services
 			var filename = String.Format("{0}.jpg", GetFilename());
 			var imageStorage = GetStoragePath();
 			var thumbStorage = GetThumbPath();
-			
+
 			var imagePath = Path.Combine(imageStorage, filename);
 			var thumbPath = Path.Combine(thumbStorage, filename);
 
@@ -65,7 +65,7 @@ namespace ltbdb.Core.Services
 			try
 			{
 				// check if image directory exists, otherwise create it
-				if(!Directory.Exists(imageStorage))
+				if (!Directory.Exists(imageStorage))
 					Directory.CreateDirectory(imageStorage);
 
 				using (var output = File.Create(imagePath))
@@ -99,7 +99,7 @@ namespace ltbdb.Core.Services
 				{
 					File.Delete(thumbPath);
 				}
-				
+
 				return null;
 			}
 		}
@@ -166,7 +166,7 @@ namespace ltbdb.Core.Services
 		public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal)
 		{
 			var _cdn = Settings.Value.CDNPath;
-			
+
 			switch (imageType)
 			{
 				case ImageType.Thumbnail:

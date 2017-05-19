@@ -7,37 +7,37 @@ using ltbdb.Core.Services;
 
 namespace ltbdb.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Policy = "AdministratorOnly")]
-    public class HomeController : Controller
-    {
-        private readonly BookService Book;
+	[Area("Admin")]
+	[Authorize(Policy = "AdministratorOnly")]
+	public class HomeController : Controller
+	{
+		private readonly BookService Book;
 		private readonly CategoryService Category;
 		private readonly TagService Tag;
 
-        public HomeController(BookService book, CategoryService category, TagService tag)
-        {
-            Book = book;
+		public HomeController(BookService book, CategoryService category, TagService tag)
+		{
+			Book = book;
 			Category = category;
 			Tag = tag;
-        }
+		}
 
 		[HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
+		public IActionResult Index()
+		{
+			return View();
+		}
 
-        [HttpGet]
-        public IActionResult Export()
-        {
-            // add header to force it as download
-            Response.Headers.Add("Content-Disposition", $"attachment; filename=ltbdb-export-{DateTime.Now.ToString("yyyyMMddHHmmss")}.json");
+		[HttpGet]
+		public IActionResult Export()
+		{
+			// add header to force it as download
+			Response.Headers.Add("Content-Disposition", $"attachment; filename=ltbdb-export-{DateTime.Now.ToString("yyyyMMddHHmmss")}.json");
 
-			return Json(Book.Export(), new JsonSerializerSettings{ Formatting = Formatting.Indented});
-        }
+			return Json(Book.Export(), new JsonSerializerSettings { Formatting = Formatting.Indented });
+		}
 
-        [HttpGet]
+		[HttpGet]
 		public IActionResult Stats()
 		{
 			var _books = Book.Get().Count();
@@ -53,7 +53,7 @@ namespace ltbdb.Areas.Admin.Controllers
 				Tags = _tags
 			};
 
-			return Json(_stats, new JsonSerializerSettings{ Formatting = Formatting.Indented } );
+			return Json(_stats, new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
-    }
+	}
 }

@@ -18,7 +18,7 @@ using ltbdb.ModelBinders;
 
 namespace ltbdb
 {
-    public class Startup
+	public class Startup
 	{
 		public IConfigurationRoot Configuration { get; }
 
@@ -43,16 +43,18 @@ namespace ltbdb
 		{
 			// key ring
 			var _keyStore = Configuration.GetSection("Settings")["KeyStore"];
-			if(!String.IsNullOrEmpty(_keyStore))
+			if (!String.IsNullOrEmpty(_keyStore))
 			{
-				services.AddDataProtection(options => {
+				services.AddDataProtection(options =>
+				{
 					options.ApplicationDiscriminator = "ltbdb";
 				}).PersistKeysToFileSystem(new DirectoryInfo(_keyStore));
 			}
 
 			// IIS integration
-			services.Configure<IISOptions>(options => {
-				
+			services.Configure<IISOptions>(options =>
+			{
+
 			});
 
 			// add options to DI
@@ -60,19 +62,23 @@ namespace ltbdb
 			services.Configure<Settings>(Configuration.GetSection("Settings"));
 
 			// add custom model binders
-			services.AddMvc(options => {
+			services.AddMvc(options =>
+			{
 				options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
-			}).AddJsonOptions(options => {
+			}).AddJsonOptions(options =>
+			{
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 			});
 
 			// authorization policies
-			services.AddAuthorization(options => {
-				options.AddPolicy("AdministratorOnly", policy => {
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("AdministratorOnly", policy =>
+				{
 					policy.RequireRole("Administrator");
 				});
 			});
-			
+
 			// DI
 			services.AddAutoMapper();
 			services.AddScoped<MongoContext>();
@@ -81,16 +87,16 @@ namespace ltbdb
 			services.AddTransient<CategoryService>();
 			services.AddTransient<ImageService>();
 		}
-		
+
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
 		{
 			logger.AddNLog();
 
 			app.AddNLogWeb();
-			
+
 			app.UseStatusCodePagesWithReExecute("/error/{0}");
 
-			if(env.IsDevelopment())
+			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
@@ -101,7 +107,8 @@ namespace ltbdb
 
 			app.UseStaticFiles();
 
-			app.UseCookieAuthentication(new CookieAuthenticationOptions(){
+			app.UseCookieAuthentication(new CookieAuthenticationOptions()
+			{
 				AuthenticationScheme = "ltbdb",
 				CookieName = "ltbdb",
 				LoginPath = new PathString("/login"),

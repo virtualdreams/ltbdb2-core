@@ -48,19 +48,19 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public IActionResult SearchTitle(string term)
 		{
-			return Json(Book.Suggestions(term ?? String.Empty), new JsonSerializerSettings{ Formatting = Formatting.Indented } );
+			return Json(Book.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
 		public IActionResult SearchCategory(string term)
 		{
-			return Json(Category.Suggestions(term ?? String.Empty), new JsonSerializerSettings{ Formatting = Formatting.Indented } );
+			return Json(Category.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
 		public IActionResult SearchTag(string term)
 		{
-			return Json(Tag.Suggestions(term ?? String.Empty), new JsonSerializerSettings{ Formatting = Formatting.Indented } );
+			return Json(Tag.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 	}
 }

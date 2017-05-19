@@ -5,7 +5,7 @@ using MongoDB.Bson;
 
 namespace ltbdb.Core.Helpers
 {
-    static public class StringExtensions
+	static public class StringExtensions
 	{
 		/// <summary>
 		/// Get last n characters.
@@ -15,7 +15,7 @@ namespace ltbdb.Core.Helpers
 		/// <returns>Last n characters.</returns>
 		static public string GetLast(this string value, int len)
 		{
-			if(String.IsNullOrEmpty(value) || len >= value.Length)
+			if (String.IsNullOrEmpty(value) || len >= value.Length)
 				return value;
 
 			return value.Substring(value.Length - len);

@@ -6,58 +6,59 @@ namespace ltbdb.Extensions
 	{
 		static public IApplicationBuilder AddRoutes(this IApplicationBuilder app)
 		{
-			app.UseMvc(routes => {
+			app.UseMvc(routes =>
+			{
 				routes.MapRoute(
 					name: "areaExport",
-    				template: "{area:exists}/export",
-					defaults: new { area = "Admin", controller = "Home", action = "Export"}
+					template: "{area:exists}/export",
+					defaults: new { area = "Admin", controller = "Home", action = "Export" }
 				);
 
 				routes.MapRoute(
 					name: "areaStats",
-    				template: "{area:exists}/stats",
-					defaults: new { area = "Admin", controller = "Home", action = "Stats"}
+					template: "{area:exists}/stats",
+					defaults: new { area = "Admin", controller = "Home", action = "Stats" }
 				);
-				
+
 				routes.MapRoute(
 					name: "areaRoute",
-    				template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+					template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 				);
 
 				routes.MapRoute(
 					name: "search",
 					template: "search",
-					defaults: new { controller = "Search", action = "Search"}
+					defaults: new { controller = "Search", action = "Search" }
 				);
 
 				routes.MapRoute(
 					name: "searchTitle",
 					template: "search/title",
-					defaults: new { controller = "Search", action = "SearchTitle"}
+					defaults: new { controller = "Search", action = "SearchTitle" }
 				);
 
 				routes.MapRoute(
 					name: "searchCategory",
 					template: "search/category",
-					defaults: new { controller = "Search", action = "SearchCategory"}
+					defaults: new { controller = "Search", action = "SearchCategory" }
 				);
 
 				routes.MapRoute(
 					name: "searchTag",
 					template: "search/tag",
-					defaults: new { controller = "Search", action = "SearchTag"}
+					defaults: new { controller = "Search", action = "SearchTag" }
 				);
 
 				routes.MapRoute(
 					name: "view",
 					template: "book/{id?}",
-					defaults: new { controller = "Book", action = "View"}
+					defaults: new { controller = "Book", action = "View" }
 				);
 
 				routes.MapRoute(
 					name: "create",
 					template: "create",
-					defaults: new { controller = "Book", action = "Create"}
+					defaults: new { controller = "Book", action = "Create" }
 				);
 
 				routes.MapRoute(
@@ -87,13 +88,13 @@ namespace ltbdb.Extensions
 				routes.MapRoute(
 					name: "login",
 					template: "login",
-					defaults: new { controller = "Account", action = "Login"}
+					defaults: new { controller = "Account", action = "Login" }
 				);
 
 				routes.MapRoute(
 					name: "logout",
 					template: "logout",
-					defaults: new { controller = "Account", action = "Logout"}
+					defaults: new { controller = "Account", action = "Logout" }
 				);
 
 				routes.MapRoute(

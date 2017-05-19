@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ltbdb.ViewComponents
 {
 	public class TagsViewComponent : ViewComponent
-    {
+	{
 		private readonly TagService Tag;
 
 		public TagsViewComponent(TagService tag)

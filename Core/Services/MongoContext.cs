@@ -7,7 +7,7 @@ using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
 {
-    public class MongoContext
+	public class MongoContext
 	{
 		private readonly ILogger<MongoContext> Log;
 		private readonly IOptions<Settings> Settings;
@@ -21,10 +21,10 @@ namespace ltbdb.Core.Services
 			Settings = settings;
 
 			Log.LogDebug("Set mongo database to '{0}'.", Settings.Value.Database);
-			
+
 			var _settings = MongoClientSettings.FromUrl(new MongoUrl(Settings.Value.MongoDB));
 
-			if(Log.IsEnabled(LogLevel.Debug))
+			if (Log.IsEnabled(LogLevel.Debug))
 			{
 				Log.LogDebug("MongoDB command log enabled.");
 				_settings.ClusterConfigurator = cb =>

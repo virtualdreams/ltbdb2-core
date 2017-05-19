@@ -10,8 +10,8 @@ using Microsoft.Extensions.Options;
 
 namespace ltbdb.Controllers
 {
-    public class AccountController : Controller
-    {
+	public class AccountController : Controller
+	{
 		private readonly IMapper Mapper;
 		private readonly ILogger<AccountController> Log;
 		private readonly IOptions<Settings> Settings;
@@ -38,30 +38,31 @@ namespace ltbdb.Controllers
 			{
 				return View("Login", model);
 			}
-			
+
 			if (Settings.Value.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Settings.Value.Password.Equals(model.Password))
-				{
-					var claims = new List<Claim>
+			{
+				var claims = new List<Claim>
 					{
 						new Claim(ClaimTypes.Name, model.Username, ClaimValueTypes.String),
 						new Claim(ClaimTypes.Role, "Administrator", ClaimValueTypes.String)
 					};
 
-					var _identity = new ClaimsIdentity(claims, "local");
-					var _principal = new ClaimsPrincipal(_identity);
+				var _identity = new ClaimsIdentity(claims, "local");
+				var _principal = new ClaimsPrincipal(_identity);
 
-					HttpContext.Authentication.SignInAsync("ltbdb", _principal, 
-						new AuthenticationProperties {
-							IsPersistent = true,
-							AllowRefresh = true
-						}
-					).Wait();
-				}
-				else
-				{
-					ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
-					return View("Login", model);
-				}
+				HttpContext.Authentication.SignInAsync("ltbdb", _principal,
+					new AuthenticationProperties
+					{
+						IsPersistent = true,
+						AllowRefresh = true
+					}
+				).Wait();
+			}
+			else
+			{
+				ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
+				return View("Login", model);
+			}
 
 			// return to target page.
 			if (Url.IsLocalUrl(returnUrl))
@@ -81,5 +82,5 @@ namespace ltbdb.Controllers
 
 			return RedirectToAction("index", "home");
 		}
-    }
+	}
 }

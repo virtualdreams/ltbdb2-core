@@ -20,6 +20,6 @@ namespace ltbdb
 	{
 		public LtbdbRenameCategoryException()
 			: base("Rename category names must be non-zero.")
-			{ }
+		{ }
 	}
 }

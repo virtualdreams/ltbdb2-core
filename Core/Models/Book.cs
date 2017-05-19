@@ -4,10 +4,10 @@ using System;
 
 namespace ltbdb.Core.Models
 {
-    /// <summary>
-    /// Object to store a book.
-    /// </summary>
-    [BsonIgnoreExtraElements]
+	/// <summary>
+	/// Object to store a book.
+	/// </summary>
+	[BsonIgnoreExtraElements]
 	public class Book
 	{
 		/// <summary>
@@ -64,7 +64,7 @@ namespace ltbdb.Core.Models
 		}
 
 		private string[] _tags = new string[] { };
-		
+
 		/// <summary>
 		/// The tags for the book.
 		/// </summary>

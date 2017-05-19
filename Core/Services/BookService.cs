@@ -10,7 +10,7 @@ using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
 {
-    public class BookService
+	public class BookService
 	{
 		private readonly ILogger<BookService> Log;
 		private readonly MongoContext Context;
@@ -22,7 +22,7 @@ namespace ltbdb.Core.Services
 		/// <param name="client">The mongo client.</param>
 		/// <param name="logger">The logger.</param>
 		public BookService(ILogger<BookService> logger, MongoContext context, ImageService image)
-		{ 
+		{
 			Log = logger;
 			Context = context;
 			ImageService = image;
@@ -96,7 +96,7 @@ namespace ltbdb.Core.Services
 			var _order = _sort.Ascending(f => f.Number).Ascending(f => f.Category);
 
 			Log.LogInformation($"Request books by tag '{tag}'.");
-			
+
 			return Context.Book.Find(_tag).Sort(_order).ToEnumerable();
 		}
 
@@ -150,11 +150,11 @@ namespace ltbdb.Core.Services
 			var _filter = Builders<Book>.Filter;
 			var _title = _filter.Regex(f => f.Title, new BsonRegularExpression(Regex.Escape(term), "i"));
 			var _stories = _filter.Regex("Stories", new BsonRegularExpression(Regex.Escape(term), "i"));
-			
+
 			var _query = _title | _stories;
 
 			var _n = 0;
-			if(Int32.TryParse(term, out _n))
+			if (Int32.TryParse(term, out _n))
 			{
 				var _number = _filter.Eq(f => f.Number, _n);
 				_query |= _number;
@@ -258,7 +258,7 @@ namespace ltbdb.Core.Services
 
 			if (_book == null)
 				return;
-			
+
 			RemoveImage(_book.Filename);
 			if (stream == null)
 			{

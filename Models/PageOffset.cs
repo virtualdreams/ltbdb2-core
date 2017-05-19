@@ -1,6 +1,6 @@
 ﻿namespace ltbdb.Models
 {
-    public class PageOffset
+	public class PageOffset
 	{
 		/// <summary>
 		/// Current offset from zero.

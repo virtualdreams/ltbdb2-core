@@ -15,7 +15,7 @@ namespace ltbdb.Core.Helpers
 		/// <returns>Slugified string.</returns>
 		static public string ToSlug(string value, int maxLength = 100)
 		{
-			if(String.IsNullOrEmpty(value))
+			if (String.IsNullOrEmpty(value))
 				return String.Empty;
 
 			// convert to lower case
@@ -57,12 +57,12 @@ namespace ltbdb.Core.Helpers
 		public static string ToSlug(ObjectId id, int maxLength = 100, params string[] values)
 		{
 			var _sb = new StringBuilder();
-			
-			foreach(var value in values)
+
+			foreach (var value in values)
 			{
 				_sb.Append($"{value}-");
 			}
-			
+
 			return $"{UrlHelper.ToSlug(_sb.ToString(), maxLength)}-{id.ToString()}";
 		}
 	}

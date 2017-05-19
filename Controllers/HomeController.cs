@@ -7,7 +7,7 @@ using ltbdb.Models;
 namespace ltbdb.Controllers
 {
 	public class HomeController : Controller
-    {
+	{
 		private readonly IMapper Mapper;
 		private readonly IOptions<Settings> Settings;
 		private readonly BookService Book;
@@ -20,8 +20,8 @@ namespace ltbdb.Controllers
 		}
 
 		[HttpGet]
-        public IActionResult Index()
-        {
+		public IActionResult Index()
+		{
 			var _books = Book.GetRecentlyAdded(Settings.Value.RecentItems);
 
 			var books = Mapper.Map<BookModel[]>(_books);
@@ -29,11 +29,11 @@ namespace ltbdb.Controllers
 			var view = new BookViewContainer { Books = books };
 
 			return View(view);
-        }
+		}
 
 		public IActionResult Error(int? code)
 		{
-			switch(code ?? 0)
+			switch (code ?? 0)
 			{
 				case 404:
 					return View("PageNotFound");
@@ -42,5 +42,5 @@ namespace ltbdb.Controllers
 					return View();
 			}
 		}
-    }
+	}
 }

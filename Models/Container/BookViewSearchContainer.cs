@@ -2,7 +2,7 @@
 
 namespace ltbdb.Models
 {
-    public class BookViewSearchContainer
+	public class BookViewSearchContainer
 	{
 		public IEnumerable<BookModel> Books { get; set; }
 		public string Query { get; set; }

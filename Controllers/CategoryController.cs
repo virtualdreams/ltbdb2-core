@@ -8,8 +8,8 @@ using ltbdb.Models;
 
 namespace ltbdb.Controllers
 {
-    public class CategoryController : Controller
-    {
+	public class CategoryController : Controller
+	{
 		private readonly IMapper Mapper;
 		private readonly IOptions<Settings> Settings;
 		private readonly BookService Book;
@@ -22,8 +22,8 @@ namespace ltbdb.Controllers
 		}
 
 		[HttpGet]
-        public IActionResult Index(int? ofs)
-        {
+		public IActionResult Index(int? ofs)
+		{
 			var _books = Book.Get().OrderBy(o => o.Category);
 			var _page = _books.Skip(ofs ?? 0).Take(Settings.Value.ItemsPerPage);
 
@@ -37,7 +37,7 @@ namespace ltbdb.Controllers
 			};
 
 			return View(view);
-        }
+		}
 
 		[HttpGet]
 		public IActionResult View(string id, int? ofs)
@@ -60,5 +60,5 @@ namespace ltbdb.Controllers
 
 			return View(view);
 		}
-    }
+	}
 }

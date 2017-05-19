@@ -26,12 +26,12 @@ namespace ltbdb.Core.Services
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
-				Log.LogDebug("MongoDB command log enabled.");
+				Log.LogTrace("MongoDB command log enabled.");
 				_settings.ClusterConfigurator = cb =>
 				{
 					cb.Subscribe<CommandStartedEvent>(e =>
 					{
-						Log.LogDebug($"{e.CommandName} - {e.Command.ToJson()}");
+						Log.LogTrace($"{e.CommandName} - {e.Command.ToJson()}");
 					});
 				};
 			}

@@ -28,10 +28,6 @@ namespace ltbdb.Extensions
 					.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w)).Distinct()))
 					.ForSourceMember(s => s.Image, map => map.Ignore())
 					.ForSourceMember(s => s.Remove, map => map.Ignore());
-
-				config.CreateMap<User, UserModel>()
-					.ForMember(d => d.Password, map => map.Ignore())
-					.ForMember(d => d.PasswordRepeat, map => map.Ignore());
 			});
 
 			_autoMapperConfig.AssertConfigurationIsValid();

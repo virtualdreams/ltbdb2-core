@@ -13,6 +13,8 @@ namespace ltbdb.Extensions
 		{
 			var _autoMapperConfig = new MapperConfiguration(config =>
 			{
+				config.AllowNullCollections = false;
+
 				config.CreateMap<Book, BookModel>();
 				config.CreateMap<Book, BookWriteModel>()
 					.ForMember(d => d.Tags, map => map.MapFrom(s => String.Join("; ", s.Tags)))
@@ -24,7 +26,7 @@ namespace ltbdb.Extensions
 					.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Trim()))
 					.ForMember(s => s.Created, map => map.Ignore())
 					.ForMember(d => d.Filename, map => map.Ignore())
-					.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w))))
+					.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Where(w => !String.IsNullOrEmpty(w)).Select(x => x.Trim())))
 					.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w)).Distinct()))
 					.ForSourceMember(s => s.Image, map => map.Ignore())
 					.ForSourceMember(s => s.Remove, map => map.Ignore());

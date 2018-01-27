@@ -36,6 +36,9 @@ namespace ltbdb.Core.Helpers
 			{
 				foreach (var item in list)
 				{
+					if(item == null)
+						continue;
+
 					if (item.Length > MaxLength)
 						return false;
 				}

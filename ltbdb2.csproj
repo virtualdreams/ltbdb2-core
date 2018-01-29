@@ -11,7 +11,7 @@
     <AssemblyName>ltbdb2</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>ltbdb2</PackageId>
-    <!-->
+    <!--
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     -->

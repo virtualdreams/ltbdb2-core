@@ -1,10 +1,12 @@
 ﻿@using ltbdb.Core.Helpers
+
 <!DOCTYPE html>
 
 <html lang="de">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="version" content="@await Component.InvokeAsync("Version")">
 		
 		<link type="text/css" href="@Url.Content("~/lib/smoothness/jquery-ui.min.css")" rel="stylesheet" />
 		<link type="text/css" href="@Url.Content("~/lib/jBox.css")" rel="stylesheet" />

@@ -9,9 +9,11 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="version" content="@await Component.InvokeAsync("Version")">
 		@if(!String.IsNullOrEmpty(ViewBag.Description)) {
 		<meta name="description" content="@ViewBag.Description" />
 		}
+
 		<meta name="application-name" content="Lustiges Taschenbuch Datenbank" />
 		<meta name="keywords" content="Lustiges Taschenbuch, Datenbank, LTB, @ViewBag.Keywords" />
 
@@ -69,7 +71,7 @@
 						@if(Context.User.Identity.IsAuthenticated) {
 						<li><a href="@Url.RouteUrl("create")">Neues Buch</a></li>
 						}
-						@if(await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")) {
+						@if((await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")).Succeeded) {
 						<li style="float: right;">
 							<a href="@Url.Action("index", "home", new { area = "admin" })">Einstellungen</a>
 						</li>

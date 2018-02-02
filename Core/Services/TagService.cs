@@ -14,11 +14,6 @@ namespace ltbdb.Core.Services
 		private readonly ILogger<TagService> Log;
 		private readonly MongoContext Context;
 
-		private class Tag
-		{
-			public string _id { get; set; }
-		}
-
 		public TagService(ILogger<TagService> logger, MongoContext context)
 		{
 			Log = logger;
@@ -52,8 +47,8 @@ namespace ltbdb.Core.Services
 				.Match(new BsonDocument { { "Tags", new BsonRegularExpression(Regex.Escape(term), "i") } })
 				.Group(new BsonDocument { { "_id", "$Tags" } })
 				.ToEnumerable()
-				.Select(s => BsonSerializer.Deserialize<Tag>(s))
-				.Select(s => s._id);
+				.Select(s => BsonSerializer.Deserialize<TagResult>(s))
+				.Select(s => s.Id);
 
 			return _result;
 		}

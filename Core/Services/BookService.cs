@@ -42,7 +42,12 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Request all books.");
 
-			return Context.Book.Find(_all).Sort(_order).ToEnumerable();
+			var _result = Context.Book
+				.Find(_all)
+				.Sort(_order)
+				.ToEnumerable();
+
+			return _result;
 		}
 
 		/// <summary>
@@ -57,7 +62,11 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Request book by id '{id.ToString()}'.");
 
-			return Context.Book.Find(_id).SingleOrDefault();
+			var _result = Context.Book
+				.Find(_id)
+				.SingleOrDefault();
+
+			return _result;
 		}
 
 		/// <summary>
@@ -77,7 +86,12 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Request books by category '{category}'.");
 
-			return Context.Book.Find(_category).Sort(_order).ToEnumerable();
+			var _result = Context.Book
+				.Find(_category)
+				.Sort(_order)
+				.ToEnumerable();
+
+			return _result;
 		}
 
 		/// <summary>
@@ -97,7 +111,12 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Request books by tag '{tag}'.");
 
-			return Context.Book.Find(_tag).Sort(_order).ToEnumerable();
+			var _result = Context.Book
+				.Find(_tag)
+				.Sort(_order)
+				.ToEnumerable();
+
+			return _result;
 		}
 
 		/// <summary>
@@ -114,7 +133,13 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Request recently added book. (limit {limit})");
 
-			return Context.Book.Find(_all).Sort(_order).Limit(limit).ToEnumerable();
+			var _result = Context.Book
+				.Find(_all)
+				.Sort(_order)
+				.Limit(limit)
+				.ToEnumerable();
+
+			return _result;
 		}
 
 		/// <summary>
@@ -165,7 +190,12 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Search for book by term '{term}'.");
 
-			return Context.Book.Find(_query).Sort(_order).ToEnumerable();
+			var _result = Context.Book
+				.Find(_query)
+				.Sort(_order)
+				.ToEnumerable();
+
+			return _result;
 		}
 
 		/// <summary>
@@ -185,7 +215,13 @@ namespace ltbdb.Core.Services
 
 			Log.LogDebug($"Request suggestions for books by term '{term}'.");
 
-			return Context.Book.Find(_title).Sort(_order).ToEnumerable().Select(s => s.Title);
+			var _result = Context.Book
+				.Find(_title)
+				.Sort(_order)
+				.ToEnumerable()
+				.Select(s => s.Title);
+
+			return _result;
 		}
 
 		/// <summary>
@@ -221,9 +257,9 @@ namespace ltbdb.Core.Services
 				.Set(s => s.Stories, book.Stories)
 				.Set(s => s.Tags, book.Tags);
 
-			Context.Book.UpdateOne(_id, _set);
-
 			Log.LogInformation($"Update book '{book.Id}'.");
+
+			Context.Book.UpdateOne(_id, _set);
 		}
 
 		/// <summary>
@@ -240,10 +276,10 @@ namespace ltbdb.Core.Services
 			var _filter = Builders<Book>.Filter;
 			var _id = _filter.Eq(f => f.Id, _book.Id);
 
+			Log.LogInformation($"Delete book '{id.ToString()}'.");
+
 			Context.Book.DeleteOne(_id);
 			RemoveImage(_book.Filename);
-
-			Log.LogInformation($"Delete book '{id.ToString()}'.");
 		}
 
 		/// <summary>
@@ -267,7 +303,7 @@ namespace ltbdb.Core.Services
 			}
 			else
 			{
-				// remove the old images and store the new one
+				// remove the old image and store the new one
 				var _filename = ImageService.Save(stream, true);
 				if (String.IsNullOrEmpty(_filename))
 					throw new LtbdbInvalidFilenameException();
@@ -281,9 +317,9 @@ namespace ltbdb.Core.Services
 			var _update = Builders<Book>.Update;
 			var _set = _update.Set(f => f.Filename, _book.Filename);
 
-			var _result = Context.Book.UpdateOne(_id, _set);
-
 			Log.LogInformation($"Update image for book '{id.ToString()}'");
+
+			Context.Book.UpdateOne(_id, _set);
 		}
 
 		/// <summary>

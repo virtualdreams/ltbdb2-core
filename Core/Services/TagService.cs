@@ -31,7 +31,11 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Get()
 		{
-			return Context.Book.Distinct<string>("Tags", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
+			var _result = Context.Book
+				.Distinct<string>("Tags", new ExpressionFilterDefinition<Book>(_ => true))
+				.ToEnumerable();
+
+			return _result;
 		}
 
 		/// <summary>
@@ -43,13 +47,15 @@ namespace ltbdb.Core.Services
 		{
 			term = term.Trim();
 
-			return Context.Book.Aggregate()
+			var _result = Context.Book.Aggregate()
 				.Unwind("Tags")
 				.Match(new BsonDocument { { "Tags", new BsonRegularExpression(Regex.Escape(term), "i") } })
 				.Group(new BsonDocument { { "_id", "$Tags" } })
 				.ToEnumerable()
 				.Select(s => BsonSerializer.Deserialize<Tag>(s))
 				.Select(s => s._id);
+
+			return _result;
 		}
 	}
 }

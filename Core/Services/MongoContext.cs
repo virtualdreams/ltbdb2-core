@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
-using MongoDB.Driver.Core.Events;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Events;
 using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
@@ -10,19 +9,19 @@ namespace ltbdb.Core.Services
 	public class MongoContext
 	{
 		private readonly ILogger<MongoContext> Log;
-		private readonly IOptions<Settings> Settings;
+		private readonly Settings Options;
 		private readonly IMongoClient _client;
 		private readonly IMongoDatabase _database;
 		public IMongoCollection<Book> Book { get; private set; }
 
-		public MongoContext(IOptions<Settings> settings, ILogger<MongoContext> log)
+		public MongoContext(Settings settings, ILogger<MongoContext> log)
 		{
 			Log = log;
-			Settings = settings;
+			Options = settings;
 
-			Log.LogDebug("Set mongo database to '{0}'.", Settings.Value.Database);
+			Log.LogDebug("Set mongo database to '{0}'.", Options.Database);
 
-			var _settings = MongoClientSettings.FromUrl(new MongoUrl(Settings.Value.MongoDB));
+			var _settings = MongoClientSettings.FromUrl(new MongoUrl(Options.MongoDB));
 
 			if (Log.IsEnabled(LogLevel.Debug))
 			{
@@ -37,7 +36,7 @@ namespace ltbdb.Core.Services
 			}
 
 			_client = new MongoClient(_settings);
-			_database = _client.GetDatabase(Settings.Value.Database);
+			_database = _client.GetDatabase(Options.Database);
 			Book = _database.GetCollection<Book>("book");
 		}
 	}

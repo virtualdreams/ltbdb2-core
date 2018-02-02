@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using System.Linq;
 using System;
+using System.Linq;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 
@@ -11,14 +10,14 @@ namespace ltbdb.Controllers
 	public class TagController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly IOptions<Settings> Settings;
+		private readonly Settings Options;
 		private readonly BookService Book;
 		private readonly TagService Tag;
 
-		public TagController(IMapper mapper, IOptions<Settings> settings, BookService book, TagService tag)
+		public TagController(IMapper mapper, Settings settings, BookService book, TagService tag)
 		{
 			Mapper = mapper;
-			Settings = settings;
+			Options = settings;
 			Book = book;
 			Tag = tag;
 		}
@@ -40,10 +39,10 @@ namespace ltbdb.Controllers
 		public IActionResult View(string id, int? ofs)
 		{
 			var _books = Book.GetByTag(id ?? String.Empty);
-			var _page = _books.Skip(ofs ?? 0).Take(Settings.Value.ItemsPerPage);
+			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_books);
-			var offset = new PageOffset(ofs ?? 0, Settings.Value.ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, Options.ItemsPerPage, _books.Count());
 
 			var view = new BookViewTagContainer
 			{

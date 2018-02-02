@@ -1,8 +1,7 @@
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using ltbdb.Core.Helpers;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace ltbdb.Core.Services
 {
@@ -29,13 +28,13 @@ namespace ltbdb.Core.Services
 
 	public class ImageService
 	{
-		readonly IOptions<Settings> Settings;
+		readonly Settings Options;
 		readonly ILogger<ImageService> Log;
 		readonly string thumbnailDirectory = "thumb";
 
-		public ImageService(IOptions<Settings> settings, ILogger<ImageService> log)
+		public ImageService(Settings settings, ILogger<ImageService> log)
 		{
-			Settings = settings;
+			Options = settings;
 			Log = log;
 		}
 
@@ -60,7 +59,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Set image path to '{imagePath}'.");
 			Log.LogInformation($"Set thumb path to '{thumbPath}'.");
 
-			GraphicsMagick.GraphicsImage = Settings.Value.GraphicsMagick;
+			GraphicsMagick.GraphicsImage = Options.GraphicsMagick;
 
 			try
 			{
@@ -165,7 +164,7 @@ namespace ltbdb.Core.Services
 		/// <returns>The CDN path.</returns>
 		public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal)
 		{
-			var _cdn = Settings.Value.CDNPath;
+			var _cdn = Options.CDNPath;
 
 			switch (imageType)
 			{
@@ -186,7 +185,7 @@ namespace ltbdb.Core.Services
 					goto default;
 
 				default:
-					return Settings.Value.NoImage;
+					return Options.NoImage;
 			}
 		}
 
@@ -205,7 +204,7 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		private string GetStoragePath()
 		{
-			return Settings.Value.Storage;
+			return Options.Storage;
 		}
 
 		/// <summary>

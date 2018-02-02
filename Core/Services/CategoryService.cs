@@ -26,7 +26,11 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Get()
 		{
-			return Context.Book.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true)).ToEnumerable();
+			var _result = Context.Book
+				.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true))
+				.ToEnumerable();
+
+			return _result;
 		}
 
 		/// <summary>
@@ -49,9 +53,11 @@ namespace ltbdb.Core.Services
 			var _update = Builders<Book>.Update;
 			var _set = _update.Set(s => s.Category, to);
 
+			Log.LogInformation($"Rename category '{from}' to '{to}'.");
+
 			var _result = Context.Book.UpdateMany(_from, _set);
 
-			Log.LogInformation($"Rename category '{from}' to '{to}'. Modified {_result.ModifiedCount} documents.");
+			Log.LogInformation($"Modified {_result.ModifiedCount} documents.");
 		}
 
 		/// <summary>
@@ -76,7 +82,14 @@ namespace ltbdb.Core.Services
 
 			Log.LogDebug($"Request suggestions for categories by term '{term}'.");
 
-			return Context.Book.Find(_category).Sort(_order).ToEnumerable().Select(s => s.Category).Distinct();
+			var _result = Context.Book
+				.Find(_category)
+				.Sort(_order)
+				.ToEnumerable()
+				.Select(s => s.Category)
+				.Distinct();
+
+			return _result;
 		}
 	}
 }

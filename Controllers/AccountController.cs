@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ltbdb.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using ltbdb.Models;
 
 namespace ltbdb.Controllers
 {
@@ -14,13 +14,13 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly ILogger<AccountController> Log;
-		private readonly IOptions<Settings> Settings;
+		private readonly Settings Options;
 
-		public AccountController(IMapper mapper, ILogger<AccountController> log, IOptions<Settings> settings)
+		public AccountController(IMapper mapper, ILogger<AccountController> log, Settings settings)
 		{
 			Mapper = mapper;
 			Log = log;
-			Settings = settings;
+			Options = settings;
 		}
 
 		[HttpGet]
@@ -39,7 +39,7 @@ namespace ltbdb.Controllers
 				return View("Login", model);
 			}
 
-			if (Settings.Value.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Settings.Value.Password.Equals(model.Password))
+			if (Options.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Options.Password.Equals(model.Password))
 			{
 				var claims = new List<Claim>
 					{

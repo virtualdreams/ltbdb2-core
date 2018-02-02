@@ -1,6 +1,3 @@
-using ltbdb.Core.Services;
-using ltbdb.Extensions;
-using ltbdb.ModelBinders;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -15,6 +12,9 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using System;
 using System.IO;
+using ltbdb.Core.Services;
+using ltbdb.Extensions;
+using ltbdb.ModelBinders;
 
 namespace ltbdb
 {
@@ -79,6 +79,7 @@ namespace ltbdb
 
 			// DI
 			services.AddAutoMapper();
+			services.AddScoped(cfg => cfg.GetService<IOptionsSnapshot<Settings>>().Value);
 			services.AddScoped<MongoContext>();
 			services.AddTransient<BookService>();
 			services.AddTransient<TagService>();

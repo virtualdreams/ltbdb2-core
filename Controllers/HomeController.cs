@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 
@@ -9,20 +8,20 @@ namespace ltbdb.Controllers
 	public class HomeController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly IOptions<Settings> Settings;
+		private readonly Settings Options;
 		private readonly BookService Book;
 
-		public HomeController(IMapper mapper, IOptions<Settings> settings, BookService book)
+		public HomeController(IMapper mapper, Settings settings, BookService book)
 		{
 			Mapper = mapper;
-			Settings = settings;
+			Options = settings;
 			Book = book;
 		}
 
 		[HttpGet]
 		public IActionResult Index()
 		{
-			var _books = Book.GetRecentlyAdded(Settings.Value.RecentItems);
+			var _books = Book.GetRecentlyAdded(Options.RecentItems);
 
 			var books = Mapper.Map<BookModel[]>(_books);
 

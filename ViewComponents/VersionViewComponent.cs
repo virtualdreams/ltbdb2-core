@@ -8,6 +8,6 @@ namespace ltbdb.ViewComponents
 		public VersionViewComponent()
 		{ }
 
-		public IViewComponentResult Invoke() => Content($"{Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationVersion}");
+		public IViewComponentResult Invoke() => Content($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version}");
 	}
 }

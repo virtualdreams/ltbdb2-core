@@ -1,8 +1,8 @@
 $.widget("custom.catcomplete", $.ui.autocomplete, {
-	_renderMenu: function(ul, items) {
+	_renderMenu: function (ul, items) {
 		var that = this, currentCategory = "";
-		$.each(items, function(index, item) {
-			if(item.category != currentCategory) {
+		$.each(items, function (index, item) {
+			if (item.category != currentCategory) {
 				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
 				currentCategory = item.category;
 			}
@@ -37,6 +37,12 @@ String.prototype.formatEx = function (placeholders) {
 };
 
 $(function () {
+	/* data-href */
+	$('[data-href]').click(function () {
+		var href = $(this).data('href');
+		location.href = href;
+	});
+
 	/* autocomplete for search */
 	$('#q').autocomplete({
 		source: '/search/title',
@@ -84,7 +90,7 @@ $(function () {
 				$(event.target).val(ui.item.value);
 			}
 		}
-	}).focus(function() {
+	}).focus(function () {
 		$(this).autocomplete("search", $(this).val());
 	});
 
@@ -93,7 +99,7 @@ $(function () {
 
 	/* add, delete or insert stories */
 	var story_container = $('#story-container');
-	var story_template =	'<div class="story">\
+	var story_template = '<div class="story">\
 								<input class="input" type="text" name="stories" value="" placeholder="Inhalt" /> <span class="button-green story-ins" title="Eintrag darüber einfügen."><i class="material-icons material-icons-small">add</i></span> <span class="button-red story-rem" title="Eintrag entfernen."><i class="material-icons material-icons-small">remove</i></span>\
 							</div>';
 
@@ -149,7 +155,7 @@ $(function () {
 		var control = e;
 		control.replaceWith(control.clone(true));
 	}
-	
+
 	$('#image').on('click', function () {
 		$('#image-upload').click();
 	});
@@ -199,11 +205,11 @@ $(function () {
 
 	/* validation */
 	$.validator.addMethod(
-	    "regex",
-	    function (value, element, regexp) {
-	    	return this.optional(element) || value.match(regexp);
-	    },
-	    "Please check your input."
+		"regex",
+		function (value, element, regexp) {
+			return this.optional(element) || value.match(regexp);
+		},
+		"Please check your input."
 	);
 
 	$.validator.addMethod(

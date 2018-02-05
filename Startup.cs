@@ -85,6 +85,7 @@ namespace ltbdb
 			services.AddTransient<TagService>();
 			services.AddTransient<CategoryService>();
 			services.AddTransient<ImageService>();
+			services.AddTransient<MaintenanceService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)

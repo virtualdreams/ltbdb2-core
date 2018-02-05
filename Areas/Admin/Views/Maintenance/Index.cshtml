@@ -1,0 +1,18 @@
+@using ltbdb.Models;
+
+@{
+	ViewBag.Title = "Wartung | ";
+	ViewBag.Menu = "maintenance";
+}
+
+<div class="box">
+	<h3>Indexverwaltung</h3>
+	<div>
+		<p>
+			Datenbank neu indizieren. Dies kann einen Moment dauern.
+		</p>
+		<p>
+			<span data-href="@Url.Action("recreateindexes", "maintenance", new { area = "admin" })" class="button-red">Indizieren</span>
+		</p>
+	</div>
+</div>

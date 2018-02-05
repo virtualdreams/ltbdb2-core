@@ -71,7 +71,7 @@
 						@if(Context.User.Identity.IsAuthenticated) {
 						<li><a href="@Url.RouteUrl("create")">Neues Buch</a></li>
 						}
-						@if(await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")) {
+						@if((await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")).Succeeded) {
 						<li style="float: right;">
 							<a href="@Url.Action("index", "home", new { area = "admin" })">Einstellungen</a>
 						</li>

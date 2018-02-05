@@ -20,23 +20,13 @@ namespace ltbdb
 {
 	public class Startup
 	{
-		public IConfigurationRoot Configuration { get; }
+		public IConfiguration Configuration { get; }
 
 		static public ILoggerFactory Logger { get; private set; }
 
-		public Startup(IHostingEnvironment env, ILoggerFactory logger)
+		public Startup(IConfiguration configuration, IHostingEnvironment env)
 		{
-			// only needed if the file is somewhere else or has a different name.
-			//env.ConfigureNLog("NLog.config");
-
-			var builder = new ConfigurationBuilder()
-				.SetBasePath(env.ContentRootPath)
-				.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-				.AddEnvironmentVariables();
-
-			Configuration = builder.Build();
-
-			Logger = logger;
+			Configuration = configuration;
 		}
 
 		public void ConfigureServices(IServiceCollection services)
@@ -70,6 +60,14 @@ namespace ltbdb
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
 			});
 
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.Cookie.Name = "ltbdb";
+					options.LoginPath = new PathString("/login");
+					options.AccessDeniedPath = new PathString("/");
+				});
+
 			// authorization policies
 			services.AddAuthorization(options =>
 			{
@@ -94,8 +92,6 @@ namespace ltbdb
 		{
 			logger.AddNLog();
 
-			app.AddNLogWeb();
-
 			app.UseStatusCodePagesWithReExecute("/error/{0}");
 
 			if (env.IsDevelopment())
@@ -109,15 +105,7 @@ namespace ltbdb
 
 			app.UseStaticFiles();
 
-			app.UseCookieAuthentication(new CookieAuthenticationOptions()
-			{
-				AuthenticationScheme = "ltbdb",
-				CookieName = "ltbdb",
-				LoginPath = new PathString("/login"),
-				AccessDeniedPath = new PathString("/"),
-				AutomaticAuthenticate = true,
-				AutomaticChallenge = true
-			});
+			app.UseAuthentication();
 
 			app.AddRoutes();
 		}

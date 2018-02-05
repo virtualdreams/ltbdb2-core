@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using AutoMapper;
-using ltbdb.Models;
-using Microsoft.AspNetCore.Http.Authentication;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using ltbdb.Models;
 
 namespace ltbdb.Controllers
 {
@@ -49,7 +50,7 @@ namespace ltbdb.Controllers
 				var _identity = new ClaimsIdentity(claims, "local");
 				var _principal = new ClaimsPrincipal(_identity);
 
-				HttpContext.Authentication.SignInAsync("ltbdb", _principal,
+				AuthenticationHttpContextExtensions.SignInAsync(HttpContext, _principal,
 					new AuthenticationProperties
 					{
 						IsPersistent = true,
@@ -77,7 +78,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public IActionResult Logout()
 		{
-			HttpContext.Authentication.SignOutAsync("ltbdb");
+			AuthenticationHttpContextExtensions.SignOutAsync(HttpContext);
 
 			return RedirectToAction("index", "home");
 		}

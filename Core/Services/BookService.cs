@@ -104,7 +104,7 @@ namespace ltbdb.Core.Services
 			tag = tag.Trim();
 
 			var _filter = Builders<Book>.Filter;
-			var _tag = _filter.AnyIn("Tags", new string[] { tag });
+			var _tag = _filter.AnyEq("Tags", tag);
 
 			var _sort = Builders<Book>.Sort;
 			var _order = _sort.Ascending(f => f.Number).Ascending(f => f.Category);

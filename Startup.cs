@@ -22,8 +22,6 @@ namespace ltbdb
 	{
 		public IConfiguration Configuration { get; }
 
-		static public ILoggerFactory Logger { get; private set; }
-
 		public Startup(IConfiguration configuration, IHostingEnvironment env)
 		{
 			Configuration = configuration;
@@ -90,8 +88,6 @@ namespace ltbdb
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
 		{
-			logger.AddNLog();
-
 			app.UseStatusCodePagesWithReExecute("/error/{0}");
 
 			if (env.IsDevelopment())

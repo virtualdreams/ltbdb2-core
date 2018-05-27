@@ -1,8 +1,9 @@
-﻿using MongoDB.Bson;
+﻿using ltbdb.Core.Helpers;
+using Microsoft.AspNetCore.Http;
+using MongoDB.Bson;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
-using ltbdb.Core.Helpers;
-using Microsoft.AspNetCore.Http;
 
 namespace ltbdb.Models
 {
@@ -11,6 +12,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The book id.
 		/// </summary>
+		[JsonConverter(typeof(ObjectIdConverter))]
 		public ObjectId Id { get; set; }
 
 		/// <summary>
@@ -147,5 +149,69 @@ namespace ltbdb.Models
 		/// Delete image flag.
 		/// </summary>
 		public bool Remove { get; set; }
+	}
+
+	public class BookWriteApiModel
+	{
+		/// <summary>
+		/// The book number.
+		/// </summary>
+		[Required(ErrorMessage = "Bitte gib eine Nummer ein.")]
+		public int? Number { get; set; }
+
+		/// <summary>
+		/// The book title.
+		/// </summary>
+		[Required(ErrorMessage = "Bitte gib einen Titel ein.")]
+		[MaxLength(100, ErrorMessage = "Der Titel darf max. 100 Zeichen lang sein.")]
+		public string Title { get; set; }
+
+		/// <summary>
+		/// The category of the book.
+		/// </summary>
+		[Required(ErrorMessage = "Bitte gib eine Kategorie ein.")]
+		[MaxLength(100, ErrorMessage = "Die Kategorie darf max. 100 Zeichen lang sein.")]
+		public string Category { get; set; }
+
+		private string[] _stories = new string[] { };
+
+		/// <summary>
+		/// The stories in the book.
+		/// </summary>
+		[ArrayItemMaxLength(100, ErrorMessage = "Der Inhalt darf max. 100 Zeichen lang sein.")]
+		public string[] Stories
+		{
+			get
+			{
+				return _stories;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_stories = value;
+				}
+			}
+		}
+
+		public string[] _tags = new string[] { };
+
+		/// <summary>
+		/// The tags for the book.
+		/// </summary>
+		public string[] Tags
+		{
+			get
+			{
+				return _tags;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_tags = value;
+				}
+			}
+		}
 	}
 }

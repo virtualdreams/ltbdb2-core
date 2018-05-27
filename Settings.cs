@@ -52,5 +52,16 @@ namespace ltbdb
 		/// The password to login.
 		/// </summary>
 		public string Password { get; set; } = "";
+
+		/// <summary>
+		/// Path to keystore directory.
+		/// </summary>
+		public string KeyStore { get; set; } = "";
+
+		/// <summary>
+		/// Security key for jwt bearer token.
+		/// </summary>
+		/// <returns></returns>
+		public string SecurityKey { get; set; } = "";
 	}
 }

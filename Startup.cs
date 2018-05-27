@@ -1,3 +1,6 @@
+using ltbdb.Core.Services;
+using ltbdb.Extensions;
+using ltbdb.ModelBinders;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -7,14 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using System;
 using System.IO;
-using ltbdb.Core.Services;
-using ltbdb.Extensions;
-using ltbdb.ModelBinders;
+using System.Text;
 
 namespace ltbdb
 {
@@ -29,14 +31,30 @@ namespace ltbdb
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// add options to DI
+			services.AddOptions();
+			services.Configure<Settings>(Configuration.GetSection("Settings"));
+
+			// DI
+			services.AddAutoMapper();
+			services.AddScoped(config => config.GetService<IOptionsSnapshot<Settings>>().Value);
+			services.AddScoped<MongoContext>();
+			services.AddTransient<BookService>();
+			services.AddTransient<TagService>();
+			services.AddTransient<CategoryService>();
+			services.AddTransient<ImageService>();
+			services.AddTransient<MaintenanceService>();
+
+			// get settings
+			var settings = services.BuildServiceProvider().GetRequiredService<Settings>();
+
 			// key ring
-			var _keyStore = Configuration.GetSection("Settings")["KeyStore"];
-			if (!String.IsNullOrEmpty(_keyStore))
+			if (!String.IsNullOrEmpty(settings.KeyStore))
 			{
 				services.AddDataProtection(options =>
 				{
 					options.ApplicationDiscriminator = "ltbdb";
-				}).PersistKeysToFileSystem(new DirectoryInfo(_keyStore));
+				}).PersistKeysToFileSystem(new DirectoryInfo(settings.KeyStore));
 			}
 
 			// IIS integration
@@ -44,10 +62,6 @@ namespace ltbdb
 			{
 
 			});
-
-			// add options to DI
-			services.AddOptions();
-			services.Configure<Settings>(Configuration.GetSection("Settings"));
 
 			// add custom model binders
 			services.AddMvc(options =>
@@ -64,6 +78,18 @@ namespace ltbdb
 					options.Cookie.Name = "ltbdb";
 					options.LoginPath = new PathString("/login");
 					options.AccessDeniedPath = new PathString("/");
+				})
+				.AddJwtBearer(options =>
+				{
+					options.TokenValidationParameters = new TokenValidationParameters
+					{
+						ValidateAudience = false,
+						ValidateIssuer = false,
+						ValidateIssuerSigningKey = true,
+						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecurityKey)),
+						ValidateLifetime = true,
+						ClockSkew = TimeSpan.FromMinutes(5)
+					};
 				});
 
 			// authorization policies
@@ -74,30 +100,22 @@ namespace ltbdb
 					policy.RequireRole("Administrator");
 				});
 			});
-
-			// DI
-			services.AddAutoMapper();
-			services.AddScoped(cfg => cfg.GetService<IOptionsSnapshot<Settings>>().Value);
-			services.AddScoped<MongoContext>();
-			services.AddTransient<BookService>();
-			services.AddTransient<TagService>();
-			services.AddTransient<CategoryService>();
-			services.AddTransient<ImageService>();
-			services.AddTransient<MaintenanceService>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
 		{
-			app.UseStatusCodePagesWithReExecute("/error/{0}");
-
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/error/500");
-			}
+			app.UseWhen(context => !context.Request.Path.StartsWithSegments(new PathString("/api")), branch => {
+				branch.UseStatusCodePagesWithReExecute("/error/{0}");
+				
+				if (env.IsDevelopment())
+				{
+					branch.UseDeveloperExceptionPage();
+				}
+				else
+				{
+					branch.UseExceptionHandler("/error/500");
+				}
+			});
 
 			app.UseStaticFiles();
 

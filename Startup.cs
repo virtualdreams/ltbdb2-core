@@ -83,8 +83,10 @@ namespace ltbdb
 				{
 					options.TokenValidationParameters = new TokenValidationParameters
 					{
-						ValidateAudience = false,
-						ValidateIssuer = false,
+						ValidateAudience = true,
+						ValidAudience = "ltbdb",
+						ValidateIssuer = true,
+						ValidIssuer = "ltbdb",
 						ValidateIssuerSigningKey = true,
 						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecurityKey)),
 						ValidateLifetime = true,
@@ -104,9 +106,10 @@ namespace ltbdb
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
 		{
-			app.UseWhen(context => !context.Request.Path.StartsWithSegments(new PathString("/api")), branch => {
+			app.UseWhen(context => !context.Request.Path.StartsWithSegments(new PathString("/api")), branch =>
+			{
 				branch.UseStatusCodePagesWithReExecute("/error/{0}");
-				
+
 				if (env.IsDevelopment())
 				{
 					branch.UseDeveloperExceptionPage();

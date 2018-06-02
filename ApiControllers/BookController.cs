@@ -42,7 +42,7 @@ namespace ltbdb.WebAPI.Controllers
 		public IActionResult GetById(ObjectId id)
 		{
 			var _book = Book.GetById(id);
-			if(_book == null)
+			if (_book == null)
 				return NotFound();
 
 			return Ok(Mapper.Map<BookModel>(_book));
@@ -51,12 +51,12 @@ namespace ltbdb.WebAPI.Controllers
 		[HttpPost("{id}")]
 		public IActionResult Post(ObjectId id, [FromBody]BookWriteApiModel model)
 		{
-			if(ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
 				try
 				{
 					var _book = Book.GetById(id);
-					if(_book == null)
+					if (_book == null)
 						return NotFound();
 
 					var book = Mapper.Map<Book>(model);
@@ -65,7 +65,7 @@ namespace ltbdb.WebAPI.Controllers
 
 					return Ok();
 				}
-				catch(Exception)
+				catch (Exception)
 				{
 					return StatusCode(500);
 				}
@@ -77,7 +77,7 @@ namespace ltbdb.WebAPI.Controllers
 		[HttpPut]
 		public IActionResult Put([FromBody]BookWriteApiModel model)
 		{
-			if(ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
 				try
 				{
@@ -87,7 +87,7 @@ namespace ltbdb.WebAPI.Controllers
 
 					return Ok(new { Id = id.ToString() });
 				}
-				catch(Exception)
+				catch (Exception)
 				{
 					return StatusCode(500);
 				}
@@ -102,14 +102,14 @@ namespace ltbdb.WebAPI.Controllers
 			try
 			{
 				var _book = Book.GetById(id);
-				if(_book == null)
+				if (_book == null)
 					return NotFound();
 
 				Book.Delete(id);
 
 				return Ok();
 			}
-			catch(Exception)
+			catch (Exception)
 			{
 				return StatusCode(500);
 			}

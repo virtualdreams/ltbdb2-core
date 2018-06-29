@@ -18,12 +18,20 @@ server {
 	
 	root /srv/www/ltbdb2-core/wwwroot;
 	
-	location ~ ^/(content|css|images|js)/ {
-		expires 30d;
-		add_header Pragma public;
-		add_header Cache-Control "public";
-	}
+	location ~ ^/(content|css|js)/ {
+        expires 30d;
+        add_header Pragma public;
+        add_header Cache-Control "public";
+    }
 	
+	# images are located outside the app directory
+    location /images/ {
+        alias /srv/www/ltbdb2-core-images/;
+        expires 30d;
+        add_header Pragma public;
+        add_header Cache-Control "public";
+    }
+
 	location / {
 		proxy_pass http://127.0.0.1:5001;
 		proxy_http_version 1.1;

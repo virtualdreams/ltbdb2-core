@@ -22,11 +22,16 @@ namespace ltbdb
 {
 	public class Startup
 	{
+		private readonly ILogger<Startup> Log;
+
 		public IConfiguration Configuration { get; }
 
-		public Startup(IConfiguration configuration, IHostingEnvironment env)
+		public Startup(IConfiguration configuration, IHostingEnvironment env, ILogger<Startup> log)
 		{
+			Log = log;
 			Configuration = configuration;
+
+			Log.LogInformation($"Application ltbdb2 v{System.Reflection.Assembly.GetEntryAssembly().GetName().Version} started.");
 		}
 
 		public void ConfigureServices(IServiceCollection services)

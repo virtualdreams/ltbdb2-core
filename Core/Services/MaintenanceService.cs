@@ -35,9 +35,9 @@ namespace ltbdb.Core.Services
 				.Ascending(f => f.Tags);
 
 			Context.Book.Indexes.DropAll();
-			Context.Book.Indexes.CreateOne(_title, new CreateIndexOptions { });
-			Context.Book.Indexes.CreateOne(_category, new CreateIndexOptions { });
-			//Context.Book.Indexes.CreateOne(_tags, new CreateIndexOptions { Sparse = true });
+			Context.Book.Indexes.CreateOne(new CreateIndexModel<Book>(_title, new CreateIndexOptions { }));
+			Context.Book.Indexes.CreateOne(new CreateIndexModel<Book>(_category, new CreateIndexOptions { }));
+			//Context.Book.Indexes.CreateOne(new CreateIndexModel<Book>(_tags, new CreateIndexOptions { Sparse = true }));
 		}
 	}
 }

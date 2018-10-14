@@ -8,17 +8,22 @@
 	ViewBag.Description = $"Inhalte getaggt mit \"{Model.Tag}\"";
 }
 
-<h2>Inhalte getaggt mit &quot;@Model.Tag&quot;</h2>
-<ul class="book">
-	@foreach (var book in Model.Books) {
-		@await Html.PartialAsync("_PartialBook", book)
-	}
-</ul>
-<div class="pager">
-	@if(Model.PageOffset.HasPrevious) {
-		<a href="@Url.RouteUrl("tag", new { id = Model.Tag, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
-	}
-	@if(Model.PageOffset.HasNext) {
-		<a href="@Url.RouteUrl("tag", new { id = Model.Tag, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">weiter <i class="material-icons">keyboard_arrow_right</i></a>
-	}
+<div style="position: relative;">
+	<div class="panel-menu">
+			Anzahl Bücher mit diesem Tag: @Model.PageOffset.Items
+		</div>
+	<h2>Inhalte getaggt mit &quot;@Model.Tag&quot;</h2>
+	<ul class="book">
+		@foreach (var book in Model.Books) {
+			@await Html.PartialAsync("_PartialBook", book)
+		}
+	</ul>
+	<div class="pager">
+		@if(Model.PageOffset.HasPrevious) {
+			<a href="@Url.RouteUrl("tag", new { id = Model.Tag, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
+		}
+		@if(Model.PageOffset.HasNext) {
+			<a href="@Url.RouteUrl("tag", new { id = Model.Tag, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">weiter <i class="material-icons">keyboard_arrow_right</i></a>
+		}
+	</div>
 </div>

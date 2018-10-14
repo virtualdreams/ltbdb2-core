@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ltbdb.core.Helpers;
 using ltbdb.Core.Services;
 
 namespace ltbdb.ViewComponents
@@ -8,6 +9,6 @@ namespace ltbdb.ViewComponents
 		public VersionViewComponent()
 		{ }
 
-		public IViewComponentResult Invoke() => Content($"{System.Reflection.Assembly.GetEntryAssembly().GetName().Version}");
+		public IViewComponentResult Invoke() => Content($"{ApplicationVersion.InfoVersion()}");
 	}
 }

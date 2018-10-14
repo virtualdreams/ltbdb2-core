@@ -41,7 +41,7 @@ namespace ltbdb.Controllers
 			var _books = Book.GetByTag(id ?? String.Empty);
 			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
 
-			var books = Mapper.Map<BookModel[]>(_books);
+			var books = Mapper.Map<BookModel[]>(_page);
 			var offset = new PageOffset(ofs ?? 0, Options.ItemsPerPage, _books.Count());
 
 			var view = new BookViewTagContainer

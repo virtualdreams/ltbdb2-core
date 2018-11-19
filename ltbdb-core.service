@@ -1,0 +1,18 @@
+[Unit]
+Description=dotnet ltbdb2-core
+After=network.target
+
+[Service]
+;Environment=ASPNETCORE_URLS=http://127.0.0.1:5000/
+EnvironmentFile=
+;Restart=always
+;RestartSec=10
+Type=simple
+SyslogIdentifier=ltbdb2-core
+WorkingDirectory=/srv/www/ltbdb2-core
+ExecStart=/usr/local/bin/dotnet /srv/www/ltbdb2-core/ltbdb2.dll
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

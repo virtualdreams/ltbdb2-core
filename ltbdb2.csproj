@@ -5,7 +5,7 @@
     <Description>Lustiges Taschenbuch Datenbank v2</Description>
     <Copyright>stichelbiene.de © 2014-2018</Copyright>
     <AssemblyTitle>Lustiges Taschenbuch Datenbank v2</AssemblyTitle>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <DebugType>portable</DebugType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>ltbdb2</AssemblyName>
@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.All" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.2" />
     <PackageReference Include="NLog" Version="4.5.11" />

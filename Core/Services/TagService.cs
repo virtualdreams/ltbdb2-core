@@ -11,9 +11,9 @@ namespace ltbdb.Core.Services
 		private readonly ILogger<TagService> Log;
 		private readonly MySqlContext Context;
 
-		public TagService(ILogger<TagService> logger, MySqlContext context)
+		public TagService(ILogger<TagService> log, MySqlContext context)
 		{
-			Log = logger;
+			Log = log;
 			Context = context;
 		}
 

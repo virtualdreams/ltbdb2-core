@@ -10,9 +10,9 @@ namespace ltbdb.Core.Services
 		private readonly ILogger<MaintenanceService> Log;
 		private readonly MySqlContext Context;
 
-		public MaintenanceService(ILogger<MaintenanceService> logger, MySqlContext context)
+		public MaintenanceService(ILogger<MaintenanceService> log, MySqlContext context)
 		{
-			Log = logger;
+			Log = log;
 			Context = context;
 		}
 

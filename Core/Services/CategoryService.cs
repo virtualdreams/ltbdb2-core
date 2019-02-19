@@ -12,9 +12,9 @@ namespace ltbdb.Core.Services
 		private readonly ILogger<CategoryService> Log;
 		private readonly MySqlContext Context;
 
-		public CategoryService(ILogger<CategoryService> logger, MySqlContext context)
+		public CategoryService(ILogger<CategoryService> log, MySqlContext context)
 		{
-			Log = logger;
+			Log = log;
 			Context = context;
 		}
 

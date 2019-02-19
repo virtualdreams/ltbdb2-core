@@ -9,19 +9,19 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService Book;
+		private readonly BookService BookService;
 
 		public HomeController(IMapper mapper, Settings settings, BookService book)
 		{
 			Mapper = mapper;
 			Options = settings;
-			Book = book;
+			BookService = book;
 		}
 
 		[HttpGet]
 		public IActionResult Index()
 		{
-			var _books = Book.GetRecentlyAdded(Options.RecentItems);
+			var _books = BookService.GetRecentlyAdded(Options.RecentItems);
 
 			var books = Mapper.Map<BookModel[]>(_books);
 

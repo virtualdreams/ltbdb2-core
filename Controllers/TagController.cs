@@ -11,21 +11,21 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService Book;
-		private readonly TagService Tag;
+		private readonly BookService BookService;
+		private readonly TagService TagService;
 
 		public TagController(IMapper mapper, Settings settings, BookService book, TagService tag)
 		{
 			Mapper = mapper;
 			Options = settings;
-			Book = book;
-			Tag = tag;
+			BookService = book;
+			TagService = tag;
 		}
 
 		[HttpGet]
 		public IActionResult Index()
 		{
-			var _tags = Tag.Get().OrderBy(o => o);
+			var _tags = TagService.Get().OrderBy(o => o);
 
 			var view = new TagViewContainer
 			{
@@ -38,7 +38,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public IActionResult View(string id, int? ofs)
 		{
-			var _books = Book.GetByTag(id ?? String.Empty);
+			var _books = BookService.GetByTag(id ?? String.Empty);
 			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);

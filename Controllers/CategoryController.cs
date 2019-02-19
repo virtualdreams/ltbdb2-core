@@ -11,19 +11,19 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService Book;
+		private readonly BookService BookService;
 
 		public CategoryController(IMapper mapper, Settings settings, BookService book)
 		{
 			Mapper = mapper;
 			Options = settings;
-			Book = book;
+			BookService = book;
 		}
 
 		[HttpGet]
 		public IActionResult Index(int? ofs)
 		{
-			var _books = Book.Get().OrderBy(o => o.Category);
+			var _books = BookService.Get().OrderBy(o => o.Category);
 			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
@@ -41,7 +41,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public IActionResult View(string id, int? ofs)
 		{
-			var _books = Book.GetByCategory(id ?? String.Empty);
+			var _books = BookService.GetByCategory(id ?? String.Empty);
 			if (_books.Count() == 0)
 				return NotFound();
 

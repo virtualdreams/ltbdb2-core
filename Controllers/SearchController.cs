@@ -12,23 +12,23 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService Book;
-		private readonly CategoryService Category;
-		private readonly TagService Tag;
+		private readonly BookService BookService;
+		private readonly CategoryService CategoryService;
+		private readonly TagService TagService;
 
 		public SearchController(IMapper mapper, Settings settings, BookService book, CategoryService category, TagService tag)
 		{
 			Mapper = mapper;
 			Options = settings;
-			Book = book;
-			Category = category;
-			Tag = tag;
+			BookService = book;
+			CategoryService = category;
+			TagService = tag;
 		}
 
 		[HttpGet]
 		public IActionResult Search(string q, int? ofs)
 		{
-			var _books = Book.Search(q ?? String.Empty);
+			var _books = BookService.Search(q ?? String.Empty);
 			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
@@ -47,19 +47,19 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public IActionResult SearchTitle(string term)
 		{
-			return Json(Book.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(BookService.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
 		public IActionResult SearchCategory(string term)
 		{
-			return Json(Category.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(CategoryService.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
 		public IActionResult SearchTag(string term)
 		{
-			return Json(Tag.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(TagService.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 	}
 }

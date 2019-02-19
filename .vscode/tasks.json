@@ -1,28 +1,15 @@
 {
-    "version": "0.1.0",
-    "command": "dotnet",
-    "isShellCommand": true,
-    "args": [],
+    "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "build",
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
             "args": [
-                "${workspaceRoot}\\ltbdb2.csproj"
+                "build",
+                "${workspaceFolder}/ltbdb2.csproj"
             ],
-            "isBuildCommand": true,
-            "problemMatcher": "$msCompile",
-            "echoCommand": true
-        },
-        {
-            "taskName": "publish",
-            "args": [
-                "--configuration",
-                "Release",
-                "${workspaceRoot}\\ltbdb2.csproj"
-            ],
-            "isBuildCommand": false,
-            "showOutput": "always",
-            "echoCommand": true
+            "problemMatcher": "$msCompile"
         }
     ]
 }

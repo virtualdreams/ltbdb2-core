@@ -3,14 +3,9 @@ namespace ltbdb
 	public class Settings
 	{
 		/// <summary>
-		/// MongoDb connection string.
+		/// MySql connection string.
 		/// </summary>
-		public string MongoDB { get; set; } = "mongodb://127.0.0.1/";
-
-		/// <summary>
-		/// MongoDb database name.
-		/// </summary>
-		public string Database { get; set; } = "ltbdb";
+		public string ConnectionString { get; set; } = "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb";
 
 		/// <summary>
 		/// Items per page to display.

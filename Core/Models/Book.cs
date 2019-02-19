@@ -1,86 +1,60 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ltbdb.Core.Models
 {
 	/// <summary>
 	/// Object to store a book.
 	/// </summary>
-	[BsonIgnoreExtraElements]
+	[Table("book")]
 	public class Book
 	{
 		/// <summary>
 		/// The book id.
 		/// </summary>
-		[BsonId]
-		[BsonIgnoreIfDefault]
-		public ObjectId Id { get; set; }
+		[Column("id")]
+		public int Id { get; set; }
 
 		/// <summary>
 		/// The book number.
 		/// </summary>
+		[Column("number")]
 		public int Number { get; set; }
 
 		/// <summary>
 		/// The book title.
 		/// </summary>
+		[Column("title")]
 		public string Title { get; set; }
 
 		/// <summary>
 		/// The book category.
 		/// </summary>
+		[Column("category")]
 		public string Category { get; set; }
 
 		/// <summary>
 		/// The creation date.
 		/// </summary>
-		[BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+		[Column("created")]
 		public DateTime Created { get; set; }
 
 		/// <summary>
 		/// The cover filename (stored in gridfs).
 		/// </summary>
+		[Column("filename")]
 		public string Filename { get; set; }
-
-		private string[] _stories = new string[] { };
 
 		/// <summary>
 		/// The stories in the book.
 		/// </summary>
-		public string[] Stories
-		{
-			get
-			{
-				return _stories;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_stories = value;
-				}
-			}
-		}
-
-		private string[] _tags = new string[] { };
+		public ICollection<Story> Stories { get; set; }
 
 		/// <summary>
 		/// The tags for the book.
 		/// </summary>
-		public string[] Tags
-		{
-			get
-			{
-				return _tags;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_tags = value;
-				}
-			}
-		}
+		public ICollection<Tag> Tags { get; set; }
 	}
 }

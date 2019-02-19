@@ -1,20 +1,18 @@
-﻿using ltbdb.Core.Models;
-using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Logging;
+using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
 {
 	public class CategoryService
 	{
 		private readonly ILogger<CategoryService> Log;
-		private readonly MongoContext Context;
+		private readonly MySqlContext Context;
 
-		public CategoryService(ILogger<CategoryService> logger, MongoContext context)
+		public CategoryService(ILogger<CategoryService> logger, MySqlContext context)
 		{
 			Log = logger;
 			Context = context;
@@ -26,11 +24,16 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Get()
 		{
-			var _result = Context.Book
-				.Distinct<string>("Category", new ExpressionFilterDefinition<Book>(_ => true))
-				.ToEnumerable();
+			// TODO
+			Log.LogInformation($"Get the full list of categories.");
 
-			return _result;
+			var _query = Context.Book
+				.Where(f => f.Category != null)
+				.GroupBy(g => g.Category)
+				.Select(s => s.Key)
+				.OrderBy(o => o);
+
+			return _query.ToList();
 		}
 
 		/// <summary>
@@ -47,17 +50,20 @@ namespace ltbdb.Core.Services
 			if (String.IsNullOrEmpty(from) || String.IsNullOrEmpty(to))
 				throw new LtbdbRenameCategoryException();
 
-			var _filter = Builders<Book>.Filter;
-			var _from = _filter.Eq(f => f.Category, from);
+			var _query = Context.Book
+				.Where(f => f.Category == from)
+				.ToList();
 
-			var _update = Builders<Book>.Update;
-			var _set = _update.Set(s => s.Category, to);
+			_query.ForEach(e =>
+			{
+				e.Category = to;
+			});
 
 			Log.LogInformation($"Rename category '{from}' to '{to}'.");
 
-			var _result = Context.Book.UpdateMany(_from, _set);
+			Context.SaveChanges();
 
-			Log.LogInformation($"Modified {_result.ModifiedCount} documents.");
+			// Log.LogInformation($"Modified {_result.ModifiedCount} documents.");
 		}
 
 		/// <summary>
@@ -69,27 +75,12 @@ namespace ltbdb.Core.Services
 		{
 			term = term.Trim();
 
-			if (String.IsNullOrEmpty(term))
-				term = ".*";
-			else
-				term = Regex.Escape(term);
-
-			var _filter = Builders<Book>.Filter;
-			var _category = _filter.Regex(f => f.Category, new BsonRegularExpression(term, "i"));
-
-			var _sort = Builders<Book>.Sort;
-			var _order = _sort.Ascending(f => f.Category);
+			var _categories = Get()
+				.Where(f => f.Contains(term));
 
 			Log.LogDebug($"Request suggestions for categories by term '{term}'.");
 
-			var _result = Context.Book
-				.Find(_category)
-				.Sort(_order)
-				.ToEnumerable()
-				.Select(s => s.Category)
-				.Distinct();
-
-			return _result;
+			return _categories;
 		}
 	}
 }

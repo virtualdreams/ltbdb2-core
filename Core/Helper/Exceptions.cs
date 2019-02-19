@@ -22,4 +22,11 @@ namespace ltbdb
 			: base("Rename category names must be non-zero.")
 		{ }
 	}
+
+	public class LtbdbNotFoundException : LtbdbException
+	{
+		public LtbdbNotFoundException()
+			: base("Book not found.")
+		{ }
+	}
 }

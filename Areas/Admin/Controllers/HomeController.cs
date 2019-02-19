@@ -14,12 +14,14 @@ namespace ltbdb.Areas.Admin.Controllers
 		private readonly BookService Book;
 		private readonly CategoryService Category;
 		private readonly TagService Tag;
+		private readonly MaintenanceService Maintenance;
 
-		public HomeController(BookService book, CategoryService category, TagService tag)
+		public HomeController(BookService book, CategoryService category, TagService tag, MaintenanceService maintenance)
 		{
 			Book = book;
 			Category = category;
 			Tag = tag;
+			Maintenance = maintenance;
 		}
 
 		[HttpGet]
@@ -34,26 +36,13 @@ namespace ltbdb.Areas.Admin.Controllers
 			// add header to force it as download
 			Response.Headers.Add("Content-Disposition", $"attachment; filename=ltbdb-export-{DateTime.Now.ToString("yyyyMMddHHmmss")}.json");
 
-			return Json(Book.Export(), new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(Maintenance.Export(), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
 		public IActionResult Stats()
 		{
-			var _books = Book.Get().Count();
-			var _categories = Category.Get().Count();
-			var _stories = Book.Get().SelectMany(s => s.Stories).Distinct().Count();
-			var _tags = Tag.Get().Count();
-
-			var _stats = new
-			{
-				Books = _books,
-				Categories = _categories,
-				Stories = _stories,
-				Tags = _tags
-			};
-
-			return Json(_stats, new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(Maintenance.Stats(), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 	}
 }

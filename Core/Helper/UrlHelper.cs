@@ -1,7 +1,6 @@
-using MongoDB.Bson;
-using System.Text.RegularExpressions;
-using System.Text;
 using System;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ltbdb.Core.Helpers
 {
@@ -35,7 +34,7 @@ namespace ltbdb.Core.Helpers
 			value = value.Replace("ä", "ae").Replace("ö", "oe").Replace("ü", "ue").Replace("ß", "ss");
 
 			// remove invalid chars
-			value = Regex.Replace(value, @"[^a-z0-9\s-]", "");
+			value = Regex.Replace(value, @"[^a-z0-9\s-]", "-");
 
 			// trim dashes from end
 			value = value.Trim('-');
@@ -54,7 +53,7 @@ namespace ltbdb.Core.Helpers
 		/// <param name="maxLength">Max length of text.</param>
 		/// <param name="values">The strings to concat and slugify.</param>
 		/// <returns></returns>
-		public static string ToSlug(ObjectId id, int maxLength = 100, params string[] values)
+		public static string ToSlug(int maxLength = 100, params string[] values)
 		{
 			var _sb = new StringBuilder();
 
@@ -63,7 +62,7 @@ namespace ltbdb.Core.Helpers
 				_sb.Append($"{value}-");
 			}
 
-			return $"{UrlHelper.ToSlug(_sb.ToString(), maxLength)}-{id.ToString()}";
+			return $"{UrlHelper.ToSlug(_sb.ToString(), maxLength)}";
 		}
 	}
 }

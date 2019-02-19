@@ -1,20 +1,17 @@
-﻿using ltbdb.Core.Models;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
+﻿using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Logging;
+using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
 {
 	public class TagService
 	{
 		private readonly ILogger<TagService> Log;
-		private readonly MongoContext Context;
+		private readonly MySqlContext Context;
 
-		public TagService(ILogger<TagService> logger, MongoContext context)
+		public TagService(ILogger<TagService> logger, MySqlContext context)
 		{
 			Log = logger;
 			Context = context;
@@ -26,11 +23,14 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Get()
 		{
-			var _result = Context.Book
-				.Distinct<string>("Tags", new ExpressionFilterDefinition<Book>(_ => true))
-				.ToEnumerable();
+			Log.LogInformation($"Get the full list of tags.");
 
-			return _result;
+			var _query = Context.Tag
+				.GroupBy(g => g.Name)
+				.Select(s => s.Key)
+				.OrderBy(o => o);
+
+			return _query.ToList();
 		}
 
 		/// <summary>
@@ -42,15 +42,12 @@ namespace ltbdb.Core.Services
 		{
 			term = term.Trim();
 
-			var _result = Context.Book.Aggregate()
-				.Unwind("Tags")
-				.Match(new BsonDocument { { "Tags", new BsonRegularExpression(Regex.Escape(term), "i") } })
-				.Group(new BsonDocument { { "_id", "$Tags" } })
-				.ToEnumerable()
-				.Select(s => BsonSerializer.Deserialize<TagResult>(s))
-				.Select(s => s.Id);
+			var _tags = Get()
+				.Where(f => f.Contains(term));
 
-			return _result;
+			Log.LogDebug($"Request suggestions for tags by term '{term}'.");
+
+			return _tags;
 		}
 	}
 }

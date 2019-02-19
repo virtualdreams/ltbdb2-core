@@ -1,13 +1,12 @@
 using AutoMapper;
-using ltbdb.Core.Models;
-using ltbdb.Core.Services;
-using ltbdb.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
+using ltbdb.Core.Models;
+using ltbdb.Core.Services;
+using ltbdb.Models;
 
 namespace ltbdb.WebAPI.Controllers
 {
@@ -18,30 +17,30 @@ namespace ltbdb.WebAPI.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService Book;
-		private readonly CategoryService Category;
-		private readonly TagService Tag;
+		private readonly BookService BookService;
+		private readonly CategoryService CategoryService;
+		private readonly TagService TagService;
 
 		public BookController(IMapper mapper, Settings settings, BookService book, CategoryService category, TagService tag)
 		{
 			Mapper = mapper;
 			Options = settings;
-			Book = book;
-			Category = category;
-			Tag = tag;
+			BookService = book;
+			CategoryService = category;
+			TagService = tag;
 		}
 
 		[HttpGet]
 		public IActionResult GetAll(string filter, string category)
 		{
-			var _books = Book.Get();
+			var _books = BookService.Get();
 			return Ok(Mapper.Map<BookModel[]>(_books));
 		}
 
 		[HttpGet("{id}")]
-		public IActionResult GetById(ObjectId id)
+		public IActionResult GetById(int id)
 		{
-			var _book = Book.GetById(id);
+			var _book = BookService.GetById(id);
 			if (_book == null)
 				return NotFound();
 
@@ -49,19 +48,19 @@ namespace ltbdb.WebAPI.Controllers
 		}
 
 		[HttpPost("{id}")]
-		public IActionResult Post(ObjectId id, [FromBody]BookWriteApiModel model)
+		public IActionResult Post(int id, [FromBody]BookPostApiModel model)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
-					var _book = Book.GetById(id);
+					var _book = BookService.GetById(id);
 					if (_book == null)
 						return NotFound();
 
 					var book = Mapper.Map<Book>(model);
 					book.Id = id;
-					Book.Update(book);
+					BookService.Update(book);
 
 					return Ok();
 				}
@@ -75,7 +74,7 @@ namespace ltbdb.WebAPI.Controllers
 		}
 
 		[HttpPut]
-		public IActionResult Put([FromBody]BookWriteApiModel model)
+		public IActionResult Put([FromBody]BookPostApiModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -83,7 +82,7 @@ namespace ltbdb.WebAPI.Controllers
 				{
 					var book = Mapper.Map<Book>(model);
 
-					var id = Book.Create(book);
+					var id = BookService.Create(book);
 
 					return Ok(new { Id = id.ToString() });
 				}
@@ -97,15 +96,15 @@ namespace ltbdb.WebAPI.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult Delete(ObjectId id)
+		public IActionResult Delete(int id)
 		{
 			try
 			{
-				var _book = Book.GetById(id);
+				var _book = BookService.GetById(id);
 				if (_book == null)
 					return NotFound();
 
-				Book.Delete(id);
+				BookService.Delete(id);
 
 				return Ok();
 			}

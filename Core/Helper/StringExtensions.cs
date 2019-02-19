@@ -1,26 +1,11 @@
 ﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using MongoDB.Bson;
 
 namespace ltbdb.Core.Helpers
 {
 	static public class StringExtensions
 	{
-		/// <summary>
-		/// Get last n characters.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <param name="len">Max length.</param>
-		/// <returns>Last n characters.</returns>
-		static public string GetLast(this string value, int len)
-		{
-			if (String.IsNullOrEmpty(value) || len >= value.Length)
-				return value;
-
-			return value.Substring(value.Length - len);
-		}
-
 		/// <summary>
 		/// Combines two pathes.
 		/// </summary>

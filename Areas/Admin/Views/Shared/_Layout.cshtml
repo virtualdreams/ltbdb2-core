@@ -44,7 +44,6 @@
 								<a href="/admin" class="@((ViewBag.Menu == "home") ? "selected" : "")">Home</a>
 								<a href="/">Frontend</a>
 								<a href="@Url.Action("index", "category", new { area = "admin" })" class="@((ViewBag.Menu == "category") ? "selected" : "")">Kategorien</a>
-								<a href="@Url.Action("index", "maintenance", new { area = "admin" })" class="@((ViewBag.Menu == "maintenance") ? "selected" : "")">Wartung</a>
 							</nav>
 						</div>
 					</div>
@@ -55,9 +54,7 @@
 					</div>
 				</div>
 
-				<div class="footer">
-					<div class="copy">&copy; 2014-2018 <a href="http://stichelbiene.de">stichelbiene.de</a>.</div>
-				</div>
+				@await Html.PartialAsync("_PartialFooter")
 			</div>
 		</div>
 	</body>

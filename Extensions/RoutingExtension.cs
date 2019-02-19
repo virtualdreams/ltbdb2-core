@@ -51,8 +51,9 @@ namespace ltbdb.Extensions
 
 				routes.MapRoute(
 					name: "view",
-					template: "book/{id?}",
-					defaults: new { controller = "Book", action = "View" }
+					template: "book/{id?}/{slug?}",
+					defaults: new { controller = "Book", action = "View" },
+					constraints: new { id = @"\d+" }
 				);
 
 				routes.MapRoute(

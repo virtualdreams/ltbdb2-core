@@ -1,9 +1,8 @@
-﻿using ltbdb.Core.Helpers;
-using Microsoft.AspNetCore.Http;
-using MongoDB.Bson;
+﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
+using ltbdb.Core.Helpers;
 
 namespace ltbdb.Models
 {
@@ -12,8 +11,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The book id.
 		/// </summary>
-		[JsonConverter(typeof(ObjectIdConverter))]
-		public ObjectId Id { get; set; }
+		public int Id { get; set; }
 
 		/// <summary>
 		/// The book number.
@@ -81,12 +79,12 @@ namespace ltbdb.Models
 		}
 	}
 
-	public class BookWriteModel
+	public class BookPostModel
 	{
 		/// <summary>
 		/// The book id.
 		/// </summary>
-		public ObjectId Id { get; set; }
+		public int Id { get; set; }
 
 		/// <summary>
 		/// The book number.
@@ -151,7 +149,7 @@ namespace ltbdb.Models
 		public bool Remove { get; set; }
 	}
 
-	public class BookWriteApiModel
+	public class BookPostApiModel
 	{
 		/// <summary>
 		/// The book number.

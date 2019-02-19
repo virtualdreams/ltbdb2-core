@@ -1,43 +1,66 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using ltbdb.Core.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ltbdb.Core.Services
 {
-	/// <summary>
-	/// Maintenance service class.
-	/// </summary>
 	public class MaintenanceService
 	{
 		private readonly ILogger<MaintenanceService> Log;
-		private readonly MongoContext Context;
+		private readonly MySqlContext Context;
 
-		public MaintenanceService(ILogger<MaintenanceService> log, MongoContext context)
+		public MaintenanceService(ILogger<MaintenanceService> logger, MySqlContext context)
 		{
-			Log = log;
+			Log = logger;
 			Context = context;
 		}
 
 		/// <summary>
-		/// (Re)Create all necessary indexes for the database.
+		/// Export the complete database.
 		/// </summary>
-		public void CreateIndexes()
+		/// <returns>List of json ready objects.</returns>
+		public IEnumerable<dynamic> Export()
 		{
-			var _index = Builders<Book>.IndexKeys;
-			var _title = _index
-				.Ascending(f => f.Title);
+			var _books = Context.Book
+				.Include(i => i.Stories)
+				.Include(i => i.Tags)
+				.OrderBy(o => o.Category)
+				.ThenBy(o => o.Number);
 
-			var _category = _index
-				.Ascending(f => f.Category);
+			foreach (var book in _books)
+			{
+				yield return new
+				{
+					Number = book.Number,
+					Title = book.Title,
+					Category = book.Category,
+					Created = book.Created,
+					Filename = book.Filename,
+					Stories = book.Stories.Select(s => s.Name),
+					Tags = book.Tags.Select(s => s.Name)
+				};
+			}
+		}
 
-			var _tags = _index
-				.Ascending(f => f.Tags);
+		/// <summary>
+		/// Get database statistics.
+		/// </summary>
+		/// <returns>List of json ready objects.</returns>
+		public dynamic Stats()
+		{
+			var _books = Context.Book.Count();
+			var _categories = Context.Book.Select(s => s.Category).Distinct().Count();
+			var _stories = Context.Book.SelectMany(s => s.Stories).Count();
+			var _tags = Context.Tag.Select(s => s.Name).Distinct().Count();
 
-			Context.Book.Indexes.DropAll();
-			Context.Book.Indexes.CreateOne(new CreateIndexModel<Book>(_title, new CreateIndexOptions { }));
-			Context.Book.Indexes.CreateOne(new CreateIndexModel<Book>(_category, new CreateIndexOptions { }));
-			//Context.Book.Indexes.CreateOne(new CreateIndexModel<Book>(_tags, new CreateIndexOptions { Sparse = true }));
+			return new
+			{
+				Books = _books,
+				Categories = _categories,
+				Stories = _stories,
+				Tags = _tags
+			};
 		}
 	}
 }

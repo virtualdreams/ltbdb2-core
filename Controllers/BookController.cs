@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using System;
 using ltbdb.Core.Helpers;
 using ltbdb.Core.Models;
@@ -13,18 +12,18 @@ namespace ltbdb.Controllers
 	public class BookController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly BookService Book;
+		private readonly BookService BookService;
 
 		public BookController(IMapper mapper, BookService book)
 		{
 			Mapper = mapper;
-			Book = book;
+			BookService = book;
 		}
 
 		[HttpGet]
-		public IActionResult View(ObjectId id)
+		public IActionResult View(int id)
 		{
-			var _book = Book.GetById(id);
+			var _book = BookService.GetById(id);
 			if (_book == null)
 				return NotFound();
 
@@ -44,7 +43,7 @@ namespace ltbdb.Controllers
 		{
 			var _book = new Book();
 
-			var book = Mapper.Map<BookWriteModel>(_book);
+			var book = Mapper.Map<BookPostModel>(_book);
 			book.Number = null;
 
 			var view = new BookEditContainer
@@ -57,13 +56,13 @@ namespace ltbdb.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IActionResult Edit(ObjectId id)
+		public IActionResult Edit(int id)
 		{
-			var _book = Book.GetById(id);
+			var _book = BookService.GetById(id);
 			if (_book == null)
 				return NotFound();
 
-			var book = Mapper.Map<BookWriteModel>(_book);
+			var book = Mapper.Map<BookPostModel>(_book);
 
 			var view = new BookEditContainer
 			{
@@ -75,22 +74,23 @@ namespace ltbdb.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public IActionResult Edit(BookWriteModel model)
+		public IActionResult Edit(BookPostModel model)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
 					var book = Mapper.Map<Book>(model);
-					var id = ObjectId.Empty;
-					if (book.Id == ObjectId.Empty)
+					var _id = 0;
+					if (book.Id == 0)
 					{
-						id = Book.Create(book);
+						var _book = BookService.Create(book);
+						_id = book.Id;
 					}
 					else
 					{
-						Book.Update(book);
-						id = book.Id;
+						BookService.Update(book);
+						_id = book.Id;
 					}
 
 					// save image
@@ -98,15 +98,15 @@ namespace ltbdb.Controllers
 					{
 						if (model.Remove)
 						{
-							Book.SetImage(id, null);
+							BookService.SetImage(_id, null);
 						}
 						else
 						{
-							Book.SetImage(id, model.Image.OpenReadStream());
+							BookService.SetImage(_id, model.Image.OpenReadStream());
 						}
 					}
 
-					return RedirectToAction("view", "book", new { id = UrlHelper.ToSlug(id, 100, "Nr.", book.Number.ToString(), book.Title) });
+					return RedirectToAction("view", "book", new { id = _id, slug = UrlHelper.ToSlug(100, "Nr.", book.Number.ToString(), book.Title) });
 				}
 				catch (Exception ex)
 				{
@@ -125,11 +125,11 @@ namespace ltbdb.Controllers
 		[Authorize]
 		//[IsAjaxRequest]
 		[HttpPost]
-		public IActionResult Delete(ObjectId id)
+		public IActionResult Delete(int id)
 		{
 			try
 			{
-				Book.Delete(id);
+				BookService.Delete(id);
 
 				return Json(new { Success = true, Error = "" });
 			}

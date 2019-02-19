@@ -83,9 +83,7 @@
 					@RenderBody()
 				</div>
 
-				<div class="footer">
-					<div class="copy">&copy; 2014-2018 <a href="http://stichelbiene.de">stichelbiene.de</a>.</div>
-				</div>
+				@await Html.PartialAsync("_PartialFooter")
 			</div>
 		</div>
 	</body>

@@ -1,11 +1,9 @@
-using ltbdb.Core.Services;
-using ltbdb.Extensions;
-using ltbdb.ModelBinders;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -17,6 +15,9 @@ using NLog.Web;
 using System;
 using System.IO;
 using System.Text;
+using ltbdb.Core.Services;
+using ltbdb.Extensions;
+using ltbdb.Core.Helpers;
 
 namespace ltbdb
 {
@@ -31,7 +32,7 @@ namespace ltbdb
 			Log = log;
 			Configuration = configuration;
 
-			Log.LogInformation($"Application ltbdb2 v{System.Reflection.Assembly.GetEntryAssembly().GetName().Version} started.");
+			Log.LogInformation($"Application ltbdb2 {ApplicationVersion.InfoVersion()} started.");
 		}
 
 		public void ConfigureServices(IServiceCollection services)
@@ -40,18 +41,25 @@ namespace ltbdb
 			services.AddOptions();
 			services.Configure<Settings>(Configuration.GetSection("Settings"));
 
+			// get settings
+			services.AddScoped(cfg => cfg.GetService<IOptionsSnapshot<Settings>>().Value);
+			var settings = services.BuildServiceProvider().GetRequiredService<Settings>();
+
+			// database context
+			services.AddDbContext<MySqlContext>(options =>
+			{
+				options.UseMySql(settings.ConnectionString, mySqlOptions => { });
+				//options.EnableSensitiveDataLogging(true);
+			},
+			ServiceLifetime.Scoped);
+
 			// DI
 			services.AddAutoMapper();
-			services.AddScoped(config => config.GetService<IOptionsSnapshot<Settings>>().Value);
-			services.AddScoped<MongoContext>();
 			services.AddTransient<BookService>();
 			services.AddTransient<TagService>();
 			services.AddTransient<CategoryService>();
-			services.AddTransient<ImageService>();
 			services.AddTransient<MaintenanceService>();
-
-			// get settings
-			var settings = services.BuildServiceProvider().GetRequiredService<Settings>();
+			services.AddTransient<ImageService>();
 
 			// key ring
 			if (!String.IsNullOrEmpty(settings.KeyStore))
@@ -71,10 +79,11 @@ namespace ltbdb
 			// add custom model binders
 			services.AddMvc(options =>
 			{
-				options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
+				//options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
 			}).AddJsonOptions(options =>
 			{
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 			});
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

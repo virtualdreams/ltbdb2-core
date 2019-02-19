@@ -220,6 +220,20 @@ $(function () {
 		'No white space.'
 	);
 
+	$.validator.addMethod(
+		'arrayitemmaxlength',
+		function (value, element, length) {
+			var array = value.split(';');
+			for (var i = 0; i < array.length; i++) {
+				if (array[i].trim().length > length) {
+					return false;
+				}
+			}
+			return true;
+		},
+		'Length of word too long.'
+	);
+
 	$('#book-form').validate({
 		errorClass: 'field-validation-error',
 		validClass: 'field-validation-valid',
@@ -239,6 +253,9 @@ $(function () {
 				required: true,
 				nowhitespace: true,
 				maxlength: 100
+			},
+			tags: {
+				arrayitemmaxlength: 50
 			}
 		},
 		messages: {
@@ -256,6 +273,9 @@ $(function () {
 				required: 'Bitte gib eine Kategorie ein.',
 				nowhitespace: 'Bitte gib eine Kategorie ein.',
 				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
+			},
+			tags: {
+				arrayitemmaxlength: 'Ein Tag darf max. 50 Zeichen lang sein.'
 			}
 		}
 	});

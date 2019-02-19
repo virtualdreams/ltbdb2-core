@@ -2,6 +2,6 @@
 {
 	public class BookEditContainer
 	{
-		public BookWriteModel Book { get; set; }
+		public BookPostModel Book { get; set; }
 	}
 }

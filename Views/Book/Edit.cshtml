@@ -1,5 +1,4 @@
 ﻿@model ltbdb.Models.BookEditContainer
-@using MongoDB.Bson
 @using ltbdb
 @using ltbdb.Models
 @using ltbdb.Core.Helpers
@@ -10,7 +9,7 @@
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
 
-	if(Model.Book.Id == ObjectId.Empty) {
+	if(Model.Book.Id == 0) {
 		ViewBag.Title = "Neues Buch | ";
 	} else {
 		ViewBag.Title = $"Nr. {Model.Book.Number} - {Model.Book.Title} | {Model.Book.Category} | ";

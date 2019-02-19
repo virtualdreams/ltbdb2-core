@@ -9,51 +9,51 @@ var srcDir = 'wwwroot/assets/'
 var cssTargetDir = 'wwwroot/css/'
 var jsTargetDir = 'wwwroot/js/'
 
-gulp.task('frontend-css', function() {
+gulp.task('frontend-css', function () {
 	return gulp.src([
 		srcDir + 'css/material.css',
 		srcDir + 'css/layout.less',
 		srcDir + 'css/navigation.css'
 	])
-	.pipe(less())
-	.pipe(concat('ltbdb.min.css'))
-	.pipe(cssmin())
-	.pipe(gulp.dest(cssTargetDir));
+		.pipe(less())
+		.pipe(concat('ltbdb.min.css'))
+		.pipe(cssmin())
+		.pipe(gulp.dest(cssTargetDir));
 });
 
-gulp.task('admin-css', function() {
+gulp.task('admin-css', function () {
 	return gulp.src([
 		srcDir + 'css/material.css',
 		srcDir + 'css/admin.less',
 	])
-	.pipe(less())
-	.pipe(concat('admin.min.css'))
-	.pipe(cssmin())
-	.pipe(gulp.dest(cssTargetDir));
+		.pipe(less())
+		.pipe(concat('admin.min.css'))
+		.pipe(cssmin())
+		.pipe(gulp.dest(cssTargetDir));
 });
 
-gulp.task('error-css', function() {
+gulp.task('error-css', function () {
 	return gulp.src([
 		srcDir + 'css/error.less',
 	])
-	.pipe(less())
-	.pipe(concat('error.min.css'))
-	.pipe(cssmin())
-	.pipe(gulp.dest(cssTargetDir));
+		.pipe(less())
+		.pipe(concat('error.min.css'))
+		.pipe(cssmin())
+		.pipe(gulp.dest(cssTargetDir));
 });
 
-gulp.task('js', function() {
+gulp.task('js', function () {
 	return gulp.src([
 		srcDir + 'js/ltbdb.js'
 	])
-	.pipe(uglify())
-	.pipe(rename({suffix: '.min'}))
-	.pipe(gulp.dest(jsTargetDir))
+		.pipe(uglify())
+		.pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest(jsTargetDir))
 });
 
-gulp.task('default', [
+gulp.task('default', gulp.series(
 	'frontend-css',
 	'admin-css',
 	'error-css',
 	'js'
-]);
+));

@@ -38,8 +38,9 @@ namespace ltbdb
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// add options to DI
-			services.AddOptions();
-			services.Configure<Settings>(Configuration.GetSection("Settings"));
+			services.AddOptions<Settings>()
+				.Bind(Configuration.GetSection("Settings"));
+			//.ValidateDataAnnotations(); // https://github.com/stevejgordon/OptionsValidationSample
 
 			// get settings
 			services.AddScoped(cfg => cfg.GetService<IOptionsSnapshot<Settings>>().Value);

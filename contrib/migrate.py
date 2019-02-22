@@ -8,7 +8,7 @@ import pymongo
 import mysql.connector
 
 # init mongodb
-mgoClient = pymongo.MongoClient("mongodb://192.168.254:27017")
+mgoClient = pymongo.MongoClient("mongodb://127.0.0.1:27017")
 mgoDb = mgoClient["ltbdb"]
 mgoBookCollection = mgoDb["book"]
 

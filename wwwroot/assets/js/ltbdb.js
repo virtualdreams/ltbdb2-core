@@ -221,7 +221,7 @@ $(function () {
 	);
 
 	$.validator.addMethod(
-		'arrayitemmaxlength',
+		'stringarrayitemmaxlength',
 		function (value, element, length) {
 			var array = value.split(';');
 			for (var i = 0; i < array.length; i++) {
@@ -255,7 +255,7 @@ $(function () {
 				maxlength: 100
 			},
 			tags: {
-				arrayitemmaxlength: 50
+				stringarrayitemmaxlength: 50
 			}
 		},
 		messages: {
@@ -275,7 +275,7 @@ $(function () {
 				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
 			},
 			tags: {
-				arrayitemmaxlength: 'Ein Tag darf max. 50 Zeichen lang sein.'
+				stringarrayitemmaxlength: 'Ein Tag darf max. 50 Zeichen lang sein.'
 			}
 		}
 	});

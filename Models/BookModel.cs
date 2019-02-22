@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
-using ltbdb.Core.Helpers;
+using ltbdb.Extensions;
 
 namespace ltbdb.Models
 {
@@ -116,7 +115,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The stories in the book.
 		/// </summary>
-		[ArrayItemMaxLength(100, ErrorMessage = "Der Inhalt darf max. 100 Zeichen lang sein.")]
+		[ArrayItemMaxLength(100, ErrorMessage = "Ein Eintrag darf max. 100 Zeichen lang sein.")]
 		public string[] Stories
 		{
 			get
@@ -135,6 +134,7 @@ namespace ltbdb.Models
 		/// <summary>
 		/// The tags for the book.
 		/// </summary>
+		[StringArrayItemMaxLength(50, ErrorMessage = "Ein Tag darf max. 50 Zeichen lang sein.")]
 		public string Tags { get; set; }
 
 

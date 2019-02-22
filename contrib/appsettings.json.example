@@ -1,15 +1,22 @@
 {
+	"Kestrel": {
+		"EndPoints": {
+			"Http": {
+				"Url": "http://127.0.0.1:5000"
+			}
+		}
+	},
 	"Settings": {
 		"ConnectionString": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb",
 		"ItemsPerPage": 18,
 		"RecentItems": 18,
-		"Storage": "./wwwroot/images/",
+		"Storage": "/foo/bar/ltbdb2-core-images/",
 		"NoImage": "/content/no-image.png",
 		"CDNPath": "/images/",
 		"GraphicsMagick": "gm",
-		"Username": "",
-		"Password": "",
-		"KeyStore": "",
-		"SecurityKey": ""
+		"Username": "username",
+		"Password": "password",
+		"KeyStore": "/foo/bar/ltbdb2-core/key-ring/",
+		"SecurityKey": "abcdefghijklmnopqrst"
 	}
 }

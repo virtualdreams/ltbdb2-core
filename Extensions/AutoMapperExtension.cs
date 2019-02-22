@@ -32,8 +32,8 @@ namespace ltbdb.Extensions
 					.ForMember(d => d.Filename, map => map.Ignore())
 					.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Where(w => !String.IsNullOrEmpty(w)).Select(x => new Story { Name = x.Trim() })))
 					.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w)).Distinct().Select(x => new Tag { Name = x })))
-					.ForSourceMember(s => s.Image, map => map.Ignore())
-					.ForSourceMember(s => s.Remove, map => map.Ignore());
+					.ForSourceMember(s => s.Image, map => map.DoNotValidate())
+					.ForSourceMember(s => s.Remove, map => map.DoNotValidate());
 
 				config.CreateMap<BookPostApiModel, Book>()
 					.ForMember(d => d.Id, map => map.Ignore())

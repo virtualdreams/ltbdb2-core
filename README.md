@@ -14,9 +14,9 @@ Datenbank, um die Sammlung von Lustigen Taschenbüchern zu tracken.
 
 ## Technology
 
-* [.NET Core 2.1](https://www.microsoft.com/net/core)
-* [ASP.NET Core 2.1](https://docs.microsoft.com/en-us/aspnet/core/)
-* [MongoDB](https://www.mongodb.com/)
+* [.NET Core 2.2](https://www.microsoft.com/net/core)
+* [ASP.NET Core 2.2](https://docs.microsoft.com/en-us/aspnet/core/)
+* [MariaDB](https://mariadb.org/)
 * [jQuery](http://jquery.com/)
 * [jQuery-UI](http://jqueryui.com/)
 * [jBox](https://github.com/StephanWagner/jBox)
@@ -27,7 +27,7 @@ Datenbank, um die Sammlung von Lustigen Taschenbüchern zu tracken.
 
 ## How to run
 
-You need the latest **.NET Core**, **ASP.NET Core** and **MongoDB** to run this application.
+You need the latest **.NET Core**, **ASP.NET Core** and **MariaDB** to run this application.
 
 ### Build
 
@@ -67,8 +67,7 @@ dotnet /path/to/ltbdb2.dll
 		}
 	},
 	"Settings": {
-		"MongoDB": "mongodb://127.0.0.1/",
-		"Database": "ltbdb",
+		"ConnectionString": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb",
 		"ItemsPerPage": 18,
 		"RecentItems": 18,
 		"Storage": "./wwwroot/images/",
@@ -85,7 +84,7 @@ dotnet /path/to/ltbdb2.dll
 
 #### Options
 
-* **MongoDB**: MongoDB connection string
+* **ConnectionString**: MariaDB/MySQL connection string `Server=[host];Database=[database];User=[username];Password=[password]`
 * **Database**: MongoDB collection name
 * **ItemsPerPage**: Books per page to display
 * **RecentItems**: Books per page to display on start page 
@@ -96,7 +95,7 @@ dotnet /path/to/ltbdb2.dll
 * **Username**: Login username
 * **Password**: Login password
 * **KeyStore**: Directory to store encryption key files (leave empty to use memory)
-* **SecurityKey**: JWT bearer token key
+* **SecurityKey**: JWT bearer token key, min length 16 characters
 
 ### Logging
 

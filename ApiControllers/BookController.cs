@@ -80,11 +80,11 @@ namespace ltbdb.WebAPI.Controllers
 			{
 				try
 				{
-					var book = Mapper.Map<Book>(model);
+					var _book = Mapper.Map<Book>(model);
 
-					var id = BookService.Create(book);
+					var book = BookService.Create(_book);
 
-					return Ok(new { Id = id.ToString() });
+					return Ok(new { Id = book.Id });
 				}
 				catch (Exception)
 				{

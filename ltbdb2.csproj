@@ -6,6 +6,8 @@
     <Copyright>stichelbiene.de © 2014-2018</Copyright>
     <AssemblyTitle>Lustiges Taschenbuch Datenbank v2</AssemblyTitle>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <!-- <RuntimeFrameworkVersion>2.2.7</RuntimeFrameworkVersion> -->
+    <!-- <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch> -->
     <DebugType>portable</DebugType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>ltbdb2</AssemblyName>

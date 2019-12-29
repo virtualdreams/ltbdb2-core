@@ -4,13 +4,11 @@ Datenbank, um die Sammlung von Lustigen Taschenbüchern zu tracken.
 
 ## Features
 
-* Bücher und Inhalte
-* Kategorien
-* Suche
+* Books, Categories, Content and Tags
+* Search
 * Covers
-* Tags
-* Authentifizierung
-* Simple WebAPI to manage books
+* Authentification
+* REST-API
 
 ## Technology
 
@@ -44,8 +42,17 @@ dotnet run
 Run in PowerShell or bash:
 
 ```sh
-dotnet publish -c Release /p:Version=1.0-$(git rev-parse --short HEAD)
-dotnet /path/to/ltbdb2.dll
+$ dotnet publish -c Release /p:Version=1.0-$(git rev-parse --short HEAD)
+$ dotnet /path/to/ltbdb2.dll
+```
+
+**or**
+
+use `make`.
+
+```sh
+$ make publish
+$ dotnet /path/to/ltbdb2.dll
 ```
 
 ### Configuration
@@ -135,7 +142,7 @@ Configure logging in `NLog.config` and copy this file to publish directory.
 </nlog>
 ```
 
-Additionally review `logsettings.Production.json`.
+Also check `logsettings.production.json` and set the appropriate values.
 
 ```json
 {
@@ -148,3 +155,119 @@ Additionally review `logsettings.Production.json`.
 	}
 }
 ```
+
+## REST API
+
+### Login / Token
+
+**Request**
+
+```sh
+$ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/token -d '{ "username": "<username>", "password": "<password>" }'
+```
+
+**Response**
+
+```json
+{
+    "Token": "<token>"
+}
+```
+
+### Get all books
+
+Request
+
+```sh
+$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book
+```
+
+**Response**
+
+```json
+[
+    {
+        "Id": 1,
+        "Number": 1,
+        "Title": "Title",
+        "Category": "Category",
+        "Created": "2019-12-29T16:34:47",
+        "Filename": null,
+        "Stories": [],
+        "Tags": []
+    },
+    {
+        "Id": 2,
+        "Number": 2,
+        "Title": "Title",
+        "Category": "Category",
+        "Created": "2019-12-29T16:35:48",
+        "Filename": null,
+        "Stories": [],
+        "Tags": []
+	}
+]
+```
+
+### Get a book by id
+
+**Request**
+
+```sh
+$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/1
+```
+
+Response
+
+```json
+{
+    "Id": 1,
+    "Number": 1,
+    "Title": "Title",
+    "Category": "Category",
+    "Created": "2019-12-29T16:34:47",
+    "Filename": null,
+    "Stories": [],
+    "Tags": []
+}
+```
+
+### Create a book
+
+**Request**
+
+```sh
+$ curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book -d '{ "number": <number>, "title": "<title>", "category", "<category>", stories: [ "<story 1>", "<story 2>" ], tags: [ "<tag 1>", "<tag 2>" ] }'
+```
+
+**Response**
+
+```json
+{
+    "Id": 1234
+}
+```
+
+### Edit a book
+
+**Request**
+
+```sh
+$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book -d '{ "number": <number>, "title": "<title>", "category", "<category>", stories: [ "<story 1>", "<story 2>" ], tags: [ "<tag 1>", "<tag 2>" ] }'
+```
+
+**Response**
+
+*HTTP200*
+
+### Delete a book
+
+**Request**
+
+```sh
+$ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/1
+```
+
+**Response**
+
+*HTTP200*

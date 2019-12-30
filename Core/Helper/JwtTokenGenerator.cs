@@ -18,7 +18,7 @@ namespace ltbdb.Core.Helpers
 				new Claim(JwtRegisteredClaimNames.Aud, "ltbdb"),
 				new Claim(JwtRegisteredClaimNames.Iss, "ltbdb"),
 				new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
-				new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString())
+				new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddHours(1)).ToUnixTimeSeconds().ToString())
 			};
 
 			var token = new JwtSecurityToken(

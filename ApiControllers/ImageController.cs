@@ -21,19 +21,35 @@ namespace ltbdb.WebAPI.Controllers
 		private readonly BookService BookService;
 		private readonly CategoryService CategoryService;
 		private readonly TagService TagService;
+		private readonly ImageService ImageService;
 
 		// public class FileUploadAPI
 		// {
 		// 	public IFormFile files { get; set; }
 		// }
 
-		public ImageController(IMapper mapper, Settings settings, BookService book, CategoryService category, TagService tag)
+		public ImageController(IMapper mapper, Settings settings, BookService book, CategoryService category, TagService tag, ImageService image)
 		{
 			Mapper = mapper;
 			Options = settings;
 			BookService = book;
 			CategoryService = category;
 			TagService = tag;
+			ImageService = image;
+		}
+
+		[HttpGet("{id}")]
+		public IActionResult GetById(int id)
+		{
+			var _book = BookService.GetById(id);
+			if (_book == null)
+				return NotFound();
+
+			return Ok(new
+			{
+				Thumbnail = ImageService.GetCDNPath(_book.Filename, ImageType.Thumbnail, true),
+				Image = ImageService.GetCDNPath(_book.Filename, ImageType.Normal, true)
+			});
 		}
 
 		[HttpPost("{id}")]

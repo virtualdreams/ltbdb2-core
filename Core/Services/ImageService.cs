@@ -11,17 +11,17 @@ namespace ltbdb.Core.Services
 	public enum ImageType
 	{
 		/// <summary>
-		/// Get the normal version if available, otherwise none.
+		/// Get the normal version if available.
 		/// </summary>
 		Normal,
 
 		/// <summary>
-		/// Get the thumbnail version if available, otherwise none.
+		/// Get the thumbnail version if available.
 		/// </summary>
 		Thumbnail,
 
 		/// <summary>
-		/// Prefer thumbnail over normal version if available, otherwise none,
+		/// Prefer thumbnail over normal version if available.
 		/// </summary>
 		PreferThumbnail
 	}
@@ -161,8 +161,9 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="filename">The image filename.</param>
 		/// <param name="imageType">Select type of image to load.</param>
+		/// <param name="nullIfEmpty">Return "null" if image not exists.</param>
 		/// <returns>The CDN path.</returns>
-		public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal)
+		public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal, bool nullIfEmpty = false)
 		{
 			var _cdn = Options.CDNPath;
 
@@ -185,7 +186,9 @@ namespace ltbdb.Core.Services
 					goto default;
 
 				default:
-					return Options.NoImage;
+					if (!nullIfEmpty)
+						return Options.NoImage;
+					return null;
 			}
 		}
 

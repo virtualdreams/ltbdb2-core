@@ -51,7 +51,7 @@ namespace ltbdb.WebAPI.Controllers
 
 					return Ok();
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
 					return StatusCode(500);
 				}

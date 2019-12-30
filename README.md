@@ -272,6 +272,25 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <
 
 None
 
+### Get image paths for a book
+
+**Request**
+
+```sh
+$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/1
+```
+
+**Response**
+
+```json
+{
+    "Thumbnail": "/path/to/image/thumb/image.jpg",
+    "Image": "/path/to/image/image.jpg"
+}
+```
+
+Paths can be `null`.
+
 ### Set image for a book
 
 **Request**

@@ -258,7 +258,7 @@ $ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <to
 
 **Response**
 
-*HTTP200*
+None
 
 ### Delete a book
 
@@ -270,4 +270,28 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <
 
 **Response**
 
-*HTTP200*
+None
+
+### Set image for a book
+
+**Request**
+
+```sh
+$ curl -X POST -H "Authorization: Bearer <token>" -H "Content-Type: multipart/form-data" -F "image=@file.png" http://localhost/api/v1/image/1
+```
+
+**Response**
+
+None
+
+### Delete image from a book
+
+**Request**
+
+```sh
+$ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/1
+```
+
+**Response**
+
+None

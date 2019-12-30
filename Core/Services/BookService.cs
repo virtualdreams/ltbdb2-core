@@ -36,7 +36,9 @@ namespace ltbdb.Core.Services
 		{
 			Log.LogInformation($"Request all books.");
 
-			var _query = Context.Book.AsQueryable()
+			var _query = Context.Book //.AsQueryable()
+				.Include(i => i.Stories)
+				.Include(i => i.Tags)
 				.OrderBy(o => o.Number)
 				.ThenBy(o => o.Category);
 

@@ -214,7 +214,7 @@ $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <tok
 **Request**
 
 ```sh
-$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/1
+$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id>
 ```
 
 Response
@@ -253,7 +253,7 @@ $ curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <tok
 **Request**
 
 ```sh
-$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book -d '{ "number": <number>, "title": "<title>", "category", "<category>", stories: [ "<story 1>", "<story 2>" ], tags: [ "<tag 1>", "<tag 2>" ] }'
+$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id> -d '{ "number": <number>, "title": "<title>", "category", "<category>", stories: [ "<story 1>", "<story 2>" ], tags: [ "<tag 1>", "<tag 2>" ] }'
 ```
 
 **Response**
@@ -265,7 +265,7 @@ None
 **Request**
 
 ```sh
-$ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/1
+$ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id>
 ```
 
 **Response**
@@ -277,7 +277,7 @@ None
 **Request**
 
 ```sh
-$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/1
+$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/<id>
 ```
 
 **Response**
@@ -296,7 +296,7 @@ Paths can be `null`.
 **Request**
 
 ```sh
-$ curl -X POST -H "Authorization: Bearer <token>" -H "Content-Type: multipart/form-data" -F "image=@file.png" http://localhost/api/v1/image/1
+$ curl -X POST -H "Authorization: Bearer <token>" -H "Content-Type: multipart/form-data" -F "image=@file.png" http://localhost/api/v1/image/<id>
 ```
 
 **Response**

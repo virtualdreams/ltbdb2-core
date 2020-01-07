@@ -1,0 +1,418 @@
+{
+	"info": {
+		"_postman_id": "21e0caec-9203-4d0d-9b2e-c892b90e97b9",
+		"name": "ltbdb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Environment",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f38fb03-3ca2-4afe-bf21-c3f6d592c241",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"token\", jsonData.Token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						},
+						"description": "Get login token."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Operations",
+			"item": [
+				{
+					"name": "Book",
+					"item": [
+						{
+							"name": "List books",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8c1affe2-983b-4ee7-bb88-06555a4bd2a9",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/v1/book",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"book"
+									]
+								},
+								"description": "Get all books."
+							},
+							"response": []
+						},
+						{
+							"name": "Get book",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/v1/book/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"book",
+										"{{id}}"
+									]
+								},
+								"description": "Get a book by id."
+							},
+							"response": []
+						},
+						{
+							"name": "Add book",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0252936a-8ea8-4e9d-9558-3bbd82ae912c",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"pm.environment.set(\"id\", jsonData.Id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"number\": 1,\n\t\"title\": \"Book from API\",\n\t\"category\": \"Category from API\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/book",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"book"
+									]
+								},
+								"description": "Insert a new book."
+							},
+							"response": []
+						},
+						{
+							"name": "Update book",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"number\": 1,\n\t\"title\": \"Book from API\",\n\t\"category\": \"Category from API\",\n\t\"stories\": [\n\t\t\"Story 1\",\n\t\t\"Story 2\"\n\t],\n\t\"tags\": [\n\t\t\"Tag 1\",\n\t\t\"Tag 2\"\n\t]\n}"
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/book/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"book",
+										"{{id}}"
+									]
+								},
+								"description": "Update a book."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete book",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/v1/book/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"book",
+										"{{id}}"
+									]
+								},
+								"description": "Delete a book by id."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Image",
+					"item": [
+						{
+							"name": "Get image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/v1/image/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"image",
+										"{{id}}"
+									]
+								},
+								"description": "Get image paths for a book."
+							},
+							"response": []
+						},
+						{
+							"name": "Upload image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "image",
+											"type": "file",
+											"src": "/home/thomas/Bilder/Screenshot_debian-10_2019-10-12_13:29:33.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/image/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"image",
+										"{{id}}"
+									]
+								},
+								"description": "Upload image to a book."
+							},
+							"response": []
+						},
+						{
+							"name": "Delete image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/api/v1/image/{{id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"image",
+										"{{id}}"
+									]
+								},
+								"description": "Delete image from a book."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

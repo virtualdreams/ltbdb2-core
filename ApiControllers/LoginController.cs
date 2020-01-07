@@ -13,11 +13,11 @@ namespace ltbdb.WebAPI.Controllers
 {
 	[Produces("application/json")]
 	[Route("api/v1/[controller]")]
-	public class TokenController : Controller
+	public class LoginController : Controller
 	{
 		public readonly Settings Options;
 
-		public TokenController(Settings settings)
+		public LoginController(Settings settings)
 		{
 			Options = settings;
 		}

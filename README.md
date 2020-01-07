@@ -163,7 +163,7 @@ Also check `logsettings.production.json` and set the appropriate values.
 **Request**
 
 ```sh
-$ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/token -d '{ "username": "<username>", "password": "<password>" }'
+$ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login -d '{ "username": "<username>", "password": "<password>" }'
 ```
 
 **Response**

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 
@@ -11,10 +12,10 @@ namespace ltbdb.Controllers
 		private readonly Settings Options;
 		private readonly BookService BookService;
 
-		public HomeController(IMapper mapper, Settings settings, BookService book)
+		public HomeController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book)
 		{
 			Mapper = mapper;
-			Options = settings;
+			Options = settings.Value;
 			BookService = book;
 		}
 

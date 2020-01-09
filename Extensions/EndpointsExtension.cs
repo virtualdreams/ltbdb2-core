@@ -2,111 +2,111 @@ using Microsoft.AspNetCore.Builder;
 
 namespace ltbdb.Extensions
 {
-	static public class RoutingExtensions
+	static public class EndpointsExtension
 	{
-		static public IApplicationBuilder AddRoutes(this IApplicationBuilder app)
+		static public IApplicationBuilder AddEndpoints(this IApplicationBuilder app)
 		{
-			app.UseMvc(routes =>
+			app.UseEndpoints(endpoints =>
 			{
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "areaExport",
-					template: "{area:exists}/export",
+					pattern: "{area:exists}/export",
 					defaults: new { area = "Admin", controller = "Home", action = "Export" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "areaStats",
-					template: "{area:exists}/stats",
+					pattern: "{area:exists}/stats",
 					defaults: new { area = "Admin", controller = "Home", action = "Stats" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "areaRoute",
-					template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+					pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "search",
-					template: "search",
+					pattern: "search",
 					defaults: new { controller = "Search", action = "Search" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "searchTitle",
-					template: "search/title",
+					pattern: "search/title",
 					defaults: new { controller = "Search", action = "SearchTitle" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "searchCategory",
-					template: "search/category",
+					pattern: "search/category",
 					defaults: new { controller = "Search", action = "SearchCategory" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "searchTag",
-					template: "search/tag",
+					pattern: "search/tag",
 					defaults: new { controller = "Search", action = "SearchTag" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "view",
-					template: "book/{id?}/{slug?}",
+					pattern: "book/{id?}/{slug?}",
 					defaults: new { controller = "Book", action = "View" },
 					constraints: new { id = @"\d+" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "create",
-					template: "create",
+					pattern: "create",
 					defaults: new { controller = "Book", action = "Create" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "tags",
-					template: "tags/{ofs?}",
+					pattern: "tags/{ofs?}",
 					defaults: new { controller = "Tag", action = "Index" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "tag",
-					template: "tag/{id?}/{ofs?}",
+					pattern: "tag/{id?}/{ofs?}",
 					defaults: new { controller = "Tag", action = "View" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "categories",
-					template: "categories/{ofs?}",
+					pattern: "categories/{ofs?}",
 					defaults: new { controller = "Category", action = "Index" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "category",
-					template: "category/{id?}/{ofs?}",
+					pattern: "category/{id?}/{ofs?}",
 					defaults: new { controller = "Category", action = "View" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "login",
-					template: "login",
+					pattern: "login",
 					defaults: new { controller = "Account", action = "Login" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "logout",
-					template: "logout",
+					pattern: "logout",
 					defaults: new { controller = "Account", action = "Logout" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "error",
-					template: "error/{code?}",
+					pattern: "error/{code?}",
 					defaults: new { controller = "home", action = "error" }
 				);
 
-				routes.MapRoute(
+				endpoints.MapControllerRoute(
 					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}"
+					pattern: "{controller=Home}/{action=Index}/{id?}"
 				);
 			});
 

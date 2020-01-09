@@ -1,10 +1,11 @@
 ﻿@model ltbdb.Models.BookEditContainer
+@using Microsoft.Extensions.Options
 @using ltbdb
 @using ltbdb.Models
 @using ltbdb.Core.Helpers
 @using ltbdb.Core.Services
 @inject ImageService ImageService
-@inject Settings Options;
+@inject IOptionsSnapshot<Settings> Options;
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -83,7 +84,7 @@
 
 			<div style="position: absolute; top: -24px; right: 8px;">
 				<span class="pointer" id="image-reset" data-src="@ImageService.GetCDNPath(Model.Book.Filename)" title="Bild zurücksetzen." style="display: none;"><i class="material-icons bigger">undo</i></span>
-				<span class="pointer" id="image-delete" data-src="@Options.NoImage" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
+				<span class="pointer" id="image-delete" data-src="@Options.Value.NoImage" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
 			</div>
 		</div>
 	</div>

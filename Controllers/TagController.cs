@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Extensions.Options;
 using System.Linq;
+using System;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 
@@ -14,10 +15,10 @@ namespace ltbdb.Controllers
 		private readonly BookService BookService;
 		private readonly TagService TagService;
 
-		public TagController(IMapper mapper, Settings settings, BookService book, TagService tag)
+		public TagController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, TagService tag)
 		{
 			Mapper = mapper;
-			Options = settings;
+			Options = settings.Value;
 			BookService = book;
 			TagService = tag;
 		}

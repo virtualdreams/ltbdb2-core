@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -16,10 +17,10 @@ namespace ltbdb.Controllers
 		private readonly CategoryService CategoryService;
 		private readonly TagService TagService;
 
-		public SearchController(IMapper mapper, Settings settings, BookService book, CategoryService category, TagService tag)
+		public SearchController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, CategoryService category, TagService tag)
 		{
 			Mapper = mapper;
-			Options = settings;
+			Options = settings.Value;
 			BookService = book;
 			CategoryService = category;
 			TagService = tag;

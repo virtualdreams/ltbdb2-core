@@ -16,11 +16,11 @@ namespace ltbdb.Controllers
 		private readonly ILogger<AccountController> Log;
 		private readonly Settings Options;
 
-		public AccountController(IMapper mapper, ILogger<AccountController> log, Settings settings)
+		public AccountController(IMapper mapper, IOptionsSnapshot<Settings> settings, ILogger<AccountController> log)
 		{
 			Mapper = mapper;
 			Log = log;
-			Options = settings;
+			Options = settings.Value;
 		}
 
 		[HttpGet]

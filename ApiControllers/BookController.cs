@@ -2,8 +2,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
@@ -21,10 +22,10 @@ namespace ltbdb.WebAPI.Controllers
 		private readonly CategoryService CategoryService;
 		private readonly TagService TagService;
 
-		public BookController(IMapper mapper, Settings settings, BookService book, CategoryService category, TagService tag)
+		public BookController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, CategoryService category, TagService tag)
 		{
 			Mapper = mapper;
-			Options = settings;
+			Options = settings.Value;
 			BookService = book;
 			CategoryService = category;
 			TagService = tag;

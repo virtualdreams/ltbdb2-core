@@ -1,13 +1,14 @@
-using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System;
 using ltbdb.Core.Helpers;
 using ltbdb.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace ltbdb.WebAPI.Controllers
 {
@@ -17,9 +18,9 @@ namespace ltbdb.WebAPI.Controllers
 	{
 		public readonly Settings Options;
 
-		public LoginController(Settings settings)
+		public LoginController(IOptionsSnapshot<Settings> settings)
 		{
-			Options = settings;
+			Options = settings.Value;
 		}
 
 		[HttpPost]

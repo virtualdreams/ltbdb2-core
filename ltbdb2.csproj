@@ -3,19 +3,16 @@
   <PropertyGroup>
     <Version>1.0.0</Version>
     <Description>Lustiges Taschenbuch Datenbank v2</Description>
-    <Copyright>stichelbiene.de © 2014-2018</Copyright>
+    <Copyright>stichelbiene.de © 2019</Copyright>
     <AssemblyTitle>Lustiges Taschenbuch Datenbank v2</AssemblyTitle>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <!-- <RuntimeFrameworkVersion>2.2.7</RuntimeFrameworkVersion> -->
-    <!-- <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch> -->
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <DebugType>portable</DebugType>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>ltbdb2</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>ltbdb2</PackageId>
     <!--
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
-    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion>2.2</RuntimeFrameworkVersion>
     -->
   </PropertyGroup>
 
@@ -46,7 +43,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.6" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="NLog" Version="4.6.8" />

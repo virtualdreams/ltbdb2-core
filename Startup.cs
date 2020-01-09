@@ -6,45 +6,34 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Serialization;
-using NLog.Extensions.Logging;
-using NLog.Web;
-using System;
 using System.IO;
+using System;
 using System.Text;
 using ltbdb.Core.Services;
 using ltbdb.Extensions;
-using ltbdb.Core.Helpers;
 
 namespace ltbdb
 {
 	public class Startup
 	{
-		private readonly ILogger<Startup> Log;
-
 		public IConfiguration Configuration { get; }
 
-		public Startup(IConfiguration configuration, IHostingEnvironment env, ILogger<Startup> log)
+		public Startup(IConfiguration configuration)
 		{
-			Log = log;
 			Configuration = configuration;
-
-			Log.LogInformation($"Application ltbdb2 {ApplicationVersion.InfoVersion()} started.");
 		}
 
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// add options to DI
-			services.AddOptions<Settings>()
-				.Bind(Configuration.GetSection("Settings"));
-			//.ValidateDataAnnotations(); // https://github.com/stevejgordon/OptionsValidationSample
+			services.AddOptions();
+			services.Configure<Settings>(Configuration.GetSection("Settings"));
 
-			// get settings
-			services.AddScoped(cfg => cfg.GetService<IOptionsSnapshot<Settings>>().Value);
-			var settings = services.BuildServiceProvider().GetRequiredService<Settings>();
+			// get settings for local usage
+			var settings = new Settings();
+			Configuration.GetSection("Settings").Bind(settings);
 
 			// database context
 			services.AddDbContext<MySqlContext>(options =>
@@ -72,20 +61,27 @@ namespace ltbdb
 			}
 
 			// IIS integration
-			services.Configure<IISOptions>(options =>
-			{
-
-			});
+			services.Configure<IISOptions>(options => { });
 
 			// add custom model binders
 			services.AddMvc(options =>
 			{
 				//options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
-			}).AddJsonOptions(options =>
+			})
+			.AddNewtonsoftJson(options =>
 			{
-				options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+				options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 			});
+
+			// add sessions
+			// services.AddDistributedMemoryCache();
+			// services.AddSession(options =>
+			// {
+			// 	options.Cookie.Name = "ltbdb_session";
+			// 	options.IdleTimeout = TimeSpan.FromMinutes(30);
+			// 	options.Cookie.HttpOnly = true;
+			// });
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(options =>
@@ -119,7 +115,7 @@ namespace ltbdb
 			});
 		}
 
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			app.UseWhen(context => !context.Request.Path.StartsWithSegments(new PathString("/api")), branch =>
 			{
@@ -137,9 +133,14 @@ namespace ltbdb
 
 			app.UseStaticFiles();
 
-			app.UseAuthentication();
+			app.UseRouting();
 
-			app.AddRoutes();
+			// app.UseCors();
+
+			app.UseAuthentication();
+			app.UseAuthorization();
+
+			app.AddEndpoints();
 		}
 	}
 }

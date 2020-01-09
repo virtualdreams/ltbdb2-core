@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
-using System;
+using Microsoft.Extensions.Options;
 using System.IO;
+using System;
 using ltbdb.Core.Helpers;
 
 namespace ltbdb.Core.Services
@@ -32,9 +33,9 @@ namespace ltbdb.Core.Services
 		readonly ILogger<ImageService> Log;
 		readonly string thumbnailDirectory = "thumb";
 
-		public ImageService(Settings settings, ILogger<ImageService> log)
+		public ImageService(IOptionsSnapshot<Settings> settings, ILogger<ImageService> log)
 		{
-			Options = settings;
+			Options = settings.Value;
 			Log = log;
 		}
 

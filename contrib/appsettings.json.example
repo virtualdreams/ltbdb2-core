@@ -17,6 +17,6 @@
 		"Username": "username",
 		"Password": "password",
 		"KeyStore": "/foo/bar/ltbdb2-core/key-ring/",
-		"SecurityKey": "abcdefghijklmnopqrst"
+		"SecurityKey": "1234567890123456"
 	}
 }

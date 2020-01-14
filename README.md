@@ -1,19 +1,18 @@
 # Lustiges Taschenbuch Datenbank v2
 
-Datenbank, um die Sammlung von Lustigen Taschenbüchern zu tracken.
+Database to manage the collection of "Lustiges Taschenbuch".
 
 ## Features
 
 * Books, Categories, Content and Tags
 * Search
 * Covers
-* Authentification
 * REST-API
 
 ## Technology
 
-* [.NET Core 2.2](https://www.microsoft.com/net/core)
-* [ASP.NET Core 2.2](https://docs.microsoft.com/en-us/aspnet/core/)
+* [.NET Core 3.1](https://www.microsoft.com/net/core)
+* [ASP.NET Core 3.1](https://docs.microsoft.com/en-us/aspnet/core/)
 * [MariaDB](https://mariadb.org/)
 * [jQuery](http://jquery.com/)
 * [jQuery-UI](http://jqueryui.com/)
@@ -27,7 +26,7 @@ Datenbank, um die Sammlung von Lustigen Taschenbüchern zu tracken.
 
 You need the latest **.NET Core**, **ASP.NET Core** and **MariaDB** to run this application.
 
-### Build
+## Build
 
 **Build to run on local**
 
@@ -55,7 +54,7 @@ $ make publish
 $ dotnet /path/to/ltbdb2.dll
 ```
 
-### Configuration
+## Configuration
 
 ```json
 {
@@ -84,77 +83,60 @@ $ dotnet /path/to/ltbdb2.dll
 		"Username": "",
 		"Password": "",
 		"KeyStore": "",
-		"SecurityKey": ""
+		"SecurityKey": "1234567890123456"
 	}
 }
 ```
 
-#### Options
+## Options
 
-* **ConnectionString**: MariaDB/MySQL connection string `Server=[host];Database=[database];User=[username];Password=[password]`
-* **Database**: MongoDB collection name
-* **ItemsPerPage**: Books per page to display
-* **RecentItems**: Books per page to display on start page 
-* **Storage**: Image storage file path
-* **NoImage**: Path to "no-image" file
-* **CDNPath**: Path to images for download from "www-data"
-* **GraphicsMagick**: Path to GraphicsMagick binary or gm
-* **Username**: Login username
-* **Password**: Login password
-* **KeyStore**: Directory to store encryption key files (leave empty to use memory)
-* **SecurityKey**: JWT bearer token key, min length 16 characters
+**ConnectionString**
 
-### Logging
+MariaDB/MySQL connection string `Server=[host];Database=[database];User=[username];Password=[password]`
 
-Configure logging in `NLog.config` and copy this file to publish directory.
+**ItemsPerPage**
 
-```xml
-<?xml version="1.0" encoding="utf-8" ?>
-  <nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        autoReload="true"
-        internalLogLevel="Warn"
-        internalLogFile="nlog-internal.log">
+Books per page to display
 
-  <!-- Load the ASP.NET Core plugin -->
-  <extensions>
-    <add assembly="NLog.Web.AspNetCore"/>
-  </extensions>
+**RecentItems**
 
-  <!-- the targets to write to -->
-  <targets>
-    <!-- write logs to file -->
-    <target xsi:type="File" name="file" fileName="ltbdb-${shortdate}.log" layout="${longdate} ${pad:padding=-5:inner=${uppercase:${level}}} ${logger} ${message} ${exception}" />
+Books per page to display on start page 
 
-    <!-- write logs to console -->
-    <target xsi:type="ColoredConsole" name="console" layout="${pad:padding=-5:inner=${uppercase:${level}}} ${logger} ${message} ${exception}" />
+**Storage**
 
-    <!-- write to the void -->
-    <target xsi:type="Null" name="blackhole" />
-  </targets>
+Image storage path in filesystem (upload)
 
-  <!-- rules to map from logger name to target -->
-  <rules>
-    <logger name="ltbdb.*" minlevel="Info" writeTo="console" />
-    <logger name="Microsoft.*" minlevel="Trace" writeTo="blackhole" final="true" />
-    <logger name="*" minlevel="Debug" writeTo="file" />
-  </rules>
-</nlog>
-```
+**NoImage**
 
-Also check `logsettings.production.json` and set the appropriate values.
+Path to "no-image" file
 
-```json
-{
-	"Logging": {
-		"Console": {
-			"LogLevel": {
-				"Default": "None"
-			}
-		}
-	}
-}
-```
+**CDNPath**
+
+Path to images for download from "wwwroot"
+
+**GraphicsMagick**
+
+Path to GraphicsMagick binary or `gm`
+
+**Username**
+
+Login username
+
+**Password**
+
+Login password
+
+**KeyStore**
+
+Directory to store encryption key files (leave empty to use in-memory)
+
+**SecurityKey**
+
+JWT bearer token key, min length 16 characters
+
+## Logging
+
+Configure logging in `NLog.config` and copy this file to publish directory. Also check `logsettings.production.json` and set the appropriate values.
 
 ## REST API
 

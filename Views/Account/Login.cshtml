@@ -9,7 +9,7 @@
 <form action="@Url.Action("login", "account", new { ReturnUrl = Context.Request.Query["ReturnUrl"] })" method="post" enctype="multipart/form-data" id="login-form">
 	<h2>Anmeldung</h2>
 	<div class="details">
-		<div style="margin-left: 10px; padding-bottom: 20px;">
+		<div style="margin-left: -10px; padding-bottom: 20px;">
 			@Html.ValidationMessage("failed")
 		</div>
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
 using System.ComponentModel.DataAnnotations;
+using System;
 using ltbdb.Extensions;
 
 namespace ltbdb.Models

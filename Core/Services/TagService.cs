@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
 {

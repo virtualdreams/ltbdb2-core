@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using ltbdb.Core.Services;
 using ltbdb.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ltbdb.ViewComponents
 {

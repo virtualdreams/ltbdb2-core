@@ -4,11 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
 using System;
-using ltbdb.Core.Models;
 using ltbdb.Core.Services;
-using ltbdb.Models;
 
 namespace ltbdb.WebAPI.Controllers
 {

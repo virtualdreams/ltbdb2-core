@@ -90,49 +90,29 @@ $ dotnet /path/to/ltbdb2.dll
 
 ## Options
 
-**ConnectionString**
-
-MariaDB/MySQL connection string `Server=[host];Database=[database];User=[username];Password=[password]`
-
-**ItemsPerPage**
-
-Books per page to display
-
-**RecentItems**
-
-Books per page to display on start page 
-
-**Storage**
-
-Image storage path in filesystem (upload)
-
-**NoImage**
-
-Path to "no-image" file
-
-**CDNPath**
-
-Path to images for download from "wwwroot"
-
-**GraphicsMagick**
-
-Path to GraphicsMagick binary or `gm`
-
-**Username**
-
-Login username
-
-**Password**
-
-Login password
-
-**KeyStore**
-
-Directory to store encryption key files (leave empty to use in-memory)
-
-**SecurityKey**
-
-JWT bearer token key, min length 16 characters
+* **ConnectionString**  
+MariaDB/MySQL connection string.  
+`Server=[host];Database=[database];User=[username];Password=[password]`
+* **ItemsPerPage**  
+Books per page to display.
+* **RecentItems**  
+Books per page to display on start page.
+* **Storage**  
+Image storage path in filesystem (upload).
+* **NoImage**  
+Path to `no-image` file.
+* **CDNPath**  
+Path to images for download from "wwwroot".
+* **GraphicsMagick**  
+Path to GraphicsMagick binary or `gm`.
+* **Username**  
+Login username.
+* **Password**  
+Login password.
+* **KeyStore**  
+Directory to store encryption key files (leave empty to use in-memory).
+* **SecurityKey**  
+JWT bearer token encryption key. Min length 16 characters.
 
 ## Logging
 

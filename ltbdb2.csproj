@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Version>1.0.0</Version>
     <Description>Lustiges Taschenbuch Datenbank v2</Description>
-    <Copyright>stichelbiene.de © 2019</Copyright>
+    <Copyright>stichelbiene.de © 2020</Copyright>
     <AssemblyTitle>Lustiges Taschenbuch Datenbank v2</AssemblyTitle>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DebugType>portable</DebugType>
@@ -29,17 +29,25 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>$(DefineConstants);RELEASE;TRACE</DefineConstants>
     <Optimize>true</Optimize>
+    <DebugType>None</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Update="wwwroot\**\*;Views\**\*.cshtml;Areas\**\*.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\assets\**\*;wwwroot\**\*.less;wwwroot\**\*.map;package.json;package-lock.json">
+    <Content Update="wwwroot\assets\**\*;wwwroot\**\*.less;wwwroot\**\*.map;package.json;package-lock.json;contrib/**">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
-    <Content Update="NLog.config" CopyToPublishDirectory="Never" CopyToOutputDirectory="PreserveNewest" />
-    <Content Update="appsettings.json" CopyToPublishDirectory="Never" CopyToOutputDirectory="Never" />
+    <Content Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -52,7 +60,7 @@
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
-    <!--<Exec Command="gulp" />-->
+    <!-- <Exec Command="gulp" /> -->
   </Target>
 
 </Project>

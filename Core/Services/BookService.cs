@@ -35,7 +35,7 @@ namespace ltbdb.Core.Services
 		{
 			Log.LogInformation($"Request all books.");
 
-			var _query = Context.Book //.AsQueryable()
+			var _query = Context.Book
 				.Include(i => i.Stories)
 				.Include(i => i.Tags)
 				.OrderBy(o => o.Number)
@@ -92,6 +92,37 @@ namespace ltbdb.Core.Services
 
 			var _query = Context.Book
 				.Where(f => f.Tags.Any(a => a.Name == tag))
+				.OrderBy(o => o.Number)
+				.ThenBy(o => o.Category);
+
+			return _query;
+		}
+
+		/// <summary>
+		/// Get books by filter. Filter can be category and/or tags.
+		/// </summary>
+		/// <param name="category">The category.</param>
+		/// <param name="tag">The tag.</param>
+		/// <returns>List of book.</returns>
+		public IEnumerable<Book> GetByFilter(string category, string tag)
+		{
+			category = category.Trim();
+			tag = tag.Trim();
+
+			Log.LogInformation($"Request all books by filter. Filter: category: '{category}', tag: '{tag}'.");
+
+			var _query = Context.Book
+				.Include(i => i.Stories)
+				.Include(i => i.Tags)
+				.AsQueryable();
+
+			if (!String.IsNullOrEmpty(category))
+				_query = _query.Where(f => f.Category == category);
+
+			if (!String.IsNullOrEmpty(tag))
+				_query = _query.Where(f => f.Tags.Any(a => a.Name == tag));
+
+			_query = _query
 				.OrderBy(o => o.Number)
 				.ThenBy(o => o.Category);
 

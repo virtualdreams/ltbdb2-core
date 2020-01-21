@@ -31,9 +31,12 @@ namespace ltbdb.WebAPI.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult GetAll(string filter, string category)
+		public IActionResult GetAll(string category, string tag)
 		{
-			var _books = BookService.Get();
+			var filterCategory = category ?? String.Empty;
+			var filterTag = tag ?? String.Empty;
+
+			var _books = BookService.GetByFilter(filterCategory, filterTag);
 			return Ok(Mapper.Map<BookModel[]>(_books));
 		}
 

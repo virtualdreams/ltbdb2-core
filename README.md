@@ -141,8 +141,15 @@ $ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login
 Request
 
 ```sh
-$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book
+$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book[?category=Category&tag=Tag]
 ```
+
+Request parameters
+
+| Name | Description | Required |
+|:--- |:--- |:--- |
+| category | The category to filter. | no |
+| tag | The tag to filter. | no |
 
 **Response**
 

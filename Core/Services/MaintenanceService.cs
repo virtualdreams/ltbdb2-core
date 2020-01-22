@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,33 +13,6 @@ namespace ltbdb.Core.Services
 		{
 			Log = log;
 			Context = context;
-		}
-
-		/// <summary>
-		/// Export the complete database.
-		/// </summary>
-		/// <returns>List of json ready objects.</returns>
-		public IEnumerable<dynamic> Export()
-		{
-			var _books = Context.Book
-				.Include(i => i.Stories)
-				.Include(i => i.Tags)
-				.OrderBy(o => o.Category)
-				.ThenBy(o => o.Number);
-
-			foreach (var book in _books)
-			{
-				yield return new
-				{
-					Number = book.Number,
-					Title = book.Title,
-					Category = book.Category,
-					Created = book.Created,
-					Filename = book.Filename,
-					Stories = book.Stories.Select(s => s.Name),
-					Tags = book.Tags.Select(s => s.Name)
-				};
-			}
 		}
 
 		/// <summary>

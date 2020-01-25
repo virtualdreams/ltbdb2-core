@@ -153,22 +153,16 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Search for book by term '{term}'.");
 
-			var _query = Context.Book
-				.Where(
-					f =>
-						f.Title.Contains(term) ||
-						f.Stories.Any(a => a.Name.Contains(term)) ||
-						f.Tags.Any(a => a.Name.Contains(term))
-				)
-				.OrderBy(o => o.Number)
-				.ThenBy(o => o.Title);
-
-			/* var _n = 0;
-			if (Int32.TryParse(term, out _n))
-			{
-				var _number = _filter.Eq(f => f.Number, _n);
-				_query |= _number;
-			} */
+			var _query = Context.Book.
+			Where(
+				f =>
+					EF.Functions.Like(f.Title, $"%{term}%") ||
+					EF.Functions.Like(f.Number, $"{term}") ||
+					f.Stories.Any(a => EF.Functions.Like(a.Name, $"%{term}%")) ||
+					f.Tags.Any(a => EF.Functions.Like(a.Name, $"%{term}%"))
+			)
+			.OrderBy(o => o.Number)
+			.ThenBy(o => o.Title);
 
 			return _query;
 		}

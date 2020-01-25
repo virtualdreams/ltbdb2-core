@@ -24,7 +24,7 @@ namespace ltbdb.Controllers
 		[HttpGet]
 		public IActionResult Index(int? ofs)
 		{
-			var _books = BookService.Get().OrderBy(o => o.Category);
+			var _books = BookService.Get();
 			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);

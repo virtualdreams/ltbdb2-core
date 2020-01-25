@@ -36,8 +36,8 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Request all books.");
 
 			var _query = Context.Book.AsQueryable()
-				.OrderBy(o => o.Number)
-				.ThenBy(o => o.Category);
+				.OrderBy(o => o.Category)
+				.ThenBy(o => o.Number);
 
 			return _query;
 		}
@@ -121,8 +121,7 @@ namespace ltbdb.Core.Services
 				_query = _query.Where(f => f.Tags.Any(a => a.Name == tag));
 
 			_query = _query
-				.OrderBy(o => o.Number)
-				.ThenBy(o => o.Category);
+				.OrderBy(o => o.Id);
 
 			return _query;
 		}

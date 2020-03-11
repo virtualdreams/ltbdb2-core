@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ltbdb.Core.Helpers;
+using ltbdb.Extensions;
 
 namespace ltbdb.ViewComponents
 {

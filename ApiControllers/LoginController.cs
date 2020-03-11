@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
-using ltbdb.Core.Helpers;
+using ltbdb.Extensions;
 using ltbdb.Models;
 
 namespace ltbdb.WebAPI.Controllers

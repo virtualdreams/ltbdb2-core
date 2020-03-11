@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using ltbdb.Core.Helpers;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
+using ltbdb.Extensions;
 using ltbdb.Models;
 
 namespace ltbdb.Controllers

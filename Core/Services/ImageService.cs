@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.IO;
 using System;
-using ltbdb.Core.Helpers;
+using ltbdb.Core.Internal;
 
 namespace ltbdb.Core.Services
 {

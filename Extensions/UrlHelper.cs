@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System;
 
-namespace ltbdb.Core.Helpers
+namespace ltbdb.Extensions
 {
 	public class UrlHelper
 	{

@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System;
 
-namespace ltbdb.Core.Helpers
+namespace ltbdb.Extensions
 {
 	public class JwtTokenGenerator
 	{

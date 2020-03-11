@@ -2,7 +2,7 @@
 using System.IO;
 using System;
 
-namespace ltbdb.Core.Helpers
+namespace ltbdb.Core.Internal
 {
 	static public class GraphicsMagick
 	{

@@ -168,6 +168,8 @@ namespace ltbdb.Core.Services
 		{
 			var _cdn = Options.CDNPath;
 
+			Log.LogInformation($"Request image '{filename}' with quality '{imageType}'...");
+
 			switch (imageType)
 			{
 				case ImageType.Thumbnail:
@@ -178,7 +180,6 @@ namespace ltbdb.Core.Services
 				case ImageType.PreferThumbnail:
 					if (Exists(filename, true))
 						return _cdn.Combine(thumbnailDirectory).Combine(filename);
-
 					goto case ImageType.Normal;
 
 				case ImageType.Normal:

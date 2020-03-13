@@ -26,12 +26,12 @@ namespace ltbdb
 		/// <summary>
 		/// Path to image, if no cover exists.
 		/// </summary>
-		public string NoImage { get; set; } = "/content/no-image.png";
+		public string DefaultImage { get; set; } = "/content/no-image.png";
 
 		/// <summary>
-		/// CDN path, where the images are located.
+		/// Web path, where the images are located.
 		/// </summary>
-		public string CDNPath { get; set; } = "/images/";
+		public string ImageWebPath { get; set; } = "/images/";
 
 		/// <summary>
 		/// Path to GraphicsMagick to process the uploaded images.

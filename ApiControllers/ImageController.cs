@@ -45,8 +45,8 @@ namespace ltbdb.WebAPI.Controllers
 
 			return Ok(new
 			{
-				Thumbnail = ImageService.GetCDNPath(_book.Filename, ImageType.Thumbnail, true),
-				Image = ImageService.GetCDNPath(_book.Filename, ImageType.Normal, true)
+				Thumbnail = ImageService.GetImageWebPath(_book.Filename, ImageType.Thumbnail, true),
+				Image = ImageService.GetImageWebPath(_book.Filename, ImageType.Normal, true)
 			});
 		}
 

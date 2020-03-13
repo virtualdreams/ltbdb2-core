@@ -1,9 +1,6 @@
 ﻿@model ltbdb.Models.BookEditContainer
-@using Microsoft.Extensions.Options
-@using ltbdb
 @using ltbdb.Core.Services
 @inject ImageService ImageService
-@inject IOptionsSnapshot<Settings> Options;
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -75,14 +72,14 @@
 		</div>
 		<div style="float: right; position: relative; width: 200px; height: 200px; text-align: center;">
 			<input style="display: none;" name="image" type="file" id="image-upload" />
-			<img style="cursor: pointer;" id="image" src="@ImageService.GetCDNPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen." />
+			<img style="cursor: pointer;" id="image" src="@ImageService.GetImageWebPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen." />
 			
-			<input type="hidden" name="filename" value="@ImageService.GetCDNPath(Model.Book.Filename)" />
+			<input type="hidden" name="filename" value="@ImageService.GetImageWebPath(Model.Book.Filename)" />
 			<input type="hidden" name="remove" value="false" id="remove" />
 
 			<div style="position: absolute; top: -24px; right: 8px;">
-				<span class="pointer" id="image-reset" data-src="@ImageService.GetCDNPath(Model.Book.Filename)" title="Bild zurücksetzen." style="display: none;"><i class="material-icons bigger">undo</i></span>
-				<span class="pointer" id="image-delete" data-src="@Options.Value.NoImage" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
+				<span class="pointer" id="image-reset" data-src="@ImageService.GetImageWebPath(Model.Book.Filename)" title="Bild zurücksetzen." style="display: none;"><i class="material-icons bigger">undo</i></span>
+				<span class="pointer" id="image-delete" data-src="@ImageService.GetDefaultImage()" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
 			</div>
 		</div>
 	</div>

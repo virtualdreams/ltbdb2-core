@@ -158,15 +158,15 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
-		/// Get CDN path or return default image.
+		/// Get image path for or return default image.
 		/// </summary>
 		/// <param name="filename">The image filename.</param>
 		/// <param name="imageType">Select type of image to load.</param>
 		/// <param name="nullIfEmpty">Return "null" if image not exists.</param>
-		/// <returns>The CDN path.</returns>
-		public string GetCDNPath(string filename, ImageType imageType = ImageType.Normal, bool nullIfEmpty = false)
+		/// <returns>The web image path.</returns>
+		public string GetImageWebPath(string filename, ImageType imageType = ImageType.Normal, bool nullIfEmpty = false)
 		{
-			var _cdn = Options.CDNPath;
+			var _cdn = Options.ImageWebPath;
 
 			Log.LogInformation($"Request image '{filename}' with quality '{imageType}'...");
 
@@ -189,9 +189,21 @@ namespace ltbdb.Core.Services
 
 				default:
 					if (!nullIfEmpty)
-						return Options.NoImage;
+						return Options.DefaultImage;
 					return null;
 			}
+		}
+
+		/// <summary>
+		/// Get the default image.
+		/// </summary>
+		/// <param name="nullIfEmpty">Return "null" if image not exists.</param>
+		/// <returns>The image path.</returns>
+		public string GetDefaultImage(bool nullIfEmpty = false)
+		{
+			if (!nullIfEmpty)
+				return Options.DefaultImage;
+			return null;
 		}
 
 		/// <summary>

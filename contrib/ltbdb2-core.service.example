@@ -4,11 +4,10 @@ After=network.target
 After=mariadb.service
 
 [Service]
-#Environment=ASPNETCORE_URLS=http://127.0.0.1:5000/
 EnvironmentFile=
-;Restart=always
-;RestartSec=10
-Type=simple
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
 SyslogIdentifier=ltbdb2
 WorkingDirectory=/foo/bar/ltbdb2-core
 ExecStart=/usr/local/bin/dotnet /foo/bar/ltbdb2-core/ltbdb2.dll

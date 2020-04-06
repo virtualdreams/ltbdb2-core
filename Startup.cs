@@ -51,6 +51,7 @@ namespace ltbdb
 			services.AddTransient<CategoryService>();
 			services.AddTransient<MaintenanceService>();
 			services.AddTransient<ImageService>();
+			services.AddScoped<CustomTokenEvents>();
 
 			// key ring
 			if (!String.IsNullOrEmpty(settings.KeyStore))
@@ -104,6 +105,7 @@ namespace ltbdb
 						ValidateLifetime = true,
 						ClockSkew = TimeSpan.FromMinutes(5)
 					};
+					options.EventsType = typeof(CustomTokenEvents);
 				});
 
 			// authorization policies

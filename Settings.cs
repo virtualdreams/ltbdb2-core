@@ -58,5 +58,10 @@ namespace ltbdb
 		/// </summary>
 		/// <returns></returns>
 		public string SecurityKey { get; set; } = "";
+
+		/// <summary>
+		/// Sets the expiration time of the token in seconds.
+		/// </summary>
+		public int TokenExpire { get; set; } = 300;
 	}
 }

@@ -9,7 +9,15 @@ namespace ltbdb.Extensions
 {
 	public class JwtTokenGenerator
 	{
-		static public string Generate(string securityKey, string username, string role)
+		/// <summary>
+		/// Generates a JwtToken.
+		/// </summary>
+		/// <param name="securityKey">The encryption key.</param>
+		/// <param name="username">Issuer username.</param>
+		/// <param name="role">Issuer role.</param>
+		/// <param name="expire">Expiration time.</param>
+		/// <returns>Returns a JwtToken.</returns>
+		static public string Generate(string securityKey, string username, string role, int expire = 300)
 		{
 			var claims = new List<Claim>
 			{
@@ -18,7 +26,7 @@ namespace ltbdb.Extensions
 				new Claim(JwtRegisteredClaimNames.Aud, "ltbdb"),
 				new Claim(JwtRegisteredClaimNames.Iss, "ltbdb"),
 				new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
-				new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddHours(1)).ToUnixTimeSeconds().ToString())
+				new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddSeconds(expire)).ToUnixTimeSeconds().ToString())
 			};
 
 			var token = new JwtSecurityToken(

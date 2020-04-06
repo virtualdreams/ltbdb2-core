@@ -26,7 +26,12 @@ namespace ltbdb.WebAPI.Controllers
 				{
 					if (Options.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Options.Password.Equals(model.Password))
 					{
-						return Ok(new { Token = JwtTokenGenerator.Generate(Options.SecurityKey, model.Username, "Administrator") });
+						return Ok(new
+						{
+							Token = JwtTokenGenerator.Generate(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
+							Type = "Bearer",
+							ExpiresIn = Options.TokenExpire
+						});
 					}
 
 					return StatusCode(403);

@@ -51,6 +51,7 @@ namespace ltbdb
 			services.AddTransient<CategoryService>();
 			services.AddTransient<MaintenanceService>();
 			services.AddTransient<ImageService>();
+			services.AddTransient<JwtTokenGenerator>();
 			services.AddScoped<CustomTokenEvents>();
 
 			// key ring

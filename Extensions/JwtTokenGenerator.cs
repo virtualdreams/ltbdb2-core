@@ -17,7 +17,7 @@ namespace ltbdb.Extensions
 		/// <param name="role">Issuer role.</param>
 		/// <param name="expire">Expiration time.</param>
 		/// <returns>Returns a JwtToken.</returns>
-		static public string Generate(string securityKey, string username, string role, int expire = 300)
+		public string GenerateToken(string securityKey, string username, string role, int expire = 300)
 		{
 			var claims = new List<Claim>
 			{

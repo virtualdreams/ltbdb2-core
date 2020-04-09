@@ -104,7 +104,7 @@ namespace ltbdb
 						ValidateIssuerSigningKey = true,
 						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecurityKey)),
 						ValidateLifetime = true,
-						ClockSkew = TimeSpan.FromMinutes(5)
+						ClockSkew = TimeSpan.Zero
 					};
 					options.EventsType = typeof(CustomTokenEvents);
 				});

@@ -17,28 +17,25 @@ namespace ltbdb.Extensions
 		/// <param name="role">Issuer role.</param>
 		/// <param name="expire">Expiration time.</param>
 		/// <returns>Returns a JwtToken.</returns>
-		public string GenerateToken(string securityKey, string username, string role, int expire = 300)
+		public string GenerateToken(string securityKey, string username, string role, int expire)
 		{
-			var claims = new List<Claim>
+			var _tokenHandler = new JwtSecurityTokenHandler();
+			var _key = Encoding.UTF8.GetBytes(securityKey);
+			var _tokenDescriptor = new SecurityTokenDescriptor
 			{
-				new Claim(ClaimTypes.Name, username, ClaimValueTypes.String),
-				new Claim(ClaimTypes.Role, role, ClaimValueTypes.String),
-				new Claim(JwtRegisteredClaimNames.Aud, "ltbdb"),
-				new Claim(JwtRegisteredClaimNames.Iss, "ltbdb"),
-				new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
-				new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddSeconds(expire)).ToUnixTimeSeconds().ToString())
+				Subject = new ClaimsIdentity(new[]{
+					new Claim(ClaimTypes.Name, username, ClaimValueTypes.String),
+					new Claim(ClaimTypes.Role, role, ClaimValueTypes.String),
+					new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+				}),
+				Audience = "ltbdb",
+				Issuer = "ltbdb",
+				Expires = DateTime.UtcNow.AddSeconds(expire),
+				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_key), SecurityAlgorithms.HmacSha256Signature)
 			};
 
-			var token = new JwtSecurityToken(
-				new JwtHeader(
-					new SigningCredentials(
-						new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey)), SecurityAlgorithms.HmacSha256
-					)
-				),
-				new JwtPayload(claims)
-			);
-
-			return new JwtSecurityTokenHandler().WriteToken(token);
+			var _token = _tokenHandler.CreateToken(_tokenDescriptor);
+			return _tokenHandler.WriteToken(_token);
 		}
 	}
 }

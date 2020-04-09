@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ltbdb.Extensions
@@ -23,5 +24,19 @@ namespace ltbdb.Extensions
 			}
 			return Task.CompletedTask;
 		}
+
+		/* public override Task TokenValidated(TokenValidatedContext context)
+		{
+			var _context = context.Principal;
+			var _name = _context.FindFirst(ClaimTypes.Name)?.Value;
+
+			if (_name.Equals("test"))
+			{
+				context.Response.StatusCode = 401;
+				context.Fail("Token invalid");
+			}
+
+			return Task.CompletedTask;
+		} */
 	}
 }

@@ -8,7 +8,7 @@ using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 
-namespace ltbdb.WebAPI.Controllers
+namespace ltbdb.WebAPI.Controllers.V1
 {
 	[Produces("application/json")]
 	[Route("api/v1/[controller]")]

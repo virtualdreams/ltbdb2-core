@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ltbdb.Core.Services;
 
-namespace ltbdb.WebAPI.Controllers
+namespace ltbdb.WebAPI.Controllers.V1
 {
 	[Produces("application/json")]
 	[Route("api/v1/[controller]")]

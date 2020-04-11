@@ -4,15 +4,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Net.Mime;
 using System;
 using ltbdb.Core.Services;
 
 namespace ltbdb.WebAPI.Controllers.V1
 {
-	[Produces("application/json")]
+	[ApiController]
+	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[Authorize(Policy = "AdministratorOnly", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	public class ImageController : Controller
+	public class ImageController : ControllerBase
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;

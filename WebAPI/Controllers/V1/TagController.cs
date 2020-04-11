@@ -3,14 +3,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Net.Mime;
 using ltbdb.Core.Services;
 
 namespace ltbdb.WebAPI.Controllers.V1
 {
-	[Produces("application/json")]
+	[ApiController]
+	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[Authorize(Policy = "AdministratorOnly", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-	public class TagController : Controller
+	public class TagController : ControllerBase
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;

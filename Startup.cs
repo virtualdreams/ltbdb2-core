@@ -77,6 +77,14 @@ namespace ltbdb
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 			});
 
+			// configure WebAPI 
+			services.AddControllers()
+				.ConfigureApiBehaviorOptions(options =>
+				{
+					options.SuppressModelStateInvalidFilter = true;
+					options.SuppressMapClientErrors = true;
+				});
+
 			// add sessions
 			// services.AddDistributedMemoryCache();
 			// services.AddSession(options =>

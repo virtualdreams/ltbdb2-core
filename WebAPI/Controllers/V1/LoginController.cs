@@ -1,14 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Net.Mime;
 using System;
 using ltbdb.Extensions;
 using ltbdb.Models;
 
 namespace ltbdb.WebAPI.Controllers.V1
 {
-	[Produces("application/json")]
+	[ApiController]
+	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
-	public class LoginController : Controller
+	public class LoginController : ControllerBase
 	{
 		public readonly Settings Options;
 		public readonly JwtTokenGenerator JwtToken;

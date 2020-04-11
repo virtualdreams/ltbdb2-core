@@ -66,16 +66,13 @@ namespace ltbdb
 			// IIS integration
 			services.Configure<IISOptions>(options => { });
 
-			// add custom model binders
-			services.AddMvc(options =>
-			{
-				//options.ModelBinderProviders.Insert(0, new CustomModelBinderProvider());
-			})
-			.AddNewtonsoftJson(options =>
-			{
-				options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
-				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-			});
+			// configure MVC
+			services.AddMvc(options => { })
+				.AddNewtonsoftJson(options =>
+				{
+					options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+					options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+				});
 
 			// configure WebAPI 
 			services.AddControllers()

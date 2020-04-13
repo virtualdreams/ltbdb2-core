@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace ltbdb.Models
 {
-	public class BookModel
+	public class BookPostModel
 	{
 		public int Id { get; set; }
 
@@ -13,12 +13,14 @@ namespace ltbdb.Models
 
 		public string Category { get; set; }
 
-		public DateTime Created { get; set; }
-
 		public string Filename { get; set; }
 
 		public List<string> Stories { get; set; } = new List<string>();
 
-		public List<string> Tags { get; set; } = new List<string>();
+		public string Tags { get; set; }
+
+		public IFormFile Image { get; set; }
+
+		public bool Remove { get; set; }
 	}
 }

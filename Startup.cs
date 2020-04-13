@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -67,20 +68,28 @@ namespace ltbdb
 			services.Configure<IISOptions>(options => { });
 
 			// configure MVC
-			services.AddMvc(options => { })
-				.AddNewtonsoftJson(options =>
-				{
-					options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
-					options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-				});
+			services.AddMvc(options =>
+			{
+				options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => "Bitte gib eine Zahl ein.");
+			})
+			.AddNewtonsoftJson(options =>
+			{
+				options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+			})
+			.AddFluentValidation(options =>
+			{
+				options.RegisterValidatorsFromAssemblyContaining<Startup>();
+				options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+			});
 
 			// configure WebAPI 
 			services.AddControllers()
-				.ConfigureApiBehaviorOptions(options =>
-				{
-					options.SuppressModelStateInvalidFilter = true;
-					options.SuppressMapClientErrors = true;
-				});
+			.ConfigureApiBehaviorOptions(options =>
+			{
+				options.SuppressModelStateInvalidFilter = true;
+				options.SuppressMapClientErrors = true;
+			});
 
 			// add sessions
 			// services.AddDistributedMemoryCache();
@@ -92,27 +101,27 @@ namespace ltbdb
 			// });
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-				.AddCookie(options =>
+			.AddCookie(options =>
+			{
+				options.Cookie.Name = "ltbdb";
+				options.LoginPath = new PathString("/login");
+				options.AccessDeniedPath = new PathString("/");
+			})
+			.AddJwtBearer(options =>
+			{
+				options.TokenValidationParameters = new TokenValidationParameters
 				{
-					options.Cookie.Name = "ltbdb";
-					options.LoginPath = new PathString("/login");
-					options.AccessDeniedPath = new PathString("/");
-				})
-				.AddJwtBearer(options =>
-				{
-					options.TokenValidationParameters = new TokenValidationParameters
-					{
-						ValidateAudience = true,
-						ValidAudience = "ltbdb",
-						ValidateIssuer = true,
-						ValidIssuer = "ltbdb",
-						ValidateIssuerSigningKey = true,
-						IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecurityKey)),
-						ValidateLifetime = true,
-						ClockSkew = TimeSpan.Zero
-					};
-					options.EventsType = typeof(CustomTokenEvents);
-				});
+					ValidateAudience = true,
+					ValidAudience = "ltbdb",
+					ValidateIssuer = true,
+					ValidIssuer = "ltbdb",
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecurityKey)),
+					ValidateLifetime = true,
+					ClockSkew = TimeSpan.Zero
+				};
+				options.EventsType = typeof(CustomTokenEvents);
+			});
 
 			// authorization policies
 			services.AddAuthorization(options =>

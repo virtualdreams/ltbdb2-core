@@ -8,6 +8,7 @@ using System;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.Models;
+using ltbdb.WebAPI.Contracts.V1.Requests;
 
 namespace ltbdb.WebAPI.Controllers.V1
 {
@@ -53,7 +54,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 		}
 
 		[HttpPost("{id}")]
-		public IActionResult Post(int id, [FromBody]BookPostApiModel model)
+		public IActionResult Post(int id, [FromBody]BookApiRequest model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -79,7 +80,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 		}
 
 		[HttpPut]
-		public IActionResult Put([FromBody]BookPostApiModel model)
+		public IActionResult Put([FromBody]BookApiRequest model)
 		{
 			if (ModelState.IsValid)
 			{

@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using ltbdb.Core.Models;
 using ltbdb.Models;
+using ltbdb.WebAPI.Contracts.V1.Requests;
 
 namespace ltbdb.Extensions
 {
@@ -35,7 +36,7 @@ namespace ltbdb.Extensions
 					.ForSourceMember(s => s.Image, map => map.DoNotValidate())
 					.ForSourceMember(s => s.Remove, map => map.DoNotValidate());
 
-				config.CreateMap<BookPostApiModel, Book>()
+				config.CreateMap<BookApiRequest, Book>()
 					.ForMember(d => d.Id, map => map.Ignore())
 					.ForMember(d => d.Created, map => map.Ignore())
 					.ForMember(d => d.Filename, map => map.Ignore())

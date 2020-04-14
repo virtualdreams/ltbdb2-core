@@ -27,40 +27,12 @@ namespace ltbdb.Validators
 
 			RuleFor(r => r.Stories)
 				//.MaximumLength(100)
-				.Must(MaximumLengthInArray)
+				.MaximumLengthInArray(100)
 				.WithMessage("Ein Eintrag darf max. 100 Zeichen lang sein.");
 
 			RuleFor(r => r.Tags)
-				.Must((model, value) =>
-				{
-					var _tmp = (value as String);
-					if (_tmp != null)
-					{
-						var _list = _tmp.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-						foreach (var _item in _list)
-						{
-							if (_item.Length > 50)
-							{
-								return false;
-							}
-						}
-					}
-					return true;
-				})
+				.MaximumLengthInArrayString(50, ';')
 				.WithMessage("Ein Tag darf max. 50 Zeichen lang sein.");
-		}
-
-		private bool MaximumLengthInArray(List<string> value)
-		{
-			foreach (var item in value)
-			{
-				if (item == null)
-					continue;
-
-				if (item.Length > 100)
-					return false;
-			}
-			return true;
 		}
 	}
 }

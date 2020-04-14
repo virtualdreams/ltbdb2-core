@@ -53,8 +53,30 @@ namespace ltbdb.WebAPI.Controllers.V1
 			return Ok(Mapper.Map<BookModel>(_book));
 		}
 
-		[HttpPost("{id}")]
-		public IActionResult Post(int id, [FromBody]BookApiRequest model)
+		[HttpPost]
+		public IActionResult Post([FromBody]BookApiRequest model)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					var _book = Mapper.Map<Book>(model);
+
+					var book = BookService.Create(_book);
+
+					return Ok(new { Id = book.Id });
+				}
+				catch (Exception)
+				{
+					return StatusCode(500);
+				}
+			}
+
+			return BadRequest();
+		}
+
+		[HttpPut("{id}")]
+		public IActionResult Put(int id, [FromBody]BookApiRequest model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -69,28 +91,6 @@ namespace ltbdb.WebAPI.Controllers.V1
 					BookService.Update(book);
 
 					return Ok();
-				}
-				catch (Exception)
-				{
-					return StatusCode(500);
-				}
-			}
-
-			return BadRequest();
-		}
-
-		[HttpPut]
-		public IActionResult Put([FromBody]BookApiRequest model)
-		{
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					var _book = Mapper.Map<Book>(model);
-
-					var book = BookService.Create(_book);
-
-					return Ok(new { Id = book.Id });
 				}
 				catch (Exception)
 				{

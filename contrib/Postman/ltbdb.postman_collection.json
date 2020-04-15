@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "21e0caec-9203-4d0d-9b2e-c892b90e97b9",
+		"_postman_id": "1b758cf4-684f-4459-a6c8-68156b6c29ac",
 		"name": "ltbdb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -152,55 +152,15 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "0252936a-8ea8-4e9d-9558-3bbd82ae912c",
+										"id": "d45f4638-f359-4dec-9e96-9a0732d5b388",
 										"exec": [
-											"var jsonData = JSON.parse(responseBody);",
-											"pm.environment.set(\"id\", jsonData.Id);"
+											"//var jsonData = JSON.parse(responseBody);",
+											"//pm.environment.set(\"id\", jsonData.Id);"
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"number\": 1,\n\t\"title\": \"Book from API\",\n\t\"category\": \"Category from API\"\n}"
-								},
-								"url": {
-									"raw": "{{url}}/api/v1/book",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"book"
-									]
-								},
-								"description": "Insert a new book."
-							},
-							"response": []
-						},
-						{
-							"name": "Update book",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -223,6 +183,46 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\n\t\"number\": 1,\n\t\"title\": \"Book from API\",\n\t\"category\": \"Category from API\",\n\t\"stories\": [\n\t\t\"Story 1\",\n\t\t\"Story 2\"\n\t],\n\t\"tags\": [\n\t\t\"Tag 1\",\n\t\t\"Tag 2\"\n\t]\n}"
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/book",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"book"
+									]
+								},
+								"description": "Add a book."
+							},
+							"response": []
+						},
+						{
+							"name": "Update book",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"number\": 1,\n\t\"title\": \"Book from API\",\n\t\"category\": \"Category from API\",\n\t\"stories\": [\n\t\t\"Story 1\",\n\t\t\"Story 3\"\n\t],\n\t\"tags\": [\n\t\t\"Tag 1\",\n\t\t\"Tag 3\"\n\t]\n}"
 								},
 								"url": {
 									"raw": "{{url}}/api/v1/book/{{id}}",
@@ -334,7 +334,7 @@
 										}
 									]
 								},
-								"method": "POST",
+								"method": "PUT",
 								"header": [
 									{
 										"key": "Content-Type",

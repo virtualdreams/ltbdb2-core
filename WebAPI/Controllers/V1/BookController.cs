@@ -64,7 +64,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 
 					var book = BookService.Create(_book);
 
-					return Ok(new { Id = book.Id });
+					return Created(new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{book.Id}", UriKind.Absolute), null);
 				}
 				catch (Exception)
 				{
@@ -90,7 +90,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 					book.Id = id;
 					BookService.Update(book);
 
-					return Ok();
+					return NoContent();
 				}
 				catch (Exception)
 				{
@@ -112,7 +112,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 
 				BookService.Delete(id);
 
-				return Ok();
+				return NoContent();
 			}
 			catch (Exception)
 			{

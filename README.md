@@ -138,7 +138,7 @@ $ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login
 
 ### Get all books
 
-Request
+**Request**
 
 ```sh
 $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book[?category=Category&tag=Tag]
@@ -158,8 +158,8 @@ Request parameters
     {
         "Id": 1,
         "Number": 1,
-        "Title": "Title",
-        "Category": "Category",
+        "Title": "Title 1",
+        "Category": "Category 1",
         "Created": "2019-12-29T16:34:47",
         "Filename": null,
         "Stories": [],
@@ -168,8 +168,8 @@ Request parameters
     {
         "Id": 2,
         "Number": 2,
-        "Title": "Title",
-        "Category": "Category",
+        "Title": "Title 1",
+        "Category": "Category 1",
         "Created": "2019-12-29T16:35:48",
         "Filename": null,
         "Stories": [],
@@ -186,14 +186,14 @@ Request parameters
 $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id>
 ```
 
-Response
+**Response**
 
 ```json
 {
     "Id": 1,
     "Number": 1,
-    "Title": "Title",
-    "Category": "Category",
+    "Title": "Title 1",
+    "Category": "Category 1",
     "Created": "2019-12-29T16:34:47",
     "Filename": null,
     "Stories": [],
@@ -211,11 +211,7 @@ $ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <to
 
 **Response**
 
-```json
-{
-    "Id": 1234
-}
-```
+None
 
 ### Edit a book
 
@@ -265,7 +261,7 @@ Paths can be `null`.
 **Request**
 
 ```sh
-$ curl -X POST -H "Authorization: Bearer <token>" -H "Content-Type: multipart/form-data" -F "image=@file.png" http://localhost/api/v1/image/<id>
+$ curl -X PUT -H "Authorization: Bearer <token>" -H "Content-Type: multipart/form-data" -F "image=@file.png" http://localhost/api/v1/image/<id>
 ```
 
 **Response**

@@ -52,8 +52,8 @@ namespace ltbdb.WebAPI.Controllers.V1
 			});
 		}
 
-		[HttpPost("{id}")]
-		public IActionResult Post(int id, IFormFile image)
+		[HttpPut("{id}")]
+		public IActionResult Put(int id, IFormFile image)
 		{
 			if (image != null && image.Length > 0)
 			{
@@ -65,7 +65,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 
 					BookService.SetImage(_book.Id, image.OpenReadStream());
 
-					return Ok();
+					return NoContent();
 				}
 				catch (Exception)
 				{
@@ -85,7 +85,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 
 			BookService.SetImage(_book.Id, null);
 
-			return Ok();
+			return NoContent();
 		}
 	}
 }

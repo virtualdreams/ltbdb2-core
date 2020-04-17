@@ -8,7 +8,7 @@ namespace ltbdb.Extensions
 	{
 		public static IServiceCollection AddAutoMapper(this IServiceCollection services)
 		{
-			var _autoMapperConfig = new MapperConfiguration(config =>
+			var mappingConfiguration = new MapperConfiguration(config =>
 			{
 				config.AllowNullCollections = false;
 
@@ -16,9 +16,9 @@ namespace ltbdb.Extensions
 				config.AddProfile<ApiMappingProfile>();
 			});
 
-			_autoMapperConfig.AssertConfigurationIsValid();
+			mappingConfiguration.AssertConfigurationIsValid();
 
-			services.AddSingleton<IMapper>(am => _autoMapperConfig.CreateMapper());
+			services.AddSingleton(mappingConfiguration.CreateMapper());
 
 			return services;
 		}

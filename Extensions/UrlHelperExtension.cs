@@ -4,7 +4,7 @@ using System;
 
 namespace ltbdb.Extensions
 {
-	public class UrlHelper
+	public static class UrlHelperExtension
 	{
 		/// <summary>
 		/// Slugify the string.
@@ -12,7 +12,7 @@ namespace ltbdb.Extensions
 		/// <param name="value">The string to slugify.</param>
 		/// <param name="maxLength">Max length of text.</param>
 		/// <returns>Slugified string.</returns>
-		static public string ToSlug(string value, int maxLength = 100)
+		public static string ToSlug(this string value, int maxLength = 100)
 		{
 			if (String.IsNullOrEmpty(value))
 				return String.Empty;
@@ -44,25 +44,6 @@ namespace ltbdb.Extensions
 
 			// max length of text
 			return value.Substring(0, value.Length <= maxLength ? value.Length : maxLength);
-		}
-
-		/// <summary>
-		/// Extended slugify with id at the end.
-		/// </summary>
-		/// <param name="id">The id.</param>
-		/// <param name="maxLength">Max length of text.</param>
-		/// <param name="values">The strings to concat and slugify.</param>
-		/// <returns></returns>
-		public static string ToSlug(int maxLength = 100, params string[] values)
-		{
-			var _sb = new StringBuilder();
-
-			foreach (var value in values)
-			{
-				_sb.Append($"{value}-");
-			}
-
-			return $"{UrlHelper.ToSlug(_sb.ToString(), maxLength)}";
 		}
 	}
 }

@@ -106,7 +106,7 @@ namespace ltbdb.Controllers
 						}
 					}
 
-					return RedirectToAction("view", "book", new { id = _id, slug = UrlHelper.ToSlug(100, "Nr.", book.Number.ToString(), book.Title) });
+					return RedirectToAction("view", "book", new { id = _id, slug = $"Nr. {book.Number} {book.Title}".ToSlug() });
 				}
 				catch (Exception ex)
 				{

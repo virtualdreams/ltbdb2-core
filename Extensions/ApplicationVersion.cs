@@ -5,7 +5,7 @@ namespace ltbdb.Extensions
 	/// <summary>
 	/// Get assembly version informations.
 	/// </summary>
-	public class ApplicationVersion
+	static public class ApplicationVersion
 	{
 		/// <summary
 		/// Get file version.

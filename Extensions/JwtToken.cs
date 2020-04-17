@@ -1,5 +1,4 @@
 using Microsoft.IdentityModel.Tokens;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -7,7 +6,7 @@ using System;
 
 namespace ltbdb.Extensions
 {
-	public class JwtTokenGenerator
+	public class JwtToken
 	{
 		/// <summary>
 		/// Generates a JwtToken.
@@ -17,7 +16,7 @@ namespace ltbdb.Extensions
 		/// <param name="role">Issuer role.</param>
 		/// <param name="expire">Expiration time.</param>
 		/// <returns>Returns a JwtToken.</returns>
-		public string GenerateToken(string securityKey, string username, string role, int expire)
+		public string CreateToken(string securityKey, string username, string role, int expire)
 		{
 			var _tokenHandler = new JwtSecurityTokenHandler();
 			var _key = Encoding.UTF8.GetBytes(securityKey);

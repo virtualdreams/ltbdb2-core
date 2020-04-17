@@ -13,9 +13,9 @@ namespace ltbdb.WebAPI.Controllers.V1
 	public class LoginController : ControllerBase
 	{
 		public readonly Settings Options;
-		public readonly JwtTokenGenerator JwtToken;
+		public readonly JwtToken JwtToken;
 
-		public LoginController(IOptionsSnapshot<Settings> settings, JwtTokenGenerator token)
+		public LoginController(IOptionsSnapshot<Settings> settings, JwtToken token)
 		{
 			Options = settings.Value;
 			JwtToken = token;
@@ -32,7 +32,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 					{
 						return Ok(new
 						{
-							Token = JwtToken.GenerateToken(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
+							Token = JwtToken.CreateToken(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
 							Type = "Bearer",
 							ExpiresIn = Options.TokenExpire
 						});

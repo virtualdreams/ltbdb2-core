@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Builder;
 
 namespace ltbdb.Extensions
 {
-	static public class EndpointsExtension
+	public static class EndpointsExtension
 	{
-		static public IApplicationBuilder AddEndpoints(this IApplicationBuilder app)
+		public static IApplicationBuilder AddEndpoints(this IApplicationBuilder app)
 		{
 			app.UseEndpoints(endpoints =>
 			{

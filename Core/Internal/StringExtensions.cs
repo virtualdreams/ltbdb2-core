@@ -2,7 +2,7 @@
 
 namespace ltbdb.Core.Internal
 {
-	static public class StringExtensions
+	public static class StringExtensions
 	{
 		/// <summary>
 		/// Combines two pathes.

@@ -4,9 +4,9 @@ using ltbdb.MappingProfiles;
 
 namespace ltbdb.Extensions
 {
-	static public class AutoMapperExtensions
+	public static class AutoMapperExtensions
 	{
-		static public IServiceCollection AddAutoMapper(this IServiceCollection services)
+		public static IServiceCollection AddAutoMapper(this IServiceCollection services)
 		{
 			var _autoMapperConfig = new MapperConfiguration(config =>
 			{

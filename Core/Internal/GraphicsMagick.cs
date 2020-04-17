@@ -4,12 +4,12 @@ using System;
 
 namespace ltbdb.Core.Internal
 {
-	static public class GraphicsMagick
+	public static class GraphicsMagick
 	{
 		/// <summary>
 		/// Path to GraphicsImage. If null, "gm" will used.
 		/// </summary>
-		static public string GraphicsImage { get; set; }
+		public static string GraphicsImage { get; set; }
 
 		/// <summary>
 		/// Invoke "GraphicsMagick" via command line interface.
@@ -17,7 +17,7 @@ namespace ltbdb.Core.Internal
 		/// <param name="source">The source image stream.</param>
 		/// <param name="target">The target image stream.</param>
 		/// <param name="arguments">GraphicsMagick arguments.</param>
-		static public void PInvoke(Stream source, Stream target, string arguments)
+		public static void PInvoke(Stream source, Stream target, string arguments)
 		{
 			using (var process = new Process())
 			{

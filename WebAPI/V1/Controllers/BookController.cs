@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Net.Mime;
 using System;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
-using ltbdb.Models;
-using ltbdb.WebAPI.Contracts.V1.Requests;
+using ltbdb.WebAPI.V1.Contracts.Requests;
+using ltbdb.WebAPI.V1.Contracts.Responses;
 
-namespace ltbdb.WebAPI.Controllers.V1
+namespace ltbdb.WebAPI.V1.Controllers
 {
 	[ApiController]
 	[Produces(MediaTypeNames.Application.Json)]
@@ -40,7 +41,8 @@ namespace ltbdb.WebAPI.Controllers.V1
 			var filterTag = tag ?? String.Empty;
 
 			var _books = BookService.GetByFilter(filterCategory, filterTag);
-			return Ok(Mapper.Map<BookModel[]>(_books));
+
+			return Ok(Mapper.Map<List<BookResponse>>(_books));
 		}
 
 		[HttpGet("{id}")]
@@ -50,11 +52,11 @@ namespace ltbdb.WebAPI.Controllers.V1
 			if (_book == null)
 				return NotFound();
 
-			return Ok(Mapper.Map<BookModel>(_book));
+			return Ok(Mapper.Map<BookResponse>(_book));
 		}
 
 		[HttpPost]
-		public IActionResult Post([FromBody]BookApiRequest model)
+		public IActionResult Post([FromBody]BookRequest model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -76,7 +78,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, [FromBody]BookApiRequest model)
+		public IActionResult Put(int id, [FromBody]BookRequest model)
 		{
 			if (ModelState.IsValid)
 			{

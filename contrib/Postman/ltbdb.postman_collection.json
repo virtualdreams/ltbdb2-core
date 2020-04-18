@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1b758cf4-684f-4459-a6c8-68156b6c29ac",
+		"_postman_id": "9c18ca3a-7b27-4eac-964a-fcb392094f9f",
 		"name": "ltbdb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -103,6 +103,18 @@
 										"api",
 										"v1",
 										"book"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "Category",
+											"disabled": true
+										},
+										{
+											"key": "tag",
+											"value": "Tag",
+											"disabled": true
+										}
 									]
 								},
 								"description": "Get all books."

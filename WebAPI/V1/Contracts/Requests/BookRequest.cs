@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace ltbdb.WebAPI.Contracts.V1.Requests
+namespace ltbdb.WebAPI.V1.Contracts.Requests
 {
-	public class BookApiRequest
+	public class BookRequest
 	{
-		public int? Number { get; set; }
+		public int Number { get; set; }
 
 		public string Title { get; set; }
 

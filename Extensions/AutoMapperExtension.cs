@@ -1,6 +1,5 @@
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
-using ltbdb.MappingProfiles;
 
 namespace ltbdb.Extensions
 {
@@ -12,8 +11,9 @@ namespace ltbdb.Extensions
 			{
 				config.AllowNullCollections = false;
 
-				config.AddProfile<WebMappingProfile>();
-				config.AddProfile<ApiMappingProfile>();
+				config.AddMaps(typeof(Startup));
+				// config.AddProfile<WebMappingProfile>();
+				// config.AddProfile<ApiMappingProfile>();
 			});
 
 			mappingConfiguration.AssertConfigurationIsValid();

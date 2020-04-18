@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Linq;
 using System.Net.Mime;
 using ltbdb.Core.Services;
+using ltbdb.WebAPI.V1.Contracts.Responses;
 
-namespace ltbdb.WebAPI.Controllers.V1
+namespace ltbdb.WebAPI.V1.Controllers
 {
 	[ApiController]
 	[Produces(MediaTypeNames.Application.Json)]
@@ -33,6 +35,7 @@ namespace ltbdb.WebAPI.Controllers.V1
 		public IActionResult GetAll()
 		{
 			var _tags = TagService.Get();
+
 			return Ok(_tags);
 		}
 	}

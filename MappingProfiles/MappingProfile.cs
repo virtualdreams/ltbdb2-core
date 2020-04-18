@@ -6,10 +6,11 @@ using ltbdb.Models;
 
 namespace ltbdb.MappingProfiles
 {
-	public class WebMappingProfile : Profile
+	public class MappingProfile : Profile
 	{
-		public WebMappingProfile()
+		public MappingProfile()
 		{
+			#region domain -> view
 			CreateMap<Book, BookModel>()
 				.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Select(x => x.Name)))
 				.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Select(x => x.Name)));
@@ -19,7 +20,9 @@ namespace ltbdb.MappingProfiles
 				.ForMember(d => d.Tags, map => map.MapFrom(s => String.Join("; ", s.Tags.Select(x => x.Name))))
 				.ForMember(d => d.Image, map => map.Ignore())
 				.ForMember(d => d.Remove, map => map.Ignore());
+			#endregion
 
+			#region web -> domain
 			CreateMap<BookPostModel, Book>()
 				.ForMember(d => d.Title, map => map.MapFrom(s => s.Title.Trim()))
 				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Trim()))
@@ -29,6 +32,7 @@ namespace ltbdb.MappingProfiles
 				.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).Where(w => !String.IsNullOrEmpty(w)).Distinct().Select(x => new Tag { Name = x })))
 				.ForSourceMember(s => s.Image, map => map.DoNotValidate())
 				.ForSourceMember(s => s.Remove, map => map.DoNotValidate());
+			#endregion
 		}
 	}
 }

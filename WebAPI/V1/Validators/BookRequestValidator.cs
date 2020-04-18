@@ -1,12 +1,12 @@
 using FluentValidation;
-using System.Collections.Generic;
-using ltbdb.WebAPI.Contracts.V1.Requests;
+using ltbdb.Validators;
+using ltbdb.WebAPI.V1.Contracts.Requests;
 
-namespace ltbdb.Validators
+namespace ltbdb.WebAPI.V1.Validators
 {
-	public class BookApiRequestValidator : AbstractValidator<BookApiRequest>
+	public class BookRequestValidator : AbstractValidator<BookRequest>
 	{
-		public BookApiRequestValidator()
+		public BookRequestValidator()
 		{
 			RuleFor(r => r.Number)
 				.NotEmpty()

@@ -4,8 +4,9 @@ using System.Net.Mime;
 using System;
 using ltbdb.Extensions;
 using ltbdb.Models;
+using ltbdb.WebAPI.V1.Contracts.Responses;
 
-namespace ltbdb.WebAPI.Controllers.V1
+namespace ltbdb.WebAPI.V1.Controllers
 {
 	[ApiController]
 	[Produces(MediaTypeNames.Application.Json)]
@@ -30,15 +31,17 @@ namespace ltbdb.WebAPI.Controllers.V1
 				{
 					if (Options.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Options.Password.Equals(model.Password))
 					{
-						return Ok(new
+						var _response = new AuthSuccessResponse
 						{
 							Token = JwtToken.CreateToken(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
 							Type = "Bearer",
 							ExpiresIn = Options.TokenExpire
-						});
+						};
+
+						return Ok(_response);
 					}
 
-					return StatusCode(403);
+					return Unauthorized();
 				}
 				catch (Exception)
 				{

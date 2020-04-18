@@ -8,7 +8,7 @@ using System.Net.Mime;
 using System;
 using ltbdb.Core.Services;
 
-namespace ltbdb.WebAPI.Controllers.V1
+namespace ltbdb.WebAPI.V1.Controllers
 {
 	[ApiController]
 	[Produces(MediaTypeNames.Application.Json)]

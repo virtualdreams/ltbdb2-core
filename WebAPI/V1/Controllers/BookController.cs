@@ -10,6 +10,7 @@ using ltbdb.Core.Models;
 using ltbdb.Core.Services;
 using ltbdb.WebAPI.V1.Contracts.Requests;
 using ltbdb.WebAPI.V1.Contracts.Responses;
+using ltbdb.WebAPI.V1.Filter;
 
 namespace ltbdb.WebAPI.V1.Controllers
 {
@@ -17,6 +18,7 @@ namespace ltbdb.WebAPI.V1.Controllers
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[Authorize(Policy = "AdministratorOnly", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[ValidationFilter]
 	public class BookController : ControllerBase
 	{
 		private readonly IMapper Mapper;
@@ -58,49 +60,39 @@ namespace ltbdb.WebAPI.V1.Controllers
 		[HttpPost]
 		public IActionResult Post([FromBody]BookRequest model)
 		{
-			if (ModelState.IsValid)
+			try
 			{
-				try
-				{
-					var _book = Mapper.Map<Book>(model);
+				var _book = Mapper.Map<Book>(model);
 
-					var book = BookService.Create(_book);
+				var book = BookService.Create(_book);
 
-					return Created(new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{book.Id}", UriKind.Absolute), null);
-				}
-				catch (Exception)
-				{
-					return StatusCode(500);
-				}
+				return Created(new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{book.Id}", UriKind.Absolute), null);
 			}
-
-			return BadRequest();
+			catch (Exception)
+			{
+				return StatusCode(500);
+			}
 		}
 
 		[HttpPut("{id}")]
 		public IActionResult Put(int id, [FromBody]BookRequest model)
 		{
-			if (ModelState.IsValid)
+			try
 			{
-				try
-				{
-					var _book = BookService.GetById(id);
-					if (_book == null)
-						return NotFound();
+				var _book = BookService.GetById(id);
+				if (_book == null)
+					return NotFound();
 
-					var book = Mapper.Map<Book>(model);
-					book.Id = id;
-					BookService.Update(book);
+				var book = Mapper.Map<Book>(model);
+				book.Id = id;
+				BookService.Update(book);
 
-					return NoContent();
-				}
-				catch (Exception)
-				{
-					return StatusCode(500);
-				}
+				return NoContent();
 			}
-
-			return BadRequest();
+			catch (Exception)
+			{
+				return StatusCode(500);
+			}
 		}
 
 		[HttpDelete("{id}")]

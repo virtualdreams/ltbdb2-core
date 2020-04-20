@@ -130,10 +130,27 @@ $ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login
 
 **Response**
 
+*Success*
+
 ```json
 {
-    "Token": "<token>"
+    "Token": "<token>",
+    "Type": "Bearer",
+    "ExpiresIn": <time_in_seconds>
 }
+```
+
+*BadRequest*
+
+```json
+[
+    {
+        "Field": "<fieldname>",
+        "Messages": [
+            "<message>"
+        ]
+    }
+]
 ```
 
 ### Get all books
@@ -152,6 +169,8 @@ Request parameters
 | tag | The tag to filter. | no |
 
 **Response**
+
+*Success*
 
 ```json
 [
@@ -188,6 +207,8 @@ $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <tok
 
 **Response**
 
+*Success*
+
 ```json
 {
     "Id": 1,
@@ -211,7 +232,22 @@ $ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <to
 
 **Response**
 
+*Success*
+
 None
+
+*BadRequest*
+
+```json
+[
+    {
+        "Field": "<fieldname>",
+        "Messages": [
+            "<message>"
+        ]
+    }
+]
+```
 
 ### Edit a book
 
@@ -223,7 +259,22 @@ $ curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <tok
 
 **Response**
 
+*Success*
+
 None
+
+*BadRequest*
+
+```json
+[
+    {
+        "Field": "<fieldname>",
+        "Messages": [
+            "<message>"
+        ]
+    }
+]
+```
 
 ### Delete a book
 
@@ -234,6 +285,8 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <
 ```
 
 **Response**
+
+*Success*
 
 None
 
@@ -246,6 +299,8 @@ $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <tok
 ```
 
 **Response**
+
+*Success*
 
 ```json
 {
@@ -266,6 +321,8 @@ $ curl -X PUT -H "Authorization: Bearer <token>" -H "Content-Type: multipart/for
 
 **Response**
 
+*Success*
+
 None
 
 ### Delete image from a book
@@ -277,5 +334,7 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <
 ```
 
 **Response**
+
+*Success*
 
 None

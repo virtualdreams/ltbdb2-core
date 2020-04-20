@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Linq;
 using System.Net.Mime;
 using ltbdb.Core.Services;
-using ltbdb.WebAPI.V1.Contracts.Responses;
 
 namespace ltbdb.WebAPI.V1.Controllers
 {

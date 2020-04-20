@@ -5,12 +5,14 @@ using System;
 using ltbdb.Extensions;
 using ltbdb.Models;
 using ltbdb.WebAPI.V1.Contracts.Responses;
+using ltbdb.WebAPI.V1.Filter;
 
 namespace ltbdb.WebAPI.V1.Controllers
 {
 	[ApiController]
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
+	[ValidationFilter]
 	public class LoginController : ControllerBase
 	{
 		public readonly Settings Options;
@@ -25,31 +27,26 @@ namespace ltbdb.WebAPI.V1.Controllers
 		[HttpPost]
 		public IActionResult Post([FromBody]LoginModel model)
 		{
-			if (ModelState.IsValid)
+			try
 			{
-				try
+				if (Options.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Options.Password.Equals(model.Password))
 				{
-					if (Options.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Options.Password.Equals(model.Password))
+					var _response = new AuthSuccessResponse
 					{
-						var _response = new AuthSuccessResponse
-						{
-							Token = JwtToken.CreateToken(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
-							Type = "Bearer",
-							ExpiresIn = Options.TokenExpire
-						};
+						Token = JwtToken.CreateToken(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
+						Type = "Bearer",
+						ExpiresIn = Options.TokenExpire
+					};
 
-						return Ok(_response);
-					}
+					return Ok(_response);
+				}
 
-					return Unauthorized();
-				}
-				catch (Exception)
-				{
-					return StatusCode(500);
-				}
+				return Unauthorized();
 			}
-
-			return BadRequest();
+			catch (Exception)
+			{
+				return StatusCode(500);
+			}
 		}
 	}
 }

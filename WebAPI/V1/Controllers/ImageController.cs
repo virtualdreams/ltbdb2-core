@@ -1,12 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System;
 using ltbdb.Core.Services;
+using ltbdb.WebAPI.V1.Contracts.Requests;
 
 namespace ltbdb.WebAPI.V1.Controllers
 {
@@ -22,11 +22,6 @@ namespace ltbdb.WebAPI.V1.Controllers
 		private readonly CategoryService CategoryService;
 		private readonly TagService TagService;
 		private readonly ImageService ImageService;
-
-		// public class FileUploadAPI
-		// {
-		// 	public IFormFile files { get; set; }
-		// }
 
 		public ImageController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, CategoryService category, TagService tag, ImageService image)
 		{
@@ -53,9 +48,9 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, IFormFile image)
+		public IActionResult Put(int id, [FromForm]ImageRequest model)
 		{
-			if (image != null && image.Length > 0)
+			if (model.Image != null && model.Image.Length > 0)
 			{
 				try
 				{
@@ -63,13 +58,13 @@ namespace ltbdb.WebAPI.V1.Controllers
 					if (_book == null)
 						return NotFound();
 
-					BookService.SetImage(_book.Id, image.OpenReadStream());
+					BookService.SetImage(_book.Id, model.Image.OpenReadStream());
 
 					return NoContent();
 				}
-				catch (Exception)
+				catch (Exception ex)
 				{
-					return StatusCode(500);
+					return StatusCode(500, ex.Message);
 				}
 			}
 

@@ -195,6 +195,42 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
+		/// Get the physical file path.
+		/// </summary>
+		/// <param name="filename">The image filename.</param>
+		/// <param name="imageType">Image type to load</param>
+		/// <returns></returns>
+		public string GetPhysicalPath(string filename, ImageType imageType = ImageType.Normal)
+		{
+			switch (imageType)
+			{
+				case ImageType.Normal:
+					if (Exists(filename, false))
+					{
+						var imageStorage = GetStoragePath();
+						var imagePath = Path.Combine(imageStorage, filename);
+
+						return imagePath;
+					}
+					goto default;
+
+
+				case ImageType.Thumbnail:
+					if (Exists(filename, true))
+					{
+						var thumbStorage = GetThumbPath();
+						var thumbPath = Path.Combine(thumbStorage, filename);
+
+						return thumbPath;
+					}
+					goto default;
+
+				default:
+					return String.Empty;
+			}
+		}
+
+		/// <summary>
 		/// Get the default image.
 		/// </summary>
 		/// <param name="nullIfEmpty">Return "null" if image not exists.</param>
@@ -221,7 +257,7 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		private string GetStoragePath()
 		{
-			return Options.Storage;
+			return Path.GetFullPath(Options.Storage);
 		}
 
 		/// <summary>

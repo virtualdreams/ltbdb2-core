@@ -34,17 +34,18 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpGet("{id}")]
-		public IActionResult GetById(int id)
+		public IActionResult GetById(int id, string type)
 		{
 			var _book = BookService.GetById(id);
 			if (_book == null)
 				return NotFound();
 
-			return Ok(new
-			{
-				Thumbnail = ImageService.GetImageWebPath(_book.Filename, ImageType.Thumbnail, true),
-				Image = ImageService.GetImageWebPath(_book.Filename, ImageType.Normal, true)
-			});
+			var _thumbnail = String.Equals(type, "thumbnail");
+			var _file = ImageService.GetPhysicalPath(_book.Filename, _thumbnail ? ImageType.Thumbnail : ImageType.Normal);
+			if (String.IsNullOrEmpty(_file))
+				return NotFound();
+
+			return PhysicalFile(_file, MediaTypeNames.Image.Jpeg);
 		}
 
 		[HttpPut("{id}")]

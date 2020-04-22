@@ -25,6 +25,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Get the full list of tags.");
 
 			var _query = Context.Tag
+				.AsNoTracking()
 				.GroupBy(g => g.Name)
 				.Select(s => s.Key)
 				.OrderBy(o => o);
@@ -42,6 +43,7 @@ namespace ltbdb.Core.Services
 			term = term.Trim();
 
 			var _query = Context.Tag
+				.AsNoTracking()
 				.Where(w => EF.Functions.Like(w.Name, $"%{term}%"))
 				.GroupBy(g => g.Name)
 				.Select(s => s.Key)

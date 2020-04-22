@@ -26,6 +26,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Get the full list of categories.");
 
 			var _query = Context.Book
+				.AsNoTracking()
 				.GroupBy(g => g.Category)
 				.Select(s => s.Key)
 				.OrderBy(o => o);
@@ -71,6 +72,7 @@ namespace ltbdb.Core.Services
 			term = term.Trim();
 
 			var _query = Context.Book
+				.AsNoTracking()
 				.Where(f => EF.Functions.Like(f.Category, $"%{term}%"))
 				.GroupBy(g => g.Category)
 				.Select(s => s.Key)

@@ -35,7 +35,8 @@ namespace ltbdb.Core.Services
 		{
 			Log.LogInformation($"Request all books.");
 
-			var _query = Context.Book.AsQueryable()
+			var _query = Context.Book
+				.AsNoTracking()
 				.OrderBy(o => o.Category)
 				.ThenBy(o => o.Number);
 
@@ -71,6 +72,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Request books by category '{category}'.");
 
 			var _query = Context.Book
+				.AsNoTracking()
 				.Where(f => f.Category == category)
 				.OrderBy(o => o.Number);
 
@@ -89,6 +91,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Request books by tag '{tag}'.");
 
 			var _query = Context.Book
+				.AsNoTracking()
 				.Where(f => f.Tags.Any(a => a.Name == tag))
 				.OrderBy(o => o.Number)
 				.ThenBy(o => o.Category);
@@ -110,6 +113,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Request all books by filter. Filter: category: '{category}', tag: '{tag}'.");
 
 			var _query = Context.Book
+				.AsNoTracking()
 				.Include(i => i.Stories)
 				.Include(i => i.Tags)
 				.AsQueryable();
@@ -135,7 +139,8 @@ namespace ltbdb.Core.Services
 		{
 			Log.LogInformation($"Request recently added book. (limit {limit})");
 
-			var _query = Context.Book.AsQueryable()
+			var _query = Context.Book
+				.AsNoTracking()
 				.OrderByDescending(o => o.Created)
 				.Take(limit);
 
@@ -154,6 +159,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Search for book by term '{term}'.");
 
 			var _query = Context.Book
+				.AsNoTracking()
 				.Where(f =>
 					EF.Functions.Like(f.Title, $"%{term}%") ||
 					EF.Functions.Like(f.Number, $"{term}") ||
@@ -178,6 +184,7 @@ namespace ltbdb.Core.Services
 			Log.LogDebug($"Request suggestions for books by term '{term}'.");
 
 			var _query = Context.Book
+				.AsNoTracking()
 				.Where(f =>
 					EF.Functions.Like(f.Title, $"%{term}%") ||
 					EF.Functions.Like(f.Number, $"{term}") ||

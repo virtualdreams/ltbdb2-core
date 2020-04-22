@@ -9,15 +9,11 @@ namespace ltbdb.WebAPI.V1.Validators
 		public ImageRequestValidator(IOptionsSnapshot<Settings> settings)
 		{
 			RuleFor(r => r.Image)
+				.Cascade(CascadeMode.StopOnFirstFailure)
 				.NotNull()
-				.WithMessage("Bild ist erforderlich.");
-
-			When(w => w.Image != null, () =>
-			{
-				RuleFor(r => r.Image)
-					.Must(m => m.Length > 0)
-					.WithMessage("Bild darf nicht die Größe 0 haben.");
-			});
+				.WithMessage("Bild ist erforderlich.")
+				.Must(m => m.Length > 0)
+				.WithMessage("Bild darf nicht die Größe 0 haben.");
 		}
 	}
 }

@@ -46,18 +46,21 @@ namespace ltbdb.Controllers
 		}
 
 		[HttpGet]
+		[SkipStatusCodePages]
 		public IActionResult SearchTitle(string term)
 		{
 			return Json(BookService.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
+		[SkipStatusCodePages]
 		public IActionResult SearchCategory(string term)
 		{
 			return Json(CategoryService.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
+		[SkipStatusCodePages]
 		public IActionResult SearchTag(string term)
 		{
 			return Json(TagService.Suggestions(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });

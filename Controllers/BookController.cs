@@ -123,7 +123,7 @@ namespace ltbdb.Controllers
 		}
 
 		[Authorize]
-		//[IsAjaxRequest]
+		[SkipStatusCodePages]
 		[HttpPost]
 		public IActionResult Delete(int id)
 		{

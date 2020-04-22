@@ -163,10 +163,10 @@ $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <tok
 
 Request parameters
 
-| Name | Description | Required |
-|:--- |:--- |:--- |
-| category | The category to filter. | no |
-| tag | The tag to filter. | no |
+| Name | Value | Description | Required |
+|:--- |:--- |:--- |:---
+| category | | The category to filter. | no |
+| tag | | The tag to filter. | no |
 
 **Response**
 
@@ -290,13 +290,19 @@ $ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <
 
 None
 
-### Get image paths for a book
+### Get image for a book
 
 **Request**
 
 ```sh
 $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/<id>
 ```
+
+Request parameters
+
+| Name | Value | Description | Required |
+|:--- |:--- |:--- |:---
+| type | thumbnail | Get thumbnail instead of the full image. | no |
 
 **Response**
 

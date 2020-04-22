@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System;
@@ -22,11 +23,9 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		public IEnumerable<string> Get()
 		{
-			// TODO
 			Log.LogInformation($"Get the full list of categories.");
 
 			var _query = Context.Book
-				.Where(f => f.Category != null)
 				.GroupBy(g => g.Category)
 				.Select(s => s.Key)
 				.OrderBy(o => o);
@@ -60,8 +59,6 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Rename category '{from}' to '{to}'.");
 
 			Context.SaveChanges();
-
-			// Log.LogInformation($"Modified {_result.ModifiedCount} documents.");
 		}
 
 		/// <summary>
@@ -73,12 +70,15 @@ namespace ltbdb.Core.Services
 		{
 			term = term.Trim();
 
-			var _categories = Get()
-				.Where(f => f.Contains(term));
+			var _query = Context.Book
+				.Where(f => EF.Functions.Like(f.Category, $"%{term}%"))
+				.GroupBy(g => g.Category)
+				.Select(s => s.Key)
+				.OrderBy(o => o);
 
 			Log.LogDebug($"Request suggestions for categories by term '{term}'.");
 
-			return _categories;
+			return _query.ToList();
 		}
 	}
 }

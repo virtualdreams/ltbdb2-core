@@ -153,16 +153,15 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Search for book by term '{term}'.");
 
-			var _query = Context.Book.
-			Where(
-				f =>
+			var _query = Context.Book
+				.Where(f =>
 					EF.Functions.Like(f.Title, $"%{term}%") ||
 					EF.Functions.Like(f.Number, $"{term}") ||
 					f.Stories.Any(a => EF.Functions.Like(a.Name, $"%{term}%")) ||
 					f.Tags.Any(a => EF.Functions.Like(a.Name, $"%{term}%"))
-			)
-			.OrderBy(o => o.Number)
-			.ThenBy(o => o.Title);
+				)
+				.OrderBy(o => o.Number)
+				.ThenBy(o => o.Title);
 
 			return _query;
 		}
@@ -179,7 +178,12 @@ namespace ltbdb.Core.Services
 			Log.LogDebug($"Request suggestions for books by term '{term}'.");
 
 			var _query = Context.Book
-				.Where(f => f.Title.Contains(term))
+				.Where(f =>
+					EF.Functions.Like(f.Title, $"%{term}%") ||
+					EF.Functions.Like(f.Number, $"{term}") ||
+					f.Stories.Any(a => EF.Functions.Like(a.Name, $"%{term}%")) ||
+					f.Tags.Any(a => EF.Functions.Like(a.Name, $"%{term}%"))
+				)
 				.OrderBy(o => o.Title)
 				.Select(s => s.Title);
 

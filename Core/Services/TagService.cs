@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -40,12 +41,15 @@ namespace ltbdb.Core.Services
 		{
 			term = term.Trim();
 
-			var _tags = Get()
-				.Where(f => f.Contains(term));
+			var _query = Context.Tag
+				.Where(w => EF.Functions.Like(w.Name, $"%{term}%"))
+				.GroupBy(g => g.Name)
+				.Select(s => s.Key)
+				.OrderBy(o => o);
 
 			Log.LogDebug($"Request suggestions for tags by term '{term}'.");
 
-			return _tags;
+			return _query.ToList();
 		}
 	}
 }

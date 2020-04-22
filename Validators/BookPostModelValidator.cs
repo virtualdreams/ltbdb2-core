@@ -1,6 +1,4 @@
 using FluentValidation;
-using System.Collections.Generic;
-using System;
 using ltbdb.Models;
 
 namespace ltbdb.Validators
@@ -33,6 +31,13 @@ namespace ltbdb.Validators
 			RuleFor(r => r.Tags)
 				.MaximumLengthInArrayString(50, ';')
 				.WithMessage("Ein Tag darf max. 50 Zeichen lang sein.");
+
+			When(w => w.Image != null, () =>
+			{
+				RuleFor(r => r.Image)
+					.Must(m => m.Length > 0)
+					.WithMessage("Bild darf nicht die Größe 0 haben.");
+			});
 		}
 	}
 }

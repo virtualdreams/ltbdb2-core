@@ -81,6 +81,7 @@
 				<span class="pointer" id="image-reset" data-src="@ImageService.GetImageWebPath(Model.Book.Filename)" title="Bild zurücksetzen." style="display: none;"><i class="material-icons bigger">undo</i></span>
 				<span class="pointer" id="image-delete" data-src="@ImageService.GetDefaultImage()" title="Bild löschen."><i class="material-icons bigger">delete_forever</i></span>
 			</div>
+			@Html.ValidationMessage("image")
 		</div>
 	</div>
 </form>

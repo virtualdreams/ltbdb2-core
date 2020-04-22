@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System;
 using ltbdb.Core.Services;
 using ltbdb.WebAPI.V1.Contracts.Requests;
+using ltbdb.WebAPI.V1.Filter;
 
 namespace ltbdb.WebAPI.V1.Controllers
 {
@@ -14,6 +15,7 @@ namespace ltbdb.WebAPI.V1.Controllers
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[Authorize(Policy = "AdministratorOnly", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[ValidationFilter]
 	public class ImageController : ControllerBase
 	{
 		private readonly IMapper Mapper;
@@ -51,25 +53,20 @@ namespace ltbdb.WebAPI.V1.Controllers
 		[HttpPut("{id}")]
 		public IActionResult Put(int id, [FromForm]ImageRequest model)
 		{
-			if (model.Image != null && model.Image.Length > 0)
+			try
 			{
-				try
-				{
-					var _book = BookService.GetById(id);
-					if (_book == null)
-						return NotFound();
+				var _book = BookService.GetById(id);
+				if (_book == null)
+					return NotFound();
 
-					BookService.SetImage(_book.Id, model.Image.OpenReadStream());
+				BookService.SetImage(_book.Id, model.Image.OpenReadStream());
 
-					return NoContent();
-				}
-				catch (Exception ex)
-				{
-					return StatusCode(500, ex.Message);
-				}
+				return NoContent();
 			}
-
-			return BadRequest();
+			catch (Exception)
+			{
+				return StatusCode(500);
+			}
 		}
 
 		[HttpDelete("{id}")]

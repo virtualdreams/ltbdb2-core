@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
@@ -37,20 +38,20 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult GetAll(string category, string tag)
+		public async Task<IActionResult> GetAll(string category, string tag)
 		{
 			var filterCategory = category ?? String.Empty;
 			var filterTag = tag ?? String.Empty;
 
-			var _books = BookService.GetByFilter(filterCategory, filterTag);
+			var _books = await BookService.GetByFilterAsync(filterCategory, filterTag);
 
 			return Ok(Mapper.Map<List<BookResponse>>(_books));
 		}
 
 		[HttpGet("{id}")]
-		public IActionResult GetById(int id)
+		public async Task<IActionResult> GetById(int id)
 		{
-			var _book = BookService.GetById(id);
+			var _book = await BookService.GetByIdAsync(id);
 			if (_book == null)
 				return NotFound();
 
@@ -58,13 +59,13 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Post([FromBody]BookRequest model)
+		public async Task<IActionResult> Post([FromBody]BookRequest model)
 		{
 			try
 			{
 				var _book = Mapper.Map<Book>(model);
 
-				var book = BookService.Create(_book);
+				var book = await BookService.CreateAsync(_book);
 
 				return Created(new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{book.Id}", UriKind.Absolute), null);
 			}
@@ -75,17 +76,17 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, [FromBody]BookRequest model)
+		public async Task<IActionResult> Put(int id, [FromBody]BookRequest model)
 		{
 			try
 			{
-				var _book = BookService.GetById(id);
+				var _book = await BookService.GetByIdAsync(id);
 				if (_book == null)
 					return NotFound();
 
 				var book = Mapper.Map<Book>(model);
 				book.Id = id;
-				BookService.Update(book);
+				await BookService.UpdateAsync(book);
 
 				return NoContent();
 			}
@@ -96,15 +97,15 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
 			try
 			{
-				var _book = BookService.GetById(id);
+				var _book = await BookService.GetByIdAsync(id);
 				if (_book == null)
 					return NotFound();
 
-				BookService.Delete(id);
+				await BookService.DeleteAsync(id);
 
 				return NoContent();
 			}

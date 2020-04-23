@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ltbdb.Core.Services
 {
@@ -20,7 +21,7 @@ namespace ltbdb.Core.Services
 		/// Get all available tags.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<string> Get()
+		public async Task<List<string>> GetAsync()
 		{
 			Log.LogInformation($"Get the full list of tags.");
 
@@ -30,7 +31,7 @@ namespace ltbdb.Core.Services
 				.Select(s => s.Key)
 				.OrderBy(o => o);
 
-			return _query.ToList();
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
@@ -38,7 +39,7 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="term">The term to search for.</param>
 		/// <returns>List of tags.</returns>
-		public IEnumerable<string> Suggestions(string term)
+		public async Task<List<string>> SuggestionsAsync(string term)
 		{
 			term = term.Trim();
 
@@ -51,7 +52,7 @@ namespace ltbdb.Core.Services
 
 			Log.LogDebug($"Request suggestions for tags by term '{term}'.");
 
-			return _query.ToList();
+			return await _query.ToListAsync();
 		}
 	}
 }

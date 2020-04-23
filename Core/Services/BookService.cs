@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Models;
 
@@ -31,7 +32,7 @@ namespace ltbdb.Core.Services
 		/// Get all books from storage.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<Book> Get()
+		public async Task<List<Book>> GetAsync()
 		{
 			Log.LogInformation($"Request all books.");
 
@@ -40,7 +41,7 @@ namespace ltbdb.Core.Services
 				.OrderBy(o => o.Category)
 				.ThenBy(o => o.Number);
 
-			return _query;
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
@@ -48,7 +49,7 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="id">The book id.</param>
 		/// <returns></returns>
-		public Book GetById(int id)
+		public async Task<Book> GetByIdAsync(int id)
 		{
 			Log.LogInformation($"Request book by id {id}.");
 
@@ -57,7 +58,7 @@ namespace ltbdb.Core.Services
 				.Include(i => i.Tags)
 				.Where(f => f.Id == id);
 
-			return _query.SingleOrDefault();
+			return await _query.SingleOrDefaultAsync();
 		}
 
 		/// <summary>
@@ -65,7 +66,7 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="category">The category.</param>
 		/// <returns></returns>
-		public IEnumerable<Book> GetByCategory(string category)
+		public async Task<List<Book>> GetByCategoryAsync(string category)
 		{
 			category = category.Trim();
 
@@ -76,7 +77,7 @@ namespace ltbdb.Core.Services
 				.Where(f => f.Category == category)
 				.OrderBy(o => o.Number);
 
-			return _query;
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
@@ -84,7 +85,7 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="tag">The tag.</param>
 		/// <returns></returns>
-		public IEnumerable<Book> GetByTag(string tag)
+		public async Task<List<Book>> GetByTagAsync(string tag)
 		{
 			tag = tag.Trim();
 
@@ -96,7 +97,7 @@ namespace ltbdb.Core.Services
 				.OrderBy(o => o.Number)
 				.ThenBy(o => o.Category);
 
-			return _query;
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
@@ -105,7 +106,7 @@ namespace ltbdb.Core.Services
 		/// <param name="category">The category.</param>
 		/// <param name="tag">The tag.</param>
 		/// <returns>List of book.</returns>
-		public IEnumerable<Book> GetByFilter(string category, string tag)
+		public async Task<List<Book>> GetByFilterAsync(string category, string tag)
 		{
 			category = category.Trim();
 			tag = tag.Trim();
@@ -127,7 +128,7 @@ namespace ltbdb.Core.Services
 			_query = _query
 				.OrderBy(o => o.Id);
 
-			return _query;
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
@@ -135,7 +136,7 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="limit">Limit result.</param>
 		/// <returns></returns>
-		public IEnumerable<Book> GetRecentlyAdded(int limit)
+		public async Task<List<Book>> GetRecentlyAddedAsync(int limit)
 		{
 			Log.LogInformation($"Request recently added book. (limit {limit})");
 
@@ -144,7 +145,7 @@ namespace ltbdb.Core.Services
 				.OrderByDescending(o => o.Created)
 				.Take(limit);
 
-			return _query;
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
@@ -152,7 +153,7 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="term"></param>
 		/// <returns></returns>
-		public IEnumerable<Book> Search(string term)
+		public async Task<List<Book>> SearchAsync(string term)
 		{
 			term = term.Trim();
 
@@ -169,7 +170,7 @@ namespace ltbdb.Core.Services
 				.OrderBy(o => o.Number)
 				.ThenBy(o => o.Title);
 
-			return _query;
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
@@ -177,7 +178,7 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="term">The term to search for.</param>
 		/// <returns>List of categories.</returns>
-		public IEnumerable<string> Suggestions(string term)
+		public async Task<List<string>> SuggestionsAsync(string term)
 		{
 			term = term.Trim();
 
@@ -194,20 +195,20 @@ namespace ltbdb.Core.Services
 				.OrderBy(o => o.Title)
 				.Select(s => s.Title);
 
-			return _query;
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
 		/// Create a new book.
 		/// </summary>
 		/// <param name="book">The book.</param>
-		public Book Create(Book book)
+		public async Task<Book> CreateAsync(Book book)
 		{
 			book.Filename = null;
 			book.Created = DateTime.Now;
 
 			Context.Add(book);
-			Context.SaveChanges();
+			await Context.SaveChangesAsync();
 
 			Log.LogInformation($"Create new book with id {book.Id}.");
 
@@ -218,9 +219,9 @@ namespace ltbdb.Core.Services
 		/// Update an existing book.
 		/// </summary>
 		/// <param name="book">The book.</param>
-		public void Update(Book book)
+		public async Task UpdateAsync(Book book)
 		{
-			var _book = GetById(book.Id);
+			var _book = await GetByIdAsync(book.Id);
 			if (_book == null)
 				throw new LtbdbNotFoundException();
 
@@ -245,7 +246,7 @@ namespace ltbdb.Core.Services
 				_book.Tags = book.Tags;
 			}
 
-			Context.SaveChanges();
+			await Context.SaveChangesAsync();
 
 			Log.LogInformation($"Update book {book.Id}.");
 		}
@@ -254,9 +255,9 @@ namespace ltbdb.Core.Services
 		/// Delete an existing book.
 		/// </summary>
 		/// <param name="id"></param>
-		public void Delete(int id)
+		public async Task DeleteAsync(int id)
 		{
-			var _book = GetById(id);
+			var _book = await GetByIdAsync(id);
 			if (_book == null)
 				return;
 
@@ -267,9 +268,9 @@ namespace ltbdb.Core.Services
 
 			Context.Book.Remove(_book);
 
-			Log.LogInformation($"Delete book {id}.");
+			await Context.SaveChangesAsync();
 
-			Context.SaveChanges();
+			Log.LogInformation($"Delete book {id}.");
 		}
 
 		/// <summary>
@@ -278,9 +279,9 @@ namespace ltbdb.Core.Services
 		/// <param name="id">The id of the book.</param>
 		/// <param name="stream">The image stream.</param>
 		/// <returns>True on success.</returns>
-		public void SetImage(int id, Stream stream)
+		public async Task SetImageAsync(int id, Stream stream)
 		{
-			var _book = GetById(id);
+			var _book = await GetByIdAsync(id);
 
 			if (_book == null)
 				return;
@@ -301,9 +302,9 @@ namespace ltbdb.Core.Services
 				_book.Filename = _filename;
 			}
 
-			Log.LogInformation($"Update image for book {id} set filename '{_book.Filename}'.");
+			await Context.SaveChangesAsync();
 
-			Context.SaveChanges();
+			Log.LogInformation($"Update image for book {id} set filename '{_book.Filename}'.");
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System;
 
 namespace ltbdb.Core.Services
@@ -21,7 +22,7 @@ namespace ltbdb.Core.Services
 		/// Get all available categories.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<string> Get()
+		public async Task<List<string>> GetAsync()
 		{
 			Log.LogInformation($"Get the full list of categories.");
 
@@ -31,7 +32,7 @@ namespace ltbdb.Core.Services
 				.Select(s => s.Key)
 				.OrderBy(o => o);
 
-			return _query.ToList();
+			return await _query.ToListAsync();
 		}
 
 		/// <summary>
@@ -40,7 +41,7 @@ namespace ltbdb.Core.Services
 		/// <param name="from">The original category name.</param>
 		/// <param name="to">The target category name.</param>
 		/// <returns></returns>
-		public void Rename(string from, string to)
+		public async Task RenameAsync(string from, string to)
 		{
 			from = from.Trim();
 			to = to.Trim();
@@ -59,7 +60,7 @@ namespace ltbdb.Core.Services
 
 			Log.LogInformation($"Rename category '{from}' to '{to}'.");
 
-			Context.SaveChanges();
+			await Context.SaveChangesAsync();
 		}
 
 		/// <summary>
@@ -67,7 +68,7 @@ namespace ltbdb.Core.Services
 		/// </summary>
 		/// <param name="term">The term to search for.</param>
 		/// <returns></returns>
-		public IEnumerable<string> Suggestions(string term)
+		public async Task<List<string>> SuggestionsAsync(string term)
 		{
 			term = term.Trim();
 
@@ -80,7 +81,7 @@ namespace ltbdb.Core.Services
 
 			Log.LogDebug($"Request suggestions for categories by term '{term}'.");
 
-			return _query.ToList();
+			return await _query.ToListAsync();
 		}
 	}
 }

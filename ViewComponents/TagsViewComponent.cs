@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 
@@ -14,11 +15,14 @@ namespace ltbdb.ViewComponents
 			Tag = tag;
 		}
 
-		public IViewComponentResult Invoke()
+		public async Task<IViewComponentResult> InvokeAsync()
 		{
-			var _categories = Tag.Get().Take(5);
+			var _categories = await Tag.GetAsync();
 
-			var view = new TagViewContainer { Tags = _categories };
+			var view = new TagViewContainer
+			{
+				Tags = _categories.Take(5)
+			};
 
 			return View(view);
 		}

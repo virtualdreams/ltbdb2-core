@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Models;
 using ltbdb.Core.Services;
@@ -21,9 +22,9 @@ namespace ltbdb.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult View(int id)
+		public async Task<IActionResult> View(int id)
 		{
-			var _book = BookService.GetById(id);
+			var _book = await BookService.GetByIdAsync(id);
 			if (_book == null)
 				return NotFound();
 
@@ -56,9 +57,9 @@ namespace ltbdb.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IActionResult Edit(int id)
+		public async Task<IActionResult> Edit(int id)
 		{
-			var _book = BookService.GetById(id);
+			var _book = await BookService.GetByIdAsync(id);
 			if (_book == null)
 				return NotFound();
 
@@ -74,7 +75,7 @@ namespace ltbdb.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public IActionResult Edit(BookPostModel model)
+		public async Task<IActionResult> Edit(BookPostModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -84,12 +85,12 @@ namespace ltbdb.Controllers
 					var _id = 0;
 					if (book.Id == 0)
 					{
-						var _book = BookService.Create(book);
+						var _book = await BookService.CreateAsync(book);
 						_id = book.Id;
 					}
 					else
 					{
-						BookService.Update(book);
+						await BookService.UpdateAsync(book);
 						_id = book.Id;
 					}
 
@@ -98,11 +99,11 @@ namespace ltbdb.Controllers
 					{
 						if (model.Remove)
 						{
-							BookService.SetImage(_id, null);
+							await BookService.SetImageAsync(_id, null);
 						}
 						else
 						{
-							BookService.SetImage(_id, model.Image.OpenReadStream());
+							await BookService.SetImageAsync(_id, model.Image.OpenReadStream());
 						}
 					}
 
@@ -125,11 +126,11 @@ namespace ltbdb.Controllers
 		[Authorize]
 		[SkipStatusCodePages]
 		[HttpPost]
-		public IActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
 			try
 			{
-				BookService.Delete(id);
+				await BookService.DeleteAsync(id);
 
 				return Json(new { Success = true, Error = "" });
 			}

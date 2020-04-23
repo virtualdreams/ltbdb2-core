@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 using ltbdb.Core.Services;
 using ltbdb.Models;
 
@@ -20,13 +21,16 @@ namespace ltbdb.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
-			var _books = BookService.GetRecentlyAdded(Options.RecentItems);
+			var _books = await BookService.GetRecentlyAddedAsync(Options.RecentItems);
 
 			var books = Mapper.Map<BookModel[]>(_books);
 
-			var view = new BookViewContainer { Books = books };
+			var view = new BookViewContainer
+			{
+				Books = books
+			};
 
 			return View(view);
 		}

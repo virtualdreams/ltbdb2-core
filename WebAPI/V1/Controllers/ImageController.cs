@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Services;
 using ltbdb.WebAPI.V1.Contracts.Requests;
@@ -36,9 +37,9 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpGet("{id}")]
-		public IActionResult GetById(int id, string type)
+		public async Task<IActionResult> GetById(int id, string type)
 		{
-			var _book = BookService.GetById(id);
+			var _book = await BookService.GetByIdAsync(id);
 			if (_book == null)
 				return NotFound();
 
@@ -51,15 +52,15 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, [FromForm]ImageRequest model)
+		public async Task<IActionResult> Put(int id, [FromForm]ImageRequest model)
 		{
 			try
 			{
-				var _book = BookService.GetById(id);
+				var _book = await BookService.GetByIdAsync(id);
 				if (_book == null)
 					return NotFound();
 
-				BookService.SetImage(_book.Id, model.Image.OpenReadStream());
+				await BookService.SetImageAsync(_book.Id, model.Image.OpenReadStream());
 
 				return NoContent();
 			}
@@ -70,13 +71,13 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		public IActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
-			var _book = BookService.GetById(id);
+			var _book = await BookService.GetByIdAsync(id);
 			if (_book == null)
 				return NotFound();
 
-			BookService.SetImage(_book.Id, null);
+			await BookService.SetImageAsync(_book.Id, null);
 
 			return NoContent();
 		}

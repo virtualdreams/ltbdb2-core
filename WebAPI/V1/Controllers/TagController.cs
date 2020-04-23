@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using ltbdb.Core.Services;
 
 namespace ltbdb.WebAPI.V1.Controllers
@@ -30,9 +31,9 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult GetAll()
+		public async Task<IActionResult> GetAll()
 		{
-			var _tags = TagService.Get();
+			var _tags = await TagService.GetAsync();
 
 			return Ok(_tags);
 		}

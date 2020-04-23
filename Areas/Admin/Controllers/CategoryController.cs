@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Services;
 using ltbdb.Models;
@@ -24,22 +25,22 @@ namespace ltbdb.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
-			var _categories = CategoryService.Get().OrderBy(s => s);
+			var _categories = await CategoryService.GetAsync();
 
 			var view = new CategoryViewContainer
 			{
-				Categories = _categories
+				Categories = _categories.OrderBy(s => s)
 			};
 
 			return View(view);
 		}
 
 		[HttpPost]
-		public IActionResult Move(string from, string to)
+		public async Task<IActionResult> Move(string from, string to)
 		{
-			CategoryService.Rename(from ?? String.Empty, to ?? String.Empty);
+			await CategoryService.RenameAsync(from ?? String.Empty, to ?? String.Empty);
 
 			return Redirect("index");
 		}

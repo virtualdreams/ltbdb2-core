@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Services;
 using ltbdb.Models;
@@ -34,21 +35,21 @@ namespace ltbdb.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Export()
+		public async Task<IActionResult> Export()
 		{
 			// add header to force it as download
 			Response.Headers.Add("Content-Disposition", $"attachment; filename=ltbdb-export-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.json");
 
-			var _books = BookService.GetByFilter(String.Empty, String.Empty);
+			var _books = await BookService.GetByFilterAsync(String.Empty, String.Empty);
 			var books = Mapper.Map<BookModel[]>(_books);
 
 			return Json(books, new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
-		public IActionResult Stats()
+		public async Task<IActionResult> Stats()
 		{
-			return Json(MaintenanceService.Stats(), new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(await MaintenanceService.GetStatisticsAsync(), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 	}
 }

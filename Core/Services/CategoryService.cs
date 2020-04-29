@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using ltbdb.Core.Data;
 
 namespace ltbdb.Core.Services
 {
 	public class CategoryService
 	{
 		private readonly ILogger<CategoryService> Log;
-		private readonly MySqlContext Context;
+		private readonly DataContext Context;
 
-		public CategoryService(ILogger<CategoryService> log, MySqlContext context)
+		public CategoryService(ILogger<CategoryService> log, DataContext context)
 		{
 			Log = log;
 			Context = context;

@@ -3,15 +3,16 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ltbdb.Core.Data;
 
 namespace ltbdb.Core.Services
 {
 	public class TagService
 	{
 		private readonly ILogger<TagService> Log;
-		private readonly MySqlContext Context;
+		private readonly DataContext Context;
 
-		public TagService(ILogger<TagService> log, MySqlContext context)
+		public TagService(ILogger<TagService> log, DataContext context)
 		{
 			Log = log;
 			Context = context;

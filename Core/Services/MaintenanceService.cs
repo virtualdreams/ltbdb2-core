@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ltbdb.Core.Data;
 using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
@@ -10,9 +11,9 @@ namespace ltbdb.Core.Services
 	public class MaintenanceService
 	{
 		private readonly ILogger<MaintenanceService> Log;
-		private readonly MySqlContext Context;
+		private readonly DataContext Context;
 
-		public MaintenanceService(ILogger<MaintenanceService> log, MySqlContext context)
+		public MaintenanceService(ILogger<MaintenanceService> log, DataContext context)
 		{
 			Log = log;
 			Context = context;

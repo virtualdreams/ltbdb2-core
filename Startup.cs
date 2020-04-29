@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IO;
 using System.Text;
 using System;
+using ltbdb.Core.Data;
 using ltbdb.Core.Services;
 using ltbdb.Extensions;
 
@@ -38,7 +39,7 @@ namespace ltbdb
 			Configuration.GetSection("Settings").Bind(settings);
 
 			// database context
-			services.AddDbContext<MySqlContext>(options =>
+			services.AddDbContext<DataContext>(options =>
 			{
 				options.UseMySql(settings.ConnectionString, mySqlOptions => { });
 				//options.EnableSensitiveDataLogging(true);

@@ -4,7 +4,7 @@ using System;
 
 namespace ltbdb.Validators
 {
-	public static class CustomValidators
+	public static class ValidatorExtensions
 	{
 		public static IRuleBuilderOptions<T, IList<string>> MaximumLengthInArray<T>(this IRuleBuilder<T, IList<string>> ruleBuilder, int length)
 		{

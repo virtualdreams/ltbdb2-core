@@ -29,7 +29,7 @@ namespace ltbdb.Validators
 				.WithMessage("Ein Eintrag darf max. 100 Zeichen lang sein.");
 
 			RuleFor(r => r.Tags)
-				.MaximumLengthInArrayString(50, ';')
+				.MaximumLengthInArray(50)
 				.WithMessage("Ein Tag darf max. 50 Zeichen lang sein.");
 
 			When(w => w.Image != null, () =>

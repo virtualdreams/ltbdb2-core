@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Data;
+using ltbdb.Core.Internal;
 using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
@@ -205,8 +206,23 @@ namespace ltbdb.Core.Services
 		/// <param name="book">The book.</param>
 		public async Task<Book> CreateAsync(Book book)
 		{
+			// remove empty entries
+			var _stories = book.Stories
+				.Where(w => !String.IsNullOrEmpty(w.Name))
+				.Select(s => new Story { Name = s.Name.Trim() })
+				.ToList();
+
+			// remove empty and duplicate entries 
+			var _tags = book.Tags
+				.Where(w => !String.IsNullOrEmpty(w.Name))
+				.Select(s => new Tag { Name = s.Name.Trim() })
+				.Distinct(d => d.Name)
+				.ToList();
+
 			book.Filename = null;
 			book.Created = DateTime.Now;
+			book.Stories = _stories;
+			book.Tags = _tags;
 
 			Context.Add(book);
 			await Context.SaveChangesAsync();
@@ -226,25 +242,39 @@ namespace ltbdb.Core.Services
 			if (_book == null)
 				throw new LtbdbNotFoundException();
 
+			// remove empty entries
+			var _stories = book.Stories
+				.Where(w => !String.IsNullOrEmpty(w.Name))
+				.Select(s => new Story { Name = s.Name.Trim() })
+				.ToList();
+
+			// remove empty and duplicate entries 
+			var _tags = book.Tags
+				.Where(w => !String.IsNullOrEmpty(w.Name))
+				.Select(s => new Tag { Name = s.Name.Trim() })
+				.Distinct(d => d.Name)
+				.ToList();
+
 			_book.Number = book.Number;
 			_book.Title = book.Title;
 			_book.Category = book.Category;
 
-			var _storiesEqual = _book.Stories.Select(s => s.Name).SequenceEqual(book.Stories.Select(s => s.Name));
-			var _tagsEqual = _book.Tags.Select(s => s.Name).SequenceEqual(book.Tags.Select(s => s.Name));
+			var _storiesEqual = _book.Stories.Select(s => s.Name).SequenceEqual(_stories.Select(s => s.Name));
+			var _tagsEqual = _book.Tags.Select(s => s.Name).SequenceEqual(_tags.Select(s => s.Name));
+
 			Log.LogInformation($"Stories update needed: {!_storiesEqual}");
 			Log.LogInformation($"Tags update needed: {!_tagsEqual}");
 
 			if (!_storiesEqual)
 			{
 				_book.Stories.Clear();
-				_book.Stories = book.Stories;
+				_book.Stories = _stories;
 			}
 
 			if (!_tagsEqual)
 			{
 				_book.Tags.Clear();
-				_book.Tags = book.Tags;
+				_book.Tags = _tags;
 			}
 
 			await Context.SaveChangesAsync();

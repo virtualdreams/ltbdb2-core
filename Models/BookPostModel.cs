@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ltbdb.ModelBinder;
 
 namespace ltbdb.Models
 {
@@ -17,7 +19,8 @@ namespace ltbdb.Models
 
 		public List<string> Stories { get; set; } = new List<string>();
 
-		public string Tags { get; set; }
+		[BindProperty(BinderType = typeof(SemicolonListBinder))]
+		public List<string> Tags { get; set; } = new List<string>();
 
 		public IFormFile Image { get; set; }
 

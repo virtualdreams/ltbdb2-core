@@ -62,7 +62,7 @@
 				<label for="tags">Tags</label>
 			</div>
 			<div class="block">
-				<input class="input t" type="text" id="tags" name="tags" value="@Model.Book.Tags" placeholder="Tags" /> @Html.ValidationMessage("tags")
+				<input class="input t" type="text" id="tags" name="tags" value="@String.Join("; ", Model.Book.Tags)" placeholder="Tags" /> @Html.ValidationMessage("tags")
 			</div>
 
 			<div class="block">

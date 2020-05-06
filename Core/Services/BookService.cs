@@ -209,27 +209,33 @@ namespace ltbdb.Core.Services
 			// remove empty entries
 			var _stories = book.Stories
 				.Where(w => !String.IsNullOrEmpty(w.Name))
-				.Select(s => new Story { Name = s.Name.Trim() })
+				.Select(s => new Story { Name = s.Name })
 				.ToList();
 
 			// remove empty and duplicate entries 
 			var _tags = book.Tags
 				.Where(w => !String.IsNullOrEmpty(w.Name))
-				.Select(s => new Tag { Name = s.Name.Trim() })
+				.Select(s => new Tag { Name = s.Name })
 				.Distinct(d => d.Name)
 				.ToList();
 
-			book.Filename = null;
-			book.Created = DateTime.Now;
-			book.Stories = _stories;
-			book.Tags = _tags;
+			var _book = new Book
+			{
+				Number = book.Number,
+				Title = book.Title,
+				Category = book.Category,
+				Created = DateTime.Now,
+				Filename = null,
+				Stories = _stories,
+				Tags = _tags
+			};
 
-			Context.Add(book);
+			Context.Add(_book);
 			await Context.SaveChangesAsync();
 
-			Log.LogInformation($"Create new book with id {book.Id}.");
+			Log.LogInformation($"Create new book with id {_book.Id}.");
 
-			return book;
+			return _book;
 		}
 
 		/// <summary>
@@ -245,13 +251,13 @@ namespace ltbdb.Core.Services
 			// remove empty entries
 			var _stories = book.Stories
 				.Where(w => !String.IsNullOrEmpty(w.Name))
-				.Select(s => new Story { Name = s.Name.Trim() })
+				.Select(s => new Story { Name = s.Name })
 				.ToList();
 
 			// remove empty and duplicate entries 
 			var _tags = book.Tags
 				.Where(w => !String.IsNullOrEmpty(w.Name))
-				.Select(s => new Tag { Name = s.Name.Trim() })
+				.Select(s => new Tag { Name = s.Name })
 				.Distinct(d => d.Name)
 				.ToList();
 
@@ -279,7 +285,7 @@ namespace ltbdb.Core.Services
 
 			await Context.SaveChangesAsync();
 
-			Log.LogInformation($"Update book {book.Id}.");
+			Log.LogInformation($"Update book {_book.Id}.");
 		}
 
 		/// <summary>

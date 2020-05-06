@@ -86,7 +86,7 @@ namespace ltbdb.Controllers
 					if (book.Id == 0)
 					{
 						var _book = await BookService.CreateAsync(book);
-						_id = book.Id;
+						_id = _book.Id;
 					}
 					else
 					{

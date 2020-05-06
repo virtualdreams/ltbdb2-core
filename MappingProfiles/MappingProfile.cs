@@ -28,8 +28,8 @@ namespace ltbdb.MappingProfiles
 				.ForMember(d => d.Category, map => map.MapFrom(s => s.Category.Trim()))
 				.ForMember(s => s.Created, map => map.Ignore())
 				.ForMember(d => d.Filename, map => map.Ignore())
-				.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Select(x => new Story { Name = x })))
-				.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Select(x => new Tag { Name = x })))
+				.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories.Select(x => new Story { Name = x.Trim() })))
+				.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags.Select(x => new Tag { Name = x.Trim() })))
 				.ForSourceMember(s => s.Image, map => map.DoNotValidate())
 				.ForSourceMember(s => s.Remove, map => map.DoNotValidate());
 			#endregion

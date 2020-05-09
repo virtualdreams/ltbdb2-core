@@ -88,11 +88,16 @@ $ dotnet /path/to/ltbdb2.dll
 }
 ```
 
-## Options
+## Options (appsettings.json)
 
-* **ConnectionString**  
+**Section: ConnectionStrings**
+
+* **Default**  
 MariaDB/MySQL connection string.  
 `Server=[host];Database=[database];User=[username];Password=[password]`
+
+**Section: Settings**
+
 * **ItemsPerPage**  
 Books per page to display.
 * **RecentItems**  

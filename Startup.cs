@@ -41,7 +41,7 @@ namespace ltbdb
 			// database context
 			services.AddDbContext<DataContext>(options =>
 			{
-				options.UseMySql(settings.ConnectionString, mySqlOptions => { });
+				options.UseMySql(Configuration.GetConnectionString("Default"), mySqlOptions => { });
 				//options.EnableSensitiveDataLogging(true);
 			},
 			ServiceLifetime.Scoped);

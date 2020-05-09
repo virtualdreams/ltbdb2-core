@@ -3,11 +3,6 @@ namespace ltbdb
 	public class Settings
 	{
 		/// <summary>
-		/// MySql connection string.
-		/// </summary>
-		public string ConnectionString { get; set; } = "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb";
-
-		/// <summary>
 		/// Items per page to display.
 		/// </summary>
 		public int ItemsPerPage { get; set; } = 18;

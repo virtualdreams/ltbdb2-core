@@ -206,16 +206,8 @@ namespace ltbdb.Core.Services
 		/// <param name="book">The book.</param>
 		public async Task<Book> CreateAsync(Book book)
 		{
-			// remove empty entries
-			var _stories = book.Stories
-				.Where(w => !String.IsNullOrEmpty(w.Name))
-				.Select(s => new Story { Name = s.Name })
-				.ToList();
-
-			// remove empty and duplicate entries 
+			// remove duplicate entries 
 			var _tags = book.Tags
-				.Where(w => !String.IsNullOrEmpty(w.Name))
-				.Select(s => new Tag { Name = s.Name })
 				.Distinct(d => d.Name)
 				.ToList();
 
@@ -226,7 +218,7 @@ namespace ltbdb.Core.Services
 				Category = book.Category,
 				Created = DateTime.Now,
 				Filename = null,
-				Stories = _stories,
+				Stories = book.Stories,
 				Tags = _tags
 			};
 
@@ -248,16 +240,8 @@ namespace ltbdb.Core.Services
 			if (_book == null)
 				throw new LtbdbNotFoundException();
 
-			// remove empty entries
-			var _stories = book.Stories
-				.Where(w => !String.IsNullOrEmpty(w.Name))
-				.Select(s => new Story { Name = s.Name })
-				.ToList();
-
-			// remove empty and duplicate entries 
+			// remove duplicate entries 
 			var _tags = book.Tags
-				.Where(w => !String.IsNullOrEmpty(w.Name))
-				.Select(s => new Tag { Name = s.Name })
 				.Distinct(d => d.Name)
 				.ToList();
 
@@ -265,7 +249,7 @@ namespace ltbdb.Core.Services
 			_book.Title = book.Title;
 			_book.Category = book.Category;
 
-			var _storiesEqual = _book.Stories.Select(s => s.Name).SequenceEqual(_stories.Select(s => s.Name));
+			var _storiesEqual = _book.Stories.Select(s => s.Name).SequenceEqual(book.Stories.Select(s => s.Name));
 			var _tagsEqual = _book.Tags.Select(s => s.Name).SequenceEqual(_tags.Select(s => s.Name));
 
 			Log.LogInformation($"Stories update needed: {!_storiesEqual}");
@@ -274,7 +258,7 @@ namespace ltbdb.Core.Services
 			if (!_storiesEqual)
 			{
 				_book.Stories.Clear();
-				_book.Stories = _stories;
+				_book.Stories = book.Stories;
 			}
 
 			if (!_tagsEqual)

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IO;
 using System.Text;
@@ -30,6 +31,9 @@ namespace ltbdb
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+#if DEBUG
+			IdentityModelEventSource.ShowPII = true;
+#endif
 			// add options to DI
 			services.AddOptions();
 			services.Configure<Settings>(Configuration.GetSection("Settings"));
@@ -42,7 +46,9 @@ namespace ltbdb
 			services.AddDbContext<DataContext>(options =>
 			{
 				options.UseMySql(Configuration.GetConnectionString("Default"), mySqlOptions => { });
-				//options.EnableSensitiveDataLogging(true);
+#if DEBUG
+				options.EnableSensitiveDataLogging(true);
+#endif
 			},
 			ServiceLifetime.Scoped);
 

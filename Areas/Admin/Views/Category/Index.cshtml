@@ -24,7 +24,7 @@
 			Alle Inhalte einer Kategorie in eine andere Kategorie verschieben oder umbenennen. Diese Aktion kann nicht rückgängig gemacht werden.
 		</p>
 		
-		<form action="@Url.Action("move", "category", new { area = "admin" })" method="post" enctype="multipart/form-data" id="category-move-form">
+		<form asp-controller="category" asp-action="move" asp-area="admin" method="post" enctype="multipart/form-data" id="category-move-form">
 
 			<!-- category from -->
 			<div class="block">

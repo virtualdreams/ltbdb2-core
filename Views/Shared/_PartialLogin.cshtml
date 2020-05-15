@@ -1,5 +1,5 @@
 @if(!Context.User.Identity.IsAuthenticated) {
-	<a href="@Url.RouteUrl("login")">Anmelden</a>
+	<a asp-route="login">Anmelden</a>
 } else {
-	<a href="@Url.RouteUrl("logout")">Abmelden</a>
+	<a asp-route="logout">Abmelden</a>
 }

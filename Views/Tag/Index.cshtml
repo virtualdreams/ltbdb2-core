@@ -12,7 +12,7 @@
 @foreach (var tag in Model.Tags)
 {
 	<div class="tag button-gray">
-		<a href="@Url.RouteUrl("tag", new { id = tag })" title="">@tag</a>
+		<a asp-route="tag" asp-route-id="@tag" title="">@tag</a>
 	</div>
 }
 </div>

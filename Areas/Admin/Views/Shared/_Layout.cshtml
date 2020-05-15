@@ -41,7 +41,7 @@
 							<nav>
 								<a href="/admin" class="@((ViewBag.Menu == "home") ? "selected" : "")">Home</a>
 								<a href="/">Frontend</a>
-								<a href="@Url.Action("index", "category", new { area = "admin" })" class="@((ViewBag.Menu == "category") ? "selected" : "")">Kategorien</a>
+								<a asp-route="adminCategory" class="@((ViewBag.Menu == "category") ? "selected" : "")">Kategorien</a>
 							</nav>
 						</div>
 					</div>

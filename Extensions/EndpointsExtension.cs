@@ -9,15 +9,21 @@ namespace ltbdb.Extensions
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllerRoute(
-					name: "areaExport",
-					pattern: "{area:exists}/export",
+					name: "adminExport",
+					pattern: "admin/export",
 					defaults: new { area = "Admin", controller = "Home", action = "Export" }
 				);
 
 				endpoints.MapControllerRoute(
-					name: "areaStats",
-					pattern: "{area:exists}/stats",
+					name: "adminStats",
+					pattern: "admin/stats",
 					defaults: new { area = "Admin", controller = "Home", action = "Stats" }
+				);
+
+				endpoints.MapControllerRoute(
+					name: "adminCategory",
+					pattern: "admin/category",
+					defaults: new { area = "Admin", controller = "Category", action = "Index" }
 				);
 
 				endpoints.MapControllerRoute(
@@ -27,7 +33,7 @@ namespace ltbdb.Extensions
 
 				endpoints.MapControllerRoute(
 					name: "search",
-					pattern: "search",
+					pattern: "search/{ofs?}",
 					defaults: new { controller = "Search", action = "Search" }
 				);
 

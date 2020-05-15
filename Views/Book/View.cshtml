@@ -11,9 +11,15 @@
 
 <div style="position: relative;">
 	<div class="panel-menu">
-		Kategorie: <a href="@Url.RouteUrl("category", new { id = Model.Book.Category })">@Model.Book.Category</a> | Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d. MMM yyyy}", Model.Book.Created)
+		Kategorie:
+		<a asp-route="category" asp-route-id="@Model.Book.Category">@Model.Book.Category</a>
+		|
+		Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d. MMM yyyy}", Model.Book.Created)
 		@if(Context.User.Identity.IsAuthenticated) {
-		@:| <a href="@Url.Action("edit", "book", new { id = Model.Book.Id } )">Bearbeiten</a> | <span class="pointer" id="delete-book" data-id="@Model.Book.Id" data-title="Buch Nr. @Model.Book.Number - @Model.Book.Title">Löschen</span>
+		@:|
+		<a asp-controller="book" asp-action="edit" asp-route-id="@Model.Book.Id">Bearbeiten</a>
+		@:|
+		<span class="pointer" id="delete-book" data-id="@Model.Book.Id" data-title="Buch Nr. @Model.Book.Number - @Model.Book.Title">Löschen</span>
 		}
 	</div>
 	<h2>Nr. @Model.Book.Number - @Model.Book.Title</h2>
@@ -44,7 +50,7 @@
 		@foreach (var tag in Model.Book.Tags)
 		{
 		<div class="tag button-gray">
-			<a href="@Url.RouteUrl("tag", new { id = tag })" title="">@tag</a>
+			<a asp-route="tag" asp-route-id="@tag" title="">@tag</a>
 		</div>
 		}
 	</div>

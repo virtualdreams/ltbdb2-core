@@ -18,10 +18,10 @@
 	</ul>
 	<div class="pager">
 		@if(Model.PageOffset.HasPrevious) {
-			<a href="@Url.RouteUrl("search", new { q = Model.Query, ofs = Model.PageOffset.Offset - Model.PageOffset.PageSize })"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
+			<a asp-route="search" asp-route-q="@Model.Query" asp-route-ofs="@Model.PageOffset.Previous"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
 		}
 		@if(Model.PageOffset.HasNext) {
-			<a href="@Url.RouteUrl("search", new { q = Model.Query, ofs = Model.PageOffset.Offset + Model.PageOffset.PageSize })">weiter <i class="material-icons">keyboard_arrow_right</i></a>
+			<a asp-route="search" asp-route-q="@Model.Query" asp-route-ofs="@Model.PageOffset.Next">weiter <i class="material-icons">keyboard_arrow_right</i></a>
 		}
 	</div>
 </div>

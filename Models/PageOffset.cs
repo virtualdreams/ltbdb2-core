@@ -28,6 +28,17 @@
 		public int Items { get; private set; }
 
 		/// <summary>
+		/// Next page index.
+		/// </summary>
+		public int Next { get; private set; }
+
+		/// <summary>
+		/// Previous page index.
+		/// </summary>
+		/// <value></value>
+		public int Previous { get; private set; }
+
+		/// <summary>
 		/// Initialize page offset.
 		/// </summary>
 		/// <param name="pageOffset">Current offset from zero.</param>
@@ -40,6 +51,8 @@
 			Offset = (pageOffset < 0) ? 0 : pageOffset;
 			HasPrevious = (Offset == 0) ? false : true;
 			HasNext = (Offset + PageSize < Items) ? true : false;
+			Next = Offset + PageSize;
+			Previous = Offset - PageSize;
 		}
 	}
 }

@@ -2,5 +2,5 @@
 
 @foreach (var category in Model.Categories)
 {
-<li><a href="@Url.RouteUrl("category", new { id = category, ofs = "" })">@category</a></li>
+<li><a asp-route="category" asp-route-id="@category" asp-route-ofs="">@category</a></li>
 }

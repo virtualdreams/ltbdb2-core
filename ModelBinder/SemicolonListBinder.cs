@@ -33,6 +33,7 @@ namespace ltbdb.ModelBinder
 
 			var model = value
 				.Split(new[] { ';' })
+				.Select(s => s.Trim())
 				.ToList();
 
 			bindingContext.Result = ModelBindingResult.Success(model);

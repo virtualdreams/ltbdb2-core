@@ -62,6 +62,7 @@ namespace ltbdb
 			services.AddTransient<MaintenanceService>();
 			services.AddTransient<ImageService>();
 			services.AddTransient<TokenService>();
+			services.AddScoped<CustomCookieAuthenticationEvents>();
 			services.AddScoped<CustomJwtBearerEvents>();
 
 			// key ring
@@ -117,6 +118,7 @@ namespace ltbdb
 				options.Cookie.Name = "ltbdb";
 				options.LoginPath = new PathString("/login");
 				options.AccessDeniedPath = new PathString("/");
+				options.EventsType = typeof(CustomCookieAuthenticationEvents);
 			})
 			.AddJwtBearer(options =>
 			{

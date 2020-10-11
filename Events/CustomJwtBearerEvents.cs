@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ltbdb.Events
@@ -9,10 +9,12 @@ namespace ltbdb.Events
 	public class CustomJwtBearerEvents : JwtBearerEvents
 	{
 		private readonly ILogger<CustomJwtBearerEvents> Log;
+		private readonly Settings Options;
 
-		public CustomJwtBearerEvents(ILogger<CustomJwtBearerEvents> log)
+		public CustomJwtBearerEvents(ILogger<CustomJwtBearerEvents> log, IOptionsSnapshot<Settings> settings)
 		{
 			Log = log;
+			Options = settings.Value;
 		}
 
 		public override Task AuthenticationFailed(AuthenticationFailedContext context)
@@ -25,18 +27,19 @@ namespace ltbdb.Events
 			return Task.CompletedTask;
 		}
 
-		/* public override Task TokenValidated(TokenValidatedContext context)
+		public override Task TokenValidated(TokenValidatedContext context)
 		{
-			var _context = context.Principal;
-			var _name = _context.FindFirst(ClaimTypes.Name)?.Value;
+			var _principal = context.Principal;
+			var _username = _principal.Identity.Name;
 
-			if (_name.Equals("test"))
+			if (!Options.Username.Equals(_username))
 			{
+				Log.LogInformation($"Benutzername '{ _username}' nicht identisch.");
 				context.Response.StatusCode = 401;
 				context.Fail("Token invalid");
 			}
 
 			return Task.CompletedTask;
-		} */
+		}
 	}
 }

@@ -4,13 +4,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace ltbdb.Extensions
+namespace ltbdb.Events
 {
-	public class CustomTokenEvents : JwtBearerEvents
+	public class CustomJwtBearerEvents : JwtBearerEvents
 	{
-		private readonly ILogger<CustomTokenEvents> Log;
+		private readonly ILogger<CustomJwtBearerEvents> Log;
 
-		public CustomTokenEvents(ILogger<CustomTokenEvents> log)
+		public CustomJwtBearerEvents(ILogger<CustomJwtBearerEvents> log)
 		{
 			Log = log;
 		}

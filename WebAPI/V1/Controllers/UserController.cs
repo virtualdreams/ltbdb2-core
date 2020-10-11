@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System;
-using ltbdb.Extensions;
-using ltbdb.Models;
+using ltbdb.Services;
+using ltbdb.WebAPI.V1.Contracts.Requests;
 using ltbdb.WebAPI.V1.Contracts.Responses;
 using ltbdb.WebAPI.V1.Filter;
 
@@ -13,19 +13,19 @@ namespace ltbdb.WebAPI.V1.Controllers
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[ValidationFilter]
-	public class LoginController : ControllerBase
+	public class UserController : ControllerBase
 	{
 		public readonly Settings Options;
-		public readonly JwtToken JwtToken;
+		public readonly TokenService Token;
 
-		public LoginController(IOptionsSnapshot<Settings> settings, JwtToken token)
+		public UserController(IOptionsSnapshot<Settings> settings, TokenService token)
 		{
 			Options = settings.Value;
-			JwtToken = token;
+			Token = token;
 		}
 
-		[HttpPost]
-		public IActionResult Post([FromBody]LoginModel model)
+		[HttpPost("authenticate")]
+		public IActionResult Post([FromBody] AuthRequest model)
 		{
 			try
 			{
@@ -33,7 +33,7 @@ namespace ltbdb.WebAPI.V1.Controllers
 				{
 					var _response = new AuthSuccessResponse
 					{
-						Token = JwtToken.CreateToken(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
+						Token = Token.CreateToken(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
 						Type = "Bearer",
 						ExpiresIn = Options.TokenExpire
 					};

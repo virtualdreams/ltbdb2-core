@@ -4,9 +4,9 @@ using System.Security.Claims;
 using System.Text;
 using System;
 
-namespace ltbdb.Extensions
+namespace ltbdb.Services
 {
-	public class JwtToken
+	public class TokenService
 	{
 		/// <summary>
 		/// Generates a JwtToken.

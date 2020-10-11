@@ -1,6 +1,6 @@
 namespace ltbdb.WebAPI.V1.Contracts.Requests
 {
-	public class LoginRequest
+	public class AuthRequest
 	{
 		public string Username { get; set; }
 

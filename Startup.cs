@@ -16,7 +16,9 @@ using System.Text;
 using System;
 using ltbdb.Core.Data;
 using ltbdb.Core.Services;
+using ltbdb.Events;
 using ltbdb.Extensions;
+using ltbdb.Services;
 
 namespace ltbdb
 {
@@ -59,8 +61,8 @@ namespace ltbdb
 			services.AddTransient<CategoryService>();
 			services.AddTransient<MaintenanceService>();
 			services.AddTransient<ImageService>();
-			services.AddTransient<JwtToken>();
-			services.AddScoped<CustomTokenEvents>();
+			services.AddTransient<TokenService>();
+			services.AddScoped<CustomJwtBearerEvents>();
 
 			// key ring
 			if (!String.IsNullOrEmpty(settings.KeyStore))
@@ -98,8 +100,10 @@ namespace ltbdb
 				options.SuppressMapClientErrors = true;
 			});
 
-			// add sessions
+			// add distributed cache
 			// services.AddDistributedMemoryCache();
+
+			// add sessions
 			// services.AddSession(options =>
 			// {
 			// 	options.Cookie.Name = "ltbdb_session";
@@ -127,7 +131,7 @@ namespace ltbdb
 					ValidateLifetime = true,
 					ClockSkew = TimeSpan.Zero
 				};
-				options.EventsType = typeof(CustomTokenEvents);
+				options.EventsType = typeof(CustomJwtBearerEvents);
 			});
 
 			// authorization policies

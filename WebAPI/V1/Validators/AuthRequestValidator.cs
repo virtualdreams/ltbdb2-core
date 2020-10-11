@@ -3,9 +3,9 @@ using ltbdb.WebAPI.V1.Contracts.Requests;
 
 namespace ltbdb.WebAPI.V1.Validators
 {
-	public class LoginRequestValidator : AbstractValidator<LoginRequest>
+	public class AuthRequestValidator : AbstractValidator<AuthRequest>
 	{
-		public LoginRequestValidator()
+		public AuthRequestValidator()
 		{
 			RuleFor(r => r.Username)
 				.NotEmpty()

@@ -9,7 +9,7 @@
 			"name": "Environment",
 			"item": [
 				{
-					"name": "Login",
+					"name": "Authenticate",
 					"event": [
 						{
 							"listen": "test",
@@ -38,17 +38,18 @@
 							"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}"
 						},
 						"url": {
-							"raw": "{{url}}/api/v1/login",
+							"raw": "{{url}}/api/v1/user/authenticate",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"login"
+								"user",
+								"authenticate"
 							]
 						},
-						"description": "Get login token."
+						"description": "Get a access token."
 					},
 					"response": []
 				}

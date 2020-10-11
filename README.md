@@ -125,12 +125,12 @@ Configure logging in `NLog.config` and copy this file to publish directory. Also
 
 ## REST API
 
-### Login / Token
+### Authentication
 
 **Request**
 
 ```sh
-$ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login -d '{ "username": "<username>", "password": "<password>" }'
+$ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/authenticate -d '{ "username": "<username>", "password": "<password>" }'
 ```
 
 **Response**

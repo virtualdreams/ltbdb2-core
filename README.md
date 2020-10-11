@@ -143,7 +143,8 @@ $ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/
 
 ```json
 {
-    "Token": "<token>",
+    "AccessToken": "<access_token>",
+    "RefreshToken": "<refresh_token>",
     "Type": "Bearer",
     "ExpiresIn": <time_in_minutes>
 }
@@ -161,6 +162,52 @@ $ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/
     }
 ]
 ```
+
+### Refresh token
+
+**Request**
+
+```sh
+$ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/refresh-token -d '{ "refreshtoken": "<refresh_token>" }'
+```
+
+**Response**
+
+*Success*
+
+```json
+{
+    "AccessToken": "<token>",
+    "Type": "Bearer",
+    "ExpiresIn": <time_in_minutes>
+}
+```
+
+*BadRequest*
+
+```json
+[
+    {
+        "Field": "<fieldname>",
+        "Messages": [
+            "<message>"
+        ]
+    }
+]
+```
+
+### Revoke token
+
+**Request**
+
+```sh
+$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/user/revoke-token -d ''
+```
+
+**Response**
+
+*Success*
+
 
 ### Get all books
 

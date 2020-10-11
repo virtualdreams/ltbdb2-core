@@ -102,7 +102,7 @@ namespace ltbdb
 			});
 
 			// add distributed cache
-			// services.AddDistributedMemoryCache();
+			services.AddDistributedMemoryCache();
 
 			// add sessions
 			// services.AddSession(options =>

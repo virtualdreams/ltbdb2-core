@@ -7,9 +7,9 @@ namespace ltbdb.Core.Internal
 	public static class GraphicsMagick
 	{
 		/// <summary>
-		/// Path to GraphicsImage. If null, "gm" will used.
+		/// Path to GraphicsMagick binary. If null, "gm" will used.
 		/// </summary>
-		public static string GraphicsImage { get; set; }
+		public static string Path { get; set; }
 
 		/// <summary>
 		/// Invoke "GraphicsMagick" via command line interface.
@@ -23,7 +23,7 @@ namespace ltbdb.Core.Internal
 			{
 				process.StartInfo = new ProcessStartInfo
 				{
-					FileName = GraphicsImage ?? "gm",
+					FileName = Path ?? "gm",
 					Arguments = arguments,
 					RedirectStandardInput = true,
 					RedirectStandardOutput = true,

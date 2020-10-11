@@ -29,9 +29,11 @@ namespace ltbdb.Core.Services
 
 	public class ImageService
 	{
-		readonly Settings Options;
-		readonly ILogger<ImageService> Log;
-		readonly string thumbnailDirectory = "thumb";
+		private const string GMCommand = "convert - -background white -flatten jpg:-";
+		private const string GMThumbnailCommand = "convert - -background white -flatten -resize 200x200 jpg:-";
+		private readonly Settings Options;
+		private readonly ILogger<ImageService> Log;
+		private readonly string thumbnailDirectory = "thumb";
 
 		public ImageService(IOptionsSnapshot<Settings> settings, ILogger<ImageService> log)
 		{
@@ -60,7 +62,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Set image path to '{imagePath}'.");
 			Log.LogInformation($"Set thumb path to '{thumbPath}'.");
 
-			GraphicsMagick.GraphicsImage = Options.GraphicsMagick;
+			GraphicsMagick.Path = Options.GraphicsMagick;
 
 			try
 			{
@@ -70,7 +72,7 @@ namespace ltbdb.Core.Services
 
 				using (var output = File.Create(imagePath))
 				{
-					GraphicsMagick.PInvoke(stream, output, "convert - -background white -flatten jpg:-");
+					GraphicsMagick.PInvoke(stream, output, GMCommand);
 				}
 
 				stream.Position = 0;
@@ -81,7 +83,7 @@ namespace ltbdb.Core.Services
 
 				using (var output = File.Create(thumbPath))
 				{
-					GraphicsMagick.PInvoke(stream, output, "convert - -background white -flatten -resize 200x200 jpg:-");
+					GraphicsMagick.PInvoke(stream, output, GMThumbnailCommand);
 				}
 
 				return filename;

@@ -1,3 +1,5 @@
+//using System.ComponentModel.DataAnnotations;
+
 namespace ltbdb
 {
 	public class Settings
@@ -51,14 +53,14 @@ namespace ltbdb
 		public string KeyStore { get; set; } = "";
 
 		/// <summary>
-		/// Security key for jwt bearer token.
+		/// JWT access token key.
 		/// </summary>
-		/// <returns></returns>
-		public string SecurityKey { get; set; } = "";
+		//[MinLength(16)]
+		public string AccessTokenKey { get; set; } = "";
 
 		/// <summary>
-		/// Sets the expiration time of the token in seconds.
+		/// JWT access token expire in minutes.
 		/// </summary>
-		public int TokenExpire { get; set; } = 300;
+		public int AccessTokenExpire { get; set; } = 5;
 	}
 }

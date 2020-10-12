@@ -83,7 +83,7 @@ $ dotnet /path/to/ltbdb2.dll
 		"Username": "",
 		"Password": "",
 		"KeyStore": "",
-		"SecurityKey": "1234567890123456"
+		"AccessTokenKey": "1234567890123456"
 	}
 }
 ```
@@ -116,8 +116,10 @@ Login username.
 Login password.
 * **KeyStore**  
 Directory to store encryption key files (leave empty to use in-memory).
-* **SecurityKey**  
-JWT bearer token encryption key. Min length 16 characters.
+* **AccessTokenKey**  
+JWT access token encryption key. Min length 16 characters.
+* **AccessTokenExpire**  
+JWT access token expire in minutes.
 
 ## Logging
 
@@ -141,7 +143,7 @@ $ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/
 {
     "Token": "<token>",
     "Type": "Bearer",
-    "ExpiresIn": <time_in_seconds>
+    "ExpiresIn": <time_in_minutes>
 }
 ```
 

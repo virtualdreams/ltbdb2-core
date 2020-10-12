@@ -37,12 +37,12 @@ namespace ltbdb
 			IdentityModelEventSource.ShowPII = true;
 #endif
 			// add options to DI
-			services.AddOptions();
-			services.Configure<Settings>(Configuration.GetSection(Settings.SettingsName));
+			services.AddOptions<Settings>()
+				.Bind(Configuration.GetSection(Settings.SettingsName));
+			//.ValidateDataAnnotations();
 
 			// get settings for local usage
-			var settings = new Settings();
-			Configuration.GetSection(Settings.SettingsName).Bind(settings);
+			var settings = Configuration.GetSection(Settings.SettingsName).Get<Settings>();
 
 			// database context
 			services.AddDbContext<DataContext>(options =>
@@ -129,7 +129,7 @@ namespace ltbdb
 					ValidateIssuer = true,
 					ValidIssuer = "ltbdb",
 					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecurityKey)),
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.AccessTokenKey)),
 					ValidateLifetime = true,
 					ClockSkew = TimeSpan.Zero
 				};

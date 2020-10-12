@@ -33,9 +33,9 @@ namespace ltbdb.WebAPI.V1.Controllers
 				{
 					var _response = new AuthSuccessResponse
 					{
-						Token = Token.CreateToken(Options.SecurityKey, model.Username, "Administrator", Options.TokenExpire),
+						Token = Token.CreateToken(Options.AccessTokenKey, model.Username, "Administrator", Options.AccessTokenExpire),
 						Type = "Bearer",
-						ExpiresIn = Options.TokenExpire
+						ExpiresIn = Options.AccessTokenExpire
 					};
 
 					return Ok(_response);

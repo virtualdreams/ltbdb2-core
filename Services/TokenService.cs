@@ -29,7 +29,7 @@ namespace ltbdb.Services
 				}),
 				Audience = "ltbdb",
 				Issuer = "ltbdb",
-				Expires = DateTime.UtcNow.AddSeconds(expire),
+				Expires = DateTime.UtcNow.AddMinutes(expire),
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_key), SecurityAlgorithms.HmacSha256Signature)
 			};
 

@@ -38,11 +38,11 @@ namespace ltbdb
 #endif
 			// add options to DI
 			services.AddOptions();
-			services.Configure<Settings>(Configuration.GetSection("Settings"));
+			services.Configure<Settings>(Configuration.GetSection(Settings.SettingsName));
 
 			// get settings for local usage
 			var settings = new Settings();
-			Configuration.GetSection("Settings").Bind(settings);
+			Configuration.GetSection(Settings.SettingsName).Bind(settings);
 
 			// database context
 			services.AddDbContext<DataContext>(options =>

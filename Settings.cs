@@ -2,6 +2,8 @@ namespace ltbdb
 {
 	public class Settings
 	{
+		public const string SettingsName = "Settings";
+
 		/// <summary>
 		/// Items per page to display.
 		/// </summary>

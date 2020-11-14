@@ -71,9 +71,11 @@ $ dotnet /path/to/ltbdb2.dll
 				}
 			}
 		}
+    },
+    "ConnectionStrings": {
+		"Default": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb"
 	},
 	"Settings": {
-		"ConnectionString": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb",
 		"ItemsPerPage": 18,
 		"RecentItems": 18,
 		"Storage": "./wwwroot/images/",

@@ -17,7 +17,8 @@
 								"id": "2f38fb03-3ca2-4afe-bf21-c3f6d592c241",
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);",
-									"pm.environment.set(\"token\", jsonData.Token);"
+									"pm.environment.set(\"accesstoken\", jsonData.AccessToken);",
+									"pm.environment.set(\"refreshtoken\", jsonData.RefreshToken)"
 								],
 								"type": "text/javascript"
 							}
@@ -52,6 +53,105 @@
 						"description": "Get a access token."
 					},
 					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2b93580d-efda-417b-ad08-5d9b75a80b0b",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"accesstoken\", jsonData.AccessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"refreshtoken\": \"{{refreshtoken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/user/refresh-token",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"refresh-token"
+							]
+						},
+						"description": "Get a new access token."
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "58278360-c0ef-4fc3-9aea-a72eecbca621",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accesstoken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/user/revoke-token",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"revoke-token"
+							]
+						},
+						"description": "Revoke refresh token."
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -82,7 +182,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -130,7 +230,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -180,7 +280,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -220,7 +320,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -261,7 +361,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -305,7 +405,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -342,7 +442,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -390,7 +490,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -434,7 +534,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]
@@ -477,7 +577,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{token}}",
+											"value": "{{accesstoken}}",
 											"type": "string"
 										}
 									]

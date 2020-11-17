@@ -15,8 +15,8 @@ namespace ltbdb.WebAPI.V1.Controllers
 	[ValidationFilter]
 	public class UserController : ControllerBase
 	{
-		public readonly Settings Options;
-		public readonly TokenService Token;
+		private readonly Settings Options;
+		private readonly TokenService Token;
 
 		public UserController(IOptionsSnapshot<Settings> settings, TokenService token)
 		{

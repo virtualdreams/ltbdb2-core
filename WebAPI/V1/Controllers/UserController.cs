@@ -69,7 +69,7 @@ namespace ltbdb.WebAPI.V1.Controllers
 			{
 				var _principal = Token.GetPrincipalFromRefreshToken(model.RefreshToken, Options.AccessTokenKey);
 				var _principalRefreshName = _principal.Identity.Name;
-				var _principalTokenId = _principal.FindFirst("xid")?.Value;
+				var _principalTokenId = _principal.FindFirst(TokenService.TokenId)?.Value;
 				var _oldTokenId = Cache.GetString(_principal.Identity.Name);
 
 				if (!_oldTokenId.Equals(_principalTokenId) || !Options.Username.Equals(_principalRefreshName))

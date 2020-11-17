@@ -8,6 +8,11 @@ namespace ltbdb.Services
 {
 	public class TokenService
 	{
+		public const string TokenId = "xid";
+
+		public TokenService()
+		{ }
+
 		/// <summary>
 		/// Generates a access token.
 		/// </summary>
@@ -80,7 +85,7 @@ namespace ltbdb.Services
 			{
 				Subject = new ClaimsIdentity(new[]{
 					new Claim(ClaimTypes.Name, username, ClaimValueTypes.String),
-					new Claim("xid", tokenId),
+					new Claim(TokenService.TokenId, tokenId),
 					new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 				}),
 				Audience = "ltbdb-refresh",

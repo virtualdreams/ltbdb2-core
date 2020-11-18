@@ -36,6 +36,8 @@ namespace ltbdb.MappingProfiles
 					.Trim()))
 				.ForMember(s => s.Created, map => map
 					.Ignore())
+				.ForMember(s => s.Modified, map => map
+					.Ignore())
 				.ForMember(d => d.Filename, map => map
 					.Ignore())
 				.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories

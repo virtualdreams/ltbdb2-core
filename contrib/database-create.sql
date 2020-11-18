@@ -5,6 +5,7 @@ CREATE TABLE `book` (
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   `filename` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_category` (`category`)

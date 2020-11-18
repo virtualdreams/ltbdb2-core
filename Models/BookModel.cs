@@ -15,6 +15,8 @@ namespace ltbdb.Models
 
 		public DateTime Created { get; set; }
 
+		public DateTime Modified { get; set; }
+
 		public string Filename { get; set; }
 
 		public List<string> Stories { get; set; } = new List<string>();

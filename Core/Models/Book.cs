@@ -30,6 +30,10 @@ namespace ltbdb.Core.Models
 		[Required]
 		public DateTime Created { get; set; }
 
+		[Column("modified")]
+		[Required]
+		public DateTime Modified { get; set; }
+
 		[Column("filename")]
 		[MaxLength(100)]
 		public string Filename { get; set; }

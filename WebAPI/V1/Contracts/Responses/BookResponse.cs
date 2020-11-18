@@ -15,6 +15,8 @@ namespace ltbdb.WebAPI.V1.Contracts.Responses
 
 		public DateTime Created { get; set; }
 
+		public DateTime Modified { get; set; }
+
 		public List<string> Stories { get; set; } = new List<string>();
 
 		public List<string> Tags { get; set; } = new List<string>();

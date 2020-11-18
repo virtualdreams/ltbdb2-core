@@ -211,12 +211,15 @@ namespace ltbdb.Core.Services
 				.Distinct(d => d.Name)
 				.ToList();
 
+			var _currentDate = DateTime.Now;
+
 			var _book = new Book
 			{
 				Number = book.Number,
 				Title = book.Title,
 				Category = book.Category,
-				Created = DateTime.Now,
+				Created = _currentDate,
+				Modified = _currentDate,
 				Filename = null,
 				Stories = book.Stories,
 				Tags = _tags
@@ -245,9 +248,12 @@ namespace ltbdb.Core.Services
 				.Distinct(d => d.Name)
 				.ToList();
 
+			var _currentDate = DateTime.Now;
+
 			_book.Number = book.Number;
 			_book.Title = book.Title;
 			_book.Category = book.Category;
+			_book.Modified = _currentDate;
 
 			var _storiesEqual = _book.Stories.Select(s => s.Name).SequenceEqual(book.Stories.Select(s => s.Name));
 			var _tagsEqual = _book.Tags.Select(s => s.Name).SequenceEqual(_tags.Select(s => s.Name));

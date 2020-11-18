@@ -189,6 +189,7 @@ Request parameters
         "Title": "Title 1",
         "Category": "Category 1",
         "Created": "2019-12-29T16:34:47",
+        "Modified": "2019-12-29T16:34:47",
         "Filename": null,
         "Stories": [],
         "Tags": []
@@ -199,6 +200,7 @@ Request parameters
         "Title": "Title 1",
         "Category": "Category 1",
         "Created": "2019-12-29T16:35:48",
+        "Modified": "2019-12-29T16:35:48",
         "Filename": null,
         "Stories": [],
         "Tags": []
@@ -225,6 +227,7 @@ $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <tok
     "Title": "Title 1",
     "Category": "Category 1",
     "Created": "2019-12-29T16:34:47",
+    "Modofied": "2019-12-29T16:34:47",
     "Filename": null,
     "Stories": [],
     "Tags": []

@@ -14,8 +14,8 @@ namespace ltbdb.Validators
 			RuleFor(r => r.Title)
 				.NotEmpty()
 				.WithMessage("Bitte gib einen Titel ein.")
-				.MaximumLength(100)
-				.WithMessage("Der Titel darf max. 100 Zeichen lang sein.");
+				.MaximumLength(200)
+				.WithMessage("Der Titel darf max. 200 Zeichen lang sein.");
 
 			RuleFor(r => r.Category)
 				.NotEmpty()
@@ -25,8 +25,8 @@ namespace ltbdb.Validators
 
 			RuleFor(r => r.Stories)
 				//.MaximumLength(100)
-				.MaximumLengthInArray(100)
-				.WithMessage("Ein Eintrag darf max. 100 Zeichen lang sein.");
+				.MaximumLengthInArray(200)
+				.WithMessage("Ein Eintrag darf max. 200 Zeichen lang sein.");
 
 			RuleFor(r => r.Tags)
 				.MaximumLengthInArray(50)

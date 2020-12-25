@@ -247,7 +247,7 @@ $(function () {
 			title: {
 				required: true,
 				nowhitespace: true,
-				maxlength: 100
+				maxlength: 200
 			},
 			category: {
 				required: true,
@@ -267,7 +267,7 @@ $(function () {
 			title: {
 				required: 'Bitte gib einen Titel ein.',
 				nowhitespace: 'Bitte gib einen Titel ein.',
-				maxlength: 'Der Titel darf max. 100 Zeichen lang sein.'
+				maxlength: 'Der Titel darf max. 200 Zeichen lang sein.'
 			},
 			category: {
 				required: 'Bitte gib eine Kategorie ein.',

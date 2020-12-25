@@ -12,7 +12,7 @@ namespace ltbdb.Core.Models
 
 		[Column("name")]
 		[Required]
-		[MaxLength(100)]
+		[MaxLength(200)]
 		public string Name { get; set; }
 
 		[Column("bookid")]

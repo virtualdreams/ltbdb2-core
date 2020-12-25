@@ -18,7 +18,7 @@ namespace ltbdb.Core.Models
 
 		[Column("title")]
 		[Required]
-		[MaxLength(100)]
+		[MaxLength(200)]
 		public string Title { get; set; }
 
 		[Column("category")]

@@ -1,4 +1,5 @@
 using FluentValidation;
+using ltbdb.FluentValidation;
 using ltbdb.Models;
 
 namespace ltbdb.Validators

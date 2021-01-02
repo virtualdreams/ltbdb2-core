@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ltbdb.Core.Data;
+using ltbdb.Core.Interfaces;
 using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
 {
-	public class MaintenanceService
+	public class MaintenanceService : IMaintenanceService
 	{
 		private readonly ILogger<MaintenanceService> Log;
 		private readonly DataContext Context;

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ltbdb.Core.Data;
+using ltbdb.Core.Interfaces;
 
 namespace ltbdb.Core.Services
 {
-	public class TagService
+	public class TagService : ITagService
 	{
 		private readonly ILogger<TagService> Log;
 		private readonly DataContext Context;

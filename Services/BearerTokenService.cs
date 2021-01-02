@@ -6,7 +6,7 @@ using System;
 
 namespace ltbdb.Services
 {
-	public class TokenService
+	public class BearerTokenService
 	{
 		/// <summary>
 		/// Generates a JwtToken.

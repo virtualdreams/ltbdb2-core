@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
+using ltbdb.Core.Interfaces;
 using ltbdb.Core.Models;
-using ltbdb.Core.Services;
 using ltbdb.Extensions;
 using ltbdb.Models;
 
@@ -13,9 +13,9 @@ namespace ltbdb.Controllers
 	public class BookController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly BookService BookService;
+		private readonly IBookService BookService;
 
-		public BookController(IMapper mapper, BookService book)
+		public BookController(IMapper mapper, IBookService book)
 		{
 			Mapper = mapper;
 			BookService = book;

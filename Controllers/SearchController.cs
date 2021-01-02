@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Services;
+using ltbdb.Core.Interfaces;
 using ltbdb.Models;
 
 namespace ltbdb.Controllers
@@ -14,11 +14,11 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService BookService;
-		private readonly CategoryService CategoryService;
-		private readonly TagService TagService;
+		private readonly IBookService BookService;
+		private readonly ICategoryService CategoryService;
+		private readonly ITagService TagService;
 
-		public SearchController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, CategoryService category, TagService tag)
+		public SearchController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ICategoryService category, ITagService tag)
 		{
 			Mapper = mapper;
 			Options = settings.Value;

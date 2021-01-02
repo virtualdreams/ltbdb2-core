@@ -1,7 +1,7 @@
 @model ltbdb.Models.BookModel
 @using ltbdb.Extensions
-@using ltbdb.Core.Services
-@inject ImageService ImageService
+@using ltbdb.Core.Interfaces
+@inject IImageService ImageService
 
 <li>
 	<a asp-route="view" asp-route-id="@Model.Id" asp-route-slug="@($"Nr. {Model.Number} {Model.Title}".ToSlug())">

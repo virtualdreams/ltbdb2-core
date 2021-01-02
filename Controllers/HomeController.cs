@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
-using ltbdb.Core.Services;
+using ltbdb.Core.Interfaces;
 using ltbdb.Models;
 
 namespace ltbdb.Controllers
@@ -11,9 +11,9 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService BookService;
+		private readonly IBookService BookService;
 
-		public HomeController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book)
+		public HomeController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book)
 		{
 			Mapper = mapper;
 			Options = settings.Value;

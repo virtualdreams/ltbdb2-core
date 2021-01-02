@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using ltbdb.Core.Services;
+using ltbdb.Core.Interfaces;
 
 namespace ltbdb.WebAPI.V1.Controllers
 {
@@ -17,11 +17,11 @@ namespace ltbdb.WebAPI.V1.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService BookService;
-		private readonly CategoryService CategoryService;
-		private readonly TagService TagService;
+		private readonly IBookService BookService;
+		private readonly ICategoryService CategoryService;
+		private readonly ITagService TagService;
 
-		public CategoryController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, CategoryService category, TagService tag)
+		public CategoryController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ICategoryService category, ITagService tag)
 		{
 			Mapper = mapper;
 			Options = settings.Value;

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Services;
+using ltbdb.Core.Interfaces;
 using ltbdb.Models;
 
 namespace ltbdb.Controllers
@@ -13,10 +13,10 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService BookService;
-		private readonly TagService TagService;
+		private readonly IBookService BookService;
+		private readonly ITagService TagService;
 
-		public TagController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, TagService tag)
+		public TagController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ITagService tag)
 		{
 			Mapper = mapper;
 			Options = settings.Value;

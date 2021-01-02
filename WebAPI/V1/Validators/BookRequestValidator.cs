@@ -1,5 +1,5 @@
 using FluentValidation;
-using ltbdb.Validators;
+using ltbdb.FluentValidation;
 using ltbdb.WebAPI.V1.Contracts.Requests;
 
 namespace ltbdb.WebAPI.V1.Validators

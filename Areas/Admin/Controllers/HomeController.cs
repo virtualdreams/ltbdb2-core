@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Services;
+using ltbdb.Core.Interfaces;
 using ltbdb.Models;
 
 namespace ltbdb.Areas.Admin.Controllers
@@ -14,12 +14,12 @@ namespace ltbdb.Areas.Admin.Controllers
 	public class HomeController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly BookService BookService;
-		private readonly CategoryService CategoryService;
-		private readonly TagService TagService;
-		private readonly MaintenanceService MaintenanceService;
+		private readonly IBookService BookService;
+		private readonly ICategoryService CategoryService;
+		private readonly ITagService TagService;
+		private readonly IMaintenanceService MaintenanceService;
 
-		public HomeController(IMapper mapper, BookService book, CategoryService category, TagService tag, MaintenanceService maintenance)
+		public HomeController(IMapper mapper, IBookService book, ICategoryService category, ITagService tag, IMaintenanceService maintenance)
 		{
 			Mapper = mapper;
 			BookService = book;

@@ -1,10 +1,9 @@
 using System.Text.RegularExpressions;
-using System.Text;
 using System;
 
 namespace ltbdb.Extensions
 {
-	public static class UrlHelperExtension
+	public static class LtbdbExtensions
 	{
 		/// <summary>
 		/// Slugify the string.

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Services;
+using ltbdb.Core.Interfaces;
 using ltbdb.Models;
 
 namespace ltbdb.Areas.Admin.Controllers
@@ -14,10 +14,10 @@ namespace ltbdb.Areas.Admin.Controllers
 	public class CategoryController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly BookService BookService;
-		private readonly CategoryService CategoryService;
+		private readonly IBookService BookService;
+		private readonly ICategoryService CategoryService;
 
-		public CategoryController(IMapper mapper, BookService book, CategoryService category)
+		public CategoryController(IMapper mapper, IBookService book, ICategoryService category)
 		{
 			Mapper = mapper;
 			BookService = book;

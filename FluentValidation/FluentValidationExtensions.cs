@@ -1,10 +1,9 @@
 using FluentValidation;
 using System.Collections.Generic;
-using System;
 
-namespace ltbdb.Validators
+namespace ltbdb.FluentValidation
 {
-	public static class ValidatorExtensions
+	public static class FluentValidationExtensions
 	{
 		public static IRuleBuilderOptions<T, IList<string>> MaximumLengthInArray<T>(this IRuleBuilder<T, IList<string>> ruleBuilder, int length)
 		{

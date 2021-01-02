@@ -5,10 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Data;
+using ltbdb.Core.Interfaces;
 
 namespace ltbdb.Core.Services
 {
-	public class CategoryService
+	public class CategoryService : ICategoryService
 	{
 		private readonly ILogger<CategoryService> Log;
 		private readonly DataContext Context;

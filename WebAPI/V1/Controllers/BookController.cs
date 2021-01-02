@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System;
+using ltbdb.Core.Interfaces;
 using ltbdb.Core.Models;
-using ltbdb.Core.Services;
 using ltbdb.WebAPI.V1.Contracts.Requests;
 using ltbdb.WebAPI.V1.Contracts.Responses;
 using ltbdb.WebAPI.V1.Filter;
@@ -24,11 +24,11 @@ namespace ltbdb.WebAPI.V1.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService BookService;
-		private readonly CategoryService CategoryService;
-		private readonly TagService TagService;
+		private readonly IBookService BookService;
+		private readonly ICategoryService CategoryService;
+		private readonly ITagService TagService;
 
-		public BookController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, CategoryService category, TagService tag)
+		public BookController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ICategoryService category, ITagService tag)
 		{
 			Mapper = mapper;
 			Options = settings.Value;
@@ -59,7 +59,7 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody]BookRequest model)
+		public async Task<IActionResult> Post([FromBody] BookRequest model)
 		{
 			try
 			{
@@ -76,7 +76,7 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> Put(int id, [FromBody]BookRequest model)
+		public async Task<IActionResult> Put(int id, [FromBody] BookRequest model)
 		{
 			try
 			{

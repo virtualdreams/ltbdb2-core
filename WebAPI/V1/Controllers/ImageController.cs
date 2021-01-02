@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Services;
+using ltbdb.Core.Interfaces;
 using ltbdb.WebAPI.V1.Contracts.Requests;
 using ltbdb.WebAPI.V1.Filter;
 
@@ -21,12 +21,12 @@ namespace ltbdb.WebAPI.V1.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly BookService BookService;
-		private readonly CategoryService CategoryService;
-		private readonly TagService TagService;
-		private readonly ImageService ImageService;
+		private readonly IBookService BookService;
+		private readonly ICategoryService CategoryService;
+		private readonly ITagService TagService;
+		private readonly IImageService ImageService;
 
-		public ImageController(IMapper mapper, IOptionsSnapshot<Settings> settings, BookService book, CategoryService category, TagService tag, ImageService image)
+		public ImageController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ICategoryService category, ITagService tag, IImageService image)
 		{
 			Mapper = mapper;
 			Options = settings.Value;
@@ -52,7 +52,7 @@ namespace ltbdb.WebAPI.V1.Controllers
 		}
 
 		[HttpPut("{id}")]
-		public async Task<IActionResult> Put(int id, [FromForm]ImageRequest model)
+		public async Task<IActionResult> Put(int id, [FromForm] ImageRequest model)
 		{
 			try
 			{

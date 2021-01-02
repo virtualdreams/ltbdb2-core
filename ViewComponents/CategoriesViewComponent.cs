@@ -1,22 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using ltbdb.Core.Services;
+using ltbdb.Core.Interfaces;
 using ltbdb.Models;
 
 namespace ltbdb.ViewComponents
 {
 	public class CategoriesViewComponent : ViewComponent
 	{
-		private readonly CategoryService Category;
+		private readonly ICategoryService CategoryService;
 
-		public CategoriesViewComponent(CategoryService category)
+		public CategoriesViewComponent(ICategoryService category)
 		{
-			Category = category;
+			CategoryService = category;
 		}
 
 		public async Task<IViewComponentResult> InvokeAsync()
 		{
-			var _categories = await Category.GetAsync();
+			var _categories = await CategoryService.GetAsync();
 
 			var view = new CategoryViewContainer
 			{

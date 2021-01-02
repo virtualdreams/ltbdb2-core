@@ -16,9 +16,9 @@ namespace ltbdb.WebAPI.V1.Controllers
 	public class UserController : ControllerBase
 	{
 		private readonly Settings Options;
-		private readonly TokenService Token;
+		private readonly BearerTokenService Token;
 
-		public UserController(IOptionsSnapshot<Settings> settings, TokenService token)
+		public UserController(IOptionsSnapshot<Settings> settings, BearerTokenService token)
 		{
 			Options = settings.Value;
 			Token = token;

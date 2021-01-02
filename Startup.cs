@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,8 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IO;
 using System.Text;
 using System;
-using ltbdb.Core.Data;
-using ltbdb.Core.Services;
+using ltbdb.Core;
 using ltbdb.Events;
 using ltbdb.Extensions;
 using ltbdb.Services;
@@ -45,23 +43,12 @@ namespace ltbdb
 			var settings = Configuration.GetSection(Settings.SettingsName).Get<Settings>();
 
 			// database context
-			services.AddDbContext<DataContext>(options =>
-			{
-				options.UseMySql(Configuration.GetConnectionString("Default"), mySqlOptions => { });
-#if DEBUG
-				options.EnableSensitiveDataLogging(true);
-#endif
-			},
-			ServiceLifetime.Scoped);
+			services.AddDatabaseContext(Configuration.GetConnectionString("Default"));
 
 			// DI
 			services.AddAutoMapper();
-			services.AddTransient<BookService>();
-			services.AddTransient<TagService>();
-			services.AddTransient<CategoryService>();
-			services.AddTransient<MaintenanceService>();
-			services.AddTransient<ImageService>();
-			services.AddTransient<TokenService>();
+			services.AddLtbdbServices();
+			services.AddTransient<BearerTokenService>();
 			services.AddScoped<CustomCookieAuthenticationEvents>();
 			services.AddScoped<CustomJwtBearerEvents>();
 

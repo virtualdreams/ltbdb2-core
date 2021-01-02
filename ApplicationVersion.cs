@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace ltbdb.Extensions
+namespace ltbdb
 {
 	/// <summary>
 	/// Get assembly version informations.

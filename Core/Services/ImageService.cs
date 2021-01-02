@@ -2,32 +2,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.IO;
 using System;
+using ltbdb.Core.Interfaces;
 using ltbdb.Core.Internal;
 
 namespace ltbdb.Core.Services
 {
-	/// <summary>
-	/// Type of image to request from storage.
-	/// </summary>
-	public enum ImageType
-	{
-		/// <summary>
-		/// Get the normal version if available.
-		/// </summary>
-		Normal,
-
-		/// <summary>
-		/// Get the thumbnail version if available.
-		/// </summary>
-		Thumbnail,
-
-		/// <summary>
-		/// Prefer thumbnail over normal version if available.
-		/// </summary>
-		PreferThumbnail
-	}
-
-	public class ImageService
+	public class ImageService : IImageService
 	{
 		private const string GMCommand = "convert - -background white -flatten jpg:-";
 		private const string GMThumbnailCommand = "convert - -background white -flatten -resize 200x200 jpg:-";

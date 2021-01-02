@@ -6,16 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Data;
+using ltbdb.Core.Interfaces;
 using ltbdb.Core.Internal;
 using ltbdb.Core.Models;
 
 namespace ltbdb.Core.Services
 {
-	public class BookService
+	public class BookService : IBookService
 	{
 		private readonly ILogger<BookService> Log;
 		private readonly DataContext Context;
-		private readonly ImageService ImageService;
+		private readonly IImageService ImageService;
 
 		/// <summary>
 		/// Initializes the BookService class.
@@ -23,7 +24,7 @@ namespace ltbdb.Core.Services
 		/// <param name="log">The logger.</param>
 		/// <param name="context">The MySQL context.</param>
 		/// <param name="image">The image service.</param>
-		public BookService(ILogger<BookService> log, DataContext context, ImageService image)
+		public BookService(ILogger<BookService> log, DataContext context, IImageService image)
 		{
 			Log = log;
 			Context = context;

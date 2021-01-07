@@ -7,6 +7,5 @@ namespace ltbdb.Core.Interfaces
 	{
 		Task<List<string>> GetAsync();
 		Task RenameAsync(string from, string to);
-		Task<List<string>> SuggestionsAsync(string term);
 	}
 }

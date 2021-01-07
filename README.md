@@ -96,7 +96,9 @@ $ dotnet /path/to/ltbdb2.dll
 
 * **Default**  
 MariaDB/MySQL connection string.  
-`Server=[host];Database=[database];User=[username];Password=[password]`
+`Server=[host];Database=[database];User=[username];Password=[password]`  
+PosgreSQl connection string.  
+`Host=[host];Database=[database];Username=[username];Password=[password][;SearchPath=schema,public]`
 
 **Section: Settings**
 

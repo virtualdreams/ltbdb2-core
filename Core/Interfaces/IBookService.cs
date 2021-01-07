@@ -13,8 +13,6 @@ namespace ltbdb.Core.Interfaces
 		Task<List<Book>> GetByTagAsync(string tag);
 		Task<List<Book>> GetByFilterAsync(string category, string tag);
 		Task<List<Book>> GetRecentlyAddedAsync(int limit);
-		Task<List<Book>> SearchAsync(string term);
-		Task<List<string>> SuggestionsAsync(string term);
 		Task<Book> CreateAsync(Book book);
 		Task UpdateAsync(Book book);
 		Task DeleteAsync(int id);

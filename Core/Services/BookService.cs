@@ -152,56 +152,6 @@ namespace ltbdb.Core.Services
 		}
 
 		/// <summary>
-		/// Search for books.
-		/// </summary>
-		/// <param name="term"></param>
-		/// <returns></returns>
-		public async Task<List<Book>> SearchAsync(string term)
-		{
-			term = term.Trim();
-
-			Log.LogInformation($"Search for book by term '{term}'.");
-
-			var _query = Context.Book
-				.AsNoTracking()
-				.Where(f =>
-					EF.Functions.Like(f.Title, $"%{term}%") ||
-					EF.Functions.Like(f.Number, $"{term}") ||
-					f.Stories.Any(a => EF.Functions.Like(a.Name, $"%{term}%")) ||
-					f.Tags.Any(a => EF.Functions.Like(a.Name, $"%{term}%"))
-				)
-				.OrderBy(o => o.Number)
-				.ThenBy(o => o.Title);
-
-			return await _query.ToListAsync();
-		}
-
-		/// <summary>
-		/// Get a list of suggestions for term.
-		/// </summary>
-		/// <param name="term">The term to search for.</param>
-		/// <returns>List of categories.</returns>
-		public async Task<List<string>> SuggestionsAsync(string term)
-		{
-			term = term.Trim();
-
-			Log.LogDebug($"Request suggestions for books by term '{term}'.");
-
-			var _query = Context.Book
-				.AsNoTracking()
-				.Where(f =>
-					EF.Functions.Like(f.Title, $"%{term}%") ||
-					EF.Functions.Like(f.Number, $"{term}") ||
-					f.Stories.Any(a => EF.Functions.Like(a.Name, $"%{term}%")) ||
-					f.Tags.Any(a => EF.Functions.Like(a.Name, $"%{term}%"))
-				)
-				.OrderBy(o => o.Title)
-				.Select(s => s.Title);
-
-			return await _query.ToListAsync();
-		}
-
-		/// <summary>
 		/// Create a new book.
 		/// </summary>
 		/// <param name="book">The book.</param>

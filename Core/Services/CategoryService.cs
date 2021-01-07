@@ -64,26 +64,5 @@ namespace ltbdb.Core.Services
 
 			await Context.SaveChangesAsync();
 		}
-
-		/// <summary>
-		/// Get a list of suggestions for term.
-		/// </summary>
-		/// <param name="term">The term to search for.</param>
-		/// <returns></returns>
-		public async Task<List<string>> SuggestionsAsync(string term)
-		{
-			term = term.Trim();
-
-			var _query = Context.Book
-				.AsNoTracking()
-				.Where(f => EF.Functions.Like(f.Category, $"%{term}%"))
-				.GroupBy(g => g.Category)
-				.Select(s => s.Key)
-				.OrderBy(o => o);
-
-			Log.LogDebug($"Request suggestions for categories by term '{term}'.");
-
-			return await _query.ToListAsync();
-		}
 	}
 }

@@ -16,6 +16,7 @@ using System;
 using ltbdb.Core;
 using ltbdb.Events;
 using ltbdb.Extensions;
+using ltbdb.Provider;
 using ltbdb.Services;
 
 namespace ltbdb
@@ -40,25 +41,26 @@ namespace ltbdb
 			//.ValidateDataAnnotations();
 
 			// get settings for local usage
-			var settings = Configuration.GetSection(Settings.SettingsName).Get<Settings>();
+			var _settings = Configuration.GetSection(Settings.SettingsName).Get<Settings>();
+			var _provider = Configuration.GetSection("Database").GetValue<DatabaseProvider>("Provider");
 
 			// database context
-			services.AddDatabaseContext(Configuration.GetConnectionString("Default"));
+			services.AddDatabaseContext(Configuration.GetConnectionString("Default"), _provider);
 
 			// DI
 			services.AddAutoMapper();
-			services.AddLtbdbServices();
+			services.AddLtbdbServices(_provider);
 			services.AddTransient<BearerTokenService>();
 			services.AddScoped<CustomCookieAuthenticationEvents>();
 			services.AddScoped<CustomJwtBearerEvents>();
 
 			// key ring
-			if (!String.IsNullOrEmpty(settings.KeyStore))
+			if (!String.IsNullOrEmpty(_settings.KeyStore))
 			{
 				services.AddDataProtection(options =>
 				{
 					options.ApplicationDiscriminator = "ltbdb";
-				}).PersistKeysToFileSystem(new DirectoryInfo(settings.KeyStore));
+				}).PersistKeysToFileSystem(new DirectoryInfo(_settings.KeyStore));
 			}
 
 			// IIS integration
@@ -116,7 +118,7 @@ namespace ltbdb
 					ValidateIssuer = true,
 					ValidIssuer = "ltbdb",
 					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.AccessTokenKey)),
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.AccessTokenKey)),
 					ValidateLifetime = true,
 					ClockSkew = TimeSpan.Zero
 				};

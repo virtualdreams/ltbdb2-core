@@ -14,23 +14,19 @@ namespace ltbdb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly Settings Options;
-		private readonly IBookService BookService;
-		private readonly ICategoryService CategoryService;
-		private readonly ITagService TagService;
+		private readonly ISearchService SearchService;
 
-		public SearchController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ICategoryService category, ITagService tag)
+		public SearchController(IMapper mapper, IOptionsSnapshot<Settings> settings, ISearchService search)
 		{
 			Mapper = mapper;
 			Options = settings.Value;
-			BookService = book;
-			CategoryService = category;
-			TagService = tag;
+			SearchService = search;
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> Search(string q, int? ofs)
 		{
-			var _books = await BookService.SearchAsync(q ?? String.Empty);
+			var _books = await SearchService.SearchAsync(q ?? String.Empty);
 			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
@@ -47,24 +43,21 @@ namespace ltbdb.Controllers
 		}
 
 		[HttpGet]
-		[SkipStatusCodePages]
 		public async Task<IActionResult> SearchTitle(string term)
 		{
-			return Json(await BookService.SuggestionsAsync(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(await SearchService.SearchSuggestionsAsync(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
-		[SkipStatusCodePages]
 		public async Task<IActionResult> SearchCategory(string term)
 		{
-			return Json(await CategoryService.SuggestionsAsync(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(await SearchService.CategorySuggestionsAsync(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 
 		[HttpGet]
-		[SkipStatusCodePages]
 		public async Task<IActionResult> SearchTag(string term)
 		{
-			return Json(await TagService.SuggestionsAsync(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(await SearchService.TagSuggestionsAsync(term ?? String.Empty), new JsonSerializerSettings { Formatting = Formatting.Indented });
 		}
 	}
 }

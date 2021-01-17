@@ -42,7 +42,7 @@ Run in PowerShell or bash:
 
 ```sh
 $ dotnet publish -c Release /p:Version=1.0-$(git rev-parse --short HEAD)
-$ dotnet /path/to/ltbdb2.dll
+$ dotnet /path/to/LtbDb2.dll
 ```
 
 **or**
@@ -51,7 +51,7 @@ use `make`.
 
 ```sh
 $ make publish
-$ dotnet /path/to/ltbdb2.dll
+$ dotnet /path/to/LtbDb2.dll
 ```
 
 ## Configuration

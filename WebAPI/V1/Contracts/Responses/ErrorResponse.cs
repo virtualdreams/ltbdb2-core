@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ltbdb.WebAPI.V1.Contracts.Responses
+namespace LtbDb.WebAPI.V1.Contracts.Responses
 {
 	public class ErrorResponse
 	{

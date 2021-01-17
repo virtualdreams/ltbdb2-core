@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace ltbdb.Core.Models
+namespace LtbDb.Core.Models
 {
 	[Table("story")]
 	public class Story

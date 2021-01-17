@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using ltbdb.Extensions;
 
-namespace ltbdb.ViewComponents
+namespace LtbDb.ViewComponents
 {
 	public class VersionViewComponent : ViewComponent
 	{

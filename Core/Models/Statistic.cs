@@ -1,4 +1,4 @@
-namespace ltbdb.Core.Models
+namespace LtbDb.Core.Models
 {
 	public class Statistic
 

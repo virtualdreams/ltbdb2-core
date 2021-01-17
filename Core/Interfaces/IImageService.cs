@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace ltbdb.Core.Interfaces
+namespace LtbDb.Core.Interfaces
 {
 	/// <summary>
 	/// Type of image to request from storage.

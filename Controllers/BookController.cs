@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+using LtbDb.Core.Interfaces;
+using LtbDb.Core.Models;
+using LtbDb.Extensions;
+using LtbDb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Interfaces;
-using ltbdb.Core.Models;
-using ltbdb.Extensions;
-using ltbdb.Models;
 
-namespace ltbdb.Controllers
+namespace LtbDb.Controllers
 {
 	public class BookController : Controller
 	{

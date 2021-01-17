@@ -1,4 +1,4 @@
-namespace ltbdb.WebAPI.V1.Contracts.Responses
+namespace LtbDb.WebAPI.V1.Contracts.Responses
 {
 	public class AuthSuccessResponse
 	{

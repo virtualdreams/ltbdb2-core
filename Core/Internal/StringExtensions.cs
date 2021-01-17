@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ltbdb.Core.Internal
+namespace LtbDb.Core.Internal
 {
 	public static class StringExtensions
 	{

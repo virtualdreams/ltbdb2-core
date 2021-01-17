@@ -1,11 +1,11 @@
 using AutoMapper;
+using LtbDb.Core.Models;
+using LtbDb.WebAPI.V1.Contracts.Requests;
+using LtbDb.WebAPI.V1.Contracts.Responses;
 using System.Linq;
 using System;
-using ltbdb.Core.Models;
-using ltbdb.WebAPI.V1.Contracts.Requests;
-using ltbdb.WebAPI.V1.Contracts.Responses;
 
-namespace ltbdb.WebAPI.V1.MappingProfiles
+namespace LtbDb.WebAPI.V1.MappingProfiles
 {
 	public class MappingProfile : Profile
 	{

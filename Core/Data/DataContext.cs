@@ -1,7 +1,7 @@
+using LtbDb.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using ltbdb.Core.Models;
 
-namespace ltbdb.Core.Data
+namespace LtbDb.Core.Data
 {
 	public class DataContext : DbContext
 	{

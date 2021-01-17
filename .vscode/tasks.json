@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/ltbdb2.csproj"
+                "${workspaceFolder}/LtbDb2.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -17,7 +17,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/ltbdb2.csproj",
+                "${workspaceFolder}/LtbDb2.csproj",
                 "-c",
                 "Release"
             ],

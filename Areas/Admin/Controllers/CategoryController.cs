@@ -1,13 +1,13 @@
 using AutoMapper;
+using LtbDb.Core.Interfaces;
+using LtbDb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Interfaces;
-using ltbdb.Models;
 
-namespace ltbdb.Areas.Admin.Controllers
+namespace LtbDb.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Authorize(Policy = "AdministratorOnly")]

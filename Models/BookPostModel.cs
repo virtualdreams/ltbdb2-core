@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LtbDb.ModelBinder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using ltbdb.ModelBinder;
 
-namespace ltbdb.Models
+namespace LtbDb.Models
 {
 	public class BookPostModel
 	{

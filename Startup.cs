@@ -1,4 +1,10 @@
 using FluentValidation.AspNetCore;
+using LtbDb.Core;
+using LtbDb.Events;
+using LtbDb.Extensions;
+using LtbDb.Options;
+using LtbDb.Provider;
+using LtbDb.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -13,14 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IO;
 using System.Text;
 using System;
-using ltbdb.Core;
-using ltbdb.Events;
-using ltbdb.Extensions;
-using ltbdb.Options;
-using ltbdb.Provider;
-using ltbdb.Services;
 
-namespace ltbdb
+namespace LtbDb
 {
 	public class Startup
 	{

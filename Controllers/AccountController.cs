@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using LtbDb.Models;
+using LtbDb.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -6,10 +8,8 @@ using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System;
-using ltbdb.Models;
-using ltbdb.Options;
 
-namespace ltbdb.Controllers
+namespace LtbDb.Controllers
 {
 	public class AccountController : Controller
 	{

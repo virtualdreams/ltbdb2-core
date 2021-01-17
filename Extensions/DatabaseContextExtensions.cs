@@ -1,9 +1,9 @@
+using LtbDb.Core.Data;
+using LtbDb.Provider;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ltbdb.Core.Data;
-using ltbdb.Provider;
 
-namespace ltbdb.Extensions
+namespace LtbDb.Extensions
 {
 	public static class DatabaseContextExtensions
 	{

@@ -1,8 +1,8 @@
 using FluentValidation;
-using ltbdb.FluentValidation;
-using ltbdb.WebAPI.V1.Contracts.Requests;
+using LtbDb.FluentValidation;
+using LtbDb.WebAPI.V1.Contracts.Requests;
 
-namespace ltbdb.WebAPI.V1.Validators
+namespace LtbDb.WebAPI.V1.Validators
 {
 	public class BookRequestValidator : AbstractValidator<BookRequest>
 	{

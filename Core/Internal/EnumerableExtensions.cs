@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace ltbdb.Core.Internal
+namespace LtbDb.Core.Internal
 {
 	public static class EnumerableExtensions
 	{

@@ -1,7 +1,7 @@
+using LtbDb.Core.Models;
 using System.Threading.Tasks;
-using ltbdb.Core.Models;
 
-namespace ltbdb.Core.Interfaces
+namespace LtbDb.Core.Interfaces
 {
 	public interface IMaintenanceService
 	{

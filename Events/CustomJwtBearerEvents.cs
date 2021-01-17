@@ -1,11 +1,11 @@
+using LtbDb.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
-using ltbdb.Options;
 
-namespace ltbdb.Events
+namespace LtbDb.Events
 {
 	public class CustomJwtBearerEvents : JwtBearerEvents
 	{

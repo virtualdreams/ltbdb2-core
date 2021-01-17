@@ -1,6 +1,6 @@
 using System;
 
-namespace ltbdb.Core
+namespace LtbDb.Core
 {
 	public class LtbdbException : Exception
 	{

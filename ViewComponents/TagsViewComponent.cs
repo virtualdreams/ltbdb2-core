@@ -1,10 +1,10 @@
+using LtbDb.Core.Interfaces;
+using LtbDb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
-using ltbdb.Core.Interfaces;
-using ltbdb.Models;
 
-namespace ltbdb.ViewComponents
+namespace LtbDb.ViewComponents
 {
 	public class TagsViewComponent : ViewComponent
 	{

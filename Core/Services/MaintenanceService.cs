@@ -1,13 +1,13 @@
+using LtbDb.Core.Data;
+using LtbDb.Core.Interfaces;
+using LtbDb.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ltbdb.Core.Data;
-using ltbdb.Core.Interfaces;
-using ltbdb.Core.Models;
 
-namespace ltbdb.Core.Services
+namespace LtbDb.Core.Services
 {
 	public class MaintenanceService : IMaintenanceService
 	{

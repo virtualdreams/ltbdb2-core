@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using System;
 
-namespace ltbdb.Services
+namespace LtbDb.Services
 {
 	public class BearerTokenService
 	{

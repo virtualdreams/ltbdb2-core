@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using System;
 
-namespace ltbdb.Extensions
+namespace LtbDb.Extensions
 {
 	public static class LtbdbExtensions
 	{

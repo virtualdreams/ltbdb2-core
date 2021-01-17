@@ -1,4 +1,4 @@
-﻿namespace ltbdb.Models
+﻿namespace LtbDb.Models
 {
 	public class BookEditContainer
 	{

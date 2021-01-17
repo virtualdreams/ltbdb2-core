@@ -1,4 +1,4 @@
-namespace ltbdb.WebAPI.V1.Contracts.Requests
+namespace LtbDb.WebAPI.V1.Contracts.Requests
 {
 	public class AuthRequest
 	{

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ltbdb.Core.Interfaces
+namespace LtbDb.Core.Interfaces
 {
 	public interface ICategoryService
 	{

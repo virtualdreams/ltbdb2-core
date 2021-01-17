@@ -1,8 +1,8 @@
 using FluentValidation;
-using ltbdb.FluentValidation;
-using ltbdb.Models;
+using LtbDb.FluentValidation;
+using LtbDb.Models;
 
-namespace ltbdb.Validators
+namespace LtbDb.Validators
 {
 	public class BookPostModelValidator : AbstractValidator<BookPostModel>
 	{

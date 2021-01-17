@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ltbdb.WebAPI.V1.Contracts.Requests
+namespace LtbDb.WebAPI.V1.Contracts.Requests
 {
 	public class BookRequest
 	{

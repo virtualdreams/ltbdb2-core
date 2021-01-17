@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ltbdb.Models
+namespace LtbDb.Models
 {
 	public class ErrorModel
 	{

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace ltbdb.Extensions
+namespace LtbDb.Extensions
 {
 	public static class EndpointsExtensions
 	{

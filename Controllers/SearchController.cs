@@ -1,15 +1,15 @@
 using AutoMapper;
+using LtbDb.Core.Interfaces;
+using LtbDb.Models;
+using LtbDb.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Interfaces;
-using ltbdb.Models;
-using ltbdb.Options;
 
-namespace ltbdb.Controllers
+namespace LtbDb.Controllers
 {
 	public class SearchController : Controller
 	{

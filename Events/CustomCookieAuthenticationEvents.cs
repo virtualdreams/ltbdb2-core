@@ -1,11 +1,11 @@
+using LtbDb.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
-using ltbdb.Options;
 
-namespace ltbdb.Events
+namespace LtbDb.Events
 {
 	public class CustomCookieAuthenticationEvents : CookieAuthenticationEvents
 	{

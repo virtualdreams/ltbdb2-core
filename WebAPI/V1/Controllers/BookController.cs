@@ -1,4 +1,10 @@
 using AutoMapper;
+using LtbDb.Core.Interfaces;
+using LtbDb.Core.Models;
+using LtbDb.Options;
+using LtbDb.WebAPI.V1.Contracts.Requests;
+using LtbDb.WebAPI.V1.Contracts.Responses;
+using LtbDb.WebAPI.V1.Filter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,14 +13,8 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Interfaces;
-using ltbdb.Core.Models;
-using ltbdb.Options;
-using ltbdb.WebAPI.V1.Contracts.Requests;
-using ltbdb.WebAPI.V1.Contracts.Responses;
-using ltbdb.WebAPI.V1.Filter;
 
-namespace ltbdb.WebAPI.V1.Controllers
+namespace LtbDb.WebAPI.V1.Controllers
 {
 	[ApiController]
 	[Produces(MediaTypeNames.Application.Json)]

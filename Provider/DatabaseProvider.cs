@@ -1,4 +1,4 @@
-namespace ltbdb.Provider
+namespace LtbDb.Provider
 {
 	public enum DatabaseProvider
 	{

@@ -9,9 +9,9 @@ EnvironmentFile=
 Restart=always
 RestartSec=10
 KillSignal=SIGINT
-SyslogIdentifier=ltbdb2
+SyslogIdentifier=ltbdb
 WorkingDirectory=/foo/bar/ltbdb2-core
-ExecStart=/usr/local/bin/dotnet /foo/bar/ltbdb2-core/ltbdb2.dll
+ExecStart=/usr/local/bin/dotnet /foo/bar/ltbdb2-core/LtbDb2.dll
 User=www-data
 Group=www-data
 

@@ -1,7 +1,7 @@
 using FluentValidation;
-using ltbdb.WebAPI.V1.Contracts.Requests;
+using LtbDb.WebAPI.V1.Contracts.Requests;
 
-namespace ltbdb.WebAPI.V1.Validators
+namespace LtbDb.WebAPI.V1.Validators
 {
 	public class AuthRequestValidator : AbstractValidator<AuthRequest>
 	{

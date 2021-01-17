@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ltbdb.Models
+namespace LtbDb.Models
 {
 	public class BookViewSearchContainer
 	{

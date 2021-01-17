@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ltbdb.Extensions
+namespace LtbDb.Extensions
 {
 	public static class AutoMapperExtensions
 	{

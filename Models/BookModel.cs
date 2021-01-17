@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace ltbdb.Models
+namespace LtbDb.Models
 {
 	public class BookModel
 	{

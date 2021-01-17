@@ -1,14 +1,14 @@
 using AutoMapper;
+using LtbDb.Core.Interfaces;
+using LtbDb.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using ltbdb.Core.Interfaces;
-using ltbdb.Options;
 
-namespace ltbdb.WebAPI.V1.Controllers
+namespace LtbDb.WebAPI.V1.Controllers
 {
 	[ApiController]
 	[Produces(MediaTypeNames.Application.Json)]

@@ -1,6 +1,6 @@
 //using System.ComponentModel.DataAnnotations;
 
-namespace ltbdb.Options
+namespace LtbDb.Options
 {
 	public class AppSettings
 	{

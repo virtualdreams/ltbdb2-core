@@ -1,9 +1,9 @@
+using LtbDb.Core.Interfaces;
+using LtbDb.Core.Services;
+using LtbDb.Provider;
 using Microsoft.Extensions.DependencyInjection;
-using ltbdb.Core.Interfaces;
-using ltbdb.Core.Services;
-using ltbdb.Provider;
 
-namespace ltbdb.Core
+namespace LtbDb.Core
 {
 	public static class ServiceCollectionExtensions
 	{

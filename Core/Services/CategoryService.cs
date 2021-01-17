@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LtbDb.Core.Data;
+using LtbDb.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using ltbdb.Core.Data;
-using ltbdb.Core.Interfaces;
 
-namespace ltbdb.Core.Services
+namespace LtbDb.Core.Services
 {
 	public class CategoryService : ICategoryService
 	{

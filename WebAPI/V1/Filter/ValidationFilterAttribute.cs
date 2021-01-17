@@ -1,12 +1,12 @@
+using LtbDb.WebAPI.V1.Contracts.Responses;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using ltbdb.WebAPI.V1.Contracts.Responses;
 
-namespace ltbdb.WebAPI.V1.Filter
+namespace LtbDb.WebAPI.V1.Filter
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 	public class ValidationFilterAttribute : Attribute, IAsyncActionFilter

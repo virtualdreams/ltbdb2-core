@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 
-namespace ltbdb.ModelBinder
+namespace LtbDb.ModelBinder
 {
 	public class SemicolonListBinder : IModelBinder
 	{

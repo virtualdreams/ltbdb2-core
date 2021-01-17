@@ -1,7 +1,7 @@
 using FluentValidation;
 using System.Collections.Generic;
 
-namespace ltbdb.FluentValidation
+namespace LtbDb.FluentValidation
 {
 	public static class FluentValidationExtensions
 	{

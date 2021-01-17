@@ -1,7 +1,7 @@
 using FluentValidation;
-using ltbdb.Models;
+using LtbDb.Models;
 
-namespace ltbdb.Validators
+namespace LtbDb.Validators
 {
 	public class LoginModelValidator : AbstractValidator<LoginModel>
 	{

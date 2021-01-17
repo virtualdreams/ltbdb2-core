@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace ltbdb.Core.Models
+namespace LtbDb.Core.Models
 {
 	[Table("book")]
 	public class Book

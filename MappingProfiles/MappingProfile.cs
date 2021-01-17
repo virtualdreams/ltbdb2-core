@@ -1,10 +1,10 @@
 using AutoMapper;
+using LtbDb.Core.Models;
+using LtbDb.Models;
 using System.Linq;
 using System;
-using ltbdb.Core.Models;
-using ltbdb.Models;
 
-namespace ltbdb.MappingProfiles
+namespace LtbDb.MappingProfiles
 {
 	public class MappingProfile : Profile
 	{

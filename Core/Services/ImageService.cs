@@ -4,6 +4,7 @@ using System.IO;
 using System;
 using ltbdb.Core.Interfaces;
 using ltbdb.Core.Internal;
+using ltbdb.Options;
 
 namespace ltbdb.Core.Services
 {
@@ -11,13 +12,13 @@ namespace ltbdb.Core.Services
 	{
 		private const string GMCommand = "convert - -background white -flatten jpg:-";
 		private const string GMThumbnailCommand = "convert - -background white -flatten -resize 200x200 jpg:-";
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 		private readonly ILogger<ImageService> Log;
 		private readonly string thumbnailDirectory = "thumb";
 
-		public ImageService(IOptionsSnapshot<Settings> settings, ILogger<ImageService> log)
+		public ImageService(IOptionsSnapshot<AppSettings> settings, ILogger<ImageService> log)
 		{
-			Options = settings.Value;
+			AppSettings = settings.Value;
 			Log = log;
 		}
 
@@ -42,7 +43,7 @@ namespace ltbdb.Core.Services
 			Log.LogInformation($"Set image path to '{imagePath}'.");
 			Log.LogInformation($"Set thumb path to '{thumbPath}'.");
 
-			GraphicsMagick.Path = Options.GraphicsMagick;
+			GraphicsMagick.Path = AppSettings.GraphicsMagick;
 
 			try
 			{
@@ -148,7 +149,7 @@ namespace ltbdb.Core.Services
 		/// <returns>The web image path.</returns>
 		public string GetImageWebPath(string filename, ImageType imageType = ImageType.Normal, bool nullIfEmpty = false)
 		{
-			var _cdn = Options.ImageWebPath;
+			var _cdn = AppSettings.ImageWebPath;
 
 			Log.LogInformation($"Request image '{filename}' with quality '{imageType}'...");
 
@@ -171,7 +172,7 @@ namespace ltbdb.Core.Services
 
 				default:
 					if (!nullIfEmpty)
-						return Options.DefaultImage;
+						return AppSettings.DefaultImage;
 					return null;
 			}
 		}
@@ -220,7 +221,7 @@ namespace ltbdb.Core.Services
 		public string GetDefaultImage(bool nullIfEmpty = false)
 		{
 			if (!nullIfEmpty)
-				return Options.DefaultImage;
+				return AppSettings.DefaultImage;
 			return null;
 		}
 
@@ -239,7 +240,7 @@ namespace ltbdb.Core.Services
 		/// <returns></returns>
 		private string GetStoragePath()
 		{
-			return Path.GetFullPath(Options.Storage);
+			return Path.GetFullPath(AppSettings.Storage);
 		}
 
 		/// <summary>

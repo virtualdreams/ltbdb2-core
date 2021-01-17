@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Interfaces;
 using ltbdb.Models;
+using ltbdb.Options;
 
 namespace ltbdb.Controllers
 {
 	public class SearchController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 		private readonly ISearchService SearchService;
 
-		public SearchController(IMapper mapper, IOptionsSnapshot<Settings> settings, ISearchService search)
+		public SearchController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, ISearchService search)
 		{
 			Mapper = mapper;
-			Options = settings.Value;
+			AppSettings = settings.Value;
 			SearchService = search;
 		}
 
@@ -27,10 +28,10 @@ namespace ltbdb.Controllers
 		public async Task<IActionResult> Search(string q, int? ofs)
 		{
 			var _books = await SearchService.SearchAsync(q ?? String.Empty);
-			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
+			var _page = _books.Skip(ofs ?? 0).Take(AppSettings.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
-			var offset = new PageOffset(ofs ?? 0, Options.ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, AppSettings.ItemsPerPage, _books.Count());
 
 			var view = new BookViewSearchContainer
 			{

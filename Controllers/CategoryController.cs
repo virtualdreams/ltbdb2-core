@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Interfaces;
 using ltbdb.Models;
+using ltbdb.Options;
 
 namespace ltbdb.Controllers
 {
 	public class CategoryController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 		private readonly IBookService BookService;
 
-		public CategoryController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book)
+		public CategoryController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book)
 		{
 			Mapper = mapper;
-			Options = settings.Value;
+			AppSettings = settings.Value;
 			BookService = book;
 		}
 
@@ -26,10 +27,10 @@ namespace ltbdb.Controllers
 		public async Task<IActionResult> Index(int? ofs)
 		{
 			var _books = await BookService.GetAsync();
-			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
+			var _page = _books.Skip(ofs ?? 0).Take(AppSettings.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
-			var offset = new PageOffset(ofs ?? 0, Options.ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, AppSettings.ItemsPerPage, _books.Count());
 
 			var view = new BookViewAllContainer
 			{
@@ -47,10 +48,10 @@ namespace ltbdb.Controllers
 			if (_books.Count() == 0)
 				return NotFound();
 
-			var _page = _books.Skip(ofs ?? 0).Take(Options.ItemsPerPage);
+			var _page = _books.Skip(ofs ?? 0).Take(AppSettings.ItemsPerPage);
 
 			var books = Mapper.Map<BookModel[]>(_page);
-			var offset = new PageOffset(ofs ?? 0, Options.ItemsPerPage, _books.Count());
+			var offset = new PageOffset(ofs ?? 0, AppSettings.ItemsPerPage, _books.Count());
 
 			var view = new BookViewCategoryContainer
 			{

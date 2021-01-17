@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Interfaces;
 using ltbdb.Core.Models;
+using ltbdb.Options;
 using ltbdb.WebAPI.V1.Contracts.Requests;
 using ltbdb.WebAPI.V1.Contracts.Responses;
 using ltbdb.WebAPI.V1.Filter;
@@ -23,15 +24,15 @@ namespace ltbdb.WebAPI.V1.Controllers
 	public class BookController : ControllerBase
 	{
 		private readonly IMapper Mapper;
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 		private readonly IBookService BookService;
 		private readonly ICategoryService CategoryService;
 		private readonly ITagService TagService;
 
-		public BookController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ICategoryService category, ITagService tag)
+		public BookController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book, ICategoryService category, ITagService tag)
 		{
 			Mapper = mapper;
-			Options = settings.Value;
+			AppSettings = settings.Value;
 			BookService = book;
 			CategoryService = category;
 			TagService = tag;

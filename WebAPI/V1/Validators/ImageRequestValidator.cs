@@ -1,12 +1,11 @@
 using FluentValidation;
-using Microsoft.Extensions.Options;
 using ltbdb.WebAPI.V1.Contracts.Requests;
 
 namespace ltbdb.WebAPI.V1.Validators
 {
 	public class ImageRequestValidator : AbstractValidator<ImageRequest>
 	{
-		public ImageRequestValidator(IOptionsSnapshot<Settings> settings)
+		public ImageRequestValidator()
 		{
 			RuleFor(r => r.Image)
 				.Cascade(CascadeMode.Stop)

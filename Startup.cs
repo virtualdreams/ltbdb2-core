@@ -16,6 +16,7 @@ using System;
 using ltbdb.Core;
 using ltbdb.Events;
 using ltbdb.Extensions;
+using ltbdb.Options;
 using ltbdb.Provider;
 using ltbdb.Services;
 
@@ -36,12 +37,12 @@ namespace ltbdb
 			IdentityModelEventSource.ShowPII = true;
 #endif
 			// add options to DI
-			services.AddOptions<Settings>()
-				.Bind(Configuration.GetSection(Settings.SettingsName));
+			services.AddOptions<AppSettings>()
+				.Bind(Configuration.GetSection(AppSettings.AppSettingsName));
 			//.ValidateDataAnnotations();
 
 			// get settings for local usage
-			var _settings = Configuration.GetSection(Settings.SettingsName).Get<Settings>();
+			var _settings = Configuration.GetSection(AppSettings.AppSettingsName).Get<AppSettings>();
 			var _provider = Configuration.GetSection("Database").GetValue<DatabaseProvider>("Provider");
 
 			// database context

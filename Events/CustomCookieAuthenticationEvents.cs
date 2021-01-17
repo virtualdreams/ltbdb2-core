@@ -3,18 +3,19 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
+using ltbdb.Options;
 
 namespace ltbdb.Events
 {
 	public class CustomCookieAuthenticationEvents : CookieAuthenticationEvents
 	{
 		private readonly ILogger<CustomCookieAuthenticationEvents> Log;
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 
-		public CustomCookieAuthenticationEvents(ILogger<CustomCookieAuthenticationEvents> log, IOptionsSnapshot<Settings> settings)
+		public CustomCookieAuthenticationEvents(ILogger<CustomCookieAuthenticationEvents> log, IOptionsSnapshot<AppSettings> settings)
 		{
 			Log = log;
-			Options = settings.Value;
+			AppSettings = settings.Value;
 		}
 
 		public override async Task ValidatePrincipal(CookieValidatePrincipalContext context)
@@ -22,7 +23,7 @@ namespace ltbdb.Events
 			var _principal = context.Principal;
 			var _username = _principal.Identity.Name;
 
-			if (!Options.Username.Equals(_username))
+			if (!AppSettings.Username.Equals(_username))
 			{
 				Log.LogInformation($"Benutzername '{ _username}' nicht identisch.");
 				context.RejectPrincipal();

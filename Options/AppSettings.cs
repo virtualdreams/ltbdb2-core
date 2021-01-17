@@ -1,10 +1,10 @@
 //using System.ComponentModel.DataAnnotations;
 
-namespace ltbdb
+namespace ltbdb.Options
 {
-	public class Settings
+	public class AppSettings
 	{
-		public const string SettingsName = "Settings";
+		public const string AppSettingsName = "Settings";
 
 		/// <summary>
 		/// Items per page to display.

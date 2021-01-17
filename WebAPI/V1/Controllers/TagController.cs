@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using ltbdb.Core.Interfaces;
+using ltbdb.Options;
 
 namespace ltbdb.WebAPI.V1.Controllers
 {
@@ -16,15 +17,15 @@ namespace ltbdb.WebAPI.V1.Controllers
 	public class TagController : ControllerBase
 	{
 		private readonly IMapper Mapper;
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 		private readonly IBookService BookService;
 		private readonly ICategoryService CategoryService;
 		private readonly ITagService TagService;
 
-		public TagController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ICategoryService category, ITagService tag)
+		public TagController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book, ICategoryService category, ITagService tag)
 		{
 			Mapper = mapper;
-			Options = settings.Value;
+			AppSettings = settings.Value;
 			BookService = book;
 			CategoryService = category;
 			TagService = tag;

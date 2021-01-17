@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using System;
 using ltbdb.Core.Interfaces;
+using ltbdb.Options;
 using ltbdb.WebAPI.V1.Contracts.Requests;
 using ltbdb.WebAPI.V1.Filter;
 
@@ -20,16 +21,16 @@ namespace ltbdb.WebAPI.V1.Controllers
 	public class ImageController : ControllerBase
 	{
 		private readonly IMapper Mapper;
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 		private readonly IBookService BookService;
 		private readonly ICategoryService CategoryService;
 		private readonly ITagService TagService;
 		private readonly IImageService ImageService;
 
-		public ImageController(IMapper mapper, IOptionsSnapshot<Settings> settings, IBookService book, ICategoryService category, ITagService tag, IImageService image)
+		public ImageController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book, ICategoryService category, ITagService tag, IImageService image)
 		{
 			Mapper = mapper;
-			Options = settings.Value;
+			AppSettings = settings.Value;
 			BookService = book;
 			CategoryService = category;
 			TagService = tag;

@@ -3,18 +3,19 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
+using ltbdb.Options;
 
 namespace ltbdb.Events
 {
 	public class CustomJwtBearerEvents : JwtBearerEvents
 	{
 		private readonly ILogger<CustomJwtBearerEvents> Log;
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 
-		public CustomJwtBearerEvents(ILogger<CustomJwtBearerEvents> log, IOptionsSnapshot<Settings> settings)
+		public CustomJwtBearerEvents(ILogger<CustomJwtBearerEvents> log, IOptionsSnapshot<AppSettings> settings)
 		{
 			Log = log;
-			Options = settings.Value;
+			AppSettings = settings.Value;
 		}
 
 		public override Task AuthenticationFailed(AuthenticationFailedContext context)
@@ -32,7 +33,7 @@ namespace ltbdb.Events
 			var _principal = context.Principal;
 			var _username = _principal.Identity.Name;
 
-			if (!Options.Username.Equals(_username))
+			if (!AppSettings.Username.Equals(_username))
 			{
 				Log.LogInformation($"Benutzername '{ _username}' nicht identisch.");
 				context.Response.StatusCode = 401;

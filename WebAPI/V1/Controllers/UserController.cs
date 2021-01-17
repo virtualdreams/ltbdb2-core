@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System;
+using ltbdb.Options;
 using ltbdb.Services;
 using ltbdb.WebAPI.V1.Contracts.Requests;
 using ltbdb.WebAPI.V1.Contracts.Responses;
@@ -15,12 +16,12 @@ namespace ltbdb.WebAPI.V1.Controllers
 	[ValidationFilter]
 	public class UserController : ControllerBase
 	{
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 		private readonly BearerTokenService Token;
 
-		public UserController(IOptionsSnapshot<Settings> settings, BearerTokenService token)
+		public UserController(IOptionsSnapshot<AppSettings> settings, BearerTokenService token)
 		{
-			Options = settings.Value;
+			AppSettings = settings.Value;
 			Token = token;
 		}
 
@@ -29,13 +30,13 @@ namespace ltbdb.WebAPI.V1.Controllers
 		{
 			try
 			{
-				if (Options.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Options.Password.Equals(model.Password))
+				if (AppSettings.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && AppSettings.Password.Equals(model.Password))
 				{
 					var _response = new AuthSuccessResponse
 					{
-						Token = Token.CreateToken(Options.AccessTokenKey, model.Username, "Administrator", Options.AccessTokenExpire),
+						Token = Token.CreateToken(AppSettings.AccessTokenKey, model.Username, "Administrator", AppSettings.AccessTokenExpire),
 						Type = "Bearer",
-						ExpiresIn = Options.AccessTokenExpire
+						ExpiresIn = AppSettings.AccessTokenExpire
 					};
 
 					return Ok(_response);

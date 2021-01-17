@@ -2,26 +2,24 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System;
 using ltbdb.Models;
+using ltbdb.Options;
 
 namespace ltbdb.Controllers
 {
 	public class AccountController : Controller
 	{
 		private readonly IMapper Mapper;
-		private readonly ILogger<AccountController> Log;
-		private readonly Settings Options;
+		private readonly AppSettings AppSettings;
 
-		public AccountController(IMapper mapper, IOptionsSnapshot<Settings> settings, ILogger<AccountController> log)
+		public AccountController(IMapper mapper, IOptionsSnapshot<AppSettings> settings)
 		{
 			Mapper = mapper;
-			Log = log;
-			Options = settings.Value;
+			AppSettings = settings.Value;
 		}
 
 		[HttpGet]
@@ -40,7 +38,7 @@ namespace ltbdb.Controllers
 				return View("Login", model);
 			}
 
-			if (Options.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && Options.Password.Equals(model.Password))
+			if (AppSettings.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && AppSettings.Password.Equals(model.Password))
 			{
 				var claims = new List<Claim>
 					{

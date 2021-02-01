@@ -41,8 +41,8 @@ dotnet run
 Run in PowerShell or bash:
 
 ```sh
-$ dotnet publish -c Release /p:Version=1.0-$(git rev-parse --short HEAD)
-$ dotnet /path/to/LtbDb2.dll
+dotnet publish -c Release /p:Version=1.0-$(git rev-parse --short HEAD) -o publish src/LtbDb2
+dotnet /publish/LtbDb2.dll
 ```
 
 **or**
@@ -50,8 +50,8 @@ $ dotnet /path/to/LtbDb2.dll
 use `make`.
 
 ```sh
-$ make publish
-$ dotnet /path/to/LtbDb2.dll
+make publish
+dotnet /publish/LtbDb2.dll
 ```
 
 ## Configuration

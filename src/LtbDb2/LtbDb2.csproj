@@ -36,7 +36,7 @@
     <Content Update="wwwroot\**\*;Views\**\*.cshtml;Areas\**\*.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\assets\**\*;wwwroot\**\*.less;wwwroot\**\*.map;package.json;package-lock.json;contrib/**">
+    <Content Update="wwwroot\assets\**\*;wwwroot\**\*.less;wwwroot\**\*.map;package.json;package-lock.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>

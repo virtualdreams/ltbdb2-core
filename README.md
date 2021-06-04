@@ -58,35 +58,38 @@ dotnet /publish/LtbDb2.dll
 
 ```json
 {
-	"Kestrel": {
-		"EndPoints": {
-			"Http": {
-				"Url": "http://127.0.0.1:5000"
-			},
-			"Https": {
-				"Url": "https://127.0.0.1:5001",
-				"Certificate": {
-					"Path": "/foo/bar/cert.p12|pfx",
-					"Password": "cert_password"
-				}
-			}
-		}
+    "Kestrel": {
+        "EndPoints": {
+            "Http": {
+                "Url": "http://127.0.0.1:5000"
+            },
+            "Https": {
+                "Url": "https://127.0.0.1:5001",
+                "Certificate": {
+                    "Path": "/foo/bar/cert.p12|pfx",
+                    "Password": "cert_password"
+                }
+            }
+        }
     },
     "ConnectionStrings": {
-		"Default": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb"
+        "Default": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb"
+    },
+    "Database": {
+		"Provider": "MySql"
 	},
-	"Settings": {
-		"ItemsPerPage": 18,
-		"RecentItems": 18,
-		"Storage": "./wwwroot/images/",
-		"DefaultImage": "/content/no-image.png",
-		"ImageWebPath": "/images/",
-		"GraphicsMagick": "gm",
-		"Username": "",
-		"Password": "",
-		"KeyStore": "",
-		"AccessTokenKey": "1234567890123456"
-	}
+    "Settings": {
+        "ItemsPerPage": 18,
+        "RecentItems": 18,
+        "Storage": "./wwwroot/images/",
+        "DefaultImage": "/content/no-image.png",
+        "ImageWebPath": "/images/",
+        "GraphicsMagick": "gm",
+        "Username": "",
+        "Password": "",
+        "KeyStore": "",
+        "AccessTokenKey": "1234567890123456"
+    }
 }
 ```
 
@@ -97,8 +100,13 @@ dotnet /publish/LtbDb2.dll
 * **Default**  
 MariaDB/MySQL connection string.  
 `Server=[host];Database=[database];User=[username];Password=[password]`  
-PosgreSQl connection string.  
+PosgreSql connection string.  
 `Host=[host];Database=[database];Username=[username];Password=[password][;SearchPath=schema,public]`
+
+**Section: Database**
+
+* **Provider**  
+MySql or PgSql
 
 **Section: Settings**
 

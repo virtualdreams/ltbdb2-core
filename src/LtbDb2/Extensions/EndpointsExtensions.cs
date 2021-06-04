@@ -32,12 +32,6 @@ namespace LtbDb.Extensions
 				);
 
 				endpoints.MapControllerRoute(
-					name: "search",
-					pattern: "search/{ofs?}",
-					defaults: new { controller = "Search", action = "Search" }
-				);
-
-				endpoints.MapControllerRoute(
 					name: "searchTitle",
 					pattern: "search/title",
 					defaults: new { controller = "Search", action = "SearchTitle" }
@@ -53,6 +47,12 @@ namespace LtbDb.Extensions
 					name: "searchTag",
 					pattern: "search/tag",
 					defaults: new { controller = "Search", action = "SearchTag" }
+				);
+
+				endpoints.MapControllerRoute(
+					name: "search",
+					pattern: "search/{ofs?}",
+					defaults: new { controller = "Search", action = "Search" }
 				);
 
 				endpoints.MapControllerRoute(

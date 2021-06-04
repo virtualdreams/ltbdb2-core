@@ -4,8 +4,8 @@ create table book (
   number int not null, 
   title varchar(200) not null,
   category varchar(100) not null,
-  created timestamptz not null,
-  modified timestamptz not null,
+  created timestamp not null,
+  modified timestamp not null,
   filename varchar(100) default null
 );
 

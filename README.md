@@ -11,8 +11,8 @@ Database to manage the collection of "Lustiges Taschenbuch".
 
 ## Technology
 
-* [.NET Core 3.1](https://www.microsoft.com/net/core)
-* [ASP.NET Core 3.1](https://docs.microsoft.com/en-us/aspnet/core/)
+* [.NET 5.0](https://dotnet.microsoft.com/)
+* [ASP.NET Core 5.0](https://dotnet.microsoft.com/)
 * [MariaDB](https://mariadb.org/)
 * [jQuery](http://jquery.com/)
 * [jQuery-UI](http://jqueryui.com/)

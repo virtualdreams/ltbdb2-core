@@ -14,7 +14,7 @@ namespace LtbDb.Extensions
 				switch (provider)
 				{
 					case DatabaseProvider.MySql:
-						options.UseMySql(connectionString, mySqlOptions => { });
+						options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mySqlOptions => { });
 						break;
 
 					case DatabaseProvider.PgSql:

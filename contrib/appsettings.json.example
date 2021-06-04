@@ -6,8 +6,13 @@
 			}
 		}
 	},
+	"ConnectionStrings": {
+		"Default": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb"
+	},
+	"Database": {
+		"Provider": "MySql"
+	},
 	"Settings": {
-		"ConnectionString": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb",
 		"ItemsPerPage": 18,
 		"RecentItems": 18,
 		"Storage": "/foo/bar/ltbdb2-core-images/",

@@ -76,8 +76,8 @@ dotnet /publish/LtbDb2.dll
         "Default": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb"
     },
     "Database": {
-		"Provider": "MySql"
-	},
+        "Provider": "MySql"
+    },
     "Settings": {
         "ItemsPerPage": 18,
         "RecentItems": 18,
@@ -144,7 +144,7 @@ Configure logging in `NLog.config` and copy this file to publish directory. Also
 **Request**
 
 ```sh
-$ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/authenticate -d '{ "username": "<username>", "password": "<password>" }'
+curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/authenticate -d '{ "username": "<username>", "password": "<password>" }'
 ```
 
 **Response**
@@ -177,7 +177,7 @@ $ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/
 **Request**
 
 ```sh
-$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book[?category=Category&tag=Tag]
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book[?category=Category&tag=Tag]
 ```
 
 Request parameters
@@ -223,7 +223,7 @@ Request parameters
 **Request**
 
 ```sh
-$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id>
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id>
 ```
 
 **Response**
@@ -249,7 +249,7 @@ $ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <tok
 **Request**
 
 ```sh
-$ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book -d '{ "number": <number>, "title": "<title>", "category", "<category>", stories: [ "<story 1>", "<story 2>" ], tags: [ "<tag 1>", "<tag 2>" ] }'
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book -d '{ "number": <number>, "title": "<title>", "category", "<category>", stories: [ "<story 1>", "<story 2>" ], tags: [ "<tag 1>", "<tag 2>" ] }'
 ```
 
 **Response**
@@ -276,7 +276,7 @@ None
 **Request**
 
 ```sh
-$ curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id> -d '{ "number": <number>, "title": "<title>", "category", "<category>", stories: [ "<story 1>", "<story 2>" ], tags: [ "<tag 1>", "<tag 2>" ] }'
+curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id> -d '{ "number": <number>, "title": "<title>", "category", "<category>", stories: [ "<story 1>", "<story 2>" ], tags: [ "<tag 1>", "<tag 2>" ] }'
 ```
 
 **Response**
@@ -303,7 +303,7 @@ None
 **Request**
 
 ```sh
-$ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id>
+curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book/<id>
 ```
 
 **Response**
@@ -317,7 +317,7 @@ None
 **Request**
 
 ```sh
-$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/<id>
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/<id>
 ```
 
 Request parameters
@@ -344,7 +344,7 @@ Paths can be `null`.
 **Request**
 
 ```sh
-$ curl -X PUT -H "Authorization: Bearer <token>" -H "Content-Type: multipart/form-data" -F "image=@file.png" http://localhost/api/v1/image/<id>
+curl -X PUT -H "Authorization: Bearer <token>" -H "Content-Type: multipart/form-data" -F "image=@file.png" http://localhost/api/v1/image/<id>
 ```
 
 **Response**
@@ -358,7 +358,7 @@ None
 **Request**
 
 ```sh
-$ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/1
+curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/1
 ```
 
 **Response**

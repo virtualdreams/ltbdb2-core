@@ -5,6 +5,10 @@
 @color-text: #6B7B95;
 @color-border: #dddddd;
 
+@shadow: 0, 0, 0, 0.075;
+
+@border-radius: 3px;
+
 // defaults
 @content-width: 1200px;
 
@@ -19,12 +23,16 @@ body {
 
 input {
 	font-family: Helvetica,arial,freesans,clean,sans-serif;
+
+	&:focus {
+		outline: none;
+	}
 }
 
-input::-moz-focus-inner {
-	border: 0;
-	padding: 0;
-}
+// input::-moz-focus-inner {
+// 	border: 0;
+// 	padding: 0;
+// }
 
 .a-template() {
 	text-decoration: none;
@@ -60,7 +68,7 @@ a {
 	height: 100px;
 	margin-left: auto;
 	margin-right: auto;
-	border-bottom: 1px solid #dddddd;
+	border-bottom: 1px solid @color-border;
 	padding-top: 20px;
 	padding-bottom: 20px;
 
@@ -96,7 +104,7 @@ a {
 	padding: 0;
 	margin-left: auto;
 	margin-right: auto;
-	border-top: 1px solid #dddddd;
+	border-top: 1px solid @color-border;
 	color: #999999;
 
 	.copy {
@@ -140,9 +148,7 @@ a {
 // navigation box
 nav {
 	border: 1px solid @color-border;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	border-radius: @border-radius;
 
 	& > a {
 		position: relative;
@@ -165,17 +171,15 @@ nav {
 		display: block;
 		padding: 10px;
 		color: @color-text;
-		background-color: #eee;
+		background-color: #eeeeee;
 	}
 }
 
 // content boxes
 .box {
-	border: 1px solid #dddddd;
-	-webkit-border-top-left-radius: 3px;
-	border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
-	border-top-right-radius: 3px;
+	border: 1px solid @color-border;
+	border-top-left-radius: @border-radius;
+	border-top-right-radius: @border-radius;
 	margin-bottom: 10px;
 
 	& > h3 {
@@ -183,7 +187,7 @@ nav {
 		font-size: 14px;
 		margin: 0;
 		padding: 10px;
-		border-bottom: 1px solid #dddddd;
+		border-bottom: 1px solid @color-border;
 	}
 
 	& > div {
@@ -262,23 +266,17 @@ nav {
 
 	.input {
 		border: 1px solid #cccccc;
-		-moz-border-radius: 3px;
-		-webkit-border-radius: 3px;
 		border-radius: 3px;
 		background-color: #fafafa;
 		padding: 7px;
 		vertical-align: middle;
-		-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
-		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
+		box-shadow: 0 1px 2px rgba(@shadow) inset;
 		color: #333333;
 		width: 500px;
 
 		&:focus {
 			border: 1px solid #a8dd6d;
-			-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset, 0 0 5px rgba(96, 176, 68, 0.5);
-			-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset, 0 0 5px rgba(96, 176, 68, 0.5);
-			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset, 0 0 5px rgba(96, 176, 68, 0.5);
+			box-shadow: 0 1px 2px rgba(@shadow) inset, 0 0 5px rgba(96, 176, 68, 0.5);
 		}
 	}
 
@@ -296,9 +294,7 @@ nav {
 // buttons
 .button-green {
 	background-color: #60B044;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	border-radius: @border-radius;
 	background-image: linear-gradient(#a8dd6d, #60b044);
 	border: 1px solid #5ca941;
 	display: inline-block;
@@ -318,16 +314,14 @@ nav {
 }
 
 .button-red {
-	background-color: #eee;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	background-color: #eeeeee;
+	border-radius: @border-radius;
 	background-image: linear-gradient(#fcfcfc, #eee);
 	border: 1px solid #d5d5d5;
 	display: inline-block;
 	padding: 6px 10px;
 	font-weight: bold;
-	color: #999;
+	color: #999999;
 	font-size: 13px;
 	cursor: pointer;
 
@@ -335,19 +329,17 @@ nav {
 		background-color: #b33630;
 		background-image: linear-gradient(#dc5f59, #b33630);
 		border-color: #cd504a;
-		color: #fff;
+		color: #ffffff;
 	}
 
 	&:visited, &:focus, &:active {
-		color: #fff;
+		color: #ffffff;
 	}
 }
 
 .button-gray {
 	background-color: #eeeeee;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	border-radius: @border-radius;
 	background-image: linear-gradient(#fcfcfc, #eeeeee);
 	border: 1px solid #dddddd;
 	display: inline-block;
@@ -385,9 +377,7 @@ span.field-validation-error {
 	opacity: 0.8;
 	padding: 10px;
 	font-size: 8pt;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+	border-radius: @border-radius;
 }
 
 .ui-autocomplete {

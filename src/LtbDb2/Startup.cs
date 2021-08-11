@@ -80,7 +80,7 @@ namespace LtbDb
 			.AddFluentValidation(options =>
 			{
 				options.RegisterValidatorsFromAssemblyContaining<Startup>();
-				options.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+				options.DisableDataAnnotationsValidation = true;
 			});
 
 			// configure WebAPI 

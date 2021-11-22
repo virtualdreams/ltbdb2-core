@@ -11,9 +11,6 @@
     <AssemblyName>LtbDb2</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>ltbdb2</PackageId>
-    <!--
-    <RuntimeFrameworkVersion>2.2</RuntimeFrameworkVersion>
-    -->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -63,7 +60,7 @@
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
-    <!-- <Exec Command="gulp" /> -->
+    <!-- <Exec Command="grunt" /> -->
   </Target>
 
 </Project>

@@ -1,4 +1,4 @@
-using LtbDb.Core.Data;
+﻿using LtbDb.Core.Data;
 using LtbDb.Core.Interfaces;
 using LtbDb.Core.Internal;
 using LtbDb.Core.Models;
@@ -57,7 +57,8 @@ namespace LtbDb.Core.Services
 			Log.LogInformation($"Request book by id {id}.");
 
 			var _query = Context.Book
-				.Include(i => i.Stories)
+				.Include(i => i.Stories
+					.OrderBy(o => o.ItemOrder))
 				.Include(i => i.Tags)
 				.Where(f => f.Id == id);
 
@@ -118,7 +119,8 @@ namespace LtbDb.Core.Services
 
 			var _query = Context.Book
 				.AsNoTracking()
-				.Include(i => i.Stories)
+				.Include(i => i.Stories
+					.OrderBy(o => o.ItemOrder))
 				.Include(i => i.Tags)
 				.AsQueryable();
 
@@ -162,6 +164,12 @@ namespace LtbDb.Core.Services
 				.Distinct(d => d.Name)
 				.ToList();
 
+			// assign item order
+			var _itemOrder = 1;
+			var _stories = book.Stories
+				.Select(s => new Story { Name = s.Name, ItemOrder = _itemOrder++ })
+				.ToList();
+
 			var _currentDate = DateTime.UtcNow;
 
 			var _book = new Book
@@ -172,7 +180,7 @@ namespace LtbDb.Core.Services
 				Created = _currentDate,
 				Modified = _currentDate,
 				Filename = null,
-				Stories = book.Stories,
+				Stories = _stories,
 				Tags = _tags
 			};
 
@@ -199,6 +207,12 @@ namespace LtbDb.Core.Services
 				.Distinct(d => d.Name)
 				.ToList();
 
+			// assign item order
+			var _itemOrder = 1;
+			var _stories = book.Stories
+				.Select(s => new Story { Name = s.Name, ItemOrder = _itemOrder++ })
+				.ToList();
+
 			var _currentDate = DateTime.UtcNow;
 
 			_book.Number = book.Number;
@@ -206,8 +220,13 @@ namespace LtbDb.Core.Services
 			_book.Category = book.Category;
 			_book.Modified = _currentDate;
 
-			var _storiesEqual = _book.Stories.Select(s => s.Name).SequenceEqual(book.Stories.Select(s => s.Name));
-			var _tagsEqual = _book.Tags.Select(s => s.Name).SequenceEqual(_tags.Select(s => s.Name));
+			var _storiesEqual = _book.Stories
+				.Select(s => new { s.Name, s.ItemOrder })
+				.SequenceEqual(_stories.Select(s => new { s.Name, s.ItemOrder }));
+
+			var _tagsEqual = _book.Tags
+				.Select(s => s.Name)
+				.SequenceEqual(_tags.Select(s => s.Name));
 
 			Log.LogInformation($"Stories update needed: {!_storiesEqual}");
 			Log.LogInformation($"Tags update needed: {!_tagsEqual}");
@@ -215,7 +234,7 @@ namespace LtbDb.Core.Services
 			if (!_storiesEqual)
 			{
 				_book.Stories.Clear();
-				_book.Stories = book.Stories;
+				_book.Stories = _stories;
 			}
 
 			if (!_tagsEqual)

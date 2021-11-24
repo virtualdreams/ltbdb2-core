@@ -19,6 +19,10 @@ namespace LtbDb.Core.Models
 		[Required]
 		public int BookId { get; set; }
 
+		[Column("item_order")]
+		[Required]
+		public int ItemOrder { get; set; }
+
 		public Book Book { get; set; }
 	}
 }

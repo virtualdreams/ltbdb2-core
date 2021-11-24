@@ -13,6 +13,7 @@ create table book (
 create table story (
   id serial primary key,
   name varchar(200) not null,
+  item_order int not null default 0,
   bookid int not null
 );
 

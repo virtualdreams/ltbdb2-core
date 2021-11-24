@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS `story`;
 CREATE TABLE `story` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `item_order` int(11) NOT NULL DEFAULT 0,
   `bookid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_name` (`name`),

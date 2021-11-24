@@ -15,7 +15,9 @@ namespace LtbDb.MappingProfiles
 				.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories
 					.Select(x => x.Name)))
 				.ForMember(d => d.Tags, map => map.MapFrom(s => s.Tags
-					.Select(x => x.Name)));
+					.Select(x => x.Name)))
+				.ForMember(d => d.Created, map => map.MapFrom(s => s.Created.ToLocalTime()))
+				.ForMember(d => d.Modified, map => map.MapFrom(s => s.Modified.ToLocalTime()));
 
 			CreateMap<Book, BookPostModel>()
 				.ForMember(d => d.Stories, map => map.MapFrom(s => s.Stories

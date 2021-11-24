@@ -1,4 +1,4 @@
-﻿using LtbDb.Core.Data;
+using LtbDb.Core.Data;
 using LtbDb.Core.Interfaces;
 using LtbDb.Core.Internal;
 using LtbDb.Core.Models;
@@ -162,7 +162,7 @@ namespace LtbDb.Core.Services
 				.Distinct(d => d.Name)
 				.ToList();
 
-			var _currentDate = DateTime.Now;
+			var _currentDate = DateTime.UtcNow;
 
 			var _book = new Book
 			{
@@ -199,7 +199,7 @@ namespace LtbDb.Core.Services
 				.Distinct(d => d.Name)
 				.ToList();
 
-			var _currentDate = DateTime.Now;
+			var _currentDate = DateTime.UtcNow;
 
 			_book.Number = book.Number;
 			_book.Title = book.Title;

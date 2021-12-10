@@ -7,7 +7,7 @@ namespace LtbDb
 	/// </summary>
 	public static class ApplicationVersion
 	{
-		/// <summary
+		/// <summary>
 		/// Get file version.
 		/// </summary>
 		/// <returns>File version.</returns>

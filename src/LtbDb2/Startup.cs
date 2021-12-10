@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System;
 
@@ -139,6 +140,13 @@ namespace LtbDb
 			services.AddEndpointsApiExplorer();
 			services.AddSwaggerGen(options =>
 			{
+				options.SwaggerDoc("v1", new OpenApiInfo
+				{
+					Version = "v1",
+					Title = "Lustiges Taschenbuch Datenbank API",
+					Description = "An Web API for managing Lustiges Taschenbuch Datenbank items."
+				});
+
 				options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 				{
 					In = ParameterLocation.Header,
@@ -161,6 +169,9 @@ namespace LtbDb
 						new string[] { }
 					}
 				});
+
+				var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+				options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 			});
 		}
 
@@ -194,7 +205,10 @@ namespace LtbDb
 			if (env.IsDevelopment())
 			{
 				app.UseSwagger();
-				app.UseSwaggerUI();
+				app.UseSwaggerUI(options =>
+				{
+					options.SwaggerEndpoint($"/swagger/v1/swagger.json", "Lustiges Taschenbuch Datenbank API v1");
+				});
 			}
 
 			app.UseAuthentication();

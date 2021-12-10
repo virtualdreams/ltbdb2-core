@@ -3,17 +3,21 @@ using LtbDb.Core.Interfaces;
 using LtbDb.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace LtbDb.WebAPI.V1.Controllers
 {
 	[ApiController]
+	[ApiExplorerSettings(GroupName = "v1")]
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[Authorize(Policy = "AdministratorOnly", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 	public class TagController : ControllerBase
 	{
 		private readonly IMapper Mapper;
@@ -31,7 +35,12 @@ namespace LtbDb.WebAPI.V1.Controllers
 			TagService = tag;
 		}
 
+		/// <summary>
+		/// Get all tags.
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
+		[ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetAll()
 		{
 			var _tags = await TagService.GetAsync();

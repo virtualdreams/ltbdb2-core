@@ -3,14 +3,17 @@ using LtbDb.Services;
 using LtbDb.WebAPI.V1.Contracts.Requests;
 using LtbDb.WebAPI.V1.Contracts.Responses;
 using LtbDb.WebAPI.V1.Filter;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Net.Mime;
 using System;
 
 namespace LtbDb.WebAPI.V1.Controllers
 {
 	[ApiController]
+	[ApiExplorerSettings(GroupName = "v1")]
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[ValidationFilter]
@@ -25,7 +28,15 @@ namespace LtbDb.WebAPI.V1.Controllers
 			Token = token;
 		}
 
+		/// <summary>
+		/// Create an authentication token.
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost("authenticate")]
+		[ProducesResponseType(typeof(AuthSuccessResponse), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public IActionResult Post([FromBody] AuthRequest model)
 		{
 			try

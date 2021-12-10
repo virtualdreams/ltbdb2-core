@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Text;
 using System;
@@ -134,6 +135,33 @@ namespace LtbDb
 					policy.RequireRole("Administrator");
 				});
 			});
+
+			services.AddEndpointsApiExplorer();
+			services.AddSwaggerGen(options =>
+			{
+				options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+				{
+					In = ParameterLocation.Header,
+					Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+					Name = "Authorization",
+					Type = SecuritySchemeType.ApiKey
+				});
+
+				options.AddSecurityRequirement(new OpenApiSecurityRequirement
+				{
+					{
+						new OpenApiSecurityScheme
+						{
+							Reference = new OpenApiReference
+							{
+								Type = ReferenceType.SecurityScheme,
+								Id = "Bearer"
+							}
+						},
+						new string[] { }
+					}
+				});
+			});
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -162,6 +190,12 @@ namespace LtbDb
 			app.UseRouting();
 
 			// app.UseCors();
+
+			if (env.IsDevelopment())
+			{
+				app.UseSwagger();
+				app.UseSwaggerUI();
+			}
 
 			app.UseAuthentication();
 			app.UseAuthorization();

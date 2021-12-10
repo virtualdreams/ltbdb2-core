@@ -69,6 +69,12 @@ namespace LtbDb
 			// IIS integration
 			services.Configure<IISOptions>(options => { });
 
+			// lowercase urls - this is a problem for categories and tags
+			// services.AddRouting(options =>
+			// {
+			// 	options.LowercaseUrls = true;
+			// });
+
 			// configure MVC
 			services.AddMvc(options =>
 			{

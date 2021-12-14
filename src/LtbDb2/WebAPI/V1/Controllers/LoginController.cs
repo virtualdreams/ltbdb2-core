@@ -17,12 +17,12 @@ namespace LtbDb.WebAPI.V1.Controllers
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[ValidationFilter]
-	public class UserController : ControllerBase
+	public class LoginController : ControllerBase
 	{
 		private readonly AppSettings AppSettings;
 		private readonly BearerTokenService Token;
 
-		public UserController(IOptionsSnapshot<AppSettings> settings, BearerTokenService token)
+		public LoginController(IOptionsSnapshot<AppSettings> settings, BearerTokenService token)
 		{
 			AppSettings = settings.Value;
 			Token = token;
@@ -33,7 +33,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 		/// </summary>
 		/// <param name="model"></param>
 		/// <returns></returns>
-		[HttpPost("authenticate")]
+		[HttpPost]
 		[ProducesResponseType(typeof(AuthSuccessResponse), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]

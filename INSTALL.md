@@ -32,6 +32,17 @@ Create database.
 create database ltbdb with owner ltbdb encoding 'UTF8' lc_collate = 'de_DE.UTF-8' lc_ctype = 'de_DE.UTF-8' template template0;
 ```
 
+Remove create for public.
+
+```sql
+# su - postgres -c psql
+
+\c ltbdb
+
+revoke create on schema public from public; 
+grant create on schema public to ltbdb;
+```
+
 Import schema.
 
 ```sh

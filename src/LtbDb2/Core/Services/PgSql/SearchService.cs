@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace LtbDb.Core.Services.PgSql
 {
@@ -28,6 +29,9 @@ namespace LtbDb.Core.Services.PgSql
 		public async Task<List<Book>> SearchAsync(string term)
 		{
 			term = term.Trim();
+
+			if (String.IsNullOrEmpty(term))
+				return new List<Book>();
 
 			Log.LogInformation($"Search for book by term '{term}'.");
 

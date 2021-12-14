@@ -33,6 +33,50 @@ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/user/au
 ]
 ```
 
+## Search
+
+**Request**
+
+```sh
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/search
+```
+
+Request parameters
+
+| Name | Value | Description | Required |
+|:--- |:--- |:--- |:---
+| query | | The query to search for. | yes |
+
+**Response**
+
+*Success*
+
+```json
+[
+    {
+        "Id": 10,
+        "Title": "Title 1"
+    },
+    {
+        "Id": 12,
+        "Title": "Title 2"
+    }
+]
+```
+
+*BadRequest*
+
+```json
+[
+    {
+        "Field": "<fieldname>",
+        "Messages": [
+            "<message>"
+        ]
+    }
+]
+```
+
 ## Get all books
 
 **Request**

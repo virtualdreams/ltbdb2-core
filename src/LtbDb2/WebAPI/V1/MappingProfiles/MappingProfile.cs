@@ -19,6 +19,10 @@ namespace LtbDb.WebAPI.V1.MappingProfiles
 					.Select(x => x.Name)))
 				.ForSourceMember(s => s.Filename, map => map
 					.DoNotValidate());
+
+			CreateMap<Book, SearchResponse>()
+				.ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
+				.ForMember(d => d.Title, map => map.MapFrom(s => s.Title));
 			#endregion
 
 			#region request -> domain

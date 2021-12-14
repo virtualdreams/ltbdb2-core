@@ -9,6 +9,8 @@
                 "build",
                 "${workspaceFolder}/src/LtbDb2/LtbDb2.csproj",
                 "/property:GenerateFullPaths=true",
+                "-c",
+                "Debug"
             ],
             "problemMatcher": "$msCompile"
         },

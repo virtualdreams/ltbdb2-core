@@ -88,6 +88,7 @@ dotnet /publish/LtbDb2.dll
             },
             "Https": {
                 "Url": "https://127.0.0.1:5001",
+                "SslProtocols": ["Tls12", "Tls13"],
                 "Certificate": {
                     "Path": "/foo/bar/cert.p12|pfx",
                     "Password": "cert_password"

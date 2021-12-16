@@ -27,6 +27,10 @@ restore: clean-project
 build: clean-project
 	dotnet build -c Release
 
+.PHONY: run
+run:
+	dotnet run --project $(project)/LtbDb2.csproj
+
 .PHONY: publish
 publish: clean-publish clean-project
 	dotnet publish -c Release /p:Version=1.0-$$(git rev-parse --short HEAD) -o publish $(project)

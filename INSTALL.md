@@ -6,13 +6,11 @@ You need the latest **.NET Core**, **ASP.NET Core** and **MariaDB** to run this 
 
 ## Database
 
-**MariaDB**
+### MariaDB
 
 Create database.
 
 ```sql
-# mysql
-
 create database ltbdb;
 ```
 
@@ -22,21 +20,17 @@ Import schema.
 mysql -u ltbdb -p ltbdb < contrib/database-create-mysql.sql
 ```
 
-**PostgreSQL**
+### PostgreSQL
 
 Create database.
 
 ```sql
-# su - postgres -c psql
-
 create database ltbdb with owner ltbdb encoding 'UTF8' lc_collate = 'de_DE.UTF-8' lc_ctype = 'de_DE.UTF-8' template template0;
 ```
 
-Remove create for public.
+Remove create rights for public.
 
 ```sql
-# su - postgres -c psql
-
 \c ltbdb
 
 revoke create on schema public from public; 
@@ -51,15 +45,13 @@ psql -U ltbdb -h localhost -d ltbdb < contrib/database-create-psql.sql
 
 ## Build
 
-**Build to run on local**
+### Build and run
 
 ```sh
-dotnet restore
-dotnet build
-dotnet run
+dotnet run --project src/LtbDb2/LtbDb2.csproj
 ```
 
-**Build and publish**
+### Build and publish
 
 Run in PowerShell or bash:
 

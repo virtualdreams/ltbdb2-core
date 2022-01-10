@@ -50,17 +50,17 @@ namespace LtbDb.Options
 		/// <summary>
 		/// Path to keystore directory.
 		/// </summary>
-		public string KeyStore { get; set; } = "";
+		public string KeyStore { get; set; } = null;
 
 		/// <summary>
 		/// JWT access token key.
 		/// </summary>
 		//[MinLength(16)]
-		public string AccessTokenKey { get; set; } = "";
+		public string JwtSigningKey { get; set; } = null;
 
 		/// <summary>
 		/// JWT access token expire in minutes.
 		/// </summary>
-		public int AccessTokenExpire { get; set; } = 5;
+		public int JwtExpireTime { get; set; } = 5;
 	}
 }

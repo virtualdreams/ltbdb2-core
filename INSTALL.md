@@ -89,10 +89,10 @@ dotnet /publish/LtbDb2.dll
         }
     },
     "ConnectionStrings": {
-        "Default": "Server=localhost;Database=ltbdb;User=ltbdb;Password=ltbdb"
+        "Default": "Host=localhost;Database=ltbdb;Username=ltbdb;Password=ltbdb"
     },
     "Database": {
-        "Provider": "MySql"
+        "Provider": "PgSql"
     },
     "Settings": {
         "ItemsPerPage": 18,
@@ -122,32 +122,32 @@ PosgreSql connection string.
 **Section: Database**
 
 * **Provider**  
-MySql or PgSql
+Set database provider. Default: `PgSql`. Values: `MySql`, `PgSql`.
 
 **Section: Settings**
 
 * **ItemsPerPage**  
-Books per page to display.
+Books per page to display.  Default `18`.
 * **RecentItems**  
-Books per page to display on start page.
+Books per page to display on start page.  Default `18`.
 * **Storage**  
-Image storage path in filesystem (upload).
-* **NoImage**  
-Path to `no-image` file.
-* **CDNPath**  
-Path to images for download from "wwwroot".
+Image storage path in filesystem (upload). Default `"./wwwroot/images"`.
+* **DefaultImage**  
+Path to `no-image` file. Default `"/content/no-image.png"`.
+* **ImageWebPath**  
+Path to images for download from "wwwroot". Default `"/images/"`.
 * **GraphicsMagick**  
-Path to GraphicsMagick binary or `gm`.
+Path to GraphicsMagick binary or `gm`. Default `"gm"`.
 * **Username**  
 Login username.
 * **Password**  
 Login password.
 * **KeyStore**  
-Directory to store encryption key files (leave empty to use in-memory).
-* **AccessTokenKey**  
-JWT access token encryption key. Min length 16 characters.
-* **AccessTokenExpire**  
-JWT access token expire in minutes.
+Directory to store encryption key files (leave empty to use in-memory). Default `null`.
+* **JwtSigningKey**  
+JWT access token encryption key. Minimum length 16 characters. Default `null`.
+* **JwtExpire**  
+JWT access token expire in minutes. Default `null`.
 
 ## Logging
 

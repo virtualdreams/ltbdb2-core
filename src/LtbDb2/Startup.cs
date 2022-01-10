@@ -44,8 +44,9 @@ namespace LtbDb
 			//.ValidateDataAnnotations();
 
 			// get settings for local usage
-			var _settings = Configuration.GetSection(AppSettings.AppSettingsName).Get<AppSettings>();
-			var _provider = Configuration.GetSection("Database").GetValue<DatabaseProvider>("Provider");
+			var _keyStore = Configuration.GetSection(AppSettings.AppSettingsName).GetValue<string>("KeyStore", null);
+			var _signingKey = Configuration.GetSection(AppSettings.AppSettingsName).GetValue<string>("JwtSigningKey", null);
+			var _provider = Configuration.GetSection("Database").GetValue<DatabaseProvider>("Provider", DatabaseProvider.PgSql);
 
 			// database context
 			services.AddDatabaseContext(Configuration.GetConnectionString("Default"), _provider);
@@ -58,12 +59,12 @@ namespace LtbDb
 			services.AddScoped<CustomJwtBearerEvents>();
 
 			// key ring
-			if (!String.IsNullOrEmpty(_settings.KeyStore))
+			if (!String.IsNullOrEmpty(_keyStore))
 			{
 				services.AddDataProtection(options =>
 				{
 					options.ApplicationDiscriminator = "ltbdb";
-				}).PersistKeysToFileSystem(new DirectoryInfo(_settings.KeyStore));
+				}).PersistKeysToFileSystem(new DirectoryInfo(_keyStore));
 			}
 
 			// IIS integration
@@ -127,7 +128,7 @@ namespace LtbDb
 					ValidateIssuer = true,
 					ValidIssuer = "ltbdb",
 					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.AccessTokenKey)),
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_signingKey)),
 					ValidateLifetime = true,
 					ClockSkew = TimeSpan.Zero
 				};

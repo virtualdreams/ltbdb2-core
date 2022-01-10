@@ -45,9 +45,9 @@ namespace LtbDb.WebAPI.V1.Controllers
 				{
 					var _response = new AuthSuccessResponse
 					{
-						Token = Token.CreateToken(AppSettings.AccessTokenKey, model.Username, "Administrator", AppSettings.AccessTokenExpire),
+						Token = Token.CreateToken(AppSettings.JwtSigningKey, model.Username, "Administrator", AppSettings.JwtExpireTime),
 						Type = "Bearer",
-						ExpiresIn = AppSettings.AccessTokenExpire
+						ExpiresIn = AppSettings.JwtExpireTime
 					};
 
 					return Ok(_response);

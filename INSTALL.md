@@ -8,6 +8,13 @@ You need the latest **.NET Core**, **ASP.NET Core** and **MariaDB** to run this 
 
 ### MariaDB
 
+Create user.
+
+```sql
+create user 'ltbdb'@'localhost' identified by 'password';
+grant all on notes.* to 'ltbdb'@'localhost';
+```
+
 Create database.
 
 ```sql
@@ -21,6 +28,12 @@ mysql -u ltbdb -p ltbdb < contrib/database-create-mysql.sql
 ```
 
 ### PostgreSQL
+
+Create user.
+
+```sql
+create user ltbdb with password 'password';
+```
 
 Create database.
 
@@ -57,7 +70,7 @@ Run in PowerShell or bash:
 
 ```sh
 dotnet publish -c Release /p:Version=1.0-$(git rev-parse --short HEAD) -o publish src/LtbDb2
-dotnet /publish/LtbDb2.dll
+dotnet publish/LtbDb2.dll
 ```
 
 **or**
@@ -66,7 +79,7 @@ use `make`.
 
 ```sh
 make publish
-dotnet /publish/LtbDb2.dll
+dotnet publish/LtbDb2.dll
 ```
 
 ## Configuration

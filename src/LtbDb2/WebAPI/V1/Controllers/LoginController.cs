@@ -1,3 +1,4 @@
+using LtbDb.Core.Interfaces;
 using LtbDb.Options;
 using LtbDb.Services;
 using LtbDb.WebAPI.V1.Contracts.Requests;
@@ -20,12 +21,14 @@ namespace LtbDb.WebAPI.V1.Controllers
 	public class LoginController : ControllerBase
 	{
 		private readonly AppSettings AppSettings;
-		private readonly BearerTokenService Token;
+		private readonly IUserService UserService;
+		private readonly BearerTokenService TokenService;
 
-		public LoginController(IOptionsSnapshot<AppSettings> settings, BearerTokenService token)
+		public LoginController(IOptionsSnapshot<AppSettings> settings, IUserService user, BearerTokenService token)
 		{
 			AppSettings = settings.Value;
-			Token = token;
+			UserService = user;
+			TokenService = token;
 		}
 
 		/// <summary>
@@ -41,11 +44,11 @@ namespace LtbDb.WebAPI.V1.Controllers
 		{
 			try
 			{
-				if (AppSettings.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && AppSettings.Password.Equals(model.Password))
+				if (UserService.Login(model.Username, model.Password))
 				{
 					var _response = new AuthSuccessResponse
 					{
-						Token = Token.CreateToken(AppSettings.JwtSigningKey, model.Username, "Administrator", AppSettings.JwtExpireTime),
+						Token = TokenService.CreateToken(AppSettings.JwtSigningKey, model.Username, "Administrator", AppSettings.JwtExpireTime),
 						Type = "Bearer",
 						ExpiresIn = AppSettings.JwtExpireTime
 					};

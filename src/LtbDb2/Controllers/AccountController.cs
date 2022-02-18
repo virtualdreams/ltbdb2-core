@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LtbDb.Core.Interfaces;
 using LtbDb.Models;
 using LtbDb.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Security.Claims;
-using System;
+using System.Threading.Tasks;
 
 namespace LtbDb.Controllers
 {
@@ -15,11 +16,13 @@ namespace LtbDb.Controllers
 	{
 		private readonly IMapper Mapper;
 		private readonly AppSettings AppSettings;
+		private readonly IUserService UserService;
 
-		public AccountController(IMapper mapper, IOptionsSnapshot<AppSettings> settings)
+		public AccountController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IUserService user)
 		{
 			Mapper = mapper;
 			AppSettings = settings.Value;
+			UserService = user;
 		}
 
 		[HttpGet]
@@ -31,14 +34,14 @@ namespace LtbDb.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Login(LoginModel model, string returnUrl)
+		public async Task<IActionResult> Login(LoginModel model, string returnUrl)
 		{
 			if (!ModelState.IsValid)
 			{
 				return View("Login", model);
 			}
 
-			if (AppSettings.Username.Equals(model.Username, StringComparison.OrdinalIgnoreCase) && AppSettings.Password.Equals(model.Password))
+			if (UserService.Login(model.Username, model.Password))
 			{
 				var claims = new List<Claim>
 					{
@@ -49,13 +52,13 @@ namespace LtbDb.Controllers
 				var _identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 				var _principal = new ClaimsPrincipal(_identity);
 
-				HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, _principal,
+				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, _principal,
 					new AuthenticationProperties
 					{
 						IsPersistent = true,
 						AllowRefresh = true
 					}
-				).Wait();
+				);
 			}
 			else
 			{

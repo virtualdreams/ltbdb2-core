@@ -26,7 +26,7 @@ namespace LtbDb
 {
 	public class Startup
 	{
-		public IConfiguration Configuration { get; }
+		private readonly IConfiguration Configuration;
 
 		public Startup(IConfiguration configuration)
 		{

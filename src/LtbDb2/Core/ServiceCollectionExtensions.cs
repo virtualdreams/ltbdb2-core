@@ -14,6 +14,7 @@ namespace LtbDb.Core
 			services.AddTransient<ICategoryService, CategoryService>();
 			services.AddTransient<IMaintenanceService, MaintenanceService>();
 			services.AddTransient<IImageService, ImageService>();
+			services.AddTransient<IUserService, UserService>();
 			services.AddSearchService(provider);
 
 			return services;

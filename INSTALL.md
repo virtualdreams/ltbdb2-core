@@ -152,9 +152,9 @@ Path to images for download from "wwwroot". Default `"/images/"`.
 * **GraphicsMagick**  
 Path to GraphicsMagick binary or `gm`. Default `"gm"`.
 * **Username**  
-Login username.
+Login username. Default `null`.
 * **Password**  
-Login password.
+Login password. Default `null`.
 * **KeyStore**  
 Directory to store encryption key files (leave empty to use in-memory). Default `null`.
 * **JwtSigningKey**  

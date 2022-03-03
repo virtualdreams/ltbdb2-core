@@ -96,7 +96,7 @@ $(function () {
 
 	/* show cover */
 	jbox_image = new jBox('Image', {
-		downloadButton: true
+		// downloadButton: true
 	});
 
 	/* add, delete or insert stories */

@@ -1,5 +1,38 @@
 @if(!Context.User.Identity.IsAuthenticated) {
+<li class="nav-item">
+	<a class="nav-link ms-1" asp-route="login">Anmelden</a>
+</li>
+} else {
+<li class="nav-item">
+	<a class="nav-link ms-1" asp-route="logout">Abmelden</a>
+</li>
+<li>
+	<a class="nav-link" asp-route="admin"><i class="fa-solid fa-fw fa-gear"></i></a>
+</li>
+}
+
+@* @if(!Context.User.Identity.IsAuthenticated) {
+<li class="nav-item">
+	<a class="nav-link" asp-route="login"><i class="fa-solid fa-fw fa-user"></i> Anmelden</a>
+</li>
+} else {
+<li class="nav-item dropdown">
+	<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-fw fa-user"></i> Benutzername</a>
+	<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		<a class="dropdown-item" asp-route="admin"><i class="fa-solid fa-fw fa-gear"></i> Einstellungen</a>
+		<div class="dropdown-divider"></div>
+		<a class="dropdown-item" asp-route="logout"><i class="fa-solid fa-fw fa-power-off"></i> Abmelden</a>
+	</div>
+</li>
+} *@
+
+@* <li class="nav-item">
+	<a class="nav-link" asp-route="logout"><i class="fa-solid fa-fw fa-user"></i> Abmelden</a>
+</li> *@
+
+
+@* @if(!Context.User.Identity.IsAuthenticated) {
 	<a asp-route="login">Anmelden</a>
 } else {
 	<a asp-route="logout">Abmelden</a>
-}
+} *@

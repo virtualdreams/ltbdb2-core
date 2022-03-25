@@ -9,6 +9,12 @@ namespace LtbDb.Extensions
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllerRoute(
+					name: "admin",
+					pattern: "admin",
+					defaults: new { area = "Admin", controller = "Home", action = "Index" }
+				);
+
+				endpoints.MapControllerRoute(
 					name: "adminExport",
 					pattern: "admin/export",
 					defaults: new { area = "Admin", controller = "Home", action = "Export" }
@@ -69,6 +75,12 @@ namespace LtbDb.Extensions
 				);
 
 				endpoints.MapControllerRoute(
+					name: "delete",
+					pattern: "book/delete/{id?}",
+					defaults: new { controller = "Book", action = "Delete" }
+				);
+
+				endpoints.MapControllerRoute(
 					name: "tags",
 					pattern: "tags/{ofs?}",
 					defaults: new { controller = "Tag", action = "Index" }
@@ -81,8 +93,14 @@ namespace LtbDb.Extensions
 				);
 
 				endpoints.MapControllerRoute(
+					name: "all",
+					pattern: "all/{ofs?}",
+					defaults: new { controller = "Home", action = "All" }
+				);
+
+				endpoints.MapControllerRoute(
 					name: "categories",
-					pattern: "categories/{ofs?}",
+					pattern: "categories",
 					defaults: new { controller = "Category", action = "Index" }
 				);
 

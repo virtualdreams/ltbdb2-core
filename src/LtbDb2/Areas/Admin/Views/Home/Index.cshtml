@@ -1,9 +1,43 @@
 ﻿@{
+	Layout = "~/Areas/Admin/Views/Shared/_LayoutMenu.cshtml";
 	ViewBag.Title = "";
-	ViewBag.Menu = "home";
+	ViewBag.AdminMenu = "home";
 }
 
-<div class="box">
+<div class="row">
+	<div class="col mb-4">
+		<h3>Willkommen</h3>
+		<p>
+			Konfigurationspanel für "Lustiges Taschenbuch Datenbank".
+		</p>
+		<p>
+			Repository: <a href="https://github.com/virtualdreams/ltbdb2-core">https://github.com/virtualdreams/ltbdb2-core</a>
+		</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col mb-4">
+		<h3>Statistik</h3>
+		<p>
+			Die Datenbank enthält <span id="books">-</span> Bücher in <span id="categories">-</span> Kategorien mit insgesamt <span id="stories">-</span> Geschichten. Die Inhalte wurden mit <span id="tags">-</span> Tags gekennzeichnet.
+		</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col mb-4">
+		<h3>Export</h3>
+		<p>
+			Datenbank als JSON exportieren.
+		</p>
+		<p>
+			<a class="btn btn-outline-success" asp-route="adminExport">Export</a>
+		</p>
+	</div>
+</div>
+
+@* <div class="box">
 	<h3>Willkommen</h3>
 	<div>
 		<p>
@@ -27,8 +61,9 @@
 	<div>
 		<a class="button-green" asp-route="adminExport">Export</a>
 	</div>
-</div>
+</div> *@
 
+@section script {
 <script type="text/javascript">
 	$(function () {
 		function getValue(url) {
@@ -53,3 +88,4 @@
 		getValue('@Url.RouteUrl("adminStats")');
 	});
 </script>
+}

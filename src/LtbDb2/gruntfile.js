@@ -10,10 +10,7 @@ module.exports = function (grunt) {
 					paths: ["wwwroot/assets/"]
 				},
 				files: {
-					"wwwroot/css/material.grunt.css": "wwwroot/assets/css/material.css",
-					"wwwroot/css/navigation.grunt.css": "wwwroot/assets/css/navigation.css",
-					"wwwroot/css/ltbdb.grunt.css": "wwwroot/assets/css/layout.less",
-					"wwwroot/css/admin.grunt.css": "wwwroot/assets/css/admin.less"
+					"wwwroot/css/ltbdb.grunt.css": "wwwroot/assets/css/ltbdb.less"
 				}
 			}
 		},
@@ -21,13 +18,7 @@ module.exports = function (grunt) {
 			target: {
 				files: {
 					"wwwroot/css/ltbdb.min.css": [
-						"wwwroot/css/material.grunt.css",
-						"wwwroot/css/ltbdb.grunt.css",
-						"wwwroot/css/navigation.grunt.css"
-					],
-					"wwwroot/css/admin.min.css": [
-						"wwwroot/css/material.grunt.css",
-						"wwwroot/css/admin.grunt.css",
+						"wwwroot/css/ltbdb.grunt.css"
 					]
 				}
 			}

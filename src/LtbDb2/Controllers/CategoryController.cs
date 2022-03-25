@@ -15,27 +15,24 @@ namespace LtbDb.Controllers
 		private readonly IMapper Mapper;
 		private readonly AppSettings AppSettings;
 		private readonly IBookService BookService;
+		private readonly ICategoryService CategoryService;
 
-		public CategoryController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book)
+		public CategoryController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book, ICategoryService category)
 		{
 			Mapper = mapper;
 			AppSettings = settings.Value;
 			BookService = book;
+			CategoryService = category;
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Index(int? ofs)
+		public async Task<IActionResult> Index()
 		{
-			var _books = await BookService.GetAsync();
-			var _page = _books.Skip(ofs ?? 0).Take(AppSettings.ItemsPerPage);
+			var _categories = await CategoryService.GetAsync();
 
-			var books = Mapper.Map<BookModel[]>(_page);
-			var offset = new PageOffset(ofs ?? 0, AppSettings.ItemsPerPage, _books.Count());
-
-			var view = new BookViewAllContainer
+			var view = new CategoryViewContainer
 			{
-				Books = books,
-				PageOffset = offset
+				Categories = _categories
 			};
 
 			return View(view);

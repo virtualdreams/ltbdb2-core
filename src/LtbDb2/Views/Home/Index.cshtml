@@ -1,13 +1,28 @@
 ﻿@model LtbDb.Models.BookViewContainer
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "";
+	ViewBag.Title = "";
 }
 
-<h2>Zuletzt hinzugefügt...</h2>
+<div class="row mt-4">
+	<div class="col">
+		<h1>Zuletzt hinzugefügt...</h1>
+	</div>
+	@if((await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")).Succeeded) {
+	<div class="col text-end">
+		<a class="btn btn-outline-secondary" role="button" asp-route="create">Neues Buch</a>
+	</div>
+	}
+</div>
+
+<partial name="_PartialBooks" model="Model.Books" />
+
+@* <h2>Zuletzt hinzugefügt...</h2>
 <ul class="book">
 	@foreach (var book in Model.Books) {
 		@await Html.PartialAsync("_PartialBook", book)
 	}
-</ul>
+</ul> *@

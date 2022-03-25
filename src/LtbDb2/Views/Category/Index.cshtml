@@ -1,12 +1,30 @@
-﻿@model LtbDb.Models.BookViewAllContainer
+﻿@model LtbDb.Models.CategoryViewContainer
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Title = "Alle Kategorien | ";
-	ViewBag.Description = "Alle Kategorien";
+	ViewBag.Title = "Kategorien";
+	ViewBag.Description = "Kategorien";
+	ViewBag.Menu = "categories";
 }
 
-<div style="position: relative;">
+<div class="row mt-4">
+	<div class="col">
+		<h1>Kategorien</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-3">
+		<ul class="list-group"></ul>
+		@foreach (var category in Model.Categories)
+		{
+			<li class="list-group-item"><a class="link-secondary" asp-route="category" asp-route-id="@category" asp-route-ofs="">@category</a></li>
+		}
+		</ul>
+	</div>
+</div>
+
+@* <div style="position: relative;">
 	<div class="panel-menu">
 		Anzahl Bücher in allen Kategorien: @Model.PageOffset.Items
 	</div>
@@ -24,4 +42,4 @@
 			<a asp-route="categories" asp-route-ofs="@Model.PageOffset.Next">weiter <i class="material-icons">keyboard_arrow_right</i></a>
 		}
 	</div>
-</div>
+</div> *@

@@ -2,11 +2,28 @@
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Title = $"Suche nach \"{Model.Query}\" | ";
+	ViewBag.Title = $"Suche nach \"{Model.Query}\"";
 	ViewBag.Search = !String.IsNullOrEmpty(Model.Query) ? Model.Query : "";
 }
 
-<div style="position: relative;">
+<div class="row mt-4">
+	<div class="col">
+		<h1>Suche nach &quot;@Model.Query&quot; <small class="text-muted">(@Model.PageOffset.Items Treffer)</small></h1>
+	</div>
+</div>
+
+<partial name="_PartialBooks" model="Model.Books" />
+
+<div class="row mt-4">
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<li class="page-item @(Model.PageOffset.HasPrevious ? "" : "disabled")"><a class="page-link" asp-route="search" asp-route-q="@Model.Query" asp-route-ofs="@Model.PageOffset.Previous">Zurück</a></li>
+			<li class="page-item @(Model.PageOffset.HasNext ? "" : "disabled")"><a class="page-link" asp-route="search" asp-route-q="@Model.Query" asp-route-ofs="@Model.PageOffset.Next">Weiter</a></li>
+		</ul>
+	</nav>
+</div>
+
+@* <div style="position: relative;">
 	<div class="panel-menu">
 		Die Suche ergab @Model.PageOffset.Items Treffer.
 	</div>
@@ -24,4 +41,4 @@
 			<a asp-route="search" asp-route-q="@Model.Query" asp-route-ofs="@Model.PageOffset.Next">weiter <i class="material-icons">keyboard_arrow_right</i></a>
 		}
 	</div>
-</div>
+</div> *@

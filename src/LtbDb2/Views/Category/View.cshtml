@@ -2,11 +2,29 @@
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Title = $"{Model.Category} | ";
+	ViewBag.Title = $"{Model.Category}";
 	ViewBag.Description = $"{Model.Category}";
+	ViewBag.Menu = "categories";
 }
 
-<div style="position: relative;">
+<div class="row mt-4">
+	<div class="col">
+		<h1>Kategorie &quot;@Model.Category&quot; <small class="text-muted">(@Model.PageOffset.Items)</small></h1>
+	</div>
+</div>
+
+<partial name="_PartialBooks" model="Model.Books" />
+
+<div class="row mt-4">
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<li class="page-item @(Model.PageOffset.HasPrevious ? "" : "disabled")"><a class="page-link" asp-route="category" asp-route-id="@Model.Category" asp-route-ofs="@Model.PageOffset.Previous">Zurück</a></li>
+			<li class="page-item @(Model.PageOffset.HasNext ? "" : "disabled")"><a class="page-link" asp-route="category" asp-route-id="@Model.Category" asp-route-ofs="@Model.PageOffset.Next">Weiter</a></li>
+		</ul>
+	</nav>
+</div>
+
+@* <div style="position: relative;">
 	<div class="panel-menu">
 		Anzahl Bücher in dieser Kategorie: @Model.PageOffset.Items
 	</div>
@@ -24,4 +42,4 @@
 			<a asp-route="category" asp-route-id="@Model.Category" asp-route-ofs="@Model.PageOffset.Next">weiter <i class="material-icons">keyboard_arrow_right</i></a>
 		}
 	</div>
-</div>
+</div> *@

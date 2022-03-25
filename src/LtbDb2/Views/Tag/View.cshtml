@@ -2,11 +2,29 @@
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Title = $"Inhalte getaggt mit \"{Model.Tag}\" | ";
+	ViewBag.Title = $"Inhalte getaggt mit \"{Model.Tag}\"";
 	ViewBag.Description = $"Inhalte getaggt mit \"{Model.Tag}\"";
+	ViewBag.Menu = "tags";
 }
 
-<div style="position: relative;">
+<div class="row mt-4">
+	<div class="col">
+		<h1>Inhalte getaggt mit &quot;@Model.Tag&quot; <small class="text-muted">(@Model.PageOffset.Items)</small></h1>
+	</div>
+</div>
+
+<partial name="_PartialBooks" model="Model.Books" />
+
+<div class="row mt-4">
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<li class="page-item @(Model.PageOffset.HasPrevious ? "" : "disabled")"><a class="page-link" asp-route="tag" asp-route-id="@Model.Tag" asp-route-ofs="@Model.PageOffset.Previous">Zurück</a></li>
+			<li class="page-item @(Model.PageOffset.HasNext ? "" : "disabled")"><a class="page-link" asp-route="tag" asp-route-id="@Model.Tag" asp-route-ofs="@Model.PageOffset.Next">Weiter</a></li>
+		</ul>
+	</nav>
+</div>
+
+@* <div style="position: relative;">
 	<div class="panel-menu">
 			Anzahl Bücher mit diesem Tag: @Model.PageOffset.Items
 		</div>
@@ -24,4 +42,4 @@
 			<a asp-route="tag" asp-route-id="@Model.Tag" asp-route-ofs="@Model.PageOffset.Next">weiter <i class="material-icons">keyboard_arrow_right</i></a>
 		}
 	</div>
-</div>
+</div> *@

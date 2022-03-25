@@ -38,25 +38,25 @@ String.prototype.formatEx = function (placeholders) {
 
 $(function () {
 	/* data-href */
-	$('[data-href]').click(function () {
-		var href = $(this).data('href');
-		location.href = href;
-	});
+	// $('[data-href]').click(function () {
+	// 	var href = $(this).data('href');
+	// 	location.href = href;
+	// });
 
 	/* autocomplete for search */
-	$('#q').autocomplete({
-		source: '/search/title',
-		minLength: 3,
-		select: function (event, ui) {
-			if (ui.item) {
-				$(event.target).val(ui.item.value);
-			}
-			$(event.target.form).submit();
-		}
-	});
+	// $('#q').autocomplete({
+	// 	source: '/search/title',
+	// 	minLength: 3,
+	// 	select: function (event, ui) {
+	// 		if (ui.item) {
+	// 			$(event.target).val(ui.item.value);
+	// 		}
+	// 		$(event.target.form).submit();
+	// 	}
+	// });
 
 	/* autocomplete for tags */
-	$('.t').autocomplete({
+	$('#tags').autocomplete({
 		source: function (request, response) {
 			$.getJSON('/search/tag', {
 				term: extractLast(request.term)
@@ -82,7 +82,7 @@ $(function () {
 	});
 
 	/* autocomplete for categories */
-	$('.c').autocomplete({
+	$('.ac-category').autocomplete({
 		source: '/search/category',
 		minLength: 0,
 		select: function (event, ui) {
@@ -101,9 +101,14 @@ $(function () {
 
 	/* add, delete or insert stories */
 	var story_container = $('#story-container');
-	var story_template = '<div class="story">\
-								<input class="input" type="text" name="stories" value="" placeholder="Inhalt" /> <span class="button-green story-ins" title="Eintrag darüber einfügen."><i class="material-icons material-icons-small">add</i></span> <span class="button-red story-rem" title="Eintrag entfernen."><i class="material-icons material-icons-small">remove</i></span>\
-							</div>';
+	var story_template = '<div class="input-group mb-3" >\
+							<input class="form-control" type="text" name="stories" placeholder="Inhalt" />\
+							<button class="btn btn-outline-secondary story-ins" type="button"><i class="fa-solid fa-plus"></i></button>\
+							<button class="btn btn-outline-secondary story-rem" type="button"><i class="fa-solid fa-minus"></i></button>\
+						</div>'
+	// var story_template = '<div class="story">\
+	// 							<input class="input" type="text" name="stories" value="" placeholder="Inhalt" /> <span class="button-green story-ins" title="Eintrag darüber einfügen."><i class="material-icons material-icons-small">add</i></span> <span class="button-red story-rem" title="Eintrag entfernen."><i class="material-icons material-icons-small">remove</i></span>\
+	// 						</div>';
 
 	$(document).on('click', '#story-add', function (e) {
 		$(story_template).appendTo(story_container);
@@ -120,37 +125,51 @@ $(function () {
 	});
 
 	/* delete book */
-	var jbox_delete = new jBox('Modal', {
-		attach: $('#delete-book'),
-		content: $('#delete-book-dialog'),
-		overlay: true,
-		closeOnClick: 'body',
-		preventDefault: true,
-		closeButton: 'title',
-		getTitle: 'data-title'
-	});
-
-	$('#delete-book-submit').click(function () {
-		id = $('#delete-book').data('id');
-
+	$('#deleteSubmit').click(function () {
+		var method = $('#delete').data('method');
+		var url = $('#delete').data('url');
 		$.ajax({
-			type: "POST",
-			url: '/book/delete/' + id,
-			statusCode: {
-				403: function () {
-					location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
-				},
-				404: function () {
-					alert('Resource not found.');
-				}
-			},
-			success: function (data) {
-				if (data.Success) {
-					location.href = '/';
-				}
-			}
-		})
+			type: method,
+			url: url
+		}).done(function () {
+			location.href = '/';
+		}).fail(function () {
+			$('#error').html('<div class="alert alert-danger">Löschen des Buches fehlgeschlagen.</div>');
+		});
 	});
+
+	/* delete book */
+	// var jbox_delete = new jBox('Modal', {
+	// 	attach: $('#delete-book'),
+	// 	content: $('#delete-book-dialog'),
+	// 	overlay: true,
+	// 	closeOnClick: 'body',
+	// 	preventDefault: true,
+	// 	closeButton: 'title',
+	// 	getTitle: 'data-title'
+	// });
+
+	// $('#delete-book-submit').click(function () {
+	// 	id = $('#delete-book').data('id');
+
+	// 	$.ajax({
+	// 		type: "POST",
+	// 		url: '/book/delete/' + id,
+	// 		statusCode: {
+	// 			403: function () {
+	// 				location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
+	// 			},
+	// 			404: function () {
+	// 				alert('Resource not found.');
+	// 			}
+	// 		},
+	// 		success: function (data) {
+	// 			if (data.Success) {
+	// 				location.href = '/';
+	// 			}
+	// 		}
+	// 	})
+	// });
 
 	/* add, delete or restore image */
 	function reset(e) {
@@ -206,10 +225,22 @@ $(function () {
 	});
 
 	/* validation */
+	$.validator.setDefaults({
+		highlight: function (element) {
+			$(element).addClass('is-invalid');
+		},
+		unhighlight: function (element) {
+			$(element).removeClass('is-invalid');
+		}
+	});
+
 	$.validator.addMethod(
 		"regex",
 		function (value, element, regexp) {
-			return this.optional(element) || value.match(regexp);
+			var re = new RegExp(regexp);
+			var result = this.optional(element) || re.test(value);
+			// alert(result);
+			return result;
 		},
 		"Please check your input."
 	);
@@ -236,15 +267,22 @@ $(function () {
 		'Length of word too long.'
 	);
 
+	/* validation for book */
 	$('#book-form').validate({
-		errorClass: 'field-validation-error',
-		validClass: 'field-validation-valid',
-		errorElement: 'span',
+		// errorClass: 'field-validation-error',
+		// validClass: 'field-validation-valid',
+		// errorPlacement: function (error, element) {
+		// 	if (element.attr("name") == "stories")
+		// 		error.insertAfter(element.parent());
+		// 	else
+		// 		error.insertAfter(element);
+		// },
+		// errorElement: 'span',
 		rules: {
 			number: {
 				required: true,
 				nowhitespace: true,
-				regex: '[0-9]+'
+				regex: '^[0-9]+$'
 			},
 			title: {
 				required: true,
@@ -256,6 +294,9 @@ $(function () {
 				nowhitespace: true,
 				maxlength: 100
 			},
+			// stories: {
+			// 	maxlength: 10
+			// },
 			tags: {
 				stringarrayitemmaxlength: 50
 			}
@@ -283,9 +324,9 @@ $(function () {
 	});
 
 	$('#login-form').validate({
-		errorClass: 'field-validation-error',
-		validClass: 'field-validation-valid',
-		errorElement: 'span',
+		// errorClass: 'field-validation-error',
+		// validClass: 'field-validation-valid',
+		// errorElement: 'span',
 		rules: {
 			username: {
 				required: true,
@@ -309,9 +350,9 @@ $(function () {
 	});
 
 	$('#category-move-form').validate({
-		errorClass: 'field-validation-error',
-		validClass: 'field-validation-valid',
-		errorElement: 'span',
+		// errorClass: 'field-validation-error',
+		// validClass: 'field-validation-valid',
+		// errorElement: 'span',
 		rules: {
 			from: {
 				required: true,

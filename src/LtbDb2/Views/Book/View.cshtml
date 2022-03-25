@@ -1,15 +1,84 @@
 @model LtbDb.Models.BookViewDetailContainer
 @using LtbDb.Core.Interfaces
+@using Microsoft.AspNetCore.Authorization
 @inject IImageService ImageService
+@inject IAuthorizationService AuthorizationService
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Title = $"Nr. {Model.Book.Number} - {Model.Book.Title} | {Model.Book.Category} | ";
+	ViewBag.Title = $"Nr. {Model.Book.Number} - {Model.Book.Title} | {Model.Book.Category}";
 	ViewBag.Description = $"Nr. {Model.Book.Number} - {Model.Book.Title}";
-	ViewBag.Keywords = String.Join(", ", Model.Book.Tags);
 }
 
-<div style="position: relative;">
+<div class="row mt-4">
+	<div class="col">
+		<h1>Nr. @Model.Book.Number - @Model.Book.Title</h1>
+	</div>
+	@if((await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")).Succeeded) {
+	<div class="col text-end">
+		<a class="btn btn-outline-secondary" role="button" asp-controller="book" asp-action="edit" asp-route-id="@Model.Book.Id">Bearbeiten</a>
+		<a class="btn btn-outline-danger" role="button" href="#" data-bs-toggle="modal" data-bs-target="#delete"><i class="fa-solid fa-fw fa-trash"></i></a>
+	</div>
+	}
+</div>
+
+<div class="row">
+	<div class="col-lg-3 mt-4 float-start">
+		<a id="image-big" href="@ImageService.GetImageWebPath(Model.Book.Filename)" title="Nr. @Model.Book.Number - @Model.Book.Title (@Model.Book.Category)" data-jbox-image="image">
+			<img src="@ImageService.GetImageWebPath(Model.Book.Filename)" class="card-img-top" style="width: 100%; /*height: 15vh;*/ object-fit: cover;" alt="" />
+		</a>
+	</div>
+	<div class="col-lg-6 mt-4">
+		<h2>Inhalt</h2>
+		<ul class="list-group">
+			@if(Model.Book.Stories.Count() > 0) {
+				@foreach (var story in Model.Book.Stories)
+				{
+					<li class="list-group-item"><i class="fa-solid fa-bookmark"></i> @story</li>
+				}
+			} else {
+				<li class="list-group-item"><span class="text-muted">Keine Inhalte angegeben.</span></li>
+			}
+		</ul>
+		<div class="row mt-4">
+			<div class="col">
+				@foreach (var tag in Model.Book.Tags) {
+				<a class="cloud badge bg-light text-dark" asp-route="tag" asp-route-id="@tag"><i class="fa-solid fa-fw fa-tag"></i> @tag</a>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal delete -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true" data-url="@Url.RouteUrl("delete", new { id = Model.Book.Id })" data-method="POST">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteLabel">
+					Buch löschen
+				</h5>
+				<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<div id="error"></div>
+					</div>
+					<div class="col-sm-12">
+						Dieses Buch wirklich löschen &quot;@Model.Book.Title&quot;?
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-outline-secondary" type="button" data-bs-dismiss="modal">Abbrechen</button>
+				<button class="btn btn-danger" type="button" id="deleteSubmit">Löschen</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+@* <div style="position: relative;">
 	<div class="panel-menu">
 		Kategorie:
 		<a asp-route="category" asp-route-id="@Model.Book.Category">@Model.Book.Category</a>
@@ -63,4 +132,4 @@
 	<div class="block">
 		<input id="delete-book-submit" class="button-red" type="button" value="Löschen" />
 	</div>
-</div>
+</div> *@

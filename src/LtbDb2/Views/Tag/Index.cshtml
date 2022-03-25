@@ -2,11 +2,26 @@
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	ViewBag.Title = "Tags | ";
+	ViewBag.Title = "Tags";
 	ViewBag.Description = "Tags";
+	ViewBag.Menu = "tags";
 }
 
-<h2>Tags</h2>
+<div class="row mt-4">
+	<div class="col">
+		<h1>Tags</h1>
+	</div>
+</div>
+
+<div class="row mt-4">
+	<div class="col">
+		@foreach (var tag in Model.Tags) {
+		<a class="cloud badge bg-light text-dark" asp-route="tag" asp-route-id="@tag"><i class="fa-solid fa-fw fa-tag"></i> @tag</a>
+		}
+	</div>
+</div>
+
+@* <h2>Tags</h2>
 <div class="tags">
 @foreach (var tag in Model.Tags)
 {
@@ -14,4 +29,4 @@
 		<a asp-route="tag" asp-route-id="@tag" title="">@tag</a>
 	</div>
 }
-</div>
+</div> *@

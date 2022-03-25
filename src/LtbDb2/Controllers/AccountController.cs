@@ -55,14 +55,14 @@ namespace LtbDb.Controllers
 				await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, _principal,
 					new AuthenticationProperties
 					{
-						IsPersistent = true,
-						AllowRefresh = true
+						IsPersistent = model.Remember,
+						AllowRefresh = model.Remember
 					}
 				);
 			}
 			else
 			{
-				ModelState.AddModelError("failed", "Benutzername oder Passwort falsch.");
+				ModelState.AddModelError("error", "Benutzername oder Passwort falsch.");
 				return View("Login", model);
 			}
 

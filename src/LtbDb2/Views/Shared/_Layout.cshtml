@@ -1,5 +1,5 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@inject IAuthorizationService AuthorizationService
+﻿@* @using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService *@
 
 <!DOCTYPE html>
 
@@ -13,10 +13,7 @@
 		<meta name="description" content="@ViewBag.Description" />
 		}
 
-		<meta name="application-name" content="Lustiges Taschenbuch Datenbank" />
-		<meta name="keywords" content="Lustiges Taschenbuch, Datenbank, LTB, @ViewBag.Keywords" />
-
-		<link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/jquery-ui.min.css")" />
+		@* <link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/jquery-ui.min.css")" />
 		<link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/jquery-ui.theme.min.css")" />
 		<link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/jBox.all.min.css")" />
 		<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/ltbdb.min.css")" />
@@ -25,14 +22,77 @@
 		<script type="text/javascript" src="@Url.Content("~/lib/jquery-ui.min.js")"></script>
 		<script type="text/javascript" src="@Url.Content("~/lib/jquery.validate.min.js")"></script>
 		<script type="text/javascript" src="@Url.Content("~/lib/jBox.all.min.js")"></script>
-		<script type="text/javascript" src="@Url.Content("~/js/ltbdb.min.js")"></script>
+		<script type="text/javascript" src="@Url.Content("~/js/ltbdb.min.js")"></script> *@
+
+		<partial name="_PartialStyles" />
 
 		<link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
 
-		<title>@(ViewBag.Title)Lustiges Taschenbuch - Datenbank</title>
+		<title>@(ViewBag.Title) | Lustiges Taschenbuch - Datenbank</title>
 	</head>
 	<body>
-		<div class="wrapper">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container">
+				<!-- brand -->
+				<a class="navbar-brand" href="/">
+					<img src="/content/logo.png" alt="" width="21" height="24" class="d-inline-block align-text-top">
+					Lustiges Taschenbuch - Datenbank
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<!-- navigation -->
+				<div class="collapse navbar-collapse" id="navbarScroll">
+					<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+						<li class="nav-item">
+							<a class="nav-link @(ViewBag.Menu == "all" ? "active" : "")" asp-route="all" asp-route-ofs="">Alle&nbsp;Kategorien</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @(ViewBag.Menu == "categories" ? "active" : "")" asp-route="categories" asp-route-ofs="">Kategorien</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link @(ViewBag.Menu == "tags" ? "active" : "")" asp-route="tags" asp-route-ofs="">Tags</a>
+						</li>
+						@* <li class="nav-item">
+							<a class="nav-link d-flex flex-column align-items-center" asp-route="tags" asp-route-ofs="">
+								<i class="fa-solid fa-fw fa-tag"></i>
+								<span class="d-none d-sm-inline">Tags</span>
+							</a>
+						</li> *@
+					</ul>
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<form asp-route="search" asp-route-ofs="" method="get" id="search-form">
+								<div class="input-group mb-0">
+									<input class="form-control border-right-0 border" type="text" name="q" placeholder="Suche..." value="@ViewBag.Search" aria-label="Search">
+									<button class="btn btn-outline-secondary border-left-0 border" type="submit">
+										<i class="fa-solid fa-fw fa-search"></i>
+									</button>
+								</div>
+							</form>
+						</li>
+					</ul>
+					<ul class="navbar-nav">
+						<partial name="_PartialLogin" />
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			@RenderBody()
+		</div>
+
+		<div class="container">
+			<partial name="_PartialFooter" />
+		</div>
+
+		<partial name="_PartialScripts" />
+
+		@RenderSection("script", required: false)
+		
+		@* <div class="wrapper">
 			<div class="wrapper-content">
 				<div class="header">
 					<a href="/">
@@ -43,9 +103,9 @@
 						</div>
 					</a>
 					<div class="right">
-						<div class="links">
+						<div class="links"> *@
 							@*<a href="#">Impressum</a>*@
-							@await Html.PartialAsync("_PartialLogin")
+							@* @await Html.PartialAsync("_PartialLogin")
 						</div>
 						<div class="searchbox">
 							<form asp-route="search" asp-route-ofs="" method="get">
@@ -85,6 +145,6 @@
 
 				@await Html.PartialAsync("_PartialFooter")
 			</div>
-		</div>
+		</div> *@
 	</body>
 </html>

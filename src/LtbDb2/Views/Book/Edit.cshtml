@@ -6,13 +6,72 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 
 	if(Model.Book.Id == 0) {
-		ViewBag.Title = "Neues Buch | ";
+		ViewBag.Title = "Neues Buch";
 	} else {
-		ViewBag.Title = $"Nr. {Model.Book.Number} - {Model.Book.Title} | {Model.Book.Category} | ";
+		ViewBag.Title = $"Nr. {Model.Book.Number} - {Model.Book.Title} | {Model.Book.Category}";
 	}
 }
 
-<form asp-controller="book" asp-action="edit" method="post" enctype="multipart/form-data" id="book-form" asp-antiforgery="false">
+@* <div class="row mt-4">
+	<div class="col">
+		<h1>Buch</h1>
+	</div>
+</div> *@
+
+<form role="form" asp-controller="book" asp-action="edit" method="post" enctype="multipart/form-data" id="book-form" asp-antiforgery="false">
+	<div class="row">
+		<div class="col-lg-3 mt-4 float-start">
+			<input style="display: none;" name="image" type="file" id="image-upload" />
+			<img class="card-img-top" style="cursor: pointer; width: 100%; /*height: 15vh;*/ object-fit: cover;" id="image" src="@ImageService.GetImageWebPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen." />
+			
+			<input type="hidden" name="filename" value="@ImageService.GetImageWebPath(Model.Book.Filename)" />
+			<input type="hidden" name="remove" value="false" id="remove" />
+
+			<span style="cursor: pointer;" id="image-reset" data-src="@ImageService.GetImageWebPath(Model.Book.Filename)" title="Bild zurücksetzen." style="display: none;"><i class="fa-solid fa-rotate-left"></i></span>
+			<span style="cursor: pointer;" id="image-delete" data-src="@ImageService.GetDefaultImage()" title="Bild löschen."><i class="fa-solid fa-trash-can"></i></span>
+		</div>
+		<div class="col-lg-6 mt-4">
+			<h2>Buch</h2>
+			<div class="mb-3">
+				<label class="form-label" for="number">Nummer</label>
+				<input class="form-control" type="text" name="number" id="number" placeholder="Nummer der Ausgabe" value="@Model.Book.Number" validation-for="number" />
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="title">Titel</label>
+				<input class="form-control" type="text" name="title" id="title" placeholder="Titel der Ausgabe" value="@Model.Book.Title" validation-for="title" />
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="category">Kategorie</label>
+				<input class="form-control ac-category" type="text" name="category" id="category" placeholder="Kategorie der Ausgabe" value="@Model.Book.Category" validation-for="category" />
+			</div>
+			<h2>Inhalt</h2>
+			<div id="story-container">
+			@foreach (var story in Model.Book.Stories)
+			{
+				<div class="input-group mb-3 has-validation">
+					<input class="form-control" type="text" name="stories" placeholder="Inhalt" value="@story" />
+					<button class="btn btn-outline-secondary story-ins" type="button" title="Eintrag darüber einfügen."><i class="fa-solid fa-plus"></i></button>
+					<button class="btn btn-outline-secondary story-rem" type="button" title="Eintrag entfernen."><i class="fa-solid fa-minus"></i></button>
+				</div>
+			}
+			</div>
+			@* @Html.ValidationMessage("stories") *@
+			<div class="input-group mb-3">
+				<button class="btn btn-outline-secondary" type="button" id="story-add">Inhalt hinzufügen</button> 
+			</div>
+			<h2>Tags</h2>
+			<div class="mb-3">
+				<label class="form-label" for="tags">Kategorie</label>
+				<input class="form-control" type="text" name="tags" id="tags" placeholder="Tags" value="@String.Join("; ", Model.Book.Tags)" validation-for="tags" validation-for="tags" />
+			</div>
+			<div class="mb-3">
+				<button class="btn btn-primary" type="submit">Speichern</button>
+			</div>
+		</div>
+	</div>
+</form>
+
+@* <form asp-controller="book" asp-action="edit" method="post" enctype="multipart/form-data" id="book-form" asp-antiforgery="false">
 	<h2>Buch</h2>
 	<div class="details">
 		<div style="float: left;">
@@ -84,4 +143,4 @@
 			@Html.ValidationMessage("image")
 		</div>
 	</div>
-</form>
+</form> *@

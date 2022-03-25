@@ -1,12 +1,42 @@
 ﻿@model LtbDb.Models.CategoryViewContainer
-@using LtbDb.Models;
 
 @{
-	ViewBag.Title = "Kategorien verwalten | ";
-	ViewBag.Menu = "category";
+	Layout = "~/Areas/Admin/Views/Shared/_LayoutMenu.cshtml";
+	ViewBag.Title = "Kategorien verwalten";
+	ViewBag.AdminMenu = "category";
 }
 
-<div class="box">
+<div class="row">
+	<div class="col mb-4">
+		<h3>Kategorien</h3>
+		<ul class="list-group">
+		@foreach(var category in Model.Categories) {
+			<li class="list-group-item">@category</li>
+		}
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col mb-4">
+		<h3>Kategorie&nbsp;umbennen/verschieben</h3>
+		<form asp-controller="category" asp-action="move" asp-area="admin" method="post" enctype="multipart/form-data" id="category-move-form" asp-antiforgery="false">
+			<div class="mb-3">
+				<label class="form-label" for="from">Von</label>
+				<input class="form-control ac-category" type="text" name="from" id="from" placeholder="Titel der Kategorie" validation-for="from" />
+			</div>
+			<div class="mb-3">
+				<label class="form-label" for="to">Zu</label>
+				<input class="form-control ac-category" type="text" name="to" id="to" placeholder="Titel der Kategorie" validation-for="to" />
+			</div>
+			<div class="mb-3">
+				<button class="btn btn-primary" type="submit">Speichern</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+@* <div class="box">
 	<h3>Kategorien</h3>
 	<div>
 		<ul class="list">
@@ -15,9 +45,9 @@
 		}
 		</ul>
 	</div>
-</div>
+</div> *@
 
-<div class="box">
+@* <div class="box">
 	<h3>Kategorie umbennen/verschieben</h3>
 	<div>
 		<p>
@@ -48,4 +78,4 @@
 
 		</form>
 	</div>
-</div>
+</div> *@

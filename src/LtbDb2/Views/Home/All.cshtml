@@ -1,0 +1,45 @@
+@model LtbDb.Models.BookViewAllContainer
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Alle Kategorien";
+	ViewBag.Description = "Alle Kategorien";
+	ViewBag.Menu = "all";
+}
+
+<div class="row mt-4">
+	<div class="col">
+		<h1>Alle Kategorien <small class="text-muted">(@Model.PageOffset.Items)</small></h1>
+	</div>
+</div>
+
+<partial name="_PartialBooks" model="Model.Books" />
+
+<div class="row mt-4">
+	<nav aria-label="page navigation">
+		<ul class="pagination justify-content-center">
+			<li class="page-item @(Model.PageOffset.HasPrevious ? "" : "disabled")"><a class="page-link" asp-route="all" asp-route-ofs="@Model.PageOffset.Previous">Zurück</a></li>
+			<li class="page-item @(Model.PageOffset.HasNext ? "" : "disabled")"><a class="page-link" asp-route="all" asp-route-ofs="@Model.PageOffset.Next">Weiter</a></li>
+		</ul>
+	</nav>
+</div>
+
+@* <div style="position: relative;">
+	<div class="panel-menu">
+		Anzahl Bücher in allen Kategorien: @Model.PageOffset.Items
+	</div>
+	<h2>Alle Inhalte</h2>
+	<ul class="book">
+		@foreach (var book in Model.Books) {
+			@await Html.PartialAsync("_PartialBook", book)
+		}
+	</ul>
+	<div class="pager">
+		@if(Model.PageOffset.HasPrevious) {
+			<a asp-route="categories" asp-route-ofs="@Model.PageOffset.Previous"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
+		}
+		@if(Model.PageOffset.HasNext) {
+			<a asp-route="categories" asp-route-ofs="@Model.PageOffset.Next">weiter <i class="material-icons">keyboard_arrow_right</i></a>
+		}
+	</div>
+</div> *@

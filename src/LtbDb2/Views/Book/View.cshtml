@@ -47,6 +47,14 @@
 				}
 			</div>
 		</div>
+		<div class="row mt-4">
+			<div class="col">
+				<small class="text-muted">
+					Kategorie: <a class="link-secondary" asp-route="category" asp-route-id="@Model.Book.Category">@Model.Book.Category</a> | 
+					Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d. MMM yyyy}", Model.Book.Created)
+				</small>
+			</div>
+		</div>
 	</div>
 </div>
 

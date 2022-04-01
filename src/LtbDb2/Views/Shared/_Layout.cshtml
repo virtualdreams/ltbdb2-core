@@ -28,7 +28,7 @@
 
 		<link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
 
-		<title>@(ViewBag.Title) | Lustiges Taschenbuch - Datenbank</title>
+		<title>@(ViewBag.Title) @(!String.IsNullOrEmpty(ViewBag.Title) ? "|" : "") Lustiges Taschenbuch - Datenbank</title>
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">

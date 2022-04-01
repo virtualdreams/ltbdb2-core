@@ -9,12 +9,12 @@ namespace LtbDb.Options
 		/// <summary>
 		/// Items per page to display.
 		/// </summary>
-		public int ItemsPerPage { get; set; } = 18;
+		public int ItemsPerPage { get; set; } = 15;
 
 		/// <summary>
 		/// Recent items to display.
 		/// </summary>
-		public int RecentItems { get; set; } = 18;
+		public int RecentItems { get; set; } = 15;
 
 		/// <summary>
 		/// Storage path, where the images be saved.

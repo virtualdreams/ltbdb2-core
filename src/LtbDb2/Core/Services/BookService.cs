@@ -1,4 +1,5 @@
 ﻿using LtbDb.Core.Data;
+using LtbDb.Core.Extensions;
 using LtbDb.Core.Interfaces;
 using LtbDb.Core.Internal;
 using LtbDb.Core.Models;
@@ -122,16 +123,25 @@ namespace LtbDb.Core.Services
 				.Include(i => i.Stories
 					.OrderBy(o => o.ItemOrder))
 				.Include(i => i.Tags)
-				.AsQueryable();
-
-			if (!String.IsNullOrEmpty(category))
-				_query = _query.Where(f => f.Category == category);
-
-			if (!String.IsNullOrEmpty(tag))
-				_query = _query.Where(f => f.Tags.Any(a => a.Name == tag));
-
-			_query = _query
+				.WhereIf(!String.IsNullOrEmpty(category), f => f.Category == category)
+				.WhereIf(!String.IsNullOrEmpty(tag), f => f.Tags.Any(a => a.Name == tag))
 				.OrderBy(o => o.Id);
+
+			// var _query = Context.Book
+			// 	.AsNoTracking()
+			// 	.Include(i => i.Stories
+			// 		.OrderBy(o => o.ItemOrder))
+			// 	.Include(i => i.Tags)
+			// 	.AsQueryable();
+
+			// if (!String.IsNullOrEmpty(category))
+			// 	_query = _query.Where(f => f.Category == category);
+
+			// if (!String.IsNullOrEmpty(tag))
+			// 	_query = _query.Where(f => f.Tags.Any(a => a.Name == tag));
+
+			// _query = _query
+			// 	.OrderBy(o => o.Id);
 
 			return await _query.ToListAsync();
 		}

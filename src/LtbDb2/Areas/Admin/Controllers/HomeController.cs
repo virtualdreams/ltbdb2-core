@@ -34,16 +34,25 @@ namespace LtbDb.Areas.Admin.Controllers
 			return View();
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> Export()
+		[HttpPost]
+		public async Task<IActionResult> Export(ExportModel model)
 		{
-			// add header to force it as download
-			Response.Headers.Add("Content-Disposition", $"attachment; filename=ltbdb-export-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.json");
+			var filterCategory = model.Category ?? String.Empty;
+			var filterTag = model.Tag ?? String.Empty;
 
-			var _books = await BookService.GetByFilterAsync(String.Empty, String.Empty);
+			// add header to force it as download
+			Response.Headers.Add(
+				"Content-Disposition",
+				$"attachment; filename=ltbdb-export-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}{(!String.IsNullOrEmpty(filterCategory) ? $"-category-{filterCategory}" : "")}{(!String.IsNullOrEmpty(filterTag) ? $"-tag-{filterTag}" : "")}.json"
+				);
+
+			var _books = await BookService.GetByFilterAsync(filterCategory, filterTag);
 			var books = Mapper.Map<BookModel[]>(_books);
 
-			return Json(books, new JsonSerializerSettings { Formatting = Formatting.Indented });
+			return Json(books, new JsonSerializerSettings
+			{
+				Formatting = Formatting.Indented
+			});
 		}
 
 		[HttpGet]

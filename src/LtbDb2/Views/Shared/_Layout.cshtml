@@ -13,17 +13,6 @@
 		<meta name="description" content="@ViewBag.Description" />
 		}
 
-		@* <link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/jquery-ui.min.css")" />
-		<link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/jquery-ui.theme.min.css")" />
-		<link rel="stylesheet" type="text/css" href="@Url.Content("~/lib/jBox.all.min.css")" />
-		<link rel="stylesheet" type="text/css" href="@Url.Content("~/css/ltbdb.min.css")" />
-
-		<script type="text/javascript" src="@Url.Content("~/lib/jquery.min.js")"></script>
-		<script type="text/javascript" src="@Url.Content("~/lib/jquery-ui.min.js")"></script>
-		<script type="text/javascript" src="@Url.Content("~/lib/jquery.validate.min.js")"></script>
-		<script type="text/javascript" src="@Url.Content("~/lib/jBox.all.min.js")"></script>
-		<script type="text/javascript" src="@Url.Content("~/js/ltbdb.min.js")"></script> *@
-
 		<partial name="_PartialStyles" />
 
 		<link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
@@ -91,60 +80,5 @@
 		<partial name="_PartialScripts" />
 
 		@RenderSection("script", required: false)
-		
-		@* <div class="wrapper">
-			<div class="wrapper-content">
-				<div class="header">
-					<a href="/">
-						<div class="left">
-							<h1 class="logo">
-								Lustiges Taschenbuch Datenbank
-							</h1>
-						</div>
-					</a>
-					<div class="right">
-						<div class="links"> *@
-							@*<a href="#">Impressum</a>*@
-							@* @await Html.PartialAsync("_PartialLogin")
-						</div>
-						<div class="searchbox">
-							<form asp-route="search" asp-route-ofs="" method="get">
-								<input id="q" type="text" name="q" value="@ViewBag.Search" placeholder="Suche..." />
-							</form>
-						</div>
-					</div>
-				</div>
-
-				<div class="nav">
-					<ul>
-						<li><a href="/">Home</a></li>
-						<li><a asp-route="categories" asp-route-ofs="">Kategorien</a>
-							<ul>
-								@await Component.InvokeAsync("Categories")
-							</ul>  
-						</li>
-						<li><a asp-route="tags" asp-route-ofs="">Tags</a>
-							<ul>
-								@await Component.InvokeAsync("Tags")
-							</ul>
-						</li>
-						@if(Context.User.Identity.IsAuthenticated) {
-						<li><a asp-route="create">Neues Buch</a></li>
-						}
-						@if((await AuthorizationService.AuthorizeAsync(User, "AdministratorOnly")).Succeeded) {
-						<li style="float: right;">
-							<a href="/admin">Einstellungen</a>
-						</li>
-						}
-					</ul>
-				</div>
-
-				<div class="content">
-					@RenderBody()
-				</div>
-
-				@await Html.PartialAsync("_PartialFooter")
-			</div>
-		</div> *@
 	</body>
 </html>

@@ -32,36 +32,22 @@
 			Datenbank als JSON exportieren.
 		</p>
 		<p>
-			<a class="btn btn-outline-success" asp-route="adminExport">Export</a>
+			<form asp-controller="home" asp-action="export" asp-area="admin" method="post" enctype="multipart/form-data" id="home-export" asp-antiforgery="false">
+				<div class="mb-3">
+					<label class="form-label" for="category">Kategorie</label>
+					<input class="form-control ac-category" type="text" name="category" id="category" placeholder="Kategorie Filter" validation-for="category" />
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="tag">Tag</label>
+					<input class="form-control ac-tag" type="text" name="tag" id="tag" placeholder="Tag Filter" validation-for="tag" />
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-outline-success" type="submit">Export</button>
+				</div>
+			</form>
 		</p>
 	</div>
 </div>
-
-@* <div class="box">
-	<h3>Willkommen</h3>
-	<div>
-		<p>
-			Konfigurationspanel für "Lustiges Taschenbuch Datenbank".
-		</p>
-		<p>
-			Repository: <a href="https://github.com/virtualdreams/ltbdb2-core">https://github.com/virtualdreams/ltbdb2-core</a>
-		</p>
-	</div>
-</div>
-
-<div class="box">
-	<h3>Statistik</h3>
-	<div>
-		Die Datenbank enthält <span id="books">-</span> Bücher in <span id="categories">-</span> Kategorien mit insgesamt <span id="stories">-</span> Geschichten. Die Inhalte wurden mit <span id="tags">-</span> Tags gekennzeichnet.
-	</div>
-</div>
-
-<div class="box">
-	<h3>Export</h3>
-	<div>
-		<a class="button-green" asp-route="adminExport">Export</a>
-	</div>
-</div> *@
 
 @section script {
 <script type="text/javascript">

@@ -23,23 +23,3 @@
 		</ul>
 	</nav>
 </div>
-
-@* <div style="position: relative;">
-	<div class="panel-menu">
-		Anzahl Bücher in dieser Kategorie: @Model.PageOffset.Items
-	</div>
-	<h2>Kategorie &quot;@Model.Category&quot;</h2>
-	<ul class="book">
-		@foreach (var book in Model.Books) {
-			@await Html.PartialAsync("_PartialBook", book)
-		}
-	</ul>
-	<div class="pager">
-		@if(Model.PageOffset.HasPrevious) {
-			<a asp-route="category" asp-route-id="@Model.Category" asp-route-ofs="@Model.PageOffset.Previous"><i class="material-icons">keyboard_arrow_left</i> zurück</a>
-		}
-		@if(Model.PageOffset.HasNext) {
-			<a asp-route="category" asp-route-id="@Model.Category" asp-route-ofs="@Model.PageOffset.Next">weiter <i class="material-icons">keyboard_arrow_right</i></a>
-		}
-	</div>
-</div> *@

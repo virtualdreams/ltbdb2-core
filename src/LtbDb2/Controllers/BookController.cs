@@ -120,7 +120,7 @@ namespace LtbDb.Controllers
 				Book = model
 			};
 
-			return View("Edit", view);
+			return View(view);
 		}
 
 		[Authorize]

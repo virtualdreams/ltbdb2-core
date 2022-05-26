@@ -94,6 +94,19 @@ $(function () {
 		$(this).autocomplete("search", $(this).val());
 	});
 
+	/* autocomplete for a single tag */
+	$('.ac-tag').autocomplete({
+		source: '/search/tag',
+		minLength: 0,
+		select: function (event, ui) {
+			if (ui.item) {
+				$(event.target).val(ui.item.value);
+			}
+		}
+	}).focus(function () {
+		$(this).autocomplete("search", $(this).val());
+	});
+
 	/* show cover */
 	jbox_image = new jBox('Image', {
 		// downloadButton: true

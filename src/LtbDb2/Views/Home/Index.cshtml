@@ -19,10 +19,3 @@
 </div>
 
 <partial name="_PartialBooks" model="Model.Books" />
-
-@* <h2>Zuletzt hinzugefügt...</h2>
-<ul class="book">
-	@foreach (var book in Model.Books) {
-		@await Html.PartialAsync("_PartialBook", book)
-	}
-</ul> *@

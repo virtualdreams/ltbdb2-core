@@ -1,4 +1,5 @@
 using FluentValidation.AspNetCore;
+using FluentValidation;
 using LtbDb.Core;
 using LtbDb.Events;
 using LtbDb.Extensions;
@@ -85,11 +86,6 @@ namespace LtbDb
 			{
 				options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
 				options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-			})
-			.AddFluentValidation(options =>
-			{
-				options.RegisterValidatorsFromAssemblyContaining<Startup>();
-				options.DisableDataAnnotationsValidation = true;
 			});
 
 			// configure WebAPI 
@@ -99,6 +95,15 @@ namespace LtbDb
 				options.SuppressModelStateInvalidFilter = true;
 				options.SuppressMapClientErrors = true;
 			});
+
+			// fluent validation
+			services.AddFluentValidationAutoValidation(options =>
+			{
+				options.DisableDataAnnotationsValidation = true;
+			})
+			.AddFluentValidationClientsideAdapters();
+
+			services.AddValidatorsFromAssemblyContaining<Startup>();
 
 			// add distributed cache
 			// services.AddDistributedMemoryCache();

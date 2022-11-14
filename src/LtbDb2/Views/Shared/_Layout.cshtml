@@ -1,4 +1,4 @@
-﻿@* @using Microsoft.AspNetCore.Authorization
+@* @using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthorizationService *@
 
 <!DOCTYPE html>
@@ -35,10 +35,10 @@
 				<div class="collapse navbar-collapse" id="navbarScroll">
 					<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
 						<li class="nav-item">
-							<a class="nav-link @(ViewBag.Menu == "all" ? "active" : "")" asp-route="all" asp-route-ofs="">Alle&nbsp;Kategorien</a>
+							<a class="nav-link @(ViewBag.Menu == "all" ? "active" : "")" asp-route="all" asp-route-ofs="">Alle&nbsp;Ausgaben</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link @(ViewBag.Menu == "categories" ? "active" : "")" asp-route="categories" asp-route-ofs="">Kategorien</a>
+							<a class="nav-link @(ViewBag.Menu == "categories" ? "active" : "")" asp-route="categories" asp-route-ofs="">Reihen</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link @(ViewBag.Menu == "tags" ? "active" : "")" asp-route="tags" asp-route-ofs="">Tags</a>

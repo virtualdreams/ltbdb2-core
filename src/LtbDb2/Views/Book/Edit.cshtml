@@ -36,8 +36,8 @@
 				<input class="form-control" type="text" name="title" id="title" placeholder="Titel der Ausgabe" value="@Model.Book.Title" validation-for="title" />
 			</div>
 			<div class="mb-3">
-				<label class="form-label" for="category">Kategorie</label>
-				<input class="form-control ac-category" type="text" name="category" id="category" placeholder="Kategorie der Ausgabe" value="@Model.Book.Category" validation-for="category" />
+				<label class="form-label" for="category">Reihe</label>
+				<input class="form-control ac-category" type="text" name="category" id="category" placeholder="Reihe der Ausgabe" value="@Model.Book.Category" validation-for="category" />
 			</div>
 			<h2>Inhalt</h2>
 			<div id="story-container">
@@ -56,7 +56,7 @@
 			</div>
 			<h2>Tags</h2>
 			<div class="mb-3">
-				<label class="form-label" for="tags">Kategorie</label>
+				<label class="form-label" for="tags">Tags</label>
 				<input class="form-control" type="text" name="tags" id="tags" placeholder="Tags" value="@String.Join("; ", Model.Book.Tags)" validation-for="tags" validation-for="tags" />
 			</div>
 			<div class="mb-3">

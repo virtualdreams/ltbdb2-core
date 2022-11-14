@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="col mb-4">
-		<h3>Kategorien</h3>
+		<h3>Reihen</h3>
 		<ul class="list-group">
 		@foreach(var category in Model.Categories) {
 			<li class="list-group-item">@category</li>
@@ -19,15 +19,15 @@
 
 <div class="row">
 	<div class="col mb-4">
-		<h3>Kategorie&nbsp;umbennen/verschieben</h3>
+		<h3>Reihe&nbsp;umbennen/verschieben</h3>
 		<form asp-controller="category" asp-action="move" asp-area="admin" method="post" enctype="multipart/form-data" id="category-move-form" asp-antiforgery="false">
 			<div class="mb-3">
 				<label class="form-label" for="from">Von</label>
-				<input class="form-control ac-category" type="text" name="from" id="from" placeholder="Titel der Kategorie" validation-for="from" />
+				<input class="form-control ac-category" type="text" name="from" id="from" placeholder="Titel der Reihe" validation-for="from" />
 			</div>
 			<div class="mb-3">
 				<label class="form-label" for="to">Zu</label>
-				<input class="form-control ac-category" type="text" name="to" id="to" placeholder="Titel der Kategorie" validation-for="to" />
+				<input class="form-control ac-category" type="text" name="to" id="to" placeholder="Titel der Reihe" validation-for="to" />
 			</div>
 			<div class="mb-3">
 				<button class="btn btn-primary" type="submit">Speichern</button>

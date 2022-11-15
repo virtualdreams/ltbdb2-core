@@ -3,6 +3,24 @@
   border: 0 none;
 }
 
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transition: all 0.3s ease;
+  transform: scale(1.05)
+}
+
+/* bootstrap custom */
+
+.bt-custom-cover {
+  min-height: 300px;
+  width: 100%;
+  height: 15vh;
+  object-fit: contain;
+}
+
 /* jquery-ui */
 
 .ui-autocomplete {
@@ -27,7 +45,7 @@
   background-clip: padding-box;
 }
 
-.ui-autocomplete > li > div {
+.ui-autocomplete>li>div {
   display: block;
   padding: 3px 20px;
   clear: both;

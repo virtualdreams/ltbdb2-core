@@ -30,30 +30,50 @@
 	</div>
 	<div class="col-lg-6 mt-4">
 		<h2>Inhalt</h2>
-		<ul class="list-group">
+		<div class="row mt-4">
 			@if(Model.Book.Stories.Count() > 0) {
+			<ul class="list-group">
 				@foreach (var story in Model.Book.Stories)
 				{
-					<li class="list-group-item"><i class="fa-solid fa-bookmark"></i> @story</li>
+					<li class="list-group-item"><span class="text-secondary"><i class="fa-solid fa-bookmark"></i> @story</span></li>
 				}
+			</ul>
 			} else {
-				<li class="list-group-item"><span class="text-muted">Keine Inhalte angegeben.</span></li>
+				<span class="text-secondary">Keine Inhalte angegeben.</span>
 			}
-		</ul>
-		<div class="row mt-4">
-			<div class="col">
-				@foreach (var tag in Model.Book.Tags) {
-				<a class="cloud badge bg-light text-dark" asp-route="tag" asp-route-id="@tag"><i class="fa-solid fa-fw fa-tag"></i> @tag</a>
-				}
-			</div>
 		</div>
+	</div>
+	<div class="col-lg-3 mt-4">
+		<h2>Info</h2>
 		<div class="row mt-4">
-			<div class="col">
-				<small class="text-muted">
-					<a class="link-secondary" asp-route="category" asp-route-id="@Model.Book.Category">@Model.Book.Category</a> | 
-					Hinzugefügt am: @String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d. MMM yyyy}", Model.Book.Created)
-				</small>
-			</div>
+			<dl>
+				<dt>Reihe</dt>
+				<dd>
+					<a class="link-secondary text-decoration-none" asp-route="category" asp-route-id="@Model.Book.Category">@Model.Book.Category</a>
+				</dd>
+				<dt>Hinzugefügt am</dt>
+				<dd>
+					<span class="text-secondary">
+						@String.Format(new System.Globalization.CultureInfo("de-DE"), "{0:dddd, d. MMM yyyy}", Model.Book.Created)
+					</span>
+				</dd>
+				<dt>Geschichten</dt>
+				<dd>
+					<span class="text-secondary">
+					@if(Model.Book.Stories.Count() > 0) {
+						@Model.Book.Stories.Count()
+					} else {
+						<text>-</text>
+					}
+					</span>
+				</dd>
+				<dt>Tags</dt>
+				<dd>
+					@foreach (var tag in Model.Book.Tags) {
+					<a class="cloud badge bg-light text-secondary text-decoration-none" asp-route="tag" asp-route-id="@tag"><i class="fa-solid fa-fw fa-tag"></i> @tag</a>
+					}
+				</dd>
+			</dl>
 		</div>
 	</div>
 </div>

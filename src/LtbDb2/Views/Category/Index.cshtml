@@ -1,4 +1,4 @@
-@model LtbDb.Models.CategoryViewContainer
+﻿@model LtbDb.Models.CategoryViewContainer
 
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,7 +13,7 @@
 	</div>
 </div>
 
-<div class="row">
+@* <div class="row">
 	<div class="col-3">
 		<ul class="list-group"></ul>
 		@foreach (var category in Model.Categories)
@@ -22,4 +22,20 @@
 		}
 		</ul>
 	</div>
+</div> *@
+
+<div class="row mt-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
+	@foreach (var category in Model.Categories)
+	{
+		<div class="col">
+			<div class="card h-100 bg-secondary text-white" style="min-height: 10rem;">
+				<div class="card-body">
+					<h5 class="card-title">
+						<a class="link-light stretched-link text-decoration-none" asp-route="category" asp-route-id="@category" asp-route-ofs="">@category</a>
+					</h5>
+					<p class="card-text">Jetzt anschauen!</p>
+				</div>
+			</div>
+		</div>
+	}
 </div>

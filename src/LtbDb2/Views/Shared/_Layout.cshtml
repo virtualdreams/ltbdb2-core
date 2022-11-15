@@ -1,7 +1,4 @@
-@* @using Microsoft.AspNetCore.Authorization
-@inject IAuthorizationService AuthorizationService *@
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="de">
 	<head>
@@ -40,14 +37,8 @@
 						<li class="nav-item">
 							<a class="nav-link @(ViewBag.Menu == "categories" ? "active" : "")" asp-route="categories" asp-route-ofs="">Reihen</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link @(ViewBag.Menu == "tags" ? "active" : "")" asp-route="tags" asp-route-ofs="">Tags</a>
-						</li>
 						@* <li class="nav-item">
-							<a class="nav-link d-flex flex-column align-items-center" asp-route="tags" asp-route-ofs="">
-								<i class="fa-solid fa-fw fa-tag"></i>
-								<span class="d-none d-sm-inline">Tags</span>
-							</a>
+							<a class="nav-link @(ViewBag.Menu == "tags" ? "active" : "")" asp-route="tags" asp-route-ofs="">Tags</a>
 						</li> *@
 					</ul>
 					<ul class="navbar-nav">

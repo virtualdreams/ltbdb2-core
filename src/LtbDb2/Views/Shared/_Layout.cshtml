@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using LtbDb.Features;
+
+<!DOCTYPE html>
 
 <html lang="de">
 	<head>
@@ -37,9 +39,11 @@
 						<li class="nav-item">
 							<a class="nav-link @(ViewBag.Menu == "categories" ? "active" : "")" asp-route="categories" asp-route-ofs="">Reihen</a>
 						</li>
-						@* <li class="nav-item">
+						<feature name="@nameof(FeatureFlags.ShowTagsPage)">
+						<li class="nav-item">
 							<a class="nav-link @(ViewBag.Menu == "tags" ? "active" : "")" asp-route="tags" asp-route-ofs="">Tags</a>
-						</li> *@
+						</li>
+						</feature>
 					</ul>
 					<ul class="navbar-nav">
 						<li class="nav-item">

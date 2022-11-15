@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using LtbDb.Core.Interfaces;
+using LtbDb.Features;
 using LtbDb.Models;
 using LtbDb.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.FeatureManagement.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
@@ -26,6 +28,7 @@ namespace LtbDb.Controllers
 		}
 
 		[HttpGet]
+		[FeatureGate(FeatureFlags.ShowTagsPage)]
 		public async Task<IActionResult> Index()
 		{
 			var _tags = await TagService.GetAsync();

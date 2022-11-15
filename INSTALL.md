@@ -107,6 +107,9 @@ dotnet publish/LtbDb2.dll
     "Database": {
         "Provider": "PgSql"
     },
+    "FeatureManagement": {
+        "ShowTagsPage": false
+    },
     "Settings": {
         "ItemsPerPage": 18,
         "RecentItems": 18,
@@ -136,6 +139,11 @@ PosgreSql connection string.
 
 * **Provider**  
 Set database provider. Default: `PgSql`. Values: `MySql`, `PgSql`.
+
+**Section: FeatureManagement**
+
+* **ShowTagsPage**:  
+Enable tags overview page. Default: `false`.
 
 **Section: Settings**
 

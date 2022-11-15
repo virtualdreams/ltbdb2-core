@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -39,6 +40,10 @@ namespace LtbDb
 #if DEBUG
 			IdentityModelEventSource.ShowPII = true;
 #endif
+
+			// features
+			services.AddFeatureManagement();
+
 			// add options to DI
 			services.AddOptions<AppSettings>()
 				.Bind(Configuration.GetSection(AppSettings.AppSettingsName));

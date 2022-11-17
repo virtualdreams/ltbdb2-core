@@ -326,9 +326,9 @@ $(function () {
 				maxlength: 'Der Titel darf max. 200 Zeichen lang sein.'
 			},
 			category: {
-				required: 'Bitte gib eine Kategorie ein.',
-				nowhitespace: 'Bitte gib eine Kategorie ein.',
-				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
+				required: 'Bitte gib eine Reihe ein.',
+				nowhitespace: 'Bitte gib eine Reihe ein.',
+				maxlength: 'Die Reihe darf max. 100 Zeichen lang sein.'
 			},
 			tags: {
 				stringarrayitemmaxlength: 'Ein Tag darf max. 50 Zeichen lang sein.'
@@ -380,14 +380,14 @@ $(function () {
 		},
 		messages: {
 			from: {
-				required: 'Bitte gib eine Kategorie ein.',
-				nowhitespace: 'Bitte gib eine Kategorie ein.',
-				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
+				required: 'Bitte gib eine Reihe ein.',
+				nowhitespace: 'Bitte gib eine Reihe ein.',
+				maxlength: 'Die Reihe darf max. 100 Zeichen lang sein.'
 			},
 			to: {
-				required: 'Bitte gib eine Kategorie ein.',
-				nowhitespace: 'Bitte gib eine Kategorie ein.',
-				maxlength: 'Die Kategorie darf max. 100 Zeichen lang sein.'
+				required: 'Bitte gib eine Reihe ein.',
+				nowhitespace: 'Bitte gib eine Reihe ein.',
+				maxlength: 'Die Reihe darf max. 100 Zeichen lang sein.'
 			}
 		}
 	});

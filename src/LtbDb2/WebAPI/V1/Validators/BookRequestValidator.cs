@@ -20,9 +20,9 @@ namespace LtbDb.WebAPI.V1.Validators
 
 			RuleFor(r => r.Category)
 				.NotEmpty()
-				.WithMessage("Bitte gib eine Kategorie ein.")
+				.WithMessage("Bitte gib eine Reihe ein.")
 				.MaximumLength(100)
-				.WithMessage("Die Kategorie darf max. 100 Zeichen lang sein.");
+				.WithMessage("Die Reihe darf max. 100 Zeichen lang sein.");
 
 			RuleFor(r => r.Stories)
 				//.MaximumLength(100)

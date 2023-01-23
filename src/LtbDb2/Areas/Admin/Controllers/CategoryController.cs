@@ -52,7 +52,7 @@ namespace LtbDb.Areas.Admin.Controllers
 		{
 			await CategoryService.RenameAsync(from ?? String.Empty, to ?? String.Empty);
 
-			return Redirect("index");
+			return RedirectToAction("index", "category", new { area = "admin" });
 		}
 	}
 }

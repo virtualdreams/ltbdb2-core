@@ -1,16 +1,3 @@
-$.widget("custom.catcomplete", $.ui.autocomplete, {
-	_renderMenu: function (ul, items) {
-		var that = this, currentCategory = "";
-		$.each(items, function (index, item) {
-			if (item.category != currentCategory) {
-				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-				currentCategory = item.category;
-			}
-			that._renderItemData(ul, item);
-		});
-	}
-});
-
 function split(val) {
 	return val.split(/;\s*/);
 }
@@ -37,24 +24,6 @@ String.prototype.formatEx = function (placeholders) {
 };
 
 $(function () {
-	/* data-href */
-	// $('[data-href]').click(function () {
-	// 	var href = $(this).data('href');
-	// 	location.href = href;
-	// });
-
-	/* autocomplete for search */
-	// $('#q').autocomplete({
-	// 	source: '/search/title',
-	// 	minLength: 3,
-	// 	select: function (event, ui) {
-	// 		if (ui.item) {
-	// 			$(event.target).val(ui.item.value);
-	// 		}
-	// 		$(event.target.form).submit();
-	// 	}
-	// });
-
 	/* autocomplete for tags */
 	$('#tags').autocomplete({
 		source: function (request, response) {
@@ -114,14 +83,12 @@ $(function () {
 
 	/* add, delete or insert stories */
 	var story_container = $('#story-container');
-	var story_template = '<div class="input-group mb-3" >\
-							<input class="form-control" type="text" name="stories" placeholder="Inhalt" />\
-							<button class="btn btn-outline-secondary story-ins" type="button"><i class="fa-solid fa-plus"></i></button>\
-							<button class="btn btn-outline-secondary story-rem" type="button"><i class="fa-solid fa-minus"></i></button>\
-						</div>'
-	// var story_template = '<div class="story">\
-	// 							<input class="input" type="text" name="stories" value="" placeholder="Inhalt" /> <span class="button-green story-ins" title="Eintrag darüber einfügen."><i class="material-icons material-icons-small">add</i></span> <span class="button-red story-rem" title="Eintrag entfernen."><i class="material-icons material-icons-small">remove</i></span>\
-	// 						</div>';
+	var story_template =
+		'<div class="input-group mb-3" >\
+			<input class="form-control" type="text" name="stories" placeholder="Inhalt" />\
+			<button class="btn btn-outline-secondary story-ins" type="button"><i class="fa-solid fa-plus"></i></button>\
+			<button class="btn btn-outline-secondary story-rem" type="button"><i class="fa-solid fa-minus"></i></button>\
+		</div>'
 
 	$(document).on('click', '#story-add', function (e) {
 		$(story_template).appendTo(story_container);
@@ -150,39 +117,6 @@ $(function () {
 			$('#error').html('<div class="alert alert-danger">Löschen des Buches fehlgeschlagen.</div>');
 		});
 	});
-
-	/* delete book */
-	// var jbox_delete = new jBox('Modal', {
-	// 	attach: $('#delete-book'),
-	// 	content: $('#delete-book-dialog'),
-	// 	overlay: true,
-	// 	closeOnClick: 'body',
-	// 	preventDefault: true,
-	// 	closeButton: 'title',
-	// 	getTitle: 'data-title'
-	// });
-
-	// $('#delete-book-submit').click(function () {
-	// 	id = $('#delete-book').data('id');
-
-	// 	$.ajax({
-	// 		type: "POST",
-	// 		url: '/book/delete/' + id,
-	// 		statusCode: {
-	// 			403: function () {
-	// 				location.href = '/account/login?ReturnUrl=' + encodeURIComponent(location.pathname);
-	// 			},
-	// 			404: function () {
-	// 				alert('Resource not found.');
-	// 			}
-	// 		},
-	// 		success: function (data) {
-	// 			if (data.Success) {
-	// 				location.href = '/';
-	// 			}
-	// 		}
-	// 	})
-	// });
 
 	/* add, delete or restore image */
 	function reset(e) {

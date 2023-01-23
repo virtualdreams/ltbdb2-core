@@ -3,6 +3,7 @@ using LtbDb.Core.Interfaces;
 using LtbDb.Models;
 using LtbDb.Options;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,13 +13,24 @@ namespace LtbDb.Controllers
 {
 	public class CategoryController : Controller
 	{
+		private readonly ILogger<CategoryController> Log;
+
 		private readonly IMapper Mapper;
+
 		private readonly AppSettings AppSettings;
+
 		private readonly IBookService BookService;
+
 		private readonly ICategoryService CategoryService;
 
-		public CategoryController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book, ICategoryService category)
+		public CategoryController(
+			ILogger<CategoryController> log,
+			IMapper mapper,
+			IOptionsSnapshot<AppSettings> settings,
+			IBookService book,
+			ICategoryService category)
 		{
+			Log = log;
 			Mapper = mapper;
 			AppSettings = settings.Value;
 			BookService = book;

@@ -3,6 +3,7 @@ using LtbDb.Core.Interfaces;
 using LtbDb.Models;
 using LtbDb.Options;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Linq;
@@ -13,12 +14,21 @@ namespace LtbDb.Controllers
 {
 	public class SearchController : Controller
 	{
+		private readonly ILogger<SearchController> Log;
+
 		private readonly IMapper Mapper;
+
 		private readonly AppSettings AppSettings;
+
 		private readonly ISearchService SearchService;
 
-		public SearchController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, ISearchService search)
+		public SearchController(
+			ILogger<SearchController> log,
+			IMapper mapper,
+			IOptionsSnapshot<AppSettings> settings,
+			ISearchService search)
 		{
+			Log = log;
 			Mapper = mapper;
 			AppSettings = settings.Value;
 			SearchService = search;

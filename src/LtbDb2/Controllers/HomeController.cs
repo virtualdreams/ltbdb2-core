@@ -3,6 +3,7 @@ using LtbDb.Core.Interfaces;
 using LtbDb.Models;
 using LtbDb.Options;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,12 +12,21 @@ namespace LtbDb.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly ILogger<HomeController> Log;
+
 		private readonly IMapper Mapper;
+
 		private readonly AppSettings AppSettings;
+
 		private readonly IBookService BookService;
 
-		public HomeController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book)
+		public HomeController(
+			ILogger<HomeController> log,
+			IMapper mapper,
+			IOptionsSnapshot<AppSettings> settings,
+			IBookService book)
 		{
+			Log = log;
 			Mapper = mapper;
 			AppSettings = settings.Value;
 			BookService = book;

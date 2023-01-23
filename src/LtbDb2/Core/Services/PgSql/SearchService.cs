@@ -13,9 +13,12 @@ namespace LtbDb.Core.Services.PgSql
 	public class SearchService : ISearchService
 	{
 		private readonly ILogger<SearchService> Log;
+
 		private readonly DataContext Context;
 
-		public SearchService(ILogger<SearchService> log, DataContext context)
+		public SearchService(
+			ILogger<SearchService> log,
+			DataContext context)
 		{
 			Log = log;
 			Context = context;

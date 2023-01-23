@@ -5,6 +5,7 @@ using LtbDb.Extensions;
 using LtbDb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System;
 
@@ -12,11 +13,18 @@ namespace LtbDb.Controllers
 {
 	public class BookController : Controller
 	{
+		private readonly ILogger<BookController> Log;
+
 		private readonly IMapper Mapper;
+
 		private readonly IBookService BookService;
 
-		public BookController(IMapper mapper, IBookService book)
+		public BookController(
+			ILogger<BookController> log,
+			IMapper mapper,
+			IBookService book)
 		{
+			Log = log;
 			Mapper = mapper;
 			BookService = book;
 		}

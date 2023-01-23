@@ -12,9 +12,12 @@ namespace LtbDb.Core.Services
 	public class MaintenanceService : IMaintenanceService
 	{
 		private readonly ILogger<MaintenanceService> Log;
+
 		private readonly DataContext Context;
 
-		public MaintenanceService(ILogger<MaintenanceService> log, DataContext context)
+		public MaintenanceService(
+			ILogger<MaintenanceService> log,
+			DataContext context)
 		{
 			Log = log;
 			Context = context;

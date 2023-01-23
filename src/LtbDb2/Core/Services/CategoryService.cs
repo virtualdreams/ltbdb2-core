@@ -12,9 +12,12 @@ namespace LtbDb.Core.Services
 	public class CategoryService : ICategoryService
 	{
 		private readonly ILogger<CategoryService> Log;
+
 		private readonly DataContext Context;
 
-		public CategoryService(ILogger<CategoryService> log, DataContext context)
+		public CategoryService(
+			ILogger<CategoryService> log,
+			DataContext context)
 		{
 			Log = log;
 			Context = context;

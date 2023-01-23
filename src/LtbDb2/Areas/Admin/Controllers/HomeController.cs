@@ -3,6 +3,7 @@ using LtbDb.Core.Interfaces;
 using LtbDb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System;
@@ -13,14 +14,27 @@ namespace LtbDb.Areas.Admin.Controllers
 	[Authorize(Policy = "AdministratorOnly")]
 	public class HomeController : Controller
 	{
+		private readonly ILogger<HomeController> Log;
+
 		private readonly IMapper Mapper;
+
 		private readonly IBookService BookService;
+
 		private readonly ICategoryService CategoryService;
+
 		private readonly ITagService TagService;
+
 		private readonly IMaintenanceService MaintenanceService;
 
-		public HomeController(IMapper mapper, IBookService book, ICategoryService category, ITagService tag, IMaintenanceService maintenance)
+		public HomeController(
+			ILogger<HomeController> log,
+			IMapper mapper,
+			IBookService book,
+			ICategoryService category,
+			ITagService tag,
+			IMaintenanceService maintenance)
 		{
+			Log = log;
 			Mapper = mapper;
 			BookService = book;
 			CategoryService = category;

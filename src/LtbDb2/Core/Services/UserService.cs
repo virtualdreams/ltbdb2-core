@@ -9,9 +9,12 @@ namespace LtbDb.Core.Services
 	public class UserService : IUserService
 	{
 		private readonly ILogger<UserService> Log;
+
 		private readonly AppSettings AppSettings;
 
-		public UserService(ILogger<UserService> log, IOptionsSnapshot<AppSettings> settings)
+		public UserService(
+			ILogger<UserService> log,
+			IOptionsSnapshot<AppSettings> settings)
 		{
 			Log = log;
 			AppSettings = settings.Value;

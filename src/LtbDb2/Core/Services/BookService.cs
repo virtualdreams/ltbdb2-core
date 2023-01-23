@@ -16,7 +16,9 @@ namespace LtbDb.Core.Services
 	public class BookService : IBookService
 	{
 		private readonly ILogger<BookService> Log;
+
 		private readonly DataContext Context;
+
 		private readonly IImageService ImageService;
 
 		/// <summary>
@@ -25,7 +27,10 @@ namespace LtbDb.Core.Services
 		/// <param name="log">The logger.</param>
 		/// <param name="context">The MySQL context.</param>
 		/// <param name="image">The image service.</param>
-		public BookService(ILogger<BookService> log, DataContext context, IImageService image)
+		public BookService(
+			ILogger<BookService> log,
+			DataContext context,
+			IImageService image)
 		{
 			Log = log;
 			Context = context;

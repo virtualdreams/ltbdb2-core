@@ -4,6 +4,7 @@ using LtbDb.Features;
 using LtbDb.Models;
 using LtbDb.Options;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement.Mvc;
 using System.Linq;
@@ -14,13 +15,24 @@ namespace LtbDb.Controllers
 {
 	public class TagController : Controller
 	{
+		private readonly ILogger<TagController> Log;
+
 		private readonly IMapper Mapper;
+
 		private readonly AppSettings AppSettings;
+
 		private readonly IBookService BookService;
+
 		private readonly ITagService TagService;
 
-		public TagController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book, ITagService tag)
+		public TagController(
+			ILogger<TagController> log,
+			IMapper mapper,
+			IOptionsSnapshot<AppSettings> settings,
+			IBookService book,
+			ITagService tag)
 		{
+			Log = log;
 			Mapper = mapper;
 			AppSettings = settings.Value;
 			BookService = book;

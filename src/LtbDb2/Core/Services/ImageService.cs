@@ -11,12 +11,18 @@ namespace LtbDb.Core.Services
 	public class ImageService : IImageService
 	{
 		private const string GMCommand = "convert - -background white -flatten jpg:-";
+
 		private const string GMThumbnailCommand = "convert - -background white -flatten -resize 200x200 jpg:-";
-		private readonly AppSettings AppSettings;
+
 		private readonly ILogger<ImageService> Log;
+
+		private readonly AppSettings AppSettings;
+
 		private readonly string thumbnailDirectory = "thumb";
 
-		public ImageService(IOptionsSnapshot<AppSettings> settings, ILogger<ImageService> log)
+		public ImageService(
+			ILogger<ImageService> log,
+			IOptionsSnapshot<AppSettings> settings)
 		{
 			AppSettings = settings.Value;
 			Log = log;

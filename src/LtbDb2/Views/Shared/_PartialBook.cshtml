@@ -3,15 +3,6 @@
 @using LtbDb.Core.Interfaces
 @inject IImageService ImageService
 
-@* <div class="col">
-	<div class="card h-100 /*shadow*/ border-light">
-		<div class="card-header text-truncate text-center" style="border-bottom: 0 none;">
-			<a asp-route="view" asp-route-id="@Model.Id" asp-route-slug="@($"Nr. {Model.Number} {Model.Title}".ToSlug())" class="link-secondary stretched-link text-decoration-none">Nr. @Model.Number - @Model.Title</a>
-		</div>
-		<img src="@ImageService.GetImageWebPath(Model.Filename, ImageType.PreferThumbnail)" class="card-img-top mx-auto bt-custom-cover" alt="">
-	</div>
-</div> *@
-
 <div class="col">
 	<div class="card-zoom card h-100 shadow border-0">
 		<img src="@ImageService.GetImageWebPath(Model.Filename, ImageType.Normal)" class="card-img-top mx-auto bt-custom-cover" alt="">

@@ -13,11 +13,11 @@ namespace LtbDb.Core.Services
 	{
 		private readonly ILogger<MaintenanceService> Log;
 
-		private readonly DataContext Context;
+		private readonly DatabaseContext Context;
 
 		public MaintenanceService(
 			ILogger<MaintenanceService> log,
-			DataContext context)
+			DatabaseContext context)
 		{
 			Log = log;
 			Context = context;

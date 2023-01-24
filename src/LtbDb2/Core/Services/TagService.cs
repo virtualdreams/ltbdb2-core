@@ -12,11 +12,11 @@ namespace LtbDb.Core.Services
 	{
 		private readonly ILogger<TagService> Log;
 
-		private readonly DataContext Context;
+		private readonly DatabaseContext Context;
 
 		public TagService(
 			ILogger<TagService> log,
-			DataContext context)
+			DatabaseContext context)
 		{
 			Log = log;
 			Context = context;

@@ -17,7 +17,7 @@ namespace LtbDb.Core.Services
 	{
 		private readonly ILogger<BookService> Log;
 
-		private readonly DataContext Context;
+		private readonly DatabaseContext Context;
 
 		private readonly IImageService ImageService;
 
@@ -29,7 +29,7 @@ namespace LtbDb.Core.Services
 		/// <param name="image">The image service.</param>
 		public BookService(
 			ILogger<BookService> log,
-			DataContext context,
+			DatabaseContext context,
 			IImageService image)
 		{
 			Log = log;

@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LtbDb.Core.Data
 {
-	public class DataContext : DbContext
+	public class DatabaseContext : DbContext
 	{
-		public DataContext(DbContextOptions options)
+		public DatabaseContext(DbContextOptions options)
 			: base(options)
 		{ }
 

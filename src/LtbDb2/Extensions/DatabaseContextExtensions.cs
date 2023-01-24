@@ -9,7 +9,7 @@ namespace LtbDb.Extensions
 	{
 		public static IServiceCollection AddDatabaseContext(this IServiceCollection services, string connectionString, DatabaseProvider provider)
 		{
-			services.AddDbContext<DataContext>(options =>
+			services.AddDbContext<DatabaseContext>(options =>
 			{
 				switch (provider)
 				{

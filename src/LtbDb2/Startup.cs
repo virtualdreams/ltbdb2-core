@@ -57,12 +57,14 @@ namespace LtbDb
 			// database context
 			services.AddDatabaseContext(Configuration.GetConnectionString("Default"), _provider);
 
-			// DI
+			// dependency injection
 			services.AddAutoMapper();
-			services.AddLtbdbServices(_provider);
+
 			services.AddTransient<BearerTokenService>();
 			services.AddScoped<CustomCookieAuthenticationEvents>();
 			services.AddScoped<CustomJwtBearerEvents>();
+
+			services.AddLtbdbServices(_provider);
 
 			// key ring
 			if (!String.IsNullOrEmpty(_keyStore))

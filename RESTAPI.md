@@ -14,9 +14,9 @@ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login -
 
 ```json
 {
-    "Token": "<token>",
-    "Type": "Bearer",
-    "ExpiresIn": <time_in_minutes>
+    "token": "<token>",
+    "type": "Bearer",
+    "expiresIn": <time_in_minutes>
 }
 ```
 
@@ -25,8 +25,8 @@ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login -
 ```json
 [
     {
-        "Field": "<fieldname>",
-        "Messages": [
+        "field": "<fieldname>",
+        "messages": [
             "<message>"
         ]
     }
@@ -54,12 +54,12 @@ Request parameters
 ```json
 [
     {
-        "Id": 10,
+        "id": 10,
         "Title": "Title 1"
     },
     {
-        "Id": 12,
-        "Title": "Title 2"
+        "id": 12,
+        "title": "Title 2"
     }
 ]
 ```
@@ -69,8 +69,8 @@ Request parameters
 ```json
 [
     {
-        "Field": "<fieldname>",
-        "Messages": [
+        "field": "<fieldname>",
+        "messages": [
             "<message>"
         ]
     }
@@ -99,26 +99,26 @@ Request parameters
 ```json
 [
     {
-        "Id": 1,
-        "Number": 1,
-        "Title": "Title 1",
-        "Category": "Category 1",
-        "Created": "2019-12-29T16:34:47",
-        "Modified": "2019-12-29T16:34:47",
-        "Filename": null,
-        "Stories": [],
-        "Tags": []
+        "id": 1,
+        "number": 1,
+        "title": "Title 1",
+        "category": "Category 1",
+        "created": "2019-12-29T16:34:47",
+        "modified": "2019-12-29T16:34:47",
+        "filename": null,
+        "stories": [],
+        "tags": []
     },
     {
-        "Id": 2,
-        "Number": 2,
-        "Title": "Title 1",
-        "Category": "Category 1",
-        "Created": "2019-12-29T16:35:48",
-        "Modified": "2019-12-29T16:35:48",
-        "Filename": null,
-        "Stories": [],
-        "Tags": []
+        "id": 2,
+        "number": 2,
+        "title": "Title 1",
+        "category": "Category 1",
+        "created": "2019-12-29T16:35:48",
+        "modified": "2019-12-29T16:35:48",
+        "filename": null,
+        "stories": [],
+        "tags": []
 	}
 ]
 ```
@@ -137,15 +137,15 @@ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token
 
 ```json
 {
-    "Id": 1,
-    "Number": 1,
-    "Title": "Title 1",
-    "Category": "Category 1",
-    "Created": "2019-12-29T16:34:47",
-    "Modofied": "2019-12-29T16:34:47",
-    "Filename": null,
-    "Stories": [],
-    "Tags": []
+    "id": 1,
+    "number": 1,
+    "title": "Title 1",
+    "category": "Category 1",
+    "created": "2019-12-29T16:34:47",
+    "modified": "2019-12-29T16:34:47",
+    "filename": null,
+    "stories": [],
+    "tags": []
 }
 ```
 
@@ -168,8 +168,8 @@ None
 ```json
 [
     {
-        "Field": "<fieldname>",
-        "Messages": [
+        "field": "<fieldname>",
+        "messages": [
             "<message>"
         ]
     }
@@ -195,8 +195,8 @@ None
 ```json
 [
     {
-        "Field": "<fieldname>",
-        "Messages": [
+        "field": "<fieldname>",
+        "messages": [
             "<message>"
         ]
     }
@@ -237,8 +237,8 @@ Request parameters
 
 ```json
 {
-    "Thumbnail": "/path/to/image/thumb/image.jpg",
-    "Image": "/path/to/image/image.jpg"
+    "thumbnail": "/path/to/image/thumb/image.jpg",
+    "image": "/path/to/image/image.jpg"
 }
 ```
 

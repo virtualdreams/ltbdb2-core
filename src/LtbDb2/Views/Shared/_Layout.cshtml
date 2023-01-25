@@ -4,17 +4,17 @@
 
 <html lang="de">
 	<head>
+		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width">
 		<meta name="version" content="@await Component.InvokeAsync("Version")">
 		@if(!String.IsNullOrEmpty(ViewBag.Description)) {
-		<meta name="description" content="@ViewBag.Description" />
+		<meta name="description" content="@ViewBag.Description">
 		}
 
-		<partial name="_PartialStyles" />
+		<partial name="_PartialStyles">
 
-		<link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
+		<link rel="icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon">
 
 		<title>@(ViewBag.Title) @(!String.IsNullOrEmpty(ViewBag.Title) ? "|" : "") Lustiges Taschenbuch - Datenbank</title>
 	</head>
@@ -58,7 +58,7 @@
 						</li>
 					</ul>
 					<ul class="navbar-nav">
-						<partial name="_PartialLogin" />
+						<partial name="_PartialLogin">
 					</ul>
 				</div>
 			</div>
@@ -69,10 +69,10 @@
 		</div>
 
 		<div class="container">
-			<partial name="_PartialFooter" />
+			<partial name="_PartialFooter">
 		</div>
 
-		<partial name="_PartialScripts" />
+		<partial name="_PartialScripts">
 
 		@RenderSection("script", required: false)
 	</body>

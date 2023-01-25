@@ -107,7 +107,7 @@ dotnet publish/LtbDb2.dll
     "Database": {
         "Provider": "PgSql"
     },
-    "FeatureManagement": {
+    "FeatureFlags": {
         "ShowTagsPage": false
     },
     "Settings": {
@@ -140,7 +140,7 @@ PosgreSql connection string.
 * **Provider**  
 Set database provider. Default: `PgSql`. Values: `MySql`, `PgSql`.
 
-**Section: FeatureManagement**
+**Section: FeatureFlags**
 
 * **ShowTagsPage**:  
 Enable tags overview page. Default: `false`.

@@ -1,5 +1,6 @@
 using LtbDb.Core.Data;
 using LtbDb.Provider;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +24,10 @@ namespace LtbDb.Extensions
 				}
 #if DEBUG
 				options.EnableSensitiveDataLogging(true);
+				options.ConfigureWarnings(w =>
+				{
+					w.Throw(RelationalEventId.MultipleCollectionIncludeWarning);
+				});
 #endif
 			},
 			ServiceLifetime.Scoped);

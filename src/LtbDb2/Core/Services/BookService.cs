@@ -66,7 +66,8 @@ namespace LtbDb.Core.Services
 				.Include(i => i.Stories
 					.OrderBy(o => o.ItemOrder))
 				.Include(i => i.Tags)
-				.Where(f => f.Id == id);
+				.Where(f => f.Id == id)
+				.AsSplitQuery();
 
 			return await _query.SingleOrDefaultAsync();
 		}
@@ -130,23 +131,8 @@ namespace LtbDb.Core.Services
 				.Include(i => i.Tags)
 				.WhereIf(!String.IsNullOrEmpty(category), f => f.Category == category)
 				.WhereIf(!String.IsNullOrEmpty(tag), f => f.Tags.Any(a => a.Name == tag))
-				.OrderBy(o => o.Id);
-
-			// var _query = Context.Book
-			// 	.AsNoTracking()
-			// 	.Include(i => i.Stories
-			// 		.OrderBy(o => o.ItemOrder))
-			// 	.Include(i => i.Tags)
-			// 	.AsQueryable();
-
-			// if (!String.IsNullOrEmpty(category))
-			// 	_query = _query.Where(f => f.Category == category);
-
-			// if (!String.IsNullOrEmpty(tag))
-			// 	_query = _query.Where(f => f.Tags.Any(a => a.Name == tag));
-
-			// _query = _query
-			// 	.OrderBy(o => o.Id);
+				.OrderBy(o => o.Id)
+				.AsSplitQuery();
 
 			return await _query.ToListAsync();
 		}

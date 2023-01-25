@@ -48,7 +48,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 		/// <param name="tag">Filter by tag.</param>
 		/// <returns></returns>
 		[HttpGet]
-		[ProducesResponseType(typeof(List<BookResponse>), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(IList<BookResponse>), StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetAll(string category, string tag)
 		{
 			var filterCategory = category ?? String.Empty;
@@ -56,7 +56,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 
 			var _books = await BookService.GetByFilterAsync(filterCategory, filterTag);
 
-			return Ok(Mapper.Map<List<BookResponse>>(_books));
+			return Ok(Mapper.Map<IList<BookResponse>>(_books));
 		}
 
 		/// <summary>
@@ -83,7 +83,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created)]
-		[ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> Post([FromBody] BookRequest model)
 		{
 			try
@@ -108,7 +108,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 		/// <returns></returns>
 		[HttpPut("{id}")]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
-		[ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> Put(int id, [FromBody] BookRequest model)
 		{
 			try

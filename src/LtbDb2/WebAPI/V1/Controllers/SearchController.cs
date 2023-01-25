@@ -41,13 +41,13 @@ namespace LtbDb.WebAPI.V1.Controllers
 		/// <param name="query"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[ProducesResponseType(typeof(List<SearchResponse>), StatusCodes.Status200OK)]
-		[ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(typeof(IList<SearchResponse>), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> Get([BindRequired] string query)
 		{
 			var _books = await SearchService.SearchAsync(query ?? string.Empty);
 
-			return Ok(Mapper.Map<List<SearchResponse>>(_books));
+			return Ok(Mapper.Map<IList<SearchResponse>>(_books));
 		}
 	}
 }

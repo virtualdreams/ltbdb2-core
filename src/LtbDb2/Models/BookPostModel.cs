@@ -17,10 +17,10 @@ namespace LtbDb.Models
 
 		public string Filename { get; set; }
 
-		public List<string> Stories { get; set; } = new List<string>();
+		public IList<string> Stories { get; set; } = new List<string>();
 
 		[BindProperty(BinderType = typeof(SemicolonListBinder))]
-		public List<string> Tags { get; set; } = new List<string>();
+		public IList<string> Tags { get; set; } = new List<string>();
 
 		public IFormFile Image { get; set; }
 

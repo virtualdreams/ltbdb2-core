@@ -5,7 +5,7 @@ namespace LtbDb.Core.Interfaces
 {
 	public interface ICategoryService
 	{
-		Task<List<string>> GetAsync();
+		Task<IList<string>> GetAsync();
 		Task RenameAsync(string from, string to);
 	}
 }

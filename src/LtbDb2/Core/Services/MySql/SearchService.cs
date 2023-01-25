@@ -29,7 +29,7 @@ namespace LtbDb.Core.Services.MySql
 		/// </summary>
 		/// <param name="term"></param>
 		/// <returns></returns>
-		public async Task<List<Book>> SearchAsync(string term)
+		public async Task<IList<Book>> SearchAsync(string term)
 		{
 			term = term.Trim();
 
@@ -57,7 +57,7 @@ namespace LtbDb.Core.Services.MySql
 		/// </summary>
 		/// <param name="term">The term to search for.</param>
 		/// <returns>List of categories.</returns>
-		public async Task<List<string>> SearchSuggestionsAsync(string term)
+		public async Task<IList<string>> SearchSuggestionsAsync(string term)
 		{
 			term = term.Trim();
 
@@ -82,7 +82,7 @@ namespace LtbDb.Core.Services.MySql
 		/// </summary>
 		/// <param name="term">The term to search for.</param>
 		/// <returns></returns>
-		public async Task<List<string>> CategorySuggestionsAsync(string term)
+		public async Task<IList<string>> CategorySuggestionsAsync(string term)
 		{
 			term = term.Trim();
 
@@ -103,7 +103,7 @@ namespace LtbDb.Core.Services.MySql
 		/// </summary>
 		/// <param name="term">The term to search for.</param>
 		/// <returns>List of tags.</returns>
-		public async Task<List<string>> TagSuggestionsAsync(string term)
+		public async Task<IList<string>> TagSuggestionsAsync(string term)
 		{
 			term = term.Trim();
 

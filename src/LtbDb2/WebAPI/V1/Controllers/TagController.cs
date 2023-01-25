@@ -40,7 +40,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		[ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
+		[ProducesResponseType(typeof(IList<string>), StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetAll()
 		{
 			var _tags = await TagService.GetAsync();

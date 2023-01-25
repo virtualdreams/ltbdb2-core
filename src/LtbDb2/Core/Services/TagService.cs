@@ -26,7 +26,7 @@ namespace LtbDb.Core.Services
 		/// Get all available tags.
 		/// </summary>
 		/// <returns></returns>
-		public async Task<List<string>> GetAsync()
+		public async Task<IList<string>> GetAsync()
 		{
 			Log.LogInformation($"Get the full list of tags.");
 

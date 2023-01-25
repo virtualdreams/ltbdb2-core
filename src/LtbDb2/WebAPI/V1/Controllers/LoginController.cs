@@ -38,7 +38,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[ProducesResponseType(typeof(AuthSuccessResponse), StatusCodes.Status200OK)]
-		[ProducesResponseType(typeof(List<ErrorResponse>), StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public IActionResult Post([FromBody] AuthRequest model)
 		{

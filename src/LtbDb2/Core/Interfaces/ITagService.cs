@@ -5,6 +5,6 @@ namespace LtbDb.Core.Interfaces
 {
 	public interface ITagService
 	{
-		Task<List<string>> GetAsync();
+		Task<IList<string>> GetAsync();
 	}
 }

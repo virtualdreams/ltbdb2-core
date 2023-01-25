@@ -38,8 +38,8 @@ namespace LtbDb.Core.Models
 		[MaxLength(100)]
 		public string Filename { get; set; }
 
-		public List<Story> Stories { get; set; } = new List<Story>();
+		public IList<Story> Stories { get; set; } = new List<Story>();
 
-		public List<Tag> Tags { get; set; } = new List<Tag>();
+		public IList<Tag> Tags { get; set; } = new List<Tag>();
 	}
 }

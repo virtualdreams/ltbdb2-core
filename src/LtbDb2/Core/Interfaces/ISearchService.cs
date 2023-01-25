@@ -6,9 +6,9 @@ namespace LtbDb.Core.Interfaces
 {
 	public interface ISearchService
 	{
-		Task<List<Book>> SearchAsync(string term);
-		Task<List<string>> SearchSuggestionsAsync(string term);
-		Task<List<string>> CategorySuggestionsAsync(string term);
-		Task<List<string>> TagSuggestionsAsync(string term);
+		Task<IList<Book>> SearchAsync(string term);
+		Task<IList<string>> SearchSuggestionsAsync(string term);
+		Task<IList<string>> CategorySuggestionsAsync(string term);
+		Task<IList<string>> TagSuggestionsAsync(string term);
 	}
 }

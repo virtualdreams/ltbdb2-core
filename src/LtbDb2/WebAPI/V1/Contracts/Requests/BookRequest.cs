@@ -10,8 +10,8 @@ namespace LtbDb.WebAPI.V1.Contracts.Requests
 
 		public string Category { get; set; }
 
-		public List<string> Stories { get; set; } = new List<string>();
+		public IList<string> Stories { get; set; } = new List<string>();
 
-		public List<string> Tags { get; set; } = new List<string>();
+		public IList<string> Tags { get; set; } = new List<string>();
 	}
 }

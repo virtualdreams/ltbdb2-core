@@ -41,7 +41,7 @@ namespace LtbDb.Core.Services
 		/// Get all books from storage.
 		/// </summary>
 		/// <returns></returns>
-		public async Task<List<Book>> GetAsync()
+		public async Task<IList<Book>> GetAsync()
 		{
 			Log.LogInformation($"Request all books.");
 
@@ -77,7 +77,7 @@ namespace LtbDb.Core.Services
 		/// </summary>
 		/// <param name="category">The category.</param>
 		/// <returns></returns>
-		public async Task<List<Book>> GetByCategoryAsync(string category)
+		public async Task<IList<Book>> GetByCategoryAsync(string category)
 		{
 			category = category.Trim();
 
@@ -96,7 +96,7 @@ namespace LtbDb.Core.Services
 		/// </summary>
 		/// <param name="tag">The tag.</param>
 		/// <returns></returns>
-		public async Task<List<Book>> GetByTagAsync(string tag)
+		public async Task<IList<Book>> GetByTagAsync(string tag)
 		{
 			tag = tag.Trim();
 
@@ -117,7 +117,7 @@ namespace LtbDb.Core.Services
 		/// <param name="category">The category.</param>
 		/// <param name="tag">The tag.</param>
 		/// <returns>List of book.</returns>
-		public async Task<List<Book>> GetByFilterAsync(string category, string tag)
+		public async Task<IList<Book>> GetByFilterAsync(string category, string tag)
 		{
 			category = category.Trim();
 			tag = tag.Trim();
@@ -142,7 +142,7 @@ namespace LtbDb.Core.Services
 		/// </summary>
 		/// <param name="limit">Limit result.</param>
 		/// <returns></returns>
-		public async Task<List<Book>> GetRecentlyAddedAsync(int limit)
+		public async Task<IList<Book>> GetRecentlyAddedAsync(int limit)
 		{
 			Log.LogInformation($"Request recently added book. (limit {limit})");
 

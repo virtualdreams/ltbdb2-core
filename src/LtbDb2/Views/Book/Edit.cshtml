@@ -15,14 +15,14 @@
 <form asp-controller="book" asp-action="edit" method="post" enctype="multipart/form-data" id="book-form" asp-antiforgery="false">
 	<div class="row">
 		<div class="col-lg-3 mt-4 float-start">
-			<input style="display: none;" name="image" type="file" id="image-upload">
-			<img class="card-img-top" style="cursor: pointer; width: 100%; /*height: 15vh;*/ object-fit: cover;" id="image" src="@ImageService.GetImageWebPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen.">
+			<input class="bt-hidden" name="image" type="file" id="image-upload">
+			<img class="card-img-top bt-pointer bt-cover" id="image" src="@ImageService.GetImageWebPath(Model.Book.Filename, ImageType.PreferThumbnail)" alt="Cover" title="Klicken, um ein Bild auszuwählen.">
 			
 			<input type="hidden" name="filename" value="@ImageService.GetImageWebPath(Model.Book.Filename)">
 			<input type="hidden" name="remove" value="false" id="remove">
 
-			<span style="cursor: pointer;" id="image-reset" data-src="@ImageService.GetImageWebPath(Model.Book.Filename)" title="Bild zurücksetzen." style="display: none;"><i class="fa-solid fa-rotate-left"></i></span>
-			<span style="cursor: pointer;" id="image-delete" data-src="@ImageService.GetDefaultImage()" title="Bild löschen."><i class="fa-solid fa-trash-can"></i></span>
+			<span class="bt-pointer bt-hidden" id="image-reset" data-src="@ImageService.GetImageWebPath(Model.Book.Filename)" title="Bild zurücksetzen."><i class="fa-solid fa-rotate-left"></i></span>
+			<span class="bt-pointer" id="image-delete" data-src="@ImageService.GetDefaultImage()" title="Bild löschen."><i class="fa-solid fa-trash-can"></i></span>
 			@* @Html.ValidationMessage("image") *@
 		</div>
 		<div class="col-lg-6 mt-4">

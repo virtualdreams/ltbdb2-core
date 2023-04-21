@@ -46,12 +46,12 @@ namespace LtbDb
 
 			// add options to DI
 			services.AddOptions<AppSettings>()
-				.Bind(Configuration.GetSection(AppSettings.AppSettingsName));
+				.Bind(Configuration.GetSection(AppSettings.SectionName));
 			//.ValidateDataAnnotations();
 
 			// get settings for local usage
-			var _keyStore = Configuration.GetSection(AppSettings.AppSettingsName).GetValue<string>("KeyStore", null);
-			var _signingKey = Configuration.GetSection(AppSettings.AppSettingsName).GetValue<string>("JwtSigningKey", null);
+			var _keyStore = Configuration.GetSection(AppSettings.SectionName).GetValue<string>("KeyStore", null);
+			var _signingKey = Configuration.GetSection(AppSettings.SectionName).GetValue<string>("JwtSigningKey", null);
 			var _provider = Configuration.GetSection("Database").GetValue<DatabaseProvider>("Provider", DatabaseProvider.PgSql);
 
 			// database context

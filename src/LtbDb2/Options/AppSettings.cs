@@ -4,7 +4,7 @@ namespace LtbDb.Options
 {
 	public class AppSettings
 	{
-		public const string AppSettingsName = "Settings";
+		public const string SectionName = "Settings";
 
 		/// <summary>
 		/// Items per page to display.

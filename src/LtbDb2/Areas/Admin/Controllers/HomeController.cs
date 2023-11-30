@@ -55,10 +55,8 @@ namespace LtbDb.Areas.Admin.Controllers
 			var filterTag = model.Tag ?? String.Empty;
 
 			// add header to force it as download
-			Response.Headers.Add(
-				"Content-Disposition",
-				$"attachment; filename=ltbdb-export-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}{(!String.IsNullOrEmpty(filterCategory) ? $"-category-{filterCategory}" : "")}{(!String.IsNullOrEmpty(filterTag) ? $"-tag-{filterTag}" : "")}.json"
-				);
+			Response.Headers["Content-Disposition"] =
+				$"attachment; filename=ltbdb-export-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}{(!String.IsNullOrEmpty(filterCategory) ? $"-category-{filterCategory}" : "")}{(!String.IsNullOrEmpty(filterTag) ? $"-tag-{filterTag}" : "")}.json";
 
 			var _books = await BookService.GetByFilterAsync(filterCategory, filterTag);
 			var books = Mapper.Map<BookModel[]>(_books);

@@ -23,7 +23,7 @@ namespace LtbDb.Events
 			if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
 			{
 				Log.LogDebug($"Token expired. Send \"Token-Expired: true\" header.");
-				context.Response.Headers.Add("Token-Expired", "true");
+				context.Response.Headers["Token-Expired"] = "true";
 			}
 			return Task.CompletedTask;
 		}
@@ -35,7 +35,7 @@ namespace LtbDb.Events
 
 			if (!AppSettings.Username.Equals(_username))
 			{
-				Log.LogInformation($"Benutzername '{ _username}' nicht identisch.");
+				Log.LogInformation($"Benutzername '{_username}' nicht identisch.");
 				context.Response.StatusCode = 401;
 				context.Fail("Token invalid");
 			}

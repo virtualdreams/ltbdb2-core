@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build (Debug)",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/LtbDb2/bin/Debug/net7.0/LtbDb2.dll",
+            "program": "${workspaceFolder}/src/LtbDb2/bin/Debug/net8.0/LtbDb2.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/LtbDb2",
             "stopAtEntry": false,
@@ -29,7 +29,7 @@
             "request": "launch",
             "preLaunchTask": "build (Release)",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/LtbDb2/bin/Release/net7.0/LtbDb2.dll",
+            "program": "${workspaceFolder}/src/LtbDb2/bin/Release/net8.0/LtbDb2.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/LtbDb2",
             "stopAtEntry": false,

@@ -40,6 +40,23 @@ namespace LtbDb.WebAPI.V1.Controllers
 			ImageService = image;
 		}
 
+		[HttpHead("{id}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<IActionResult> GetByIdHead(int id, string type)
+		{
+			var _book = await BookService.GetByIdAsync(id);
+			if (_book == null)
+				return NotFound();
+
+			var _thumbnail = String.Equals(type, "thumbnail");
+			var _file = ImageService.GetPhysicalPath(_book.Filename, _thumbnail ? ImageType.Thumbnail : ImageType.Normal);
+			if (String.IsNullOrEmpty(_file))
+				return NotFound();
+
+			return Ok();
+		}
+
 		/// <summary>
 		/// Get image for book.
 		/// </summary>

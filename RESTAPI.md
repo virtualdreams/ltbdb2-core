@@ -10,7 +10,7 @@ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login -
 
 **Response**
 
-*Success*
+*OK (200)*
 
 ```json
 {
@@ -20,7 +20,7 @@ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login -
 }
 ```
 
-*BadRequest*
+*BadRequest (400)*
 
 ```json
 [
@@ -38,7 +38,7 @@ curl -X POST -H "Content-Type: application/json" http://localhost/api/v1/login -
 **Request**
 
 ```sh
-curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/search
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/search?query=<query>
 ```
 
 Request parameters
@@ -49,7 +49,7 @@ Request parameters
 
 **Response**
 
-*Success*
+*OK (200)*
 
 ```json
 [
@@ -64,7 +64,7 @@ Request parameters
 ]
 ```
 
-*BadRequest*
+*BadRequest (400)*
 
 ```json
 [
@@ -82,7 +82,7 @@ Request parameters
 **Request**
 
 ```sh
-curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book[?category=Category&tag=Tag]
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/book[?category=<category>&tag=<tag>]
 ```
 
 Request parameters
@@ -94,7 +94,7 @@ Request parameters
 
 **Response**
 
-*Success*
+*OK (200)*
 
 ```json
 [
@@ -105,7 +105,6 @@ Request parameters
         "category": "Category 1",
         "created": "2019-12-29T16:34:47",
         "modified": "2019-12-29T16:34:47",
-        "filename": null,
         "stories": [],
         "tags": []
     },
@@ -116,7 +115,6 @@ Request parameters
         "category": "Category 1",
         "created": "2019-12-29T16:35:48",
         "modified": "2019-12-29T16:35:48",
-        "filename": null,
         "stories": [],
         "tags": []
 	}
@@ -133,7 +131,7 @@ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token
 
 **Response**
 
-*Success*
+*OK (200)*
 
 ```json
 {
@@ -143,11 +141,12 @@ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token
     "category": "Category 1",
     "created": "2019-12-29T16:34:47",
     "modified": "2019-12-29T16:34:47",
-    "filename": null,
     "stories": [],
     "tags": []
 }
 ```
+
+*NotFound (400)*
 
 ## Create a book
 
@@ -159,11 +158,9 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <toke
 
 **Response**
 
-*Success*
+*Created (201)*
 
-None
-
-*BadRequest*
+*BadRequest (400)*
 
 ```json
 [
@@ -186,11 +183,9 @@ curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <token
 
 **Response**
 
-*Success*
+*NoContent (204)*
 
-None
-
-*BadRequest*
+*BadRequest (400)*
 
 ```json
 [
@@ -213,16 +208,16 @@ curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <to
 
 **Response**
 
-*Success*
+*NoContent (204)*
 
-None
+*NotFound (404)*
 
-## Get image for a book
+## Test if image exists for a book.
 
 **Request**
 
 ```sh
-curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/<id>
+curl -I -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/<id>[?type=thumbnail]
 ```
 
 Request parameters
@@ -233,16 +228,31 @@ Request parameters
 
 **Response**
 
-*Success*
+*OK (200)*
 
-```json
-{
-    "thumbnail": "/path/to/image/thumb/image.jpg",
-    "image": "/path/to/image/image.jpg"
-}
+*NotFound (404)*
+
+## Get image for a book
+
+**Request**
+
+```sh
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/<id>[?type=thumbnail]
 ```
 
-Paths can be `null`.
+Request parameters
+
+| Name | Value | Description | Required |
+|:--- |:--- |:--- |:---
+| type | thumbnail | Get thumbnail instead of the full image. | no |
+
+**Response**
+
+*OK (200)*
+
+The image.
+
+*NotFound (404)*
 
 ## Set image for a book
 
@@ -254,20 +264,31 @@ curl -X PUT -H "Authorization: Bearer <token>" -H "Content-Type: multipart/form-
 
 **Response**
 
-*Success*
+*NoContent (204)*
 
-None
+*BadRequest (400)*
+
+```json
+[
+    {
+        "field": "<fieldname>",
+        "messages": [
+            "<message>"
+        ]
+    }
+]
+```
 
 ## Delete image from a book
 
 **Request**
 
 ```sh
-curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/1
+curl -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer <token>" http://localhost/api/v1/image/<id>
 ```
 
 **Response**
 
-*Success*
+*NoContent (204)*
 
-None
+*NotFound (404)*

@@ -33,7 +33,7 @@ run:
 
 .PHONY: publish
 publish: clean-publish clean-project
-	dotnet publish -c Release /p:Version=1.0-$$(git rev-parse --short HEAD) -o publish $(project)
+	dotnet publish -c Release /p:Version=1.0.0-$$(git rev-parse --short HEAD) -o publish $(project)
 
 .PHONY: clean-project
 clean-project:

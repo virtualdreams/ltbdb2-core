@@ -113,9 +113,8 @@ dotnet publish/LtbDb2.dll
     "Settings": {
         "ItemsPerPage": 18,
         "RecentItems": 18,
-        "Storage": "./wwwroot/images/",
+        "Storage": "",
         "DefaultImage": "/content/no-image.png",
-        "ImageWebPath": "/images/",
         "GraphicsMagick": "gm",
         "Username": "",
         "Password": "",
@@ -152,11 +151,9 @@ Books per page to display.  Default `18`.
 * **RecentItems**  
 Books per page to display on start page.  Default `18`.
 * **Storage**  
-Image storage path in filesystem (upload). Default `"./wwwroot/images"`.
+Image storage path in filesystem (upload). Default `"" (imageroot in application root)`.
 * **DefaultImage**  
 Path to `no-image` file. Default `"/content/no-image.png"`.
-* **ImageWebPath**  
-Path to images for download from "wwwroot". Default `"/images/"`.
 * **GraphicsMagick**  
 Path to GraphicsMagick binary or `gm`. Default `"gm"`.
 * **Username**  

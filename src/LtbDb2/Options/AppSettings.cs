@@ -20,7 +20,7 @@ namespace LtbDb.Options
 		/// Storage path, where the images be saved.
 		/// Can be a relative path or a full qualified url.
 		/// </summary>
-		public string Storage { get; set; } = "./wwwroot/images";
+		public string Storage { get; set; } = null;
 
 		/// <summary>
 		/// Path to image, if no cover exists.
@@ -30,7 +30,7 @@ namespace LtbDb.Options
 		/// <summary>
 		/// Web path, where the images are located.
 		/// </summary>
-		public string ImageWebPath { get; set; } = "/images/";
+		public string ImageWebPath { get; } = "/images";
 
 		/// <summary>
 		/// Path to GraphicsMagick to process the uploaded images.

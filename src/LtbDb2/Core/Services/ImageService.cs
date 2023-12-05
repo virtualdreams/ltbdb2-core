@@ -1,6 +1,7 @@
 using LtbDb.Core.Interfaces;
 using LtbDb.Core.Internal;
 using LtbDb.Options;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.IO;
@@ -16,15 +17,19 @@ namespace LtbDb.Core.Services
 
 		private readonly ILogger<ImageService> Log;
 
+		private readonly IWebHostEnvironment Env;
+
 		private readonly AppSettings AppSettings;
 
 		private readonly string thumbnailDirectory = "thumb";
 
 		public ImageService(
 			ILogger<ImageService> log,
+			IWebHostEnvironment env,
 			IOptionsSnapshot<AppSettings> settings)
 		{
 			AppSettings = settings.Value;
+			Env = env;
 			Log = log;
 		}
 
@@ -53,10 +58,6 @@ namespace LtbDb.Core.Services
 
 			try
 			{
-				// check if image directory exists, otherwise create it
-				if (!Directory.Exists(imageStorage))
-					Directory.CreateDirectory(imageStorage);
-
 				using (var output = File.Create(imagePath))
 				{
 					GraphicsMagick.PInvoke(stream, output, GMCommand);
@@ -241,16 +242,22 @@ namespace LtbDb.Core.Services
 		}
 
 		/// <summary>
-		/// Get the absolute storage path.
+		/// Get the storage path.
 		/// </summary>
 		/// <returns></returns>
 		private string GetStoragePath()
 		{
-			return Path.GetFullPath(AppSettings.Storage);
+			var storagePath = AppSettings.Storage;
+			if (String.IsNullOrEmpty(storagePath))
+			{
+				storagePath = Path.Combine(Env.ContentRootPath, "imageroot");
+			}
+
+			return storagePath;
 		}
 
 		/// <summary>
-		/// Get the absolute thumbnail path.
+		/// Get the thumbnail path.
 		/// </summary>
 		/// <returns></returns>
 		private string GetThumbPath()

@@ -14,7 +14,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -197,6 +199,8 @@ namespace LtbDb
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			var options = app.ApplicationServices.GetService<IOptions<AppSettings>>().Value;
+
 			app.UseForwardedHeaders(new ForwardedHeadersOptions
 			{
 				ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -216,7 +220,32 @@ namespace LtbDb
 				}
 			});
 
+			// wwwroot
 			app.UseStaticFiles();
+
+			var storagePath = options.Storage;
+
+			// create imageroot directory under root path
+			if (String.IsNullOrEmpty(storagePath))
+			{
+				storagePath = Path.Combine(env.ContentRootPath, "imageroot");
+				if (!Directory.Exists(storagePath))
+				{
+					Directory.CreateDirectory(storagePath);
+				}
+			}
+
+			// imageroot
+			app.UseStaticFiles(new StaticFileOptions
+			{
+				FileProvider = new PhysicalFileProvider(storagePath),
+				RequestPath = options.ImageWebPath,
+				OnPrepareResponse = ctx =>
+				{
+					ctx.Context.Response.Headers.Append(
+						 "Cache-Control", $"public, max-age={60 * 60 * 24 * 7}");
+				}
+			});
 
 			app.UseRouting();
 

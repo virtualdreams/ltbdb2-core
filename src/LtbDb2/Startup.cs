@@ -68,14 +68,20 @@ namespace LtbDb
 
 			services.AddLtbdbServices(_provider);
 
-			// key ring
-			if (!String.IsNullOrEmpty(_keyStore))
+			var keyStore = _keyStore;
+			if (String.IsNullOrEmpty(keyStore))
 			{
-				services.AddDataProtection(options =>
-				{
-					options.ApplicationDiscriminator = "ltbdb";
-				}).PersistKeysToFileSystem(new DirectoryInfo(_keyStore));
+				keyStore = "keystore";
 			}
+
+			// key ring
+			services.AddDataProtection(options =>
+			{
+				options.ApplicationDiscriminator = "ltbdb";
+			})
+			.PersistKeysToFileSystem(
+				new DirectoryInfo(keyStore)
+			);
 
 			// IIS integration
 			services.Configure<IISOptions>(options => { });

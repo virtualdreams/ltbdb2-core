@@ -44,7 +44,7 @@ namespace LtbDb
 							config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 							config.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 							config.AddJsonFile($"logsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-							config.AddEnvironmentVariables();
+							config.AddEnvironmentVariables(prefix: "LTBDB__");
 						})
 						.UseStartup<Startup>();
 				})

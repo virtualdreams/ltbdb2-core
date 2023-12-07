@@ -55,9 +55,10 @@ namespace LtbDb
 			var _keyStore = Configuration.GetSection(AppSettings.SectionName).GetValue<string>("KeyStore", null);
 			var _signingKey = Configuration.GetSection(AppSettings.SectionName).GetValue<string>("JwtSigningKey", null);
 			var _provider = Configuration.GetSection("Database").GetValue<DatabaseProvider>("Provider", DatabaseProvider.PgSql);
+			var _connectionString = Configuration.GetConnectionString(_provider.ToString());
 
 			// database context
-			services.AddDatabaseContext(Configuration.GetConnectionString("Default"), _provider);
+			services.AddDatabaseContext(_connectionString, _provider);
 
 			// dependency injection
 			services.AddAutoMapper();

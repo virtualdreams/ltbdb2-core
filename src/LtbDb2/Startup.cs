@@ -69,10 +69,10 @@ namespace LtbDb
 
 			services.AddLtbdbServices(_provider);
 
-			var keyStore = _keyStore;
-			if (String.IsNullOrEmpty(keyStore))
+			// set keystore
+			if (String.IsNullOrEmpty(_keyStore))
 			{
-				keyStore = "keystore";
+				_keyStore = "keystore";
 			}
 
 			// key ring
@@ -81,7 +81,7 @@ namespace LtbDb
 				options.ApplicationDiscriminator = "ltbdb";
 			})
 			.PersistKeysToFileSystem(
-				new DirectoryInfo(keyStore)
+				new DirectoryInfo(_keyStore)
 			);
 
 			// IIS integration

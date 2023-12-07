@@ -28,6 +28,8 @@ RUN apk add --no-cache \
 	graphicsmagick \
 	&& rm -rf /var/cache/apk/*
 
+VOLUME ["/data"]
+
 WORKDIR /app
 
 COPY --from=build /source/publish .

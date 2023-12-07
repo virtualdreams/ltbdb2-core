@@ -259,14 +259,11 @@ namespace LtbDb
 
 			// app.UseCors();
 
-			if (env.IsDevelopment())
+			app.UseSwagger();
+			app.UseSwaggerUI(options =>
 			{
-				app.UseSwagger();
-				app.UseSwaggerUI(options =>
-				{
-					options.SwaggerEndpoint($"/swagger/v1/swagger.json", "Lustiges Taschenbuch Datenbank API v1");
-				});
-			}
+				options.SwaggerEndpoint($"/swagger/v1/swagger.json", "Lustiges Taschenbuch Datenbank API v1");
+			});
 
 			app.UseAuthentication();
 			app.UseAuthorization();

@@ -231,14 +231,16 @@ namespace LtbDb
 
 			var storagePath = options.Storage;
 
-			// create imageroot directory under root path
+			// if not storage path defined create imageroot directory under root path
 			if (String.IsNullOrEmpty(storagePath))
 			{
 				storagePath = Path.Combine(env.ContentRootPath, "imageroot");
-				if (!Directory.Exists(storagePath))
-				{
-					Directory.CreateDirectory(storagePath);
-				}
+			}
+
+			// create image directory if not exists
+			if (!Directory.Exists(storagePath))
+			{
+				Directory.CreateDirectory(storagePath);
 			}
 
 			// imageroot

@@ -40,14 +40,14 @@ Builder docker image.
 docker build --no-cache -t ltbdb2-core .
 ```
 
-### RUn docker image
+### Run docker image
 
 Run image with host mount.
 
 ```sh
 docker run -d \
     -p 5000:5000 \
-    -e LTBDB__ConnectionString_PgSql=Host=hostname;Database=ltbdb;Username=ltbdb;Password=ltbdb \
+    -e LTBDB__ConnectionString__PgSql=Host=hostname;Database=ltbdb;Username=ltbdb;Password=ltbdb \
     -e LTBDB__Settings__JwtSigningKey=1234567890123456 \
     -e LTBDB__Settings__Username=demo \
     -e LTBDB__Settings__Password=demo \
@@ -60,7 +60,7 @@ Run image with named volume.
 docker volume create ltbdb2
 docker run -d \
     -p 5000:5000 \
-    -e LTBDB__ConnectionString_PgSql=Host=hostname;Database=ltbdb;Username=ltbdb;Password=ltbdb \
+    -e LTBDB__ConnectionString__PgSql=Host=hostname;Database=ltbdb;Username=ltbdb;Password=ltbdb \
     -e LTBDB__Settings__JwtSigningKey=1234567890123456 \
     -e LTBDB__Settings__Username=demo \
     -e LTBDB__Settings__Password=demo \

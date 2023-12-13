@@ -1,3 +1,10 @@
+-- schema table
+create table schema (
+  version int not null,
+  applied_on timestamptz not null, 
+  description varchar(1024) not null
+);
+
 -- book table
 create table book (
   id serial primary key,
@@ -25,8 +32,14 @@ create table tag (
 );
 
 -- create indexes
+create index ix_schema_version on schema(version);
 create index ix_book_category on book(category);
 create index ix_story_name on story(name);
 create index ix_story_bookid on story(bookid);
 create index ix_tag_name on tag(name);
 create index ix_tag_bookid on tag(bookid);
+
+-- insert schema version
+insert into schema
+  (version, applied_on, description)
+  values (1, NOW(), 'Schema create.')

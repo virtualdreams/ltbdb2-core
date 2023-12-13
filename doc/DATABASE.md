@@ -14,19 +14,10 @@ Create database.
 create database ltbdb with owner ltbdb encoding 'UTF8' lc_collate = 'de_DE.UTF-8' lc_ctype = 'de_DE.UTF-8' template template0;
 ```
 
-Remove create rights for public.
-
-```sql
-\c ltbdb
-
-revoke create on schema public from public; 
-grant create on schema public to ltbdb;
-```
-
 Import schema.
 
 ```sh
-psql -U ltbdb -h localhost -d ltbdb < contrib/database-create-psql.sql 
+psql -U ltbdb -h localhost -d ltbdb < contrib/Schema/Postgres/schema.sql 
 ```
 
 ## MariaDB
@@ -47,5 +38,5 @@ create database ltbdb;
 Import schema.
 
 ```sh
-mysql -u ltbdb -p ltbdb < contrib/database-create-mysql.sql
+mysql -u ltbdb -p ltbdb < contrib/Schema/MySql/schema.sql
 ```

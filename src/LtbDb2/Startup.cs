@@ -3,6 +3,7 @@ using FluentValidation;
 using LtbDb.Core;
 using LtbDb.Events;
 using LtbDb.Extensions;
+using LtbDb.Migrations;
 using LtbDb.Options;
 using LtbDb.Provider;
 using LtbDb.Services;
@@ -56,6 +57,9 @@ namespace LtbDb
 			var _signingKey = Configuration.GetSection(AppSettings.SectionName).GetValue<string>("JwtSigningKey", null);
 			var _provider = Configuration.GetSection("Database").GetValue<DatabaseProvider>("Provider", DatabaseProvider.PgSql);
 			var _connectionString = Configuration.GetConnectionString(_provider.ToString());
+
+			// migrations
+			services.AddFluentMigrator(_connectionString, _provider);
 
 			// database context
 			services.AddDatabaseContext(_connectionString, _provider);
@@ -270,6 +274,8 @@ namespace LtbDb
 			app.UseAuthorization();
 
 			app.AddEndpoints();
+
+			app.MigrateDatabase();
 		}
 	}
 }

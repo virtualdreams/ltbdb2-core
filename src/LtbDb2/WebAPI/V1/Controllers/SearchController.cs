@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Net.Mime;
@@ -24,12 +25,21 @@ namespace LtbDb.WebAPI.V1.Controllers
 	[ValidationFilter]
 	public class SearchController : ControllerBase
 	{
+		private readonly ILogger<SearchController> Log;
+
 		private readonly IMapper Mapper;
+
 		private readonly AppSettings AppSettings;
+
 		private readonly ISearchService SearchService;
 
-		public SearchController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, ISearchService search)
+		public SearchController(
+			ILogger<SearchController> log,
+			IMapper mapper,
+			IOptionsSnapshot<AppSettings> settings,
+			ISearchService search)
 		{
+			Log = log;
 			Mapper = mapper;
 			AppSettings = settings.Value;
 			SearchService = search;

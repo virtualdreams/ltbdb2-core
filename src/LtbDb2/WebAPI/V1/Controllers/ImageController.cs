@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -23,15 +24,30 @@ namespace LtbDb.WebAPI.V1.Controllers
 	[ValidationFilter]
 	public class ImageController : ControllerBase
 	{
+		private readonly ILogger<ImageController> Log;
+
 		private readonly IMapper Mapper;
+
 		private readonly AppSettings AppSettings;
+
 		private readonly IBookService BookService;
+
 		private readonly ICategoryService CategoryService;
+
 		private readonly ITagService TagService;
+
 		private readonly IImageService ImageService;
 
-		public ImageController(IMapper mapper, IOptionsSnapshot<AppSettings> settings, IBookService book, ICategoryService category, ITagService tag, IImageService image)
+		public ImageController(
+			ILogger<ImageController> log,
+			IMapper mapper,
+			IOptionsSnapshot<AppSettings> settings,
+			IBookService book,
+			ICategoryService category,
+			ITagService tag,
+			IImageService image)
 		{
+			Log = log;
 			Mapper = mapper;
 			AppSettings = settings.Value;
 			BookService = book;

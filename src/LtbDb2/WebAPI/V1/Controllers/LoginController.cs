@@ -6,6 +6,7 @@ using LtbDb.WebAPI.V1.Contracts.Responses;
 using LtbDb.WebAPI.V1.Filter;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Net.Mime;
@@ -20,12 +21,21 @@ namespace LtbDb.WebAPI.V1.Controllers
 	[ValidationFilter]
 	public class LoginController : ControllerBase
 	{
+		private readonly ILogger<LoginController> Log;
+
 		private readonly AppSettings AppSettings;
+
 		private readonly IUserService UserService;
+
 		private readonly BearerTokenService TokenService;
 
-		public LoginController(IOptionsSnapshot<AppSettings> settings, IUserService user, BearerTokenService token)
+		public LoginController(
+			ILogger<LoginController> log,
+			IOptionsSnapshot<AppSettings> settings,
+			IUserService user,
+			BearerTokenService token)
 		{
+			Log = log;
 			AppSettings = settings.Value;
 			UserService = user;
 			TokenService = token;
@@ -56,10 +66,14 @@ namespace LtbDb.WebAPI.V1.Controllers
 					return Ok(_response);
 				}
 
+				Log.LogInformation("Login failed. Unauthorized.");
+
 				return Unauthorized();
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
+				Log.LogError(e, "Login failed.");
+
 				return StatusCode(500);
 			}
 		}

@@ -37,7 +37,7 @@
         "Username": "demo",
         "Password": "demo",
         "KeyStore": "keystore",
-        "JwtSigningKey": "1234567890123456",
+        "JwtSigningKey": "12345678901234567890123456789012",
         "JwtExpireTime": 5
     }
 }
@@ -94,7 +94,7 @@ Default `null`.
 Directory to store encryption key files (leave empty to use in-memory).  
 Default `null`.
 * **JwtSigningKey**  
-JWT access token encryption key. Minimum length 16 characters.  
+JWT access token encryption key. Minimum length 32 characters.  
 Default `null`.
 * **JwtExpire**  
 JWT access token expire in minutes.  

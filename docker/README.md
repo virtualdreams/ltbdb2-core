@@ -17,10 +17,12 @@ docker run \
 	-p 5000:5000 \
 	-e LTBDB__ConnectionStrings__PgSql='Host=<PostgresServer>;Database=ltbdb;Username=ltbdb;Password=ltbdb' \
 	-e LTBDB__Database__Provider=PgSql \
-	-e LTBDB__Settings__JwtSigningKey=1234567890123456 \
+	-e LTBDB__Settings__JwtSigningKey=12345678901234561234567890123456 \
 	-e LTBDB__Settings__Username=test \
 	-e LTBDB__Settings__Password=test \
-	# -v $(pwd)/storage/key-store:/app/key-store \
-	# -v $(pwd)/storage/images:/app/wwwroot/images \
+	# -v $(pwd)/storage/key-store:/data/keystore \
+	# -v $(pwd)/storage/images:/data/images \
+	# or
+	# -v ltbdb-vol:/data
 	ltbdb2-core
 ```

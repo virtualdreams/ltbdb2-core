@@ -63,6 +63,8 @@ namespace LtbDb.WebAPI.V1.Controllers
 						ExpiresIn = AppSettings.JwtExpireTime
 					};
 
+					Log.LogInformation("Login successful.");
+
 					return Ok(_response);
 				}
 

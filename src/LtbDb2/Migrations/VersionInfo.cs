@@ -20,5 +20,7 @@ namespace LtbDb.Migrations
 		public string UniqueIndexName => "ix_schema_version";
 
 		public string AppliedOnColumnName => "applied_on";
+
+		public bool CreateWithPrimaryKey => true;
 	}
 }

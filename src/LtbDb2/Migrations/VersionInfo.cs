@@ -1,6 +1,6 @@
 using FluentMigrator.Runner.VersionTableInfo;
 
-namespace LtbDb2.Migrations
+namespace LtbDb.Migrations
 {
 	[VersionTableMetaData]
 	public class VersionInfo : IVersionTableMetaData

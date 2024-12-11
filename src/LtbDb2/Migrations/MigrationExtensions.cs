@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace LtbDb2.Migrations
+namespace LtbDb.Migrations
 {
 	public static class MigrationExtensions
 	{

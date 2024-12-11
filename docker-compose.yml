@@ -1,0 +1,71 @@
+services:
+  ltbdb2-core:
+    image: ltbdb2-core
+    build: ./
+    hostname: ltbdb2-core
+    depends_on:
+      postgres:
+        condition: service_healthy
+      # mysql:
+      #   condition: service_healthy
+    environment:
+      - LTBDB__ConnectionStrings__PgSql=Host=postgres;Database=ltbdb;Username=ltbdb;Password=ltbdb
+      # - LTBDB__ConnectionStrings__MySql=Server=mysql;Database=ltbdb;User=ltbdb;Password=ltbdb
+      - LTBDB__Database__Provider=PgSql
+      - LTBDB__Settings__Username=ltbdb
+      - LTBDB__Settings__Password=ltbdb
+      - LTBDB__Settings__JwtSigningKey=12345678901234561234567890123456
+      - LTBDB__Settings__JwtExpireTime=1
+    # volumes:
+    #   - ltbdb:/data
+    ports:
+      - 5000:5000
+    networks:
+      - ltbdb
+
+  postgres:
+    image: postgres
+    hostname: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    environment:
+      - POSTGRES_PASSWORD=ltbdb
+      - POSTGRES_USER=ltbdb
+      - POSTGRES_DB=ltbdb
+    # volumes:
+    #   - postgres:/var/lib/postgresql/data
+    networks:
+      - ltbdb
+  # mysql:
+  #   image: mariadb
+  #   hostname: mysql
+  #   healthcheck:
+  #     test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 10
+  #     start_period: 10s
+  #   environment:
+  #     - MARIADB_ROOT_PASSWORD=root
+  #     - MARIADB_USER=ltbdb
+  #     - MARIADB_PASSWORD=ltbdb
+  #     - MARIADB_DATABASE=ltbdb
+  #  # volumes:
+  #  #   - mysql:/var/lib/mysql
+  #   networks:
+  #     - ltbdb
+
+  # volumes:
+  #   ltbdb:
+  #     external: false
+  #   postgres:
+  #     external: false
+  #   mysql:
+  #     external: false
+
+networks:
+  ltbdb:
+    name: ltbdb

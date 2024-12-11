@@ -1,6 +1,6 @@
 using FluentMigrator;
 
-namespace LtbDb.Migrations
+namespace LtbDb2.Migrations.Migrations
 {
 	[Migration(1, "Create database.")]
 	public class Migration_1 : Migration

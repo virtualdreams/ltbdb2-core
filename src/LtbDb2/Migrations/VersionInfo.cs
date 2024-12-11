@@ -1,12 +1,10 @@
 using FluentMigrator.Runner.VersionTableInfo;
 
-namespace LtbDb.Migrations
+namespace LtbDb2.Migrations
 {
 	[VersionTableMetaData]
 	public class VersionInfo : IVersionTableMetaData
 	{
-		public object ApplicationContext { get; set; }
-
 		public bool OwnsSchema => true;
 
 		public string SchemaName => "public";

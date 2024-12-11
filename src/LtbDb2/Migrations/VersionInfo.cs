@@ -17,10 +17,10 @@ namespace LtbDb.Migrations
 
 		public string DescriptionColumnName => "description";
 
-		public string UniqueIndexName => "ix_schema_version";
+		public string UniqueIndexName => "ux_schema_version";
 
 		public string AppliedOnColumnName => "applied_on";
 
-		public bool CreateWithPrimaryKey => true;
+		public bool CreateWithPrimaryKey => false;
 	}
 }

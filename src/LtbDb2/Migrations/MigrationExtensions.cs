@@ -2,7 +2,6 @@ using FluentMigrator.Runner;
 using LtbDb.Provider;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using NLog.Extensions.Logging;
 using System.Reflection;
 
 namespace LtbDb.Migrations

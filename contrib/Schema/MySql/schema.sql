@@ -1,9 +1,9 @@
 -- schema table
 CREATE TABLE `schema` (
-  `version` INT(11) NOT NULL,
+  `version` BIGINT(20) NOT NULL,
   `applied_on` DATETIME NOT NULL,
   `description` VARCHAR(1024) COLLATE utf8mb4_unicode_ci NOT NULL,
-  KEY `ix_version` (`version`)
+  KEY `ux_schema_version` (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- book table
@@ -43,4 +43,4 @@ CREATE TABLE `tag` (
 -- insert schema version
 INSERT INTO `schema` 
   (`version`, `applied_on`, `description`)
-  VALUES(1, NOW(), 'Schema create.');
+  VALUES(1, NOW(), 'Create schema.');

@@ -1,6 +1,6 @@
 -- schema table
 create table schema (
-  version int not null,
+  version bigint not null,
   applied_on timestamptz not null, 
   description varchar(1024) not null
 );
@@ -32,7 +32,7 @@ create table tag (
 );
 
 -- create indexes
-create index ix_schema_version on schema(version);
+create index ux_schema_version on schema(version);
 create index ix_book_category on book(category);
 create index ix_story_name on story(name);
 create index ix_story_bookid on story(bookid);
@@ -42,4 +42,4 @@ create index ix_tag_bookid on tag(bookid);
 -- insert schema version
 insert into schema
   (version, applied_on, description)
-  values (1, NOW(), 'Schema create.')
+  values (1, NOW(), 'Create schema.')

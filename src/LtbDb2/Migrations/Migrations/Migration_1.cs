@@ -2,7 +2,7 @@ using FluentMigrator;
 
 namespace LtbDb.Migrations.Migrations
 {
-	[Migration(1, "Create database.")]
+	[Migration(1, "Create schema.")]
 	public class Migration_1 : Migration
 	{
 		public override void Up()

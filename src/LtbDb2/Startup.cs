@@ -212,6 +212,8 @@ namespace LtbDb
 		{
 			var options = app.ApplicationServices.GetService<IOptions<AppSettings>>().Value;
 
+			app.MigrateDatabase();
+
 			app.UseForwardedHeaders(new ForwardedHeadersOptions
 			{
 				ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -274,8 +276,6 @@ namespace LtbDb
 			app.UseAuthorization();
 
 			app.AddEndpoints();
-
-			app.MigrateDatabase();
 		}
 	}
 }

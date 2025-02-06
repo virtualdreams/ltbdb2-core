@@ -25,6 +25,8 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 RUN apk add --no-cache \
 	icu-libs \
+	icu-data-full \
+	tzdata \
 	graphicsmagick \
 	&& rm -rf /var/cache/apk/*
 

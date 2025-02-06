@@ -107,6 +107,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 
 				var book = await BookService.CreateAsync(_book);
 
+				Response.Headers.Append("X-Book-Id", $"{book.Id}");
 				return Created(new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{book.Id}", UriKind.Absolute), null);
 			}
 			catch (LtbdbDuplicateEntryException)

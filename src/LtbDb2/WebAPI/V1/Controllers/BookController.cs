@@ -1,6 +1,7 @@
 using AutoMapper;
 using LtbDb.Core.Interfaces;
 using LtbDb.Core.Models;
+using LtbDb.Core;
 using LtbDb.Options;
 using LtbDb.WebAPI.V1.Contracts.Requests;
 using LtbDb.WebAPI.V1.Contracts.Responses;
@@ -108,6 +109,10 @@ namespace LtbDb.WebAPI.V1.Controllers
 
 				return Created(new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{book.Id}", UriKind.Absolute), null);
 			}
+			catch (LtbdbDuplicateEntryException)
+			{
+				return Conflict();
+			}
 			catch (Exception)
 			{
 				return StatusCode(500);
@@ -136,6 +141,10 @@ namespace LtbDb.WebAPI.V1.Controllers
 				await BookService.UpdateAsync(book);
 
 				return NoContent();
+			}
+			catch (LtbdbDuplicateEntryException)
+			{
+				return Conflict();
 			}
 			catch (Exception)
 			{

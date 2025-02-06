@@ -5,6 +5,8 @@ using LtbDb.Core.Internal;
 using LtbDb.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MySqlConnector;
+using Npgsql;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -186,7 +188,27 @@ namespace LtbDb.Core.Services
 			};
 
 			Context.Add(_book);
-			await Context.SaveChangesAsync();
+
+			try
+			{
+				await Context.SaveChangesAsync();
+			}
+			catch (DbUpdateException e)
+			{
+				var p = e.InnerException as PostgresException;
+				if (p != null && p.SqlState == "23505")
+				{
+					Log.LogInformation("Duplicate book entry not allowed.");
+					throw new LtbdbDuplicateEntryException();
+				}
+
+				var m = e.InnerException as MySqlException;
+				if (m != null && m.Number == 1062)
+				{
+					Log.LogInformation("Duplicate book entry not allowed.");
+					throw new LtbdbDuplicateEntryException();
+				}
+			}
 
 			Log.LogInformation($"Create new book with id {_book.Id}.");
 
@@ -244,7 +266,24 @@ namespace LtbDb.Core.Services
 				_book.Tags = _tags;
 			}
 
-			await Context.SaveChangesAsync();
+			try
+			{
+				await Context.SaveChangesAsync();
+			}
+			catch (DbUpdateException e)
+			{
+				var p = e.InnerException as PostgresException;
+				if (p != null && p.SqlState == "23505")
+				{
+					throw new LtbdbDuplicateEntryException();
+				}
+
+				var m = e.InnerException as MySqlException;
+				if (m != null && m.Number == 1062)
+				{
+					throw new LtbdbDuplicateEntryException();
+				}
+			}
 
 			Log.LogInformation($"Update book {_book.Id}.");
 		}

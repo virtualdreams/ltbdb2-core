@@ -29,4 +29,11 @@ namespace LtbDb.Core
 			: base("Book not found.")
 		{ }
 	}
+
+	public class LtbdbDuplicateEntryException : LtbdbException
+	{
+		public LtbdbDuplicateEntryException()
+			: base("Duplicate book entry not allowed.")
+		{ }
+	}
 }

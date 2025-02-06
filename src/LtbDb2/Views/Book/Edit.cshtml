@@ -1,5 +1,6 @@
 @model LtbDb.Models.BookEditContainer
 @using LtbDb.Core.Interfaces
+@using LtbDb.Extensions
 @inject IImageService ImageService
 
 @{
@@ -26,6 +27,13 @@
 			@* @Html.ValidationMessage("image") *@
 		</div>
 		<div class="col-lg-6 mt-4">
+			
+			@if(Html.HasError("error")) {
+				<div class="alert alert-danger" role="alert">
+					@Html.ErrorMessage("error")
+				</div>
+			}
+			
 			<h2>Buch</h2>
 			<div class="mb-3">
 				<label class="form-label" for="number">Nummer</label>

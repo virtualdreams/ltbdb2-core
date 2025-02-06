@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LtbDb.Core.Interfaces;
 using LtbDb.Core.Models;
+using LtbDb.Core;
 using LtbDb.Extensions;
 using LtbDb.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -116,6 +117,10 @@ namespace LtbDb.Controllers
 					}
 
 					return RedirectToAction("view", "book", new { id = _id, slug = $"Nr. {book.Number} {book.Title}".ToSlug() });
+				}
+				catch (LtbdbDuplicateEntryException)
+				{
+					ModelState.AddModelError("error", "Ein Buch mit dieser Nummer, Titel und Kategorie existiert bereits.");
 				}
 				catch (Exception ex)
 				{

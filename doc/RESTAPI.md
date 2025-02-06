@@ -173,6 +173,8 @@ curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer <toke
 ]
 ```
 
+*Conflict (409)*
+
 ## Edit a book
 
 **Request**
@@ -197,6 +199,8 @@ curl -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer <token
     }
 ]
 ```
+
+*Conflict (409)*
 
 ## Delete a book
 

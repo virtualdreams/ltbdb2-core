@@ -4,7 +4,7 @@ namespace LtbDb.WebAPI.V1.Contracts.Requests
 {
 	public class BookRequest
 	{
-		public int Number { get; set; }
+		public int? Number { get; set; }
 
 		public string Title { get; set; }
 

@@ -16,7 +16,8 @@ CREATE TABLE `book` (
   `modified` DATETIME NOT NULL,
   `filename` VARCHAR(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `ix_category` (`category`)
+  KEY `ix_category` (`category`),
+  UNIQUE `uq_number_title_category` (`number`, `title`, `category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- story table
@@ -42,5 +43,6 @@ CREATE TABLE `tag` (
 
 -- insert schema version
 INSERT INTO `schema` 
-  (`version`, `applied_on`, `description`)
-  VALUES(1, NOW(), 'Create schema.');
+  (`version`, `applied_on`, `description`) VALUE
+  (1, NOW(), 'Create schema.'),
+  (2, NOW(), 'Add unique key for number, title and category.');

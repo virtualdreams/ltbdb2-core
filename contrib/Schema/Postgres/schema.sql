@@ -13,7 +13,8 @@ create table book (
   category varchar(100) not null,
   created timestamptz not null,
   modified timestamptz not null,
-  filename varchar(100) default null
+  filename varchar(100) default null,
+  constraint book_number_title_category_key unique (number, title, category)
 );
 
 -- story table
@@ -41,5 +42,6 @@ create index ix_tag_bookid on tag(bookid);
 
 -- insert schema version
 insert into schema
-  (version, applied_on, description)
-  values (1, NOW(), 'Create schema.')
+  (version, applied_on, description) values
+  (1, NOW(), 'Create schema.'),
+  (2, NOW(), 'Add unique key for number, title and category.');

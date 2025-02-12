@@ -16,6 +16,7 @@ services:
       - LTBDB__Settings__Password=ltbdb
       - LTBDB__Settings__JwtSigningKey=12345678901234561234567890123456
       - LTBDB__Settings__JwtExpireTime=1
+      - TZ=Europe/Berlin
     # volumes:
     #   - ltbdb:/data
     ports:

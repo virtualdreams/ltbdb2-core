@@ -3,21 +3,19 @@ project = src/LtbDb2
 .PHONY: all
 all: clean publish
 
-.PHONY: install-npm
-install-npm: clean-npm
-	cd $(project) && npm ci
+.PHONY: clean
+clean: clean-publish clean-project clean-npm
 
-.PHONY: clean-npm
-clean-npm:
-	cd $(project) && rm -rf node_modules
+# solution
 
-.PHONY: grunt
-grunt:
-	@if [ -d "$(project)/node_modules" ]; then \
-		cd $(project) && ./node_modules/grunt/bin/grunt; \
-	else \
-		echo "'grunt' not installed. Please run 'make install-npm'."; \
-	fi 
+.PHONY: clean-project
+clean-project:
+	cd $(project) && rm -rf bin
+	cd $(project) && rm -rf obj
+
+.PHONY: clean-publish
+clean-publish:
+	rm -rf publish
 
 .PHONY: restore
 restore: clean-project
@@ -35,14 +33,20 @@ run:
 publish: clean-publish clean-project
 	dotnet publish -c Release /p:Version=1.0.0-$$(git rev-parse --short HEAD) -o publish $(project)
 
-.PHONY: clean-project
-clean-project:
-	cd $(project) && rm -rf bin
-	cd $(project) && rm -rf obj
+# npm
 
-.PHONY: clean-publish
-clean-publish:
-	rm -rf publish
+.PHONY: clean-npm
+clean-npm:
+	cd $(project) && rm -rf node_modules
 
-.PHONY: clean
-clean: clean-publish clean-project clean-npm
+.PHONY: install-npm
+install-npm: clean-npm
+	cd $(project) && npm ci
+
+.PHONY: build-assets
+build-assets:
+	@if [ -d "$(project)/node_modules" ]; then \
+		cd $(project) && ./node_modules/grunt/bin/grunt; \
+	else \
+		echo "NPM modules not installed. Please run 'make install-npm'."; \
+	fi

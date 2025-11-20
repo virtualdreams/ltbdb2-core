@@ -74,8 +74,8 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="6.0.6" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="10.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="10.0.1" />
     <PackageReference Include="FluentMigrator" Version="7.1.0" />
     <PackageReference Include="FluentMigrator.Runner.Postgres" Version="7.1.0" />
     <PackageReference Include="FluentMigrator.Runner.MySql" Version="7.1.0" />

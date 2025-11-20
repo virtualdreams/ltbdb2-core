@@ -21,7 +21,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -187,20 +187,20 @@ namespace LtbDb
 					Type = SecuritySchemeType.ApiKey
 				});
 
-				options.AddSecurityRequirement(new OpenApiSecurityRequirement
-				{
-					{
-						new OpenApiSecurityScheme
-						{
-							Reference = new OpenApiReference
-							{
-								Type = ReferenceType.SecurityScheme,
-								Id = "Bearer"
-							}
-						},
-						new string[] { }
-					}
-				});
+				// options.AddSecurityRequirement(new OpenApiSecurityRequirement
+				// {
+				// 	{
+				// 		new OpenApiSecurityScheme
+				// 		{
+				// 			Reference = new OpenApiReference
+				// 			{
+				// 				Type = ReferenceType.SecurityScheme,
+				// 				Id = "Bearer"
+				// 			}
+				// 		},
+				// 		new string[] { }
+				// 	}
+				// });
 
 				var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 				options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));

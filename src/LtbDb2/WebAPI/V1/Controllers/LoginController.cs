@@ -4,6 +4,7 @@ using LtbDb.Services;
 using LtbDb.WebAPI.V1.Contracts.Requests;
 using LtbDb.WebAPI.V1.Contracts.Responses;
 using LtbDb.WebAPI.V1.Filter;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 	[ApiExplorerSettings(GroupName = "v1")]
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
+	[AllowAnonymous]
 	[ValidationFilter]
 	public class LoginController : ControllerBase
 	{

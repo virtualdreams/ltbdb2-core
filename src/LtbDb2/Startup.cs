@@ -184,23 +184,15 @@ namespace LtbDb
 					In = ParameterLocation.Header,
 					Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
 					Name = "Authorization",
+					Scheme = "Bearer",
+					BearerFormat = "JWT",
 					Type = SecuritySchemeType.ApiKey
 				});
 
-				// options.AddSecurityRequirement(new OpenApiSecurityRequirement
-				// {
-				// 	{
-				// 		new OpenApiSecurityScheme
-				// 		{
-				// 			Reference = new OpenApiReference
-				// 			{
-				// 				Type = ReferenceType.SecurityScheme,
-				// 				Id = "Bearer"
-				// 			}
-				// 		},
-				// 		new string[] { }
-				// 	}
-				// });
+				options.AddSecurityRequirement((document) => new OpenApiSecurityRequirement()
+				{
+					[new OpenApiSecuritySchemeReference("Bearer", document)] = []
+				});
 
 				var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 				options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
@@ -266,7 +258,10 @@ namespace LtbDb
 
 			// app.UseCors();
 
-			app.UseSwagger();
+			app.UseSwagger(options =>
+			{
+				options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_1;
+			});
 			app.UseSwaggerUI(options =>
 			{
 				options.SwaggerEndpoint($"/swagger/v1/swagger.json", "Lustiges Taschenbuch Datenbank API v1");

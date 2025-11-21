@@ -19,6 +19,10 @@
 	  <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
 	  <MvcRazorCompileOnPublish>true</MvcRazorCompileOnPublish>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <CompressionEnabled>false</CompressionEnabled>
+  </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>

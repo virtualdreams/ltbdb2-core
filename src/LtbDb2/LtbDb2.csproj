@@ -12,6 +12,7 @@
     <AssemblyName>LtbDb2</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>ltbdb2</PackageId>
+    <NuGetAudit>true</NuGetAudit>
   </PropertyGroup>
 
   <PropertyGroup>

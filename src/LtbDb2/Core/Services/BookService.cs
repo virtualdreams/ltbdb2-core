@@ -5,7 +5,6 @@ using LtbDb.Core.Internal;
 using LtbDb.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MySqlConnector;
 using Npgsql;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +26,7 @@ namespace LtbDb.Core.Services
 		/// Initializes the BookService class.
 		/// </summary>
 		/// <param name="log">The logger.</param>
-		/// <param name="context">The MySQL context.</param>
+		/// <param name="context">The database context.</param>
 		/// <param name="image">The image service.</param>
 		public BookService(
 			ILogger<BookService> log,
@@ -201,13 +200,6 @@ namespace LtbDb.Core.Services
 					Log.LogInformation("Duplicate book entry not allowed.");
 					throw new LtbdbDuplicateEntryException();
 				}
-
-				var m = e.InnerException as MySqlException;
-				if (m != null && m.Number == 1062)
-				{
-					Log.LogInformation("Duplicate book entry not allowed.");
-					throw new LtbdbDuplicateEntryException();
-				}
 			}
 
 			Log.LogInformation($"Create new book with id {_book.Id}.");
@@ -274,12 +266,6 @@ namespace LtbDb.Core.Services
 			{
 				var p = e.InnerException as PostgresException;
 				if (p != null && p.SqlState == "23505")
-				{
-					throw new LtbdbDuplicateEntryException();
-				}
-
-				var m = e.InnerException as MySqlException;
-				if (m != null && m.Number == 1062)
 				{
 					throw new LtbdbDuplicateEntryException();
 				}

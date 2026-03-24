@@ -51,15 +51,11 @@
 PosgreSql connection string.  
 Default: `Host=[host];Database=[database];Username=[username];Password=[password][;SearchPath=schema,public]`
 
-* **MySql**  
-MariaDB/MySQL connection string.  
-Default: `Server=[host];Database=[database];User=[username];Password=[password]`
-
 **Section: Database**
 
 * **Provider**  
 Set database provider.  
-Default: `PgSql`. Values: `MySql`, `PgSql`.
+Default: `PgSql`. Values: `PgSql`.
 
 **Section: FeatureFlags**
 

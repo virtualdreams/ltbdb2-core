@@ -19,24 +19,3 @@ Import schema.
 ```sh
 psql -U ltbdb -h localhost -d ltbdb < contrib/Schema/Postgres/schema.sql 
 ```
-
-## MariaDB
-
-Create user.
-
-```sql
-create user 'ltbdb'@'localhost' identified by 'password';
-grant all on notes.* to 'ltbdb'@'localhost';
-```
-
-Create database.
-
-```sql
-create database ltbdb;
-```
-
-Import schema.
-
-```sh
-mysql -u ltbdb -p ltbdb < contrib/Schema/MySql/schema.sql
-```

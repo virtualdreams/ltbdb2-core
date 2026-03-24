@@ -9,9 +9,6 @@ namespace LtbDb.Migrations.Migrations
 		{
 			IfDatabase("postgresql")
 				.Execute.EmbeddedScript("Migrations.Schema.Postgres.migration_2.sql");
-
-			IfDatabase("mysql")
-				.Execute.EmbeddedScript("Migrations.Schema.MySql.migration_2.sql");
 		}
 
 		public override void Down()

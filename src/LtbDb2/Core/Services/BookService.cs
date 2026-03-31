@@ -200,6 +200,7 @@ namespace LtbDb.Core.Services
 					Log.LogInformation("Duplicate book entry not allowed.");
 					throw new LtbdbDuplicateEntryException();
 				}
+				throw;
 			}
 
 			Log.LogInformation($"Create new book with id {_book.Id}.");

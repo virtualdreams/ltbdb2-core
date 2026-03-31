@@ -1,9 +1,10 @@
+using FluentValidation;
 using LtbDb.Core.Interfaces;
 using LtbDb.Options;
 using LtbDb.Services;
 using LtbDb.WebAPI.V1.Contracts.Requests;
 using LtbDb.WebAPI.V1.Contracts.Responses;
-using LtbDb.WebAPI.V1.Filter;
+using LtbDb.WebAPI.V1.FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using System;
 
 namespace LtbDb.WebAPI.V1.Controllers
@@ -20,7 +22,6 @@ namespace LtbDb.WebAPI.V1.Controllers
 	[Produces(MediaTypeNames.Application.Json)]
 	[Route("api/v1/[controller]")]
 	[AllowAnonymous]
-	[ValidationFilter]
 	public class LoginController : ControllerBase
 	{
 		private readonly ILogger<LoginController> Log;
@@ -31,16 +32,20 @@ namespace LtbDb.WebAPI.V1.Controllers
 
 		private readonly BearerTokenService TokenService;
 
+		private readonly IValidator<AuthRequest> AuthRequestValidator;
+
 		public LoginController(
 			ILogger<LoginController> log,
 			IOptionsSnapshot<AppSettings> settings,
 			IUserService user,
-			BearerTokenService token)
+			BearerTokenService token,
+			IValidator<AuthRequest> authRequestValidator)
 		{
 			Log = log;
 			AppSettings = settings.Value;
 			UserService = user;
 			TokenService = token;
+			AuthRequestValidator = authRequestValidator;
 		}
 
 		/// <summary>
@@ -52,34 +57,40 @@ namespace LtbDb.WebAPI.V1.Controllers
 		[ProducesResponseType(typeof(AuthSuccessResponse), StatusCodes.Status200OK)]
 		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		public IActionResult Post([FromBody] AuthRequest model)
+		public async Task<IActionResult> Post([FromBody] AuthRequest model)
 		{
-			try
+			var _result = await AuthRequestValidator.ValidateAsync(model);
+			if (_result.IsValid)
 			{
-				if (UserService.Login(model.Username, model.Password))
+				try
 				{
-					var _response = new AuthSuccessResponse
+					if (UserService.Login(model.Username, model.Password))
 					{
-						Token = TokenService.CreateToken(AppSettings.JwtSigningKey, model.Username, "Administrator", AppSettings.JwtExpireTime),
-						Type = "Bearer",
-						ExpiresIn = AppSettings.JwtExpireTime
-					};
+						var _response = new AuthSuccessResponse
+						{
+							Token = TokenService.CreateToken(AppSettings.JwtSigningKey, model.Username, "Administrator", AppSettings.JwtExpireTime),
+							Type = "Bearer",
+							ExpiresIn = AppSettings.JwtExpireTime
+						};
 
-					Log.LogInformation("Login successful.");
+						Log.LogInformation("Login successful.");
 
-					return Ok(_response);
+						return Ok(_response);
+					}
+
+					Log.LogInformation("Login failed. Unauthorized.");
+
+					return Unauthorized();
 				}
+				catch (Exception e)
+				{
+					Log.LogError(e, "Login failed.");
 
-				Log.LogInformation("Login failed. Unauthorized.");
-
-				return Unauthorized();
+					return StatusCode(500);
+				}
 			}
-			catch (Exception e)
-			{
-				Log.LogError(e, "Login failed.");
 
-				return StatusCode(500);
-			}
+			return BadRequest(_result.ToBadRequest());
 		}
 	}
 }

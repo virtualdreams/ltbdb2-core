@@ -1,11 +1,12 @@
 using AutoMapper;
+using FluentValidation;
 using LtbDb.Core.Interfaces;
 using LtbDb.Core.Models;
 using LtbDb.Core;
 using LtbDb.Options;
 using LtbDb.WebAPI.V1.Contracts.Requests;
 using LtbDb.WebAPI.V1.Contracts.Responses;
-using LtbDb.WebAPI.V1.Filter;
+using LtbDb.WebAPI.V1.FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,7 +26,6 @@ namespace LtbDb.WebAPI.V1.Controllers
 	[Route("api/v1/[controller]")]
 	[Authorize(Policy = "AdministratorOnly", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-	[ValidationFilter]
 	public class BookController : ControllerBase
 	{
 		private readonly ILogger<BookController> Log;
@@ -40,13 +40,16 @@ namespace LtbDb.WebAPI.V1.Controllers
 
 		private readonly ITagService TagService;
 
+		private readonly IValidator<BookRequest> BookRequestValidator;
+
 		public BookController(
 			ILogger<BookController> log,
 			IMapper mapper,
 			IOptionsSnapshot<AppSettings> settings,
 			IBookService book,
 			ICategoryService category,
-			ITagService tag)
+			ITagService tag,
+			IValidator<BookRequest> bookRequestValidator)
 		{
 			Log = log;
 			Mapper = mapper;
@@ -54,6 +57,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 			BookService = book;
 			CategoryService = category;
 			TagService = tag;
+			BookRequestValidator = bookRequestValidator;
 		}
 
 		/// <summary>
@@ -101,23 +105,29 @@ namespace LtbDb.WebAPI.V1.Controllers
 		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> Post([FromBody] BookRequest model)
 		{
-			try
+			var _result = await BookRequestValidator.ValidateAsync(model);
+			if (_result.IsValid)
 			{
-				var _book = Mapper.Map<Book>(model);
+				try
+				{
+					var _book = Mapper.Map<Book>(model);
 
-				var book = await BookService.CreateAsync(_book);
+					var book = await BookService.CreateAsync(_book);
 
-				Response.Headers.Append("X-Book-Id", $"{book.Id}");
-				return Created(new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{book.Id}", UriKind.Absolute), null);
+					Response.Headers.Append("X-Book-Id", $"{book.Id}");
+					return Created(new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}/{book.Id}", UriKind.Absolute), null);
+				}
+				catch (LtbdbDuplicateEntryException)
+				{
+					return Conflict();
+				}
+				catch (Exception)
+				{
+					return StatusCode(500);
+				}
 			}
-			catch (LtbdbDuplicateEntryException)
-			{
-				return Conflict();
-			}
-			catch (Exception)
-			{
-				return StatusCode(500);
-			}
+
+			return BadRequest(_result.ToBadRequest());
 		}
 
 		/// <summary>
@@ -131,26 +141,32 @@ namespace LtbDb.WebAPI.V1.Controllers
 		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> Put(int id, [FromBody] BookRequest model)
 		{
-			try
+			var _result = await BookRequestValidator.ValidateAsync(model);
+			if (_result.IsValid)
 			{
-				var _book = await BookService.GetByIdAsync(id);
-				if (_book == null)
-					return NotFound();
+				try
+				{
+					var _book = await BookService.GetByIdAsync(id);
+					if (_book == null)
+						return NotFound();
 
-				var book = Mapper.Map<Book>(model);
-				book.Id = id;
-				await BookService.UpdateAsync(book);
+					var book = Mapper.Map<Book>(model);
+					book.Id = id;
+					await BookService.UpdateAsync(book);
 
-				return NoContent();
+					return NoContent();
+				}
+				catch (LtbdbDuplicateEntryException)
+				{
+					return Conflict();
+				}
+				catch (Exception)
+				{
+					return StatusCode(500);
+				}
 			}
-			catch (LtbdbDuplicateEntryException)
-			{
-				return Conflict();
-			}
-			catch (Exception)
-			{
-				return StatusCode(500);
-			}
+
+			return BadRequest(_result.ToBadRequest());
 		}
 
 		/// <summary>

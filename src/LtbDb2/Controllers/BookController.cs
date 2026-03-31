@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LtbDb.Core.Interfaces;
 using LtbDb.Core.Models;
 using LtbDb.Core;
 using LtbDb.Extensions;
+using LtbDb.FluentValidation;
 using LtbDb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +22,18 @@ namespace LtbDb.Controllers
 
 		private readonly IBookService BookService;
 
+		private readonly IValidator<BookPostModel> BookPostModelValidator;
+
 		public BookController(
 			ILogger<BookController> log,
 			IMapper mapper,
-			IBookService book)
+			IBookService book,
+			IValidator<BookPostModel> bookPostModelValidator)
 		{
 			Log = log;
 			Mapper = mapper;
 			BookService = book;
+			BookPostModelValidator = bookPostModelValidator;
 		}
 
 		[HttpGet]
@@ -86,7 +92,8 @@ namespace LtbDb.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Edit(BookPostModel model)
 		{
-			if (ModelState.IsValid)
+			var _result = await BookPostModelValidator.ValidateAsync(model);
+			if (_result.IsValid)
 			{
 				try
 				{
@@ -133,6 +140,7 @@ namespace LtbDb.Controllers
 				Book = model
 			};
 
+			_result.AddToModelState(ModelState);
 			return View(view);
 		}
 

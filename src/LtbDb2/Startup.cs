@@ -1,4 +1,3 @@
-using FluentValidation.AspNetCore;
 using FluentValidation;
 using LtbDb.Core;
 using LtbDb.Events;
@@ -117,12 +116,6 @@ namespace LtbDb
 			});
 
 			// fluent validation
-			services.AddFluentValidationAutoValidation(options =>
-			{
-				options.DisableDataAnnotationsValidation = true;
-			})
-			.AddFluentValidationClientsideAdapters();
-
 			services.AddValidatorsFromAssemblyContaining<Startup>();
 
 			// add distributed cache

@@ -1,8 +1,9 @@
 using AutoMapper;
+using FluentValidation;
 using LtbDb.Core.Interfaces;
 using LtbDb.Options;
 using LtbDb.WebAPI.V1.Contracts.Requests;
-using LtbDb.WebAPI.V1.Filter;
+using LtbDb.WebAPI.V1.FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,6 @@ namespace LtbDb.WebAPI.V1.Controllers
 	[Route("api/v1/[controller]")]
 	[Authorize(Policy = "AdministratorOnly", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-	[ValidationFilter]
 	public class ImageController : ControllerBase
 	{
 		private readonly ILogger<ImageController> Log;
@@ -38,6 +38,8 @@ namespace LtbDb.WebAPI.V1.Controllers
 
 		private readonly IImageService ImageService;
 
+		private readonly IValidator<ImageRequest> ImageRequestValidator;
+
 		public ImageController(
 			ILogger<ImageController> log,
 			IMapper mapper,
@@ -45,7 +47,8 @@ namespace LtbDb.WebAPI.V1.Controllers
 			IBookService book,
 			ICategoryService category,
 			ITagService tag,
-			IImageService image)
+			IImageService image,
+			IValidator<ImageRequest> imageRequestValidator)
 		{
 			Log = log;
 			Mapper = mapper;
@@ -54,6 +57,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 			CategoryService = category;
 			TagService = tag;
 			ImageService = image;
+			ImageRequestValidator = imageRequestValidator;
 		}
 
 		[HttpHead("{id}")]
@@ -107,20 +111,26 @@ namespace LtbDb.WebAPI.V1.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Put(int id, [FromForm] ImageRequest model)
 		{
-			try
+			var _result = await ImageRequestValidator.ValidateAsync(model);
+			if (_result.IsValid)
 			{
-				var _book = await BookService.GetByIdAsync(id);
-				if (_book == null)
-					return NotFound();
+				try
+				{
+					var _book = await BookService.GetByIdAsync(id);
+					if (_book == null)
+						return NotFound();
 
-				await BookService.SetImageAsync(_book.Id, model.Image.OpenReadStream());
+					await BookService.SetImageAsync(_book.Id, model.Image.OpenReadStream());
 
-				return NoContent();
+					return NoContent();
+				}
+				catch (Exception)
+				{
+					return StatusCode(500);
+				}
 			}
-			catch (Exception)
-			{
-				return StatusCode(500);
-			}
+
+			return BadRequest(_result.ToBadRequest());
 		}
 
 		/// <summary>

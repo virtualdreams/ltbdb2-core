@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LtbDb.Core.Interfaces;
+using LtbDb.FluentValidation;
 using LtbDb.Models;
 using LtbDb.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -23,16 +25,20 @@ namespace LtbDb.Controllers
 
 		private readonly IUserService UserService;
 
+		private readonly IValidator<LoginModel> LoginModelValidator;
+
 		public AccountController(
 			ILogger<AccountController> log,
 			IMapper mapper,
 			IOptionsSnapshot<AppSettings> settings,
-			IUserService user)
+			IUserService user,
+			IValidator<LoginModel> loginModelValidator)
 		{
 			Log = log;
 			Mapper = mapper;
 			AppSettings = settings.Value;
 			UserService = user;
+			LoginModelValidator = loginModelValidator;
 		}
 
 		[HttpGet]
@@ -46,8 +52,10 @@ namespace LtbDb.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login(LoginModel model, string returnUrl)
 		{
-			if (!ModelState.IsValid)
+			var _result = await LoginModelValidator.ValidateAsync(model);
+			if (!_result.IsValid)
 			{
+				_result.AddToModelState(ModelState);
 				return View("Login", model);
 			}
 

@@ -1,4 +1,6 @@
+using FluentValidation.Results;
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 
 namespace LtbDb.FluentValidation
@@ -33,6 +35,14 @@ namespace LtbDb.FluentValidation
 				return list.Count < num;
 			})
 			.WithMessage("'{PropertyName}' must contain fewer than {MaxElements} items.");
+		}
+
+		public static void AddToModelState(this ValidationResult result, ModelStateDictionary modelState)
+		{
+			foreach (var error in result.Errors)
+			{
+				modelState.AddModelError(error.PropertyName, error.ErrorMessage);
+			}
 		}
 	}
 }

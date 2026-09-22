@@ -52,10 +52,10 @@ namespace LtbDb.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Login(LoginModel model, string returnUrl)
 		{
-			var _result = await LoginModelValidator.ValidateAsync(model);
-			if (!_result.IsValid)
+			var _validation = await LoginModelValidator.ValidateAsync(model);
+			if (!_validation.IsValid)
 			{
-				_result.AddToModelState(ModelState);
+				_validation.AddToModelState(ModelState);
 				return View("Login", model);
 			}
 

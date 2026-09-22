@@ -111,8 +111,8 @@ namespace LtbDb.WebAPI.V1.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Put(int id, [FromForm] ImageRequest model)
 		{
-			var _result = await ImageRequestValidator.ValidateAsync(model);
-			if (_result.IsValid)
+			var _validation = await ImageRequestValidator.ValidateAsync(model);
+			if (_validation.IsValid)
 			{
 				try
 				{
@@ -130,7 +130,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 				}
 			}
 
-			return BadRequest(_result.ToBadRequest());
+			return BadRequest(_validation.ToBadRequest());
 		}
 
 		/// <summary>

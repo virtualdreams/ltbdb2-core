@@ -92,8 +92,8 @@ namespace LtbDb.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Edit(BookPostModel model)
 		{
-			var _result = await BookPostModelValidator.ValidateAsync(model);
-			if (_result.IsValid)
+			var _validation = await BookPostModelValidator.ValidateAsync(model);
+			if (_validation.IsValid)
 			{
 				try
 				{
@@ -140,7 +140,7 @@ namespace LtbDb.Controllers
 				Book = model
 			};
 
-			_result.AddToModelState(ModelState);
+			_validation.AddToModelState(ModelState);
 			return View(view);
 		}
 

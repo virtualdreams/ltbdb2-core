@@ -59,8 +59,8 @@ namespace LtbDb.WebAPI.V1.Controllers
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public async Task<IActionResult> Post([FromBody] AuthRequest model)
 		{
-			var _result = await AuthRequestValidator.ValidateAsync(model);
-			if (_result.IsValid)
+			var _validation = await AuthRequestValidator.ValidateAsync(model);
+			if (_validation.IsValid)
 			{
 				try
 				{
@@ -90,7 +90,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 				}
 			}
 
-			return BadRequest(_result.ToBadRequest());
+			return BadRequest(_validation.ToBadRequest());
 		}
 	}
 }

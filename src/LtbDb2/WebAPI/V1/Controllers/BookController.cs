@@ -105,8 +105,8 @@ namespace LtbDb.WebAPI.V1.Controllers
 		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> Post([FromBody] BookRequest model)
 		{
-			var _result = await BookRequestValidator.ValidateAsync(model);
-			if (_result.IsValid)
+			var _validation = await BookRequestValidator.ValidateAsync(model);
+			if (_validation.IsValid)
 			{
 				try
 				{
@@ -127,7 +127,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 				}
 			}
 
-			return BadRequest(_result.ToBadRequest());
+			return BadRequest(_validation.ToBadRequest());
 		}
 
 		/// <summary>
@@ -141,8 +141,8 @@ namespace LtbDb.WebAPI.V1.Controllers
 		[ProducesResponseType(typeof(IList<ErrorResponse>), StatusCodes.Status400BadRequest)]
 		public async Task<IActionResult> Put(int id, [FromBody] BookRequest model)
 		{
-			var _result = await BookRequestValidator.ValidateAsync(model);
-			if (_result.IsValid)
+			var _validation = await BookRequestValidator.ValidateAsync(model);
+			if (_validation.IsValid)
 			{
 				try
 				{
@@ -166,7 +166,7 @@ namespace LtbDb.WebAPI.V1.Controllers
 				}
 			}
 
-			return BadRequest(_result.ToBadRequest());
+			return BadRequest(_validation.ToBadRequest());
 		}
 
 		/// <summary>

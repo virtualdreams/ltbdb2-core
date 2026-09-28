@@ -46,7 +46,7 @@ install-npm: clean-npm
 .PHONY: build-assets
 build-assets:
 	@if [ -d "$(project)/node_modules" ]; then \
-		cd $(project) && ./node_modules/grunt/bin/grunt; \
+		cd $(project) && node minify.js; \
 	else \
 		echo "NPM modules not installed. Please run 'make install-npm'."; \
 	fi
